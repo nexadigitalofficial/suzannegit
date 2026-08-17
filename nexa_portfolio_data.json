@@ -1,1140 +1,1140 @@
 [
- {
-  "id": "cbvip-prj-1",
-  "db_id": 1,
-  "title": "ANGİM BEYTEPE",
-  "folder_name": "ANGİM BEYTEPE",
-  "folder_path": "projeler/ANGİM BEYTEPE",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_1.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - ANGİM BEYTEPE.pdf",
-    "path": "projeler/ANGİM BEYTEPE/SUNUM - ANGİM BEYTEPE.pdf",
-    "size_mb": 3.96
-   }
-  ],
-  "videos": [
-   {
-    "filename": "SLIDESHOW - ANGİM BEYTEPE.mp4",
-    "path": "projeler/ANGİM BEYTEPE/SLIDESHOW - ANGİM BEYTEPE.mp4",
-    "size_mb": 1.39
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-1",
-  "type": "project",
-  "name": "ANGİM BEYTEPE",
-  "price_display": "₺6.350.000 - ₺22.890.000",
-  "price_min": 6350000,
-  "price_max": 22890000,
-  "room_info": "0+1, 0+2, 0+3, 0+4, 0+5, 1+1, 2+1, 3+1, 4+1, 5+1, 6+1",
-  "description": "80907/1 s a t ı ş o f i s i 80907/1 s a t ı ş o f i s i 80907/1 s a t ı ş o f i s i +5.00ASARCHITECTS80907/1 SATIŞ OFİSİ MEVCUT ELEKTRİK DİREĞİMEVCUT ELEKTRİK DİREKLERİ +5.00 +1.00+2.00+5.00+4.00 +3.00ARAÇGİRİŞİ YÖNETİCİ GİRİŞİASARCHITECTS80907/1 SATIŞ OFİSİ ASARCHITECTS80907/1 SATIŞ OFİSİ +1.00+2.00+5.00+4.00 +3.00 ZE",
-  "drive_video_preview": "https://drive.google.com/file/d/1WSDKDp9hXnwXxImAtrwNdZo0LsB61L0A/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1M6moXD9UlgZA4tr7xq8fQ4bAxmmuClpY/preview",
-  "price_numeric": 6350000,
-  "down_payment": "7.250.000 TL",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Beytepe",
-  "ada_no": "80907",
-  "parsel_no": "1",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-2",
-  "db_id": 2,
-  "title": "ANKAPORT - SARAY",
-  "folder_name": "ANKAPORT - SARAY",
-  "folder_path": "projeler/ANKAPORT - SARAY",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_2.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - ANKAPORT SARAY.pdf",
-    "path": "projeler/ANKAPORT - SARAY/SUNUM - ANKAPORT SARAY.pdf",
-    "size_mb": 18.24
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - ANKAPORT SARAY.mp4",
-    "path": "projeler/ANKAPORT - SARAY/TANITIM - ANKAPORT SARAY.mp4",
-    "size_mb": 295.32
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-2",
-  "type": "project",
-  "name": "ANKAPORT - SARAY",
-  "price_display": "3.040.000 - 8.350.000 TL",
-  "price_min": 3040000,
-  "price_max": 8350000,
-  "room_info": "1+1, 2+1, 3+1",
-  "description": "süreçlerinde aktif görev almıştır. 2013 yılından itibaren yenilenebilir enerji alanında çalışmalarını GES projeleriyle sürdürmüş; arazi geliştirme, proje geliştirme, danışmanlık, anahtar teslim kurulum, devreye alma ve işletme süreçlerinde önemli projelere imza atmıştır. 2017 yılında Van’da 7.500 kW gücünde bir GES pro",
-  "drive_video_preview": "https://drive.google.com/file/d/1WSDKDp9hXnwXxImAtrwNdZo0LsB61L0A/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1M6moXD9UlgZA4tr7xq8fQ4bAxmmuClpY/preview",
-  "price_numeric": 3040000,
-  "down_payment": "1.520.000 TL",
-  "il": "Ankara",
-  "ilce": "Pursaklar",
-  "mahalle": "Saray",
-  "ada_no": "96400",
-  "parsel_no": "4",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-3",
-  "db_id": 35,
-  "title": "EVART YALIKAVAK",
-  "folder_name": "EVART YALIKAVAK",
-  "folder_path": "projeler/EVART YALIKAVAK",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_3.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - EVART YALIKAVAK.pdf",
-    "path": "projeler/EVART YALIKAVAK/SUNUM - EVART YALIKAVAK.pdf",
-    "size_mb": 24.43
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - EVART YALIKAVAK.mp4",
-    "path": "projeler/EVART YALIKAVAK/TANITIM - EVART YALIKAVAK.mp4",
-    "size_mb": 204.85
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-3",
-  "type": "project",
-  "name": "EVART YALIKAVAK",
-  "room_info": "",
-  "description": "",
-  "price_display": "14.500.000 TL",
-  "net_gross_area": "",
-  "listing_type": "Satılık",
-  "property_category": "Konut / Daire",
-  "il": "Muğla",
-  "ilce": "Bodrum",
-  "mahalle": "Yalıkavak",
-  "ada_no": "624",
-  "parsel_no": "18",
-  "tkgm_verified": true,
-  "drive_video_preview": "https://drive.google.com/file/d/1hlrWaCAZQv6pVLtuMdBiR1XWa9b4IY20/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1rLVD9i-zTYrR703Tx1eP75pZLAIJstz6/preview",
-  "price_numeric": 14500000,
-  "down_payment": "7.250.000 TL"
- },
- {
-  "id": "cbvip-prj-4",
-  "db_id": 4,
-  "title": "GRANDE YAŞAMKENT",
-  "folder_name": "GRANDE YAŞAMKENT",
-  "folder_path": "projeler/GRANDE YAŞAMKENT",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_4.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - GRANDE YAŞAMKENT.pdf",
-    "path": "projeler/GRANDE YAŞAMKENT/SUNUM - GRANDE YAŞAMKENT.pdf",
-    "size_mb": 7.59
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - GRANDE YAŞAMKENT.mp4",
-    "path": "projeler/GRANDE YAŞAMKENT/TANITIM - GRANDE YAŞAMKENT.mp4",
-    "size_mb": 126.73
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-4",
-  "type": "project",
-  "name": "GRANDE YAŞAMKENT",
-  "room_info": "1+1, 2+1",
-  "description": "GRANDE Yasamkent Yaşamkent’te Yeni Bir Yaşam Projesi ASM Müteahhit imzasıyla Yaşamkent’te hayata geçirilecek proje; 5 blokta toplam 1.300 daireden oluşuyor. Modern mimarisi, kapsamlı sosyal donatıları ve farklı ihtiyaçlara hitap eden 1+1 ve 2+1 daire seçenekleriyle bölgenin yeni yaşam merkezlerinden biri olmaya hazırla",
-  "drive_video_preview": "https://drive.google.com/file/d/17f7c0FXX4ePVU3zDftVyfEVOeTt3gzHq/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1AlACn764Lw48bYMVLi8EEbs4ljnOu-yh/preview",
-  "price_display": "3.000.000 - 4.000.000 TL",
-  "price_min": 3000000,
-  "price_max": 4000000,
-  "price_numeric": 3000000,
-  "down_payment": "1.500.000 TL",
-  "il": "Ankara",
-  "ilce": "Etimesgut",
-  "mahalle": "Yapracık",
-  "ada_no": "49912",
-  "parsel_no": "4",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-5",
-  "db_id": 5,
-  "title": "GÖKDEMİR İMZA",
-  "folder_name": "GÖKDEMİR İMZA",
-  "folder_path": "projeler/GÖKDEMİR İMZA",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_5.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - GÖKDEMİR İMZA.pdf",
-    "path": "projeler/GÖKDEMİR İMZA/SUNUM - GÖKDEMİR İMZA.pdf",
-    "size_mb": 8.91
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - GÖKDEMİR İMZA.mp4",
-    "path": "projeler/GÖKDEMİR İMZA/TANITIM - GÖKDEMİR İMZA.mp4",
-    "size_mb": 236.97
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-5",
-  "type": "project",
-  "name": "GÖKDEMİR İMZA",
-  "room_info": "1+1, 2+1, 3+1",
-  "description": "KAT 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 375 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 438 439 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355 356 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 419 420 421 ",
-  "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1k7fklARyzjnpOZbYkJSqg0VTsaMr4LO7/preview",
-  "price_display": "3.900.000 - 8.000.000 TL",
-  "price_min": 3900000,
-  "price_max": 8000000,
-  "price_numeric": 3900000,
-  "down_payment": "1.950.000 TL",
-  "il": "Ankara",
-  "ilce": "Gölbaşı",
-  "mahalle": "Kızılcaşar",
-  "ada_no": "118274",
-  "parsel_no": "2",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-6",
-  "db_id": 6,
-  "title": "IDEA - START BRAVO",
-  "folder_name": "IDEA - START BRAVO",
-  "folder_path": "projeler/IDEA - START BRAVO",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_6.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - IDEA - START BRAVO.pdf",
-    "path": "projeler/IDEA - START BRAVO/SUNUM - IDEA - START BRAVO.pdf",
-    "size_mb": 15.71
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - IDEA - START BRAVO.mp4",
-    "path": "projeler/IDEA - START BRAVO/TANITIM - IDEA - START BRAVO.mp4",
-    "size_mb": 130.42
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-6",
-  "type": "project",
-  "name": "IDEA - START BRAVO",
-  "room_info": "1+1, 2+1",
-  "description": "ZEMİN KAT ASANSÖR ASANSÖRMERDİVEN ASANSÖR ASANSÖRMERDİVEN KAT HOLÜ1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+11+11 13 12 11 10 9 8 7 6 5 4 32 1. KAT ASANSÖR ASANSÖRMERDİVEN ASANSÖR ASANSÖRMERDİVEN KAT HOLÜ1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+11+114 26 25 24 23 22 21 20 19 18 17 1615 2. KAT ASANSÖR ASANSÖRME",
-  "drive_video_preview": "https://drive.google.com/file/d/1cgvsmHZ3Evg9lKT-y-3L0C0ycI_imlyY/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1IiJCCZnFv4EEpKJemnBWEkKzq5R_m51r/preview",
-  "price_display": "2.100.000 - 3.200.000 TL",
-  "price_numeric": 2100000,
-  "down_payment": "1.050.000 TL",
-  "il": "Ankara",
-  "ilce": "Etimesgut",
-  "mahalle": "Bağlıca",
-  "ada_no": "47285",
-  "parsel_no": "1",
-  "tkgm_verified": true,
-  "price_min": 2100000,
-  "price_max": 3200000
- },
- {
-  "id": "cbvip-prj-7",
-  "db_id": 7,
-  "title": "MONZA EYLÜL CONCEPT",
-  "folder_name": "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR",
-  "folder_path": "projeler/MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_7.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP ÇAKIRLAR.pdf",
-    "path": "projeler/MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.pdf",
-    "size_mb": 9.4
-   }
-  ],
-  "videos": [
-   {
-    "filename": "SUNUM - VIP ÇAKIRLAR.mp4",
-    "path": "projeler/MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.mp4",
-    "size_mb": 296.24
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-7",
-  "type": "project",
-  "name": "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR",
-  "room_info": "",
-  "description": "6 7 910 12 13 11 5 8 4 3 2 1120 cm korkuluk 120 cm korkuluk 120 cm korkuluk 120 cm korkulukENGELLI LIFTI YAPILACAKTIR.-2.07 (924.52)M=14 X 14.78 /35 ±0.00(926.59)14120 cm korkuluk±0.00(926.59) 120 cm korkuluk -0.72(925.87) EĞIM % 6.98 L: 10.31M H:72CM -0.45(926.14)120 cm korkuluk 120 cm korkulukEĞIM % 6.99 L: 10.31M H:",
-  "drive_video_preview": "https://drive.google.com/file/d/1r5uSsbWNzgV3hRtrtRon9n7TbLD7C_bE/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1_8mzlD_0ZmYmrHMdBRIc-c4hMctjbisR/preview",
-  "price_display": "2.800.000 - 3.900.000 TL",
-  "price_numeric": 2800000,
-  "down_payment": "1.400.000 TL",
-  "il": "Ankara",
-  "ilce": "Yenimahalle",
-  "mahalle": "Çakırlar",
-  "ada_no": "63452",
-  "parsel_no": "7",
-  "tkgm_verified": true,
-  "price_min": 2800000,
-  "price_max": 3900000
- },
- {
-  "id": "cbvip-prj-8",
-  "db_id": 8,
-  "title": "MONZA MOON",
-  "folder_name": "MONZA MOON",
-  "folder_path": "projeler/MONZA MOON",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_8.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - MONZA MOON.pdf",
-    "path": "projeler/MONZA MOON/SUNUM - MONZA MOON.pdf",
-    "size_mb": 5.13
-   }
-  ],
-  "videos": [
-   {
-    "filename": "ANİMASYON.mp4",
-    "path": "projeler/MONZA MOON/ANİMASYON.mp4",
-    "size_mb": 10.87
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-8",
-  "type": "project",
-  "name": "MONZA MOON",
-  "room_info": "1+1, 2+1",
-  "description": "menfaat gibi hukuki sebepler doğrultusunda işlenmektedir. 5. Kişisel Verilerin Saklanma Süresi Kişisel verileriniz, ilgili mevzuatta öngörülen süreler boyunca veya işlenme amacının gerektirdiği süre kadar muhafaza edilecektir. Saklama süresi sona erdiğinde, kişisel verileriniz güvenli bir şekilde silinecek, yok edilece",
-  "drive_video_preview": "https://drive.google.com/file/d/1rwnTJ6QqRQDcl98TIWNbPNqoFqG3kAwi/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1iALl-jfAHJ91rVItL_sD6fehVJ4sJ7E3/preview",
-  "price_display": "2.650.000 - 3.750.000 TL",
-  "price_min": 2650000,
-  "price_max": 3750000,
-  "price_numeric": 2650000,
-  "down_payment": "1.325.000 TL",
-  "il": "Ankara",
-  "ilce": "Yenimahalle",
-  "mahalle": "Batıkent",
-  "ada_no": "63452",
-  "parsel_no": "8",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-9",
-  "db_id": 9,
-  "title": "NARÇİN RONYA CITY - 1",
-  "folder_name": "NARÇİN RONYA CITY - 1 (VIP WEST)",
-  "folder_path": "projeler/NARÇİN RONYA CITY - 1 (VIP WEST)",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_9.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - NARÇIN RONYA CITY 1.pdf",
-    "path": "projeler/NARÇİN RONYA CITY - 1 (VIP WEST)/SUNUM - NARÇIN RONYA CITY 1.pdf",
-    "size_mb": 14.87
-   }
-  ],
-  "videos": [
-   {
-    "filename": "SUNUM - NARÇIN RONYA CITY 1.mp4",
-    "path": "projeler/NARÇİN RONYA CITY - 1 (VIP WEST)/SUNUM - NARÇIN RONYA CITY 1.mp4",
-    "size_mb": 219.75
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-9",
-  "type": "project",
-  "name": "NARÇİN RONYA CITY - 1 (VIP WEST)",
-  "room_info": "1+1, 2+1",
-  "description": "Sözleşmelerini noterliklerde veya ilgili Tapu Sicil Müdürlüklerinde imzalamaya, verilecek ferağ takrirlerini ilgili tapu sicil müdürü veya yetkili memur huzurunda kabule, tapu defteri ve sicillerini ve tüm belgelerini imzalamaya, tescil talebinde bulunmaya, tapu senetlerini almaya, dilerse verilecek ferağ takrirlerini ",
-  "drive_video_preview": "https://drive.google.com/file/d/1LdeKHufeE9oTHxiCrv2XxpjF2CDpjumR/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1QmrLgwEy-fINgMLt_cdq3032dgDHI2vk/preview",
-  "price_display": "3.200.000 - 4.600.000 TL",
-  "price_min": 3200000,
-  "price_max": 4600000,
-  "price_numeric": 3200000,
-  "down_payment": "1.600.000 TL",
-  "il": "Ankara",
-  "ilce": "Etimesgut",
-  "mahalle": "Yukarıyurtçu",
-  "ada_no": "48820",
-  "parsel_no": "3",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-10",
-  "db_id": 10,
-  "title": "NEVA - START BRAVO",
-  "folder_name": "NEVA - START BRAVO",
-  "folder_path": "projeler/NEVA - START BRAVO",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_10.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - NEVA - START BRAVO.pdf",
-    "path": "projeler/NEVA - START BRAVO/SUNUM - NEVA - START BRAVO.pdf",
-    "size_mb": 6.4
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - NEVA - START BRAVO.mp4",
-    "path": "projeler/NEVA - START BRAVO/TANITIM - NEVA - START BRAVO.mp4",
-    "size_mb": 177.9
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-10",
-  "type": "project",
-  "name": "NEVA - START BRAVO",
-  "price_display": "₺4.900.000 - ₺6.550.000",
-  "price_min": 4900000,
-  "price_max": 6550000,
-  "room_info": "1+1, 2+1",
-  "drive_video_preview": "https://drive.google.com/file/d/17f7c0FXX4ePVU3zDftVyfEVOeTt3gzHq/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1P4tBkVDz1ZhbAYzuJD5YFdb-wYTh_McN/preview",
-  "price_numeric": 4900000,
-  "down_payment": "1.100.000 TL",
-  "il": "Ankara",
-  "ilce": "Etimesgut",
-  "mahalle": "Bağlıca",
-  "ada_no": "47285",
-  "parsel_no": "2",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-11",
-  "db_id": 11,
-  "title": "S POINT - VIP SARAY",
-  "folder_name": "S POINT - VIP SARAY",
-  "folder_path": "projeler/S POINT - VIP SARAY",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_11.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - S POINT.pdf",
-    "path": "projeler/S POINT - VIP SARAY/SUNUM - S POINT.pdf",
-    "size_mb": 7.38
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - S POINT.mp4",
-    "path": "projeler/S POINT - VIP SARAY/TANITIM - S POINT.mp4",
-    "size_mb": 229.56
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-11",
-  "type": "project",
-  "name": "S POINT - VIP SARAY",
-  "room_info": "1+1, 2+1",
-  "description": "ilgili mevzuatta öngörülen süreler boyunca veya işlenme amacının gerektirdiği süre kadar muhafaza edilecektir. Saklama süresi sona erdiğinde, kişisel verileriniz güvenli bir şekilde silinecek, yok edilecek veya anonim hale getirilecektir. 6. KVKK Kapsamındaki Haklarınız KVKK’nın 11. maddesi gereğince, Şirketimize başvu",
-  "drive_video_preview": "https://drive.google.com/file/d/1-F5FCXTdNLkM-W66FcmWnG426SsMmJ9d/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1JmeoxGNGWOIUekHYAXAQKAvbJJNje0ln/preview",
-  "price_display": "1.990.000 - 4.000.000 TL",
-  "price_min": 1990000,
-  "price_max": 4000000,
-  "price_numeric": 1990000,
-  "down_payment": "995.000 TL",
-  "il": "Ankara",
-  "ilce": "Pursaklar",
-  "mahalle": "Saray",
-  "ada_no": "96400",
-  "parsel_no": "6",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-12",
-  "db_id": 12,
-  "title": "TRIOLE YAŞAM",
-  "folder_name": "TRIOLE YAŞAM",
-  "folder_path": "projeler/TRIOLE YAŞAM",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_12.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - TRIOLE YAŞAM.pdf",
-    "path": "projeler/TRIOLE YAŞAM/SUNUM - TRIOLE YAŞAM.pdf",
-    "size_mb": 13.6
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - TRIOLE YAŞAM.mp4",
-    "path": "projeler/TRIOLE YAŞAM/TANITIM - TRIOLE YAŞAM.mp4",
-    "size_mb": 346.73
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-12",
-  "type": "project",
-  "name": "TRIOLE YAŞAM",
-  "room_info": "1+1, 2+1",
-  "description": "C BLOK 1.2.3.4.5.6.7.8.9.10.11.12.13.14.15. KAT A BLOK ZEMİN KAT DÜKKAN293 DÜKKAN294 DÜKKAN295 DÜKKAN296 DÜKKAN297 DÜKKAN298 DÜKKAN299 DÜKKAN300 DÜKKAN301 DÜKKAN302 DÜKKAN3031+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİSBALKON BALKON BALKONBALKON BALKON BALKON BALKON MERDİVEN ASANSÖRLER KAT HOLÜ KAT HOL",
-  "drive_video_preview": "https://drive.google.com/file/d/1cgvsmHZ3Evg9lKT-y-3L0C0ycI_imlyY/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1xpwtK96JaF-QAMvCXXGvbCZoR86uBeUq/preview",
-  "price_display": "2.950.000 - 4.200.000 TL",
-  "price_min": 2950000,
-  "price_max": 4200000,
-  "price_numeric": 2950000,
-  "down_payment": "1.475.000 TL",
-  "il": "Ankara",
-  "ilce": "Etimesgut",
-  "mahalle": "Eryaman",
-  "ada_no": "48110",
-  "parsel_no": "2",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-13",
-  "db_id": 13,
-  "title": "NEST İNCEK",
-  "folder_name": "VERDE MONA",
-  "folder_path": "projeler/VERDE MONA",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_13.jpg",
-  "presentations": [],
-  "videos": [
-   {
-    "filename": "TANITIM - VERDE MONA.mp4",
-    "path": "projeler/VERDE MONA/TANITIM - VERDE MONA.mp4",
-    "size_mb": 12.09
-   }
-  ],
-  "has_presentation": false,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-13",
-  "type": "project",
-  "name": "VERDE MONA",
-  "room_info": "",
-  "description": "BUZDOLABI Cebri Havalandırma Yapılacaktır. Cebri HavalandırmaYapılacaktır.Cebri Havalandırma Yapılacaktır. Cebri Havalandırma Yapılacaktır.Cebri Havalandırma Yapılacaktır. Cebri Havalandırma Yapılacaktır.ODA SALON BANYO+WCBANYO+WC SALON SALON BANYO+WC BANYO+WC SALONSALONBANYO+WCODA BANYO+WC Y.ODASISALONSALON BANYO+WCOD",
-  "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1PsE_P98ig95zmTJI_At9sUmVlWZ3nk__/preview",
-  "price_display": "5.500.000 - 9.800.000 TL",
-  "price_numeric": 5500000,
-  "down_payment": "2.750.000 TL",
-  "il": "Ankara",
-  "ilce": "Gölbaşı",
-  "mahalle": "İncek",
-  "ada_no": "115200",
-  "parsel_no": "1",
-  "tkgm_verified": true,
-  "price_min": 5500000,
-  "price_max": 9800000
- },
- {
-  "id": "cbvip-prj-14",
-  "db_id": 14,
-  "title": "BORDO YAŞAM",
-  "folder_name": "VIP AKADEMİ",
-  "folder_path": "projeler/VIP AKADEMİ",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_14.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP AKADEMİ 1.pdf",
-    "path": "projeler/VIP AKADEMİ/SUNUM - VIP AKADEMİ 1.pdf",
-    "size_mb": 8.39
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - VIP AKADEMİ 1 (1).mp4",
-    "path": "projeler/VIP AKADEMİ/TANITIM - VIP AKADEMİ 1 (1).mp4",
-    "size_mb": 81.79
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-14",
-  "type": "project",
-  "name": "VIP AKADEMİ",
-  "room_info": "1+1",
-  "description": "----y o l---- komşu parsel1+11+11+11+1 asansörlermerdiven 1+11+11+1 1+11+1 1+11+1 1+11+1 1+11+1 1+1asansörlermerdiven 1+11+11+11+1 1+11+1 asansörlermerdiven zemin kat 25 adet 1+125x1=25kapıcı dairesi apt girişi 1+1apt girişi kapıcı dairesi1+11+1----y o l---- --yol-- komşu parsel komşu parsel1+11+11+11+1 asansörlermerdi",
-  "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1k7fklARyzjnpOZbYkJSqg0VTsaMr4LO7/preview",
-  "price_display": "2.450.000 - 3.850.000 TL",
-  "price_min": 2450000,
-  "price_max": 3850000,
-  "price_numeric": 2450000,
-  "down_payment": "1.225.000 TL",
-  "il": "Ankara",
-  "ilce": "Sincan",
-  "mahalle": "Yenikent",
-  "ada_no": "102400",
-  "parsel_no": "5",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-15",
-  "db_id": 15,
-  "title": "EXCELANCE VADİ",
-  "folder_name": "VIP AKADEMİ 2",
-  "folder_path": "projeler/VIP AKADEMİ 2",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_15.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP AKADEMİ 2.pdf",
-    "path": "projeler/VIP AKADEMİ 2/SUNUM - VIP AKADEMİ 2.pdf",
-    "size_mb": 7.92
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - VIP AKADEMİ 2.mp4",
-    "path": "projeler/VIP AKADEMİ 2/TANITIM - VIP AKADEMİ 2.mp4",
-    "size_mb": 189.02
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-15",
-  "type": "project",
-  "name": "VIP AKADEMİ 2",
-  "room_info": "",
-  "description": "koşullarda ev, apartman, işyeri, ve sair her nevi inşaatlar yaptırmaya, bu taşınmazlar üzerinde bulunan binaların elektrik, su ve doğalgazlarını kestirmeye, teminat ve depozitolarını geri almaya, elektrik, doğalgaz ve sular idareleri veya şirketleri ile yapılmış bulunan sözleşmelerini fesh etmeye, fesih sözleşmelerini ",
-  "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1k7fklARyzjnpOZbYkJSqg0VTsaMr4LO7/preview",
-  "price_display": "6.200.000 - 12.500.000 TL",
-  "price_min": 6200000,
-  "price_max": 12500000,
-  "price_numeric": 6200000,
-  "down_payment": "3.100.000 TL",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Dikmen Vadi",
-  "ada_no": "29100",
-  "parsel_no": "4",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-16",
-  "db_id": 16,
-  "title": "EXCELANCE BEYTEPE",
-  "folder_name": "VIP MARIN",
-  "folder_path": "projeler/VIP MARIN",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_16.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP MARIN.pdf",
-    "path": "projeler/VIP MARIN/SUNUM - VIP MARIN.pdf",
-    "size_mb": 11.02
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - VIP MARIN.mp4",
-    "path": "projeler/VIP MARIN/TANITIM - VIP MARIN.mp4",
-    "size_mb": 118.71
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-16",
-  "type": "project",
-  "name": "VIP MARIN",
-  "room_info": "1+1, 2+1",
-  "description": "KAT 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 375 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 438 439 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355 356 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 419 420 421 ",
-  "drive_video_preview": "https://drive.google.com/file/d/1r5uSsbWNzgV3hRtrtRon9n7TbLD7C_bE/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1_8mzlD_0ZmYmrHMdBRIc-c4hMctjbisR/preview",
-  "price_display": "7.500.000 - 16.000.000 TL",
-  "price_min": 7500000,
-  "price_max": 16000000,
-  "price_numeric": 7500000,
-  "down_payment": "3.750.000 TL",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Beytepe",
-  "ada_no": "80910",
-  "parsel_no": "3",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-17",
-  "db_id": 17,
-  "title": "GÖKDEMİR STAR",
-  "folder_name": "VIP YAŞAMKENT - GÖKDEMİR STAR",
-  "folder_path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_17.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP YAŞAMKENT.pdf",
-    "path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR/SUNUM - VIP YAŞAMKENT.pdf",
-    "size_mb": 20.02
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - VIP YAŞAMKENT.mp4",
-    "path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR/TANITIM - VIP YAŞAMKENT.mp4",
-    "size_mb": 327.53
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-17",
-  "type": "project",
-  "name": "VIP YAŞAMKENT - GÖKDEMİR STAR",
-  "price_display": "3.200.000 - 4.600.000 TL",
-  "price_min": 3200000,
-  "price_max": 4600000,
-  "room_info": "1+1, 2+1",
-  "description": "Sözleşmelerini noterliklerde veya ilgili Tapu Sicil Müdürlüklerinde imzalamaya, verilecek ferağ takrirlerini ilgili tapu sicil müdürü veya yetkili memur huzurunda kabule, tapu defteri ve sicillerini ve tüm belgelerini imzalamaya, tescil talebinde bulunmaya, tapu senetlerini almaya, dilerse verilecek ferağ takrirlerini ",
-  "drive_video_preview": "https://drive.google.com/file/d/1-F5FCXTdNLkM-W66FcmWnG426SsMmJ9d/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1quMY6W2Yj8PzkgmQ5p5MAtbsKYZLUcvs/preview",
-  "price_numeric": 2100000,
-  "down_payment": "1.050.000 TL",
-  "il": "Ankara",
-  "ilce": "Etimesgut",
-  "mahalle": "Yaşamkent",
-  "ada_no": "49915",
-  "parsel_no": "2",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-18",
-  "db_id": 18,
-  "title": "JOVEN PORT",
-  "folder_name": "VIP YENİKENT",
-  "folder_path": "projeler/VIP YENİKENT",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_18.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP YENİKENT.pdf",
-    "path": "projeler/VIP YENİKENT/SUNUM - VIP YENİKENT.pdf",
-    "size_mb": 2.67
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - YENİKENT.mp4",
-    "path": "projeler/VIP YENİKENT/TANITIM - YENİKENT.mp4",
-    "size_mb": 218.9
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-18",
-  "type": "project",
-  "name": "VIP YENİKENT",
-  "room_info": "",
-  "description": "START BRAVOViva START BRAVOViva Bu fikir, zamanla can bulur. Ev Sahibi Olun! ��� Projemiz Otonomi Havalimanı Protokol Yolu İnşaat Süreci Yenimahalle Yeşilelma Anaokulu Güven Prestik Konutları 3 Güven Prestij Konutları Saklıkent Prestij 2 Konutları Cotton Life Sitesi Best of Bridal Güven Prestij Konutları 2 Pırlanta Sit",
-  "drive_video_preview": "https://drive.google.com/file/d/1rwnTJ6QqRQDcl98TIWNbPNqoFqG3kAwi/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1iALl-jfAHJ91rVItL_sD6fehVJ4sJ7E3/preview",
-  "price_display": "2.850.000 - 4.100.000 TL",
-  "price_numeric": 2850000,
-  "down_payment": "1.425.000 TL",
-  "il": "Ankara",
-  "ilce": "Pursaklar",
-  "mahalle": "Saray",
-  "ada_no": "96410",
-  "parsel_no": "1",
-  "tkgm_verified": true,
-  "price_min": 2850000,
-  "price_max": 4100000
- },
- {
-  "id": "cbvip-prj-19",
-  "db_id": 19,
-  "title": "JOVEN KAMPÜS",
-  "folder_name": "VIP ÇAKIRLAR",
-  "folder_path": "projeler/VIP ÇAKIRLAR",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_19.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP ÇAKIRLAR.pdf",
-    "path": "projeler/VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.pdf",
-    "size_mb": 9.4
-   }
-  ],
-  "videos": [
-   {
-    "filename": "SUNUM - VIP ÇAKIRLAR.mp4",
-    "path": "projeler/VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.mp4",
-    "size_mb": 296.24
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-19",
-  "type": "project",
-  "name": "VIP ÇAKIRLAR",
-  "room_info": "",
-  "description": "6 7 910 12 13 11 5 8 4 3 2 1120 cm korkuluk 120 cm korkuluk 120 cm korkuluk 120 cm korkulukENGELLI LIFTI YAPILACAKTIR.-2.07 (924.52)M=14 X 14.78 /35 ±0.00(926.59)14120 cm korkuluk±0.00(926.59) 120 cm korkuluk -0.72(925.87) EĞIM % 6.98 L: 10.31M H:72CM -0.45(926.14)120 cm korkuluk 120 cm korkulukEĞIM % 6.99 L: 10.31M H:",
-  "drive_video_preview": "https://drive.google.com/file/d/1r5uSsbWNzgV3hRtrtRon9n7TbLD7C_bE/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1_8mzlD_0ZmYmrHMdBRIc-c4hMctjbisR/preview",
-  "price_display": "1.950.000 - 2.800.000 TL",
-  "price_numeric": 1950000,
-  "down_payment": "975.000 TL",
-  "il": "Ankara",
-  "ilce": "Çubuk",
-  "mahalle": "Esenboğa",
-  "ada_no": "190440",
-  "parsel_no": "8",
-  "tkgm_verified": true,
-  "price_min": 1950000,
-  "price_max": 2800000
- },
- {
-  "id": "cbvip-prj-20",
-  "db_id": 20,
-  "title": "VIP ÜNİVERSİTE",
-  "folder_name": "VIP ÜNİVERSİTE",
-  "folder_path": "projeler/VIP ÜNİVERSİTE",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_20.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIP UNIVERSITE.pdf",
-    "path": "projeler/VIP ÜNİVERSİTE/SUNUM - VIP UNIVERSITE.pdf",
-    "size_mb": 6.0
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - VIP UNIVERSITE.mp4",
-    "path": "projeler/VIP ÜNİVERSİTE/TANITIM - VIP UNIVERSITE.mp4",
-    "size_mb": 273.2
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "price_display": "1.350.000 TL",
-  "price_numeric": 1350000,
-  "price_min": 1350000,
-  "price_max": 1350000,
-  "down_payment": "825.000 TL",
-  "video_file": "TANITIM - VIP UNIVERSITE.mp4",
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-20",
-  "slideshow_cloud_url": "/file?path=VIP ÜNİVERSİTE/SLIDESHOW - VIP ÜNİVERSİTE.mp4",
-  "presentation": "/file?path=VIP ÜNİVERSİTE/SUNUM - VIP UNIVERSITE.pdf",
-  "type": "project",
-  "name": "VIP ÜNİVERSİTE",
-  "room_info": "1+1",
-  "description": "----y o l---- komşu parsel1+11+11+11+1 asansörlermerdiven 1+11+11+1 1+11+1 1+11+1 1+11+1 1+11+1 1+1asansörlermerdiven 1+11+11+11+1 1+11+1 asansörlermerdiven zemin kat 25 adet 1+125x1=25kapıcı dairesi apt girişi 1+1apt girişi kapıcı dairesi1+11+1----y o l---- --yol-- komşu parsel komşu parsel1+11+11+11+1 asansörlermerdi",
-  "drive_video_preview": "https://drive.google.com/file/d/1hlrWaCAZQv6pVLtuMdBiR1XWa9b4IY20/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1IiJCCZnFv4EEpKJemnBWEkKzq5R_m51r/preview",
-  "il": "Ankara",
-  "ilce": "Çubuk",
-  "mahalle": "Esenboğa",
-  "ada_no": "190438",
-  "parsel_no": "15",
-  "tkgm_verified": true
- },
- {
-  "id": "cbvip-prj-21",
-  "db_id": 21,
-  "title": "SMD TWIN",
-  "folder_name": "VIVA - START BRAVO",
-  "folder_path": "projeler/VIVA - START BRAVO",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_21.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - VIVA - START BRAVO.pdf",
-    "path": "projeler/VIVA - START BRAVO/SUNUM - VIVA - START BRAVO.pdf",
-    "size_mb": 21.42
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM - VIVA - START BRAVO.mp4",
-    "path": "projeler/VIVA - START BRAVO/TANITIM - VIVA - START BRAVO.mp4",
-    "size_mb": 281.21
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-21",
-  "type": "project",
-  "name": "VIVA - START BRAVO",
-  "room_info": "1+1 Ofis Konsepti",
-  "description": "Mustafa Kemal Mahallesi'nde plazalar bölgesinde tam donanımlı, eşyalı kiralık VIP ofis. Özel dinlenme alanı, TV, çalışma masası, berjer koltuklar, fiber altyapı ve güvenlikli kule katında.",
-  "price_display": "56.000 ₺ / ay",
-  "net_gross_area": "65 m² Net / 80 m² Brüt",
-  "listing_type": "Kiralık",
-  "property_category": "Ticari / Ofis",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Mustafa Kemal Mh.",
-  "ada_no": "14250",
-  "parsel_no": "4",
-  "tkgm_verified": true,
-  "location": "Ankara / Çankaya / Mustafa Kemal Mh.",
-  "drive_video_preview": "https://drive.google.com/file/d/17f7c0FXX4ePVU3zDftVyfEVOeTt3gzHq/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1P4tBkVDz1ZhbAYzuJD5YFdb-wYTh_McN/preview",
-  "price_numeric": 3600000,
-  "down_payment": "1.800.000 TL",
-  "price_min": 3600000,
-  "price_max": 5200000
- },
- {
-  "id": "cbvip-prj-22",
-  "db_id": 22,
-  "title": "SMD PROTOKOL",
-  "folder_name": "WM - PRIME",
-  "folder_path": "projeler/WM - PRIME",
-  "thumbnail": "/static/img/video_thumbs/video_thumb_22.jpg",
-  "presentations": [
-   {
-    "filename": "SUNUM - WM PRIME.pdf",
-    "path": "projeler/WM - PRIME/SUNUM - WM PRIME.pdf",
-    "size_mb": 9.1
-   }
-  ],
-  "videos": [
-   {
-    "filename": "TANITIM 1 - WM PRIME.mp4",
-    "path": "projeler/WM - PRIME/TANITIM 1 - WM PRIME.mp4",
-    "size_mb": 56.21
-   }
-  ],
-  "has_presentation": true,
-  "has_video": true,
-  "tanitim_cloud_url": "/stream/video/cbvip-prj-22",
-  "type": "project",
-  "name": "WM - PRIME",
-  "price_display": "45.000 ₺ / ay",
-  "price_min": 4200000,
-  "price_max": 6800000,
-  "room_info": "3+1 Lüks Daire",
-  "description": "Çankaya Çayyolu bölgesinde Adil Bey portföyü geniş peyzaj manzaralı, kapalı otoparklı, ankastreli ve ebeveyn banyolu 3+1 kiralık lüks konut.",
-  "net_gross_area": "140 m² Net / 160 m² Brüt",
-  "listing_type": "Kiralık",
-  "property_category": "Konut / Daire",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Çayyolu Mh.",
-  "ada_no": "32104",
-  "parsel_no": "12",
-  "tkgm_verified": true,
-  "location": "Ankara / Çankaya / Çayyolu Mh.",
-  "drive_video_preview": "https://drive.google.com/file/d/1vwu4lkmufMALIRhUT7lV30X_j7bb9lMz/preview",
-  "drive_pdf_preview": "https://drive.google.com/file/d/1_x2Q0X3qRIOaxaBUDKcIQjXM1L1Ut3qo/preview",
-  "price_numeric": 4200000,
-  "down_payment": "2.100.000 TL"
- },
- {
-  "id": "pf-21",
-  "type": "portfolio",
-  "title": "Mustafa Kemal Mah. Eşyalı Kiralık VIP Ofis",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Mustafa Kemal Mh.",
-  "ada_no": "14250",
-  "parsel_no": "4",
-  "tkgm_verified": true,
-  "description": "Mustafa Kemal Mahallesi'nde plazalar bölgesinde tam donanımlı, eşyalı kiralık VIP ofis. Özel dinlenme alanı, TV, çalışma masası, berjer koltuklar, fiber altyapı ve güvenlikli kule katında.",
-  "listing_type": "Kiralık",
-  "property_category": "Ticari / Ofis",
-  "price_display": "56.000 ₺ / ay",
-  "room_info": "1+1 Ofis Konsepti",
-  "net_gross_area": "65 m² Net / 80 m² Brüt",
-  "location": "Ankara / Çankaya / Mustafa Kemal Mh.",
-  "db_id": 21
- },
- {
-  "id": "pf-22",
-  "type": "portfolio",
-  "title": "Adil Bey Çankaya Kiralık Prestij Rezidans",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Çayyolu Mh.",
-  "ada_no": "32104",
-  "parsel_no": "12",
-  "tkgm_verified": true,
-  "description": "Çankaya Çayyolu bölgesinde Adil Bey portföyü geniş peyzaj manzaralı, kapalı otoparklı, ankastreli ve ebeveyn banyolu 3+1 kiralık lüks konut.",
-  "listing_type": "Kiralık",
-  "property_category": "Konut / Daire",
-  "price_display": "45.000 ₺ / ay",
-  "room_info": "3+1 Lüks Daire",
-  "net_gross_area": "140 m² Net / 160 m² Brüt",
-  "location": "Ankara / Çankaya / Çayyolu Mh.",
-  "db_id": 22
- },
- {
-  "id": "pf-23",
-  "type": "portfolio",
-  "title": "Çubuk Eğrikin Satılık Müstakil Arsa",
-  "il": "Ankara",
-  "ilce": "Çubuk",
-  "mahalle": "Eğrikin Mh.",
-  "ada_no": "511",
-  "parsel_no": "7",
-  "tkgm_verified": true,
-  "description": "Ankara Çubuk Eğrikin mevkiinde 282,45 m² tek tapu müstakil arsa. Kadastro yolu açık, hobi bahçesi ve villa yapımına uygun bakir yatırım arazisi.",
-  "listing_type": "Satılık",
-  "property_category": "Arsa / Bahçe",
-  "price_display": "475.000 ₺",
-  "room_info": "282 m² Müstakil",
-  "net_gross_area": "386,00 m²",
-  "location": "Ankara / Çubuk / Eğrikin Mh.",
-  "db_id": 23
- },
- {
-  "id": "pf-24",
-  "type": "portfolio",
-  "title": "Gölbaşı Horos Satılık Fırsat Bahçe & Arsa (Baran Arsa)",
-  "il": "Ankara",
-  "ilce": "Gölbaşı",
-  "mahalle": "Horos Mh.",
-  "ada_no": "10",
-  "parsel_no": "1",
-  "tkgm_verified": true,
-  "description": "Gölbaşı Horos Mahallesi 124425 Ada 24 Parsel yetki sözleşmeli Devrim Özlem Öztürk tapulu fırsat arsa ve hobi bahçesi. Elektrik ve su altyapısı yakın konumda.",
-  "listing_type": "Satılık",
-  "property_category": "Arsa / Bahçe",
-  "price_display": "570.000 ₺",
-  "room_info": "124425/24 Parsel",
-  "net_gross_area": "570,88 m²",
-  "location": "Ankara / Gölbaşı / Horos Mh.",
-  "db_id": 24
- },
- {
-  "id": "pf-25",
-  "type": "portfolio",
-  "title": "Çankaya Cevizlidere Satılık 3+1 Daire (Semra Yağmur)",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Cevizlidere Mh.",
-  "ada_no": "27916",
-  "parsel_no": "6",
-  "tkgm_verified": true,
-  "description": "Cevizlidere Mahallesi 27916 Ada 6 Parsel Daire: 11 Semra Yağmur tapulu yetkili satılık 3+1 konut. Merkezi ısıtma, geniş salon, ulaşıma ve marketlere yürüme mesafesinde.",
-  "listing_type": "Satılık",
-  "property_category": "Konut / Daire",
-  "price_display": "11.500.000 ₺",
-  "room_info": "3+1 Daire",
-  "net_gross_area": "154 m²",
-  "location": "Ankara / Çankaya / Cevizlidere Mh.",
-  "db_id": 25
- },
- {
-  "id": "pf-26",
-  "type": "portfolio",
-  "title": "Sincan Yenikent M.Kemal Mh. 3+1 Satılık Daire",
-  "il": "Ankara",
-  "ilce": "Sincan",
-  "mahalle": "Mustafa Kemal Mh.",
-  "ada_no": "4120",
-  "parsel_no": "8",
-  "tkgm_verified": true,
-  "description": "Sincan Yenikent Mustafa Kemal Mh. 0 Sıfır bina çift balkonlu 3+1 ara kat daire. Vestiyer, ankastre set, kombi doğalgaz, kat mülkiyetli (Portföy No: 358645).",
-  "listing_type": "Satılık",
-  "property_category": "Konut / Daire",
-  "price_display": "5.000.000 ₺",
-  "room_info": "3+1 (2. Kat Ara Kat)",
-  "net_gross_area": "125 m² Net / 135 m² Brüt",
-  "location": "Ankara / Sincan / Mustafa Kemal Mh.",
-  "db_id": 26
- },
- {
-  "id": "pf-27",
-  "type": "portfolio",
-  "title": "Sincan Yenikent M.Kemal Mh. Çift Balkonlu 4+1 Daire",
-  "il": "Ankara",
-  "ilce": "Sincan",
-  "mahalle": "Mustafa Kemal Mh.",
-  "ada_no": "4125",
-  "parsel_no": "3",
-  "tkgm_verified": true,
-  "description": "Sincan Yenikent Mustafa Kemal Mh. ebeveyn banyolu, çift geniş balkonlu, lüks tasarımlı 0 sıfır 4+1 konut (Portföy No: 357866 / İlan No: 1326738531).",
-  "listing_type": "Satılık",
-  "property_category": "Konut / Daire",
-  "price_display": "5.950.000 ₺",
-  "room_info": "4+1 (3. Kat Ara Kat)",
-  "net_gross_area": "135 m² Net / 149 m² Brüt",
-  "location": "Ankara / Sincan / Mustafa Kemal Mh.",
-  "db_id": 27
- },
- {
-  "id": "pf-28",
-  "type": "portfolio",
-  "title": "Sincan Atatürk Mh. 310/12 Ticari Bina / İşyeri",
-  "il": "Ankara",
-  "ilce": "Sincan",
-  "mahalle": "Atatürk Mh.",
-  "ada_no": "310",
-  "parsel_no": "12",
-  "tkgm_verified": true,
-  "description": "Sincan Atatürk Mh. 310 Ada 12 Parsel kat mülkiyetli kargir büro ve dükkan bina. Dükkan + üst kat büro ve ofislerden oluşan yüksek kira potansiyelli yatırım.",
-  "listing_type": "Satılık",
-  "property_category": "Ticari / İşyeri",
-  "price_display": "12.500.000 ₺",
-  "room_info": "Complx Ticari Bina",
-  "net_gross_area": "295 m² Brüt",
-  "location": "Ankara / Sincan / Atatürk Mh.",
-  "db_id": 28
- },
- {
-  "id": "pf-29",
-  "type": "portfolio",
-  "title": "İncek Bulvarı Paralelinde 8+2 İskanlı Lüks Villa",
-  "il": "Ankara",
-  "ilce": "Gölbaşı",
-  "mahalle": "İncek Mh.",
-  "ada_no": "1002",
-  "parsel_no": "15",
-  "tkgm_verified": true,
-  "description": "İncek Bulvarı paralelinde iskanı alınmış 8+2 lüks mühendislik harikası akıllı ikiz villa. Gece dış cephe ışıklandırmalı, 3D VR sanal tur imkanlı, geniş peyzaj bahçeli prestij mülk.",
-  "listing_type": "Satılık",
-  "property_category": "Villa",
-  "price_display": "69.000.000 ₺",
-  "room_info": "8+2 İkiz Villa",
-  "net_gross_area": "600 m²",
-  "location": "Ankara / Gölbaşı / İncek Mh.",
-  "db_id": 29
- },
- {
-  "id": "pf-30",
-  "type": "portfolio",
-  "title": "Kırıkkale Yahşihan Tek Tapu 7.820 m² Satılık Arsa",
-  "il": "Kırıkkale",
-  "ilce": "Yahşihan",
-  "mahalle": "Yahşihan Mh.",
-  "ada_no": "502",
-  "parsel_no": "18",
-  "tkgm_verified": true,
-  "description": "Kırıkkale Yahşihan mevkisinde tek tapulu 7.820 m² yatırımlık dev arsa. Sanayi, lojistik ve konut imar geliştirme potansiyeline sahip stratejik arazi (İlan No: 1329845926).",
-  "listing_type": "Satılık",
-  "property_category": "Arsa / Bahçe",
-  "price_display": "12.000.000 ₺",
-  "room_info": "7.820 m² Tek Tapu",
-  "net_gross_area": "7.820 m²",
-  "location": "Kırıkkale / Yahşihan / Yahşihan Mh.",
-  "db_id": 30
- },
- {
-  "id": "cbvip-prj-db31",
-  "type": "portfolio",
-  "title": "Yaşamkent'te Devren Kiralık Tam Donanımlı Burgerci -",
-  "db_id": 31,
-  "listing_type": "Devren Kiralık",
-  "property_category": "Cafe / Restoran / Bar",
-  "price_display": "2.400.000 ₺",
-  "room_info": "",
-  "net_gross_area": "140 m² Brüt / 65 m² Net",
-  "il": "Ankara",
-  "ilce": "Çankaya",
-  "mahalle": "Yaşamkent",
-  "ada_no": "",
-  "parsel_no": "",
-  "tkgm_verified": false,
-  "description": "aşamkent'te, prestijli bir lokasyonda devren kiralık tam donanımlı Burgerci! İşletme ruhsatı ve tüm gerekli izinlere sahip, hemen faaliyete geçmeye hazır bu eşsiz fırsatı kaçırmayın. Modern tasarımı ve geniş müşteri kapasitesi ile öne çıkan bu mekân, yatırımcılar için ideal bir seçenek sunuyor. Burgerci ön cephe İşletme Özellikleri Alan: bahçe teras ile birlikte net 140 m² net kullanım alanı Kişi Kapasitesi: İç mekanda 80 kişiye hizmet verebilen geniş oturma düzeni Masa Sayısı: 16 adet masa Asma Kat: Ek depolama veya özel alan olarak kullanılabilecek asma kat mevcuttur. Isıtma ve Soğutma: Konforlu bir ortam sağlayan modern klima sistemi Bina Yaşı: 11-15 yıl arası, bakımlı yapı Mutfak Ekipmanları: Tam donanımlı profesyonel mutfak (detaylar için arayınız) Dekorasyon: Modern ve davetkar iç tasarım Burgerci iç mekan Konum ve Çevre Avantajları Yaşamkent'in en işlek caddelerinden birinde, yüksek yaya ve araç trafiğine sahip stratejik bir konumda yer almaktadır. Bölgedeki diğer popüler işletmeler, okullar ve konut projeleri sayesinde sürekli bir müşteri potansiyeli bulunmaktadır. Kolay ulaşım imkanı ve çevresindeki sosyal olanaklar, işletmenizin başarısını destekleyecektir. Yatırım Potansiyeli Mevcut müşteri kitlesi ve işlek konumu ile yüksek ciro potansiyeli sunan bu işletme, devralındığı günden itibaren gelir elde etmeye hazırdır. Restoran ve lokanta kategorisinde, özellikle burger konseptinde hızla popülerleşen bu mekân, doğru yönetimle kısa sürede yatırımının karşılığını verecektir. Detaylı finansal bilgiler ve işletmenin geçmiş performansı hakkında bilgi almak için lütfen iletişime geçin. Yetkili Gayrimenkul Danışmanı: Suzanne TENEKECİOĞLU İletişim ve Randevu: 0535 489 56 56 Bu eşsiz fırsatı kaçırmamak için hemen arayın\n\nÖZELLİKLER: Tapu Durumu: Kat Mülkiyeti | Bina Yaşı: 11 | Bulunduğu Kat: ZEMİN | Kat Sayısı: 1 | Isıtma: Klima | Eşyalı: Hayır | Kullanım Durumu: Boş | Krediye Uygun: Hayır | Takasa Uygun: Hayır",
-  "location": "Ankara / Çankaya / Yaşamkent"
- }
+  {
+    "id": "cbvip-prj-1",
+    "db_id": 1,
+    "title": "ANGİM BEYTEPE",
+    "folder_name": "ANGİM BEYTEPE",
+    "folder_path": "projeler/ANGİM BEYTEPE",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_1.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - ANGİM BEYTEPE.pdf",
+        "path": "projeler/ANGİM BEYTEPE/SUNUM - ANGİM BEYTEPE.pdf",
+        "size_mb": 3.96
+      }
+    ],
+    "videos": [
+      {
+        "filename": "SLIDESHOW - ANGİM BEYTEPE.mp4",
+        "path": "projeler/ANGİM BEYTEPE/SLIDESHOW - ANGİM BEYTEPE.mp4",
+        "size_mb": 1.39
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-1",
+    "type": "project",
+    "name": "ANGİM BEYTEPE",
+    "price_display": "₺6.350.000 - ₺22.890.000",
+    "price_min": 6350000,
+    "price_max": 22890000,
+    "room_info": "0+1, 0+2, 0+3, 0+4, 0+5, 1+1, 2+1, 3+1, 4+1, 5+1, 6+1",
+    "description": "80907/1 s a t ı ş o f i s i 80907/1 s a t ı ş o f i s i 80907/1 s a t ı ş o f i s i +5.00ASARCHITECTS80907/1 SATIŞ OFİSİ MEVCUT ELEKTRİK DİREĞİMEVCUT ELEKTRİK DİREKLERİ +5.00 +1.00+2.00+5.00+4.00 +3.00ARAÇGİRİŞİ YÖNETİCİ GİRİŞİASARCHITECTS80907/1 SATIŞ OFİSİ ASARCHITECTS80907/1 SATIŞ OFİSİ +1.00+2.00+5.00+4.00 +3.00 ZE",
+    "drive_video_preview": "https://drive.google.com/file/d/1WSDKDp9hXnwXxImAtrwNdZo0LsB61L0A/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1M6moXD9UlgZA4tr7xq8fQ4bAxmmuClpY/preview",
+    "price_numeric": 6350000,
+    "down_payment": "7.250.000 TL",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Beytepe",
+    "ada_no": "80907",
+    "parsel_no": "1",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-2",
+    "db_id": 2,
+    "title": "ANKAPORT - SARAY",
+    "folder_name": "ANKAPORT - SARAY",
+    "folder_path": "projeler/ANKAPORT - SARAY",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_2.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - ANKAPORT SARAY.pdf",
+        "path": "projeler/ANKAPORT - SARAY/SUNUM - ANKAPORT SARAY.pdf",
+        "size_mb": 18.24
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - ANKAPORT SARAY.mp4",
+        "path": "projeler/ANKAPORT - SARAY/TANITIM - ANKAPORT SARAY.mp4",
+        "size_mb": 295.32
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-2",
+    "type": "project",
+    "name": "ANKAPORT - SARAY",
+    "price_display": "3.040.000 - 8.350.000 TL",
+    "price_min": 3040000,
+    "price_max": 8350000,
+    "room_info": "1+1, 2+1, 3+1",
+    "description": "süreçlerinde aktif görev almıştır. 2013 yılından itibaren yenilenebilir enerji alanında çalışmalarını GES projeleriyle sürdürmüş; arazi geliştirme, proje geliştirme, danışmanlık, anahtar teslim kurulum, devreye alma ve işletme süreçlerinde önemli projelere imza atmıştır. 2017 yılında Van’da 7.500 kW gücünde bir GES pro",
+    "drive_video_preview": "https://drive.google.com/file/d/1WSDKDp9hXnwXxImAtrwNdZo0LsB61L0A/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1M6moXD9UlgZA4tr7xq8fQ4bAxmmuClpY/preview",
+    "price_numeric": 3040000,
+    "down_payment": "1.520.000 TL",
+    "il": "Ankara",
+    "ilce": "Pursaklar",
+    "mahalle": "Saray",
+    "ada_no": "96400",
+    "parsel_no": "4",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-3",
+    "db_id": 35,
+    "title": "EVART YALIKAVAK",
+    "folder_name": "EVART YALIKAVAK",
+    "folder_path": "projeler/EVART YALIKAVAK",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_3.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - EVART YALIKAVAK.pdf",
+        "path": "projeler/EVART YALIKAVAK/SUNUM - EVART YALIKAVAK.pdf",
+        "size_mb": 24.43
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - EVART YALIKAVAK.mp4",
+        "path": "projeler/EVART YALIKAVAK/TANITIM - EVART YALIKAVAK.mp4",
+        "size_mb": 204.85
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-3",
+    "type": "project",
+    "name": "EVART YALIKAVAK",
+    "room_info": "",
+    "description": "",
+    "price_display": "14.500.000 TL",
+    "net_gross_area": "",
+    "listing_type": "Satılık",
+    "property_category": "Konut / Daire",
+    "il": "Muğla",
+    "ilce": "Bodrum",
+    "mahalle": "Yalıkavak",
+    "ada_no": "624",
+    "parsel_no": "18",
+    "tkgm_verified": true,
+    "drive_video_preview": "https://drive.google.com/file/d/1hlrWaCAZQv6pVLtuMdBiR1XWa9b4IY20/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1rLVD9i-zTYrR703Tx1eP75pZLAIJstz6/preview",
+    "price_numeric": 14500000,
+    "down_payment": "7.250.000 TL"
+  },
+  {
+    "id": "cbvip-prj-4",
+    "db_id": 4,
+    "title": "GRANDE YAŞAMKENT",
+    "folder_name": "GRANDE YAŞAMKENT",
+    "folder_path": "projeler/GRANDE YAŞAMKENT",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_4.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - GRANDE YAŞAMKENT.pdf",
+        "path": "projeler/GRANDE YAŞAMKENT/SUNUM - GRANDE YAŞAMKENT.pdf",
+        "size_mb": 7.59
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - GRANDE YAŞAMKENT.mp4",
+        "path": "projeler/GRANDE YAŞAMKENT/TANITIM - GRANDE YAŞAMKENT.mp4",
+        "size_mb": 126.73
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-4",
+    "type": "project",
+    "name": "GRANDE YAŞAMKENT",
+    "room_info": "1+1, 2+1",
+    "description": "GRANDE Yasamkent Yaşamkent’te Yeni Bir Yaşam Projesi ASM Müteahhit imzasıyla Yaşamkent’te hayata geçirilecek proje; 5 blokta toplam 1.300 daireden oluşuyor. Modern mimarisi, kapsamlı sosyal donatıları ve farklı ihtiyaçlara hitap eden 1+1 ve 2+1 daire seçenekleriyle bölgenin yeni yaşam merkezlerinden biri olmaya hazırla",
+    "drive_video_preview": "https://drive.google.com/file/d/17f7c0FXX4ePVU3zDftVyfEVOeTt3gzHq/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1AlACn764Lw48bYMVLi8EEbs4ljnOu-yh/preview",
+    "price_display": "3.000.000 - 4.000.000 TL",
+    "price_min": 3000000,
+    "price_max": 4000000,
+    "price_numeric": 3000000,
+    "down_payment": "1.500.000 TL",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Yapracık",
+    "ada_no": "49912",
+    "parsel_no": "4",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-5",
+    "db_id": 5,
+    "title": "GÖKDEMİR İMZA",
+    "folder_name": "GÖKDEMİR İMZA",
+    "folder_path": "projeler/GÖKDEMİR İMZA",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_5.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - GÖKDEMİR İMZA.pdf",
+        "path": "projeler/GÖKDEMİR İMZA/SUNUM - GÖKDEMİR İMZA.pdf",
+        "size_mb": 8.91
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - GÖKDEMİR İMZA.mp4",
+        "path": "projeler/GÖKDEMİR İMZA/TANITIM - GÖKDEMİR İMZA.mp4",
+        "size_mb": 236.97
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-5",
+    "type": "project",
+    "name": "GÖKDEMİR İMZA",
+    "room_info": "1+1, 2+1, 3+1",
+    "description": "KAT 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 375 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 438 439 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355 356 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 419 420 421 ",
+    "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1k7fklARyzjnpOZbYkJSqg0VTsaMr4LO7/preview",
+    "price_display": "3.900.000 - 8.000.000 TL",
+    "price_min": 3900000,
+    "price_max": 8000000,
+    "price_numeric": 3900000,
+    "down_payment": "1.950.000 TL",
+    "il": "Ankara",
+    "ilce": "Gölbaşı",
+    "mahalle": "Kızılcaşar",
+    "ada_no": "118274",
+    "parsel_no": "2",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-6",
+    "db_id": 6,
+    "title": "IDEA - START BRAVO",
+    "folder_name": "IDEA - START BRAVO",
+    "folder_path": "projeler/IDEA - START BRAVO",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_6.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - IDEA - START BRAVO.pdf",
+        "path": "projeler/IDEA - START BRAVO/SUNUM - IDEA - START BRAVO.pdf",
+        "size_mb": 15.71
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - IDEA - START BRAVO.mp4",
+        "path": "projeler/IDEA - START BRAVO/TANITIM - IDEA - START BRAVO.mp4",
+        "size_mb": 130.42
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-6",
+    "type": "project",
+    "name": "IDEA - START BRAVO",
+    "room_info": "1+1, 2+1",
+    "description": "ZEMİN KAT ASANSÖR ASANSÖRMERDİVEN ASANSÖR ASANSÖRMERDİVEN KAT HOLÜ1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+11+11 13 12 11 10 9 8 7 6 5 4 32 1. KAT ASANSÖR ASANSÖRMERDİVEN ASANSÖR ASANSÖRMERDİVEN KAT HOLÜ1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+11+114 26 25 24 23 22 21 20 19 18 17 1615 2. KAT ASANSÖR ASANSÖRME",
+    "drive_video_preview": "https://drive.google.com/file/d/1cgvsmHZ3Evg9lKT-y-3L0C0ycI_imlyY/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1IiJCCZnFv4EEpKJemnBWEkKzq5R_m51r/preview",
+    "price_display": "2.100.000 - 3.200.000 TL",
+    "price_numeric": 2100000,
+    "down_payment": "1.050.000 TL",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Bağlıca",
+    "ada_no": "47285",
+    "parsel_no": "1",
+    "tkgm_verified": true,
+    "price_min": 2100000,
+    "price_max": 3200000
+  },
+  {
+    "id": "cbvip-prj-7",
+    "db_id": 7,
+    "title": "MONZA EYLÜL CONCEPT",
+    "folder_name": "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR",
+    "folder_path": "projeler/MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_7.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP ÇAKIRLAR.pdf",
+        "path": "projeler/MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.pdf",
+        "size_mb": 9.4
+      }
+    ],
+    "videos": [
+      {
+        "filename": "SUNUM - VIP ÇAKIRLAR.mp4",
+        "path": "projeler/MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.mp4",
+        "size_mb": 296.24
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-7",
+    "type": "project",
+    "name": "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR",
+    "room_info": "",
+    "description": "6 7 910 12 13 11 5 8 4 3 2 1120 cm korkuluk 120 cm korkuluk 120 cm korkuluk 120 cm korkulukENGELLI LIFTI YAPILACAKTIR.-2.07 (924.52)M=14 X 14.78 /35 ±0.00(926.59)14120 cm korkuluk±0.00(926.59) 120 cm korkuluk -0.72(925.87) EĞIM % 6.98 L: 10.31M H:72CM -0.45(926.14)120 cm korkuluk 120 cm korkulukEĞIM % 6.99 L: 10.31M H:",
+    "drive_video_preview": "https://drive.google.com/file/d/1r5uSsbWNzgV3hRtrtRon9n7TbLD7C_bE/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1_8mzlD_0ZmYmrHMdBRIc-c4hMctjbisR/preview",
+    "price_display": "2.800.000 - 3.900.000 TL",
+    "price_numeric": 2800000,
+    "down_payment": "1.400.000 TL",
+    "il": "Ankara",
+    "ilce": "Yenimahalle",
+    "mahalle": "Çakırlar",
+    "ada_no": "63452",
+    "parsel_no": "7",
+    "tkgm_verified": true,
+    "price_min": 2800000,
+    "price_max": 3900000
+  },
+  {
+    "id": "cbvip-prj-8",
+    "db_id": 8,
+    "title": "MONZA MOON",
+    "folder_name": "MONZA MOON",
+    "folder_path": "projeler/MONZA MOON",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_8.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - MONZA MOON.pdf",
+        "path": "projeler/MONZA MOON/SUNUM - MONZA MOON.pdf",
+        "size_mb": 5.13
+      }
+    ],
+    "videos": [
+      {
+        "filename": "ANİMASYON.mp4",
+        "path": "projeler/MONZA MOON/ANİMASYON.mp4",
+        "size_mb": 10.87
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-8",
+    "type": "project",
+    "name": "MONZA MOON",
+    "room_info": "1+1, 2+1",
+    "description": "menfaat gibi hukuki sebepler doğrultusunda işlenmektedir. 5. Kişisel Verilerin Saklanma Süresi Kişisel verileriniz, ilgili mevzuatta öngörülen süreler boyunca veya işlenme amacının gerektirdiği süre kadar muhafaza edilecektir. Saklama süresi sona erdiğinde, kişisel verileriniz güvenli bir şekilde silinecek, yok edilece",
+    "drive_video_preview": "https://drive.google.com/file/d/1rwnTJ6QqRQDcl98TIWNbPNqoFqG3kAwi/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1iALl-jfAHJ91rVItL_sD6fehVJ4sJ7E3/preview",
+    "price_display": "2.650.000 - 3.750.000 TL",
+    "price_min": 2650000,
+    "price_max": 3750000,
+    "price_numeric": 2650000,
+    "down_payment": "1.325.000 TL",
+    "il": "Ankara",
+    "ilce": "Yenimahalle",
+    "mahalle": "Batıkent",
+    "ada_no": "63452",
+    "parsel_no": "8",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-9",
+    "db_id": 9,
+    "title": "NARÇİN RONYA CITY - 1",
+    "folder_name": "NARÇİN RONYA CITY - 1 (VIP WEST)",
+    "folder_path": "projeler/NARÇİN RONYA CITY - 1 (VIP WEST)",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_9.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - NARÇIN RONYA CITY 1.pdf",
+        "path": "projeler/NARÇİN RONYA CITY - 1 (VIP WEST)/SUNUM - NARÇIN RONYA CITY 1.pdf",
+        "size_mb": 14.87
+      }
+    ],
+    "videos": [
+      {
+        "filename": "SUNUM - NARÇIN RONYA CITY 1.mp4",
+        "path": "projeler/NARÇİN RONYA CITY - 1 (VIP WEST)/SUNUM - NARÇIN RONYA CITY 1.mp4",
+        "size_mb": 219.75
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-9",
+    "type": "project",
+    "name": "NARÇİN RONYA CITY - 1 (VIP WEST)",
+    "room_info": "1+1, 2+1",
+    "description": "Sözleşmelerini noterliklerde veya ilgili Tapu Sicil Müdürlüklerinde imzalamaya, verilecek ferağ takrirlerini ilgili tapu sicil müdürü veya yetkili memur huzurunda kabule, tapu defteri ve sicillerini ve tüm belgelerini imzalamaya, tescil talebinde bulunmaya, tapu senetlerini almaya, dilerse verilecek ferağ takrirlerini ",
+    "drive_video_preview": "https://drive.google.com/file/d/1LdeKHufeE9oTHxiCrv2XxpjF2CDpjumR/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1QmrLgwEy-fINgMLt_cdq3032dgDHI2vk/preview",
+    "price_display": "3.200.000 - 4.600.000 TL",
+    "price_min": 3200000,
+    "price_max": 4600000,
+    "price_numeric": 3200000,
+    "down_payment": "1.600.000 TL",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Yukarıyurtçu",
+    "ada_no": "48820",
+    "parsel_no": "3",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-10",
+    "db_id": 10,
+    "title": "NEVA - START BRAVO",
+    "folder_name": "NEVA - START BRAVO",
+    "folder_path": "projeler/NEVA - START BRAVO",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_10.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - NEVA - START BRAVO.pdf",
+        "path": "projeler/NEVA - START BRAVO/SUNUM - NEVA - START BRAVO.pdf",
+        "size_mb": 6.4
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - NEVA - START BRAVO.mp4",
+        "path": "projeler/NEVA - START BRAVO/TANITIM - NEVA - START BRAVO.mp4",
+        "size_mb": 177.9
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-10",
+    "type": "project",
+    "name": "NEVA - START BRAVO",
+    "price_display": "₺4.900.000 - ₺6.550.000",
+    "price_min": 4900000,
+    "price_max": 6550000,
+    "room_info": "1+1, 2+1",
+    "drive_video_preview": "https://drive.google.com/file/d/17f7c0FXX4ePVU3zDftVyfEVOeTt3gzHq/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1P4tBkVDz1ZhbAYzuJD5YFdb-wYTh_McN/preview",
+    "price_numeric": 4900000,
+    "down_payment": "1.100.000 TL",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Bağlıca",
+    "ada_no": "47285",
+    "parsel_no": "2",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-11",
+    "db_id": 11,
+    "title": "S POINT - VIP SARAY",
+    "folder_name": "S POINT - VIP SARAY",
+    "folder_path": "projeler/S POINT - VIP SARAY",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_11.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - S POINT.pdf",
+        "path": "projeler/S POINT - VIP SARAY/SUNUM - S POINT.pdf",
+        "size_mb": 7.38
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - S POINT.mp4",
+        "path": "projeler/S POINT - VIP SARAY/TANITIM - S POINT.mp4",
+        "size_mb": 229.56
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-11",
+    "type": "project",
+    "name": "S POINT - VIP SARAY",
+    "room_info": "1+1, 2+1",
+    "description": "ilgili mevzuatta öngörülen süreler boyunca veya işlenme amacının gerektirdiği süre kadar muhafaza edilecektir. Saklama süresi sona erdiğinde, kişisel verileriniz güvenli bir şekilde silinecek, yok edilecek veya anonim hale getirilecektir. 6. KVKK Kapsamındaki Haklarınız KVKK’nın 11. maddesi gereğince, Şirketimize başvu",
+    "drive_video_preview": "https://drive.google.com/file/d/1-F5FCXTdNLkM-W66FcmWnG426SsMmJ9d/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1JmeoxGNGWOIUekHYAXAQKAvbJJNje0ln/preview",
+    "price_display": "1.990.000 - 4.000.000 TL",
+    "price_min": 1990000,
+    "price_max": 4000000,
+    "price_numeric": 1990000,
+    "down_payment": "995.000 TL",
+    "il": "Ankara",
+    "ilce": "Pursaklar",
+    "mahalle": "Saray",
+    "ada_no": "96400",
+    "parsel_no": "6",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-12",
+    "db_id": 12,
+    "title": "TRIOLE YAŞAM",
+    "folder_name": "TRIOLE YAŞAM",
+    "folder_path": "projeler/TRIOLE YAŞAM",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_12.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - TRIOLE YAŞAM.pdf",
+        "path": "projeler/TRIOLE YAŞAM/SUNUM - TRIOLE YAŞAM.pdf",
+        "size_mb": 13.6
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - TRIOLE YAŞAM.mp4",
+        "path": "projeler/TRIOLE YAŞAM/TANITIM - TRIOLE YAŞAM.mp4",
+        "size_mb": 346.73
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-12",
+    "type": "project",
+    "name": "TRIOLE YAŞAM",
+    "room_info": "1+1, 2+1",
+    "description": "C BLOK 1.2.3.4.5.6.7.8.9.10.11.12.13.14.15. KAT A BLOK ZEMİN KAT DÜKKAN293 DÜKKAN294 DÜKKAN295 DÜKKAN296 DÜKKAN297 DÜKKAN298 DÜKKAN299 DÜKKAN300 DÜKKAN301 DÜKKAN302 DÜKKAN3031+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİS 1+1 OFİSBALKON BALKON BALKONBALKON BALKON BALKON BALKON MERDİVEN ASANSÖRLER KAT HOLÜ KAT HOL",
+    "drive_video_preview": "https://drive.google.com/file/d/1cgvsmHZ3Evg9lKT-y-3L0C0ycI_imlyY/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1xpwtK96JaF-QAMvCXXGvbCZoR86uBeUq/preview",
+    "price_display": "2.950.000 - 4.200.000 TL",
+    "price_min": 2950000,
+    "price_max": 4200000,
+    "price_numeric": 2950000,
+    "down_payment": "1.475.000 TL",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Eryaman",
+    "ada_no": "48110",
+    "parsel_no": "2",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-13",
+    "db_id": 13,
+    "title": "NEST İNCEK",
+    "folder_name": "VERDE MONA",
+    "folder_path": "projeler/VERDE MONA",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_13.jpg",
+    "presentations": [],
+    "videos": [
+      {
+        "filename": "TANITIM - VERDE MONA.mp4",
+        "path": "projeler/VERDE MONA/TANITIM - VERDE MONA.mp4",
+        "size_mb": 12.09
+      }
+    ],
+    "has_presentation": false,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-13",
+    "type": "project",
+    "name": "VERDE MONA",
+    "room_info": "",
+    "description": "BUZDOLABI Cebri Havalandırma Yapılacaktır. Cebri HavalandırmaYapılacaktır.Cebri Havalandırma Yapılacaktır. Cebri Havalandırma Yapılacaktır.Cebri Havalandırma Yapılacaktır. Cebri Havalandırma Yapılacaktır.ODA SALON BANYO+WCBANYO+WC SALON SALON BANYO+WC BANYO+WC SALONSALONBANYO+WCODA BANYO+WC Y.ODASISALONSALON BANYO+WCOD",
+    "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1PsE_P98ig95zmTJI_At9sUmVlWZ3nk__/preview",
+    "price_display": "5.500.000 - 9.800.000 TL",
+    "price_numeric": 5500000,
+    "down_payment": "2.750.000 TL",
+    "il": "Ankara",
+    "ilce": "Gölbaşı",
+    "mahalle": "İncek",
+    "ada_no": "115200",
+    "parsel_no": "1",
+    "tkgm_verified": true,
+    "price_min": 5500000,
+    "price_max": 9800000
+  },
+  {
+    "id": "cbvip-prj-14",
+    "db_id": 14,
+    "title": "BORDO YAŞAM",
+    "folder_name": "VIP AKADEMİ",
+    "folder_path": "projeler/VIP AKADEMİ",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_14.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP AKADEMİ 1.pdf",
+        "path": "projeler/VIP AKADEMİ/SUNUM - VIP AKADEMİ 1.pdf",
+        "size_mb": 8.39
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - VIP AKADEMİ 1 (1).mp4",
+        "path": "projeler/VIP AKADEMİ/TANITIM - VIP AKADEMİ 1 (1).mp4",
+        "size_mb": 81.79
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-14",
+    "type": "project",
+    "name": "VIP AKADEMİ",
+    "room_info": "1+1",
+    "description": "----y o l---- komşu parsel1+11+11+11+1 asansörlermerdiven 1+11+11+1 1+11+1 1+11+1 1+11+1 1+11+1 1+1asansörlermerdiven 1+11+11+11+1 1+11+1 asansörlermerdiven zemin kat 25 adet 1+125x1=25kapıcı dairesi apt girişi 1+1apt girişi kapıcı dairesi1+11+1----y o l---- --yol-- komşu parsel komşu parsel1+11+11+11+1 asansörlermerdi",
+    "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1k7fklARyzjnpOZbYkJSqg0VTsaMr4LO7/preview",
+    "price_display": "2.450.000 - 3.850.000 TL",
+    "price_min": 2450000,
+    "price_max": 3850000,
+    "price_numeric": 2450000,
+    "down_payment": "1.225.000 TL",
+    "il": "Ankara",
+    "ilce": "Sincan",
+    "mahalle": "Yenikent",
+    "ada_no": "102400",
+    "parsel_no": "5",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-15",
+    "db_id": 15,
+    "title": "EXCELANCE VADİ",
+    "folder_name": "VIP AKADEMİ 2",
+    "folder_path": "projeler/VIP AKADEMİ 2",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_15.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP AKADEMİ 2.pdf",
+        "path": "projeler/VIP AKADEMİ 2/SUNUM - VIP AKADEMİ 2.pdf",
+        "size_mb": 7.92
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - VIP AKADEMİ 2.mp4",
+        "path": "projeler/VIP AKADEMİ 2/TANITIM - VIP AKADEMİ 2.mp4",
+        "size_mb": 189.02
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-15",
+    "type": "project",
+    "name": "VIP AKADEMİ 2",
+    "room_info": "",
+    "description": "koşullarda ev, apartman, işyeri, ve sair her nevi inşaatlar yaptırmaya, bu taşınmazlar üzerinde bulunan binaların elektrik, su ve doğalgazlarını kestirmeye, teminat ve depozitolarını geri almaya, elektrik, doğalgaz ve sular idareleri veya şirketleri ile yapılmış bulunan sözleşmelerini fesh etmeye, fesih sözleşmelerini ",
+    "drive_video_preview": "https://drive.google.com/file/d/13svVnzppyAh9Mc2hGgK-ax9c1Qydig2n/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1k7fklARyzjnpOZbYkJSqg0VTsaMr4LO7/preview",
+    "price_display": "6.200.000 - 12.500.000 TL",
+    "price_min": 6200000,
+    "price_max": 12500000,
+    "price_numeric": 6200000,
+    "down_payment": "3.100.000 TL",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Dikmen Vadi",
+    "ada_no": "29100",
+    "parsel_no": "4",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-16",
+    "db_id": 16,
+    "title": "EXCELANCE BEYTEPE",
+    "folder_name": "VIP MARIN",
+    "folder_path": "projeler/VIP MARIN",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_16.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP MARIN.pdf",
+        "path": "projeler/VIP MARIN/SUNUM - VIP MARIN.pdf",
+        "size_mb": 11.02
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - VIP MARIN.mp4",
+        "path": "projeler/VIP MARIN/TANITIM - VIP MARIN.mp4",
+        "size_mb": 118.71
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-16",
+    "type": "project",
+    "name": "VIP MARIN",
+    "room_info": "1+1, 2+1",
+    "description": "KAT 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373 374 375 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 438 439 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355 356 2+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 2+1 1+1 1+1 1+1 1+1 1+1 1+1 2+1 419 420 421 ",
+    "drive_video_preview": "https://drive.google.com/file/d/1r5uSsbWNzgV3hRtrtRon9n7TbLD7C_bE/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1_8mzlD_0ZmYmrHMdBRIc-c4hMctjbisR/preview",
+    "price_display": "7.500.000 - 16.000.000 TL",
+    "price_min": 7500000,
+    "price_max": 16000000,
+    "price_numeric": 7500000,
+    "down_payment": "3.750.000 TL",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Beytepe",
+    "ada_no": "80910",
+    "parsel_no": "3",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-17",
+    "db_id": 17,
+    "title": "GÖKDEMİR STAR",
+    "folder_name": "VIP YAŞAMKENT - GÖKDEMİR STAR",
+    "folder_path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_17.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP YAŞAMKENT.pdf",
+        "path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR/SUNUM - VIP YAŞAMKENT.pdf",
+        "size_mb": 20.02
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - VIP YAŞAMKENT.mp4",
+        "path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR/TANITIM - VIP YAŞAMKENT.mp4",
+        "size_mb": 327.53
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-17",
+    "type": "project",
+    "name": "VIP YAŞAMKENT - GÖKDEMİR STAR",
+    "price_display": "2.100.000 - 3.200.000 TL",
+    "price_min": 3200000,
+    "price_max": 4600000,
+    "room_info": "1+1, 2+1",
+    "description": "Sözleşmelerini noterliklerde veya ilgili Tapu Sicil Müdürlüklerinde imzalamaya, verilecek ferağ takrirlerini ilgili tapu sicil müdürü veya yetkili memur huzurunda kabule, tapu defteri ve sicillerini ve tüm belgelerini imzalamaya, tescil talebinde bulunmaya, tapu senetlerini almaya, dilerse verilecek ferağ takrirlerini ",
+    "drive_video_preview": "https://drive.google.com/file/d/1-F5FCXTdNLkM-W66FcmWnG426SsMmJ9d/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1quMY6W2Yj8PzkgmQ5p5MAtbsKYZLUcvs/preview",
+    "price_numeric": 2100000,
+    "down_payment": "1.050.000 TL",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Yaşamkent",
+    "ada_no": "49915",
+    "parsel_no": "2",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-18",
+    "db_id": 18,
+    "title": "JOVEN PORT",
+    "folder_name": "VIP YENİKENT",
+    "folder_path": "projeler/VIP YENİKENT",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_18.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP YENİKENT.pdf",
+        "path": "projeler/VIP YENİKENT/SUNUM - VIP YENİKENT.pdf",
+        "size_mb": 2.67
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - YENİKENT.mp4",
+        "path": "projeler/VIP YENİKENT/TANITIM - YENİKENT.mp4",
+        "size_mb": 218.9
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-18",
+    "type": "project",
+    "name": "VIP YENİKENT",
+    "room_info": "",
+    "description": "START BRAVOViva START BRAVOViva Bu fikir, zamanla can bulur. Ev Sahibi Olun! ��� Projemiz Otonomi Havalimanı Protokol Yolu İnşaat Süreci Yenimahalle Yeşilelma Anaokulu Güven Prestik Konutları 3 Güven Prestij Konutları Saklıkent Prestij 2 Konutları Cotton Life Sitesi Best of Bridal Güven Prestij Konutları 2 Pırlanta Sit",
+    "drive_video_preview": "https://drive.google.com/file/d/1rwnTJ6QqRQDcl98TIWNbPNqoFqG3kAwi/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1iALl-jfAHJ91rVItL_sD6fehVJ4sJ7E3/preview",
+    "price_display": "2.850.000 - 4.100.000 TL",
+    "price_numeric": 2850000,
+    "down_payment": "1.425.000 TL",
+    "il": "Ankara",
+    "ilce": "Pursaklar",
+    "mahalle": "Saray",
+    "ada_no": "96410",
+    "parsel_no": "1",
+    "tkgm_verified": true,
+    "price_min": 2850000,
+    "price_max": 4100000
+  },
+  {
+    "id": "cbvip-prj-19",
+    "db_id": 19,
+    "title": "JOVEN KAMPÜS",
+    "folder_name": "VIP ÇAKIRLAR",
+    "folder_path": "projeler/VIP ÇAKIRLAR",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_19.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP ÇAKIRLAR.pdf",
+        "path": "projeler/VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.pdf",
+        "size_mb": 9.4
+      }
+    ],
+    "videos": [
+      {
+        "filename": "SUNUM - VIP ÇAKIRLAR.mp4",
+        "path": "projeler/VIP ÇAKIRLAR/SUNUM - VIP ÇAKIRLAR.mp4",
+        "size_mb": 296.24
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-19",
+    "type": "project",
+    "name": "VIP ÇAKIRLAR",
+    "room_info": "",
+    "description": "6 7 910 12 13 11 5 8 4 3 2 1120 cm korkuluk 120 cm korkuluk 120 cm korkuluk 120 cm korkulukENGELLI LIFTI YAPILACAKTIR.-2.07 (924.52)M=14 X 14.78 /35 ±0.00(926.59)14120 cm korkuluk±0.00(926.59) 120 cm korkuluk -0.72(925.87) EĞIM % 6.98 L: 10.31M H:72CM -0.45(926.14)120 cm korkuluk 120 cm korkulukEĞIM % 6.99 L: 10.31M H:",
+    "drive_video_preview": "https://drive.google.com/file/d/1r5uSsbWNzgV3hRtrtRon9n7TbLD7C_bE/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1_8mzlD_0ZmYmrHMdBRIc-c4hMctjbisR/preview",
+    "price_display": "1.950.000 - 2.800.000 TL",
+    "price_numeric": 1950000,
+    "down_payment": "975.000 TL",
+    "il": "Ankara",
+    "ilce": "Çubuk",
+    "mahalle": "Esenboğa",
+    "ada_no": "190440",
+    "parsel_no": "8",
+    "tkgm_verified": true,
+    "price_min": 1950000,
+    "price_max": 2800000
+  },
+  {
+    "id": "cbvip-prj-20",
+    "db_id": 20,
+    "title": "VIP ÜNİVERSİTE",
+    "folder_name": "VIP ÜNİVERSİTE",
+    "folder_path": "projeler/VIP ÜNİVERSİTE",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_20.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIP UNIVERSITE.pdf",
+        "path": "projeler/VIP ÜNİVERSİTE/SUNUM - VIP UNIVERSITE.pdf",
+        "size_mb": 6.0
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - VIP UNIVERSITE.mp4",
+        "path": "projeler/VIP ÜNİVERSİTE/TANITIM - VIP UNIVERSITE.mp4",
+        "size_mb": 273.2
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "price_display": "1.350.000 TL",
+    "price_numeric": 1350000,
+    "price_min": 1350000,
+    "price_max": 1350000,
+    "down_payment": "825.000 TL",
+    "video_file": "TANITIM - VIP UNIVERSITE.mp4",
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-20",
+    "slideshow_cloud_url": "/file?path=VIP ÜNİVERSİTE/SLIDESHOW - VIP ÜNİVERSİTE.mp4",
+    "presentation": "/file?path=VIP ÜNİVERSİTE/SUNUM - VIP UNIVERSITE.pdf",
+    "type": "project",
+    "name": "VIP ÜNİVERSİTE",
+    "room_info": "1+1",
+    "description": "----y o l---- komşu parsel1+11+11+11+1 asansörlermerdiven 1+11+11+1 1+11+1 1+11+1 1+11+1 1+11+1 1+1asansörlermerdiven 1+11+11+11+1 1+11+1 asansörlermerdiven zemin kat 25 adet 1+125x1=25kapıcı dairesi apt girişi 1+1apt girişi kapıcı dairesi1+11+1----y o l---- --yol-- komşu parsel komşu parsel1+11+11+11+1 asansörlermerdi",
+    "drive_video_preview": "https://drive.google.com/file/d/1hlrWaCAZQv6pVLtuMdBiR1XWa9b4IY20/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1IiJCCZnFv4EEpKJemnBWEkKzq5R_m51r/preview",
+    "il": "Ankara",
+    "ilce": "Çubuk",
+    "mahalle": "Esenboğa",
+    "ada_no": "190438",
+    "parsel_no": "15",
+    "tkgm_verified": true
+  },
+  {
+    "id": "cbvip-prj-21",
+    "db_id": 21,
+    "title": "SMD TWIN",
+    "folder_name": "VIVA - START BRAVO",
+    "folder_path": "projeler/VIVA - START BRAVO",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_21.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - VIVA - START BRAVO.pdf",
+        "path": "projeler/VIVA - START BRAVO/SUNUM - VIVA - START BRAVO.pdf",
+        "size_mb": 21.42
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - VIVA - START BRAVO.mp4",
+        "path": "projeler/VIVA - START BRAVO/TANITIM - VIVA - START BRAVO.mp4",
+        "size_mb": 281.21
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-21",
+    "type": "project",
+    "name": "VIVA - START BRAVO",
+    "room_info": "1+1 Ofis Konsepti",
+    "description": "Mustafa Kemal Mahallesi'nde plazalar bölgesinde tam donanımlı, eşyalı kiralık VIP ofis. Özel dinlenme alanı, TV, çalışma masası, berjer koltuklar, fiber altyapı ve güvenlikli kule katında.",
+    "price_display": "3.600.000 - 5.200.000 TL",
+    "net_gross_area": "65 m² Net / 80 m² Brüt",
+    "listing_type": "Kiralık",
+    "property_category": "Ticari / Ofis",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Mustafa Kemal Mh.",
+    "ada_no": "14250",
+    "parsel_no": "4",
+    "tkgm_verified": true,
+    "location": "Ankara / Çankaya / Mustafa Kemal Mh.",
+    "drive_video_preview": "https://drive.google.com/file/d/17f7c0FXX4ePVU3zDftVyfEVOeTt3gzHq/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1P4tBkVDz1ZhbAYzuJD5YFdb-wYTh_McN/preview",
+    "price_numeric": 3600000,
+    "down_payment": "1.800.000 TL",
+    "price_min": 3600000,
+    "price_max": 5200000
+  },
+  {
+    "id": "cbvip-prj-22",
+    "db_id": 22,
+    "title": "SMD PROTOKOL",
+    "folder_name": "WM - PRIME",
+    "folder_path": "projeler/WM - PRIME",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_22.jpg",
+    "presentations": [
+      {
+        "filename": "SUNUM - WM PRIME.pdf",
+        "path": "projeler/WM - PRIME/SUNUM - WM PRIME.pdf",
+        "size_mb": 9.1
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM 1 - WM PRIME.mp4",
+        "path": "projeler/WM - PRIME/TANITIM 1 - WM PRIME.mp4",
+        "size_mb": 56.21
+      }
+    ],
+    "has_presentation": true,
+    "has_video": true,
+    "tanitim_cloud_url": "/stream/video/cbvip-prj-22",
+    "type": "project",
+    "name": "WM - PRIME",
+    "price_display": "4.200.000 - 6.800.000 TL",
+    "price_min": 4200000,
+    "price_max": 6800000,
+    "room_info": "3+1 Lüks Daire",
+    "description": "Çankaya Çayyolu bölgesinde Adil Bey portföyü geniş peyzaj manzaralı, kapalı otoparklı, ankastreli ve ebeveyn banyolu 3+1 kiralık lüks konut.",
+    "net_gross_area": "140 m² Net / 160 m² Brüt",
+    "listing_type": "Kiralık",
+    "property_category": "Konut / Daire",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Çayyolu Mh.",
+    "ada_no": "32104",
+    "parsel_no": "12",
+    "tkgm_verified": true,
+    "location": "Ankara / Çankaya / Çayyolu Mh.",
+    "drive_video_preview": "https://drive.google.com/file/d/1vwu4lkmufMALIRhUT7lV30X_j7bb9lMz/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1_x2Q0X3qRIOaxaBUDKcIQjXM1L1Ut3qo/preview",
+    "price_numeric": 4200000,
+    "down_payment": "2.100.000 TL"
+  },
+  {
+    "id": "pf-21",
+    "type": "portfolio",
+    "title": "Mustafa Kemal Mah. Eşyalı Kiralık VIP Ofis",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Mustafa Kemal Mh.",
+    "ada_no": "14250",
+    "parsel_no": "4",
+    "tkgm_verified": true,
+    "description": "Mustafa Kemal Mahallesi'nde plazalar bölgesinde tam donanımlı, eşyalı kiralık VIP ofis. Özel dinlenme alanı, TV, çalışma masası, berjer koltuklar, fiber altyapı ve güvenlikli kule katında.",
+    "listing_type": "Kiralık",
+    "property_category": "Ticari / Ofis",
+    "price_display": "56.000 ₺ / ay",
+    "room_info": "1+1 Ofis Konsepti",
+    "net_gross_area": "65 m² Net / 80 m² Brüt",
+    "location": "Ankara / Çankaya / Mustafa Kemal Mh.",
+    "db_id": 21
+  },
+  {
+    "id": "pf-22",
+    "type": "portfolio",
+    "title": "Adil Bey Çankaya Kiralık Prestij Rezidans",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Çayyolu Mh.",
+    "ada_no": "32104",
+    "parsel_no": "12",
+    "tkgm_verified": true,
+    "description": "Çankaya Çayyolu bölgesinde Adil Bey portföyü geniş peyzaj manzaralı, kapalı otoparklı, ankastreli ve ebeveyn banyolu 3+1 kiralık lüks konut.",
+    "listing_type": "Kiralık",
+    "property_category": "Konut / Daire",
+    "price_display": "45.000 ₺ / ay",
+    "room_info": "3+1 Lüks Daire",
+    "net_gross_area": "140 m² Net / 160 m² Brüt",
+    "location": "Ankara / Çankaya / Çayyolu Mh.",
+    "db_id": 22
+  },
+  {
+    "id": "pf-23",
+    "type": "portfolio",
+    "title": "Çubuk Eğrikin Satılık Müstakil Arsa",
+    "il": "Ankara",
+    "ilce": "Çubuk",
+    "mahalle": "Eğrikin Mh.",
+    "ada_no": "511",
+    "parsel_no": "7",
+    "tkgm_verified": true,
+    "description": "Ankara Çubuk Eğrikin mevkiinde 282,45 m² tek tapu müstakil arsa. Kadastro yolu açık, hobi bahçesi ve villa yapımına uygun bakir yatırım arazisi.",
+    "listing_type": "Satılık",
+    "property_category": "Arsa / Bahçe",
+    "price_display": "475.000 ₺",
+    "room_info": "282 m² Müstakil",
+    "net_gross_area": "386,00 m²",
+    "location": "Ankara / Çubuk / Eğrikin Mh.",
+    "db_id": 23
+  },
+  {
+    "id": "pf-24",
+    "type": "portfolio",
+    "title": "Gölbaşı Horos Satılık Fırsat Bahçe & Arsa (Baran Arsa)",
+    "il": "Ankara",
+    "ilce": "Gölbaşı",
+    "mahalle": "Horos Mh.",
+    "ada_no": "10",
+    "parsel_no": "1",
+    "tkgm_verified": true,
+    "description": "Gölbaşı Horos Mahallesi 124425 Ada 24 Parsel yetki sözleşmeli Devrim Özlem Öztürk tapulu fırsat arsa ve hobi bahçesi. Elektrik ve su altyapısı yakın konumda.",
+    "listing_type": "Satılık",
+    "property_category": "Arsa / Bahçe",
+    "price_display": "570.000 ₺",
+    "room_info": "124425/24 Parsel",
+    "net_gross_area": "570,88 m²",
+    "location": "Ankara / Gölbaşı / Horos Mh.",
+    "db_id": 24
+  },
+  {
+    "id": "pf-25",
+    "type": "portfolio",
+    "title": "Çankaya Cevizlidere Satılık 3+1 Daire (Semra Yağmur)",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Cevizlidere Mh.",
+    "ada_no": "27916",
+    "parsel_no": "6",
+    "tkgm_verified": true,
+    "description": "Cevizlidere Mahallesi 27916 Ada 6 Parsel Daire: 11 Semra Yağmur tapulu yetkili satılık 3+1 konut. Merkezi ısıtma, geniş salon, ulaşıma ve marketlere yürüme mesafesinde.",
+    "listing_type": "Satılık",
+    "property_category": "Konut / Daire",
+    "price_display": "11.500.000 ₺",
+    "room_info": "3+1 Daire",
+    "net_gross_area": "154 m²",
+    "location": "Ankara / Çankaya / Cevizlidere Mh.",
+    "db_id": 25
+  },
+  {
+    "id": "pf-26",
+    "type": "portfolio",
+    "title": "Sincan Yenikent M.Kemal Mh. 3+1 Satılık Daire",
+    "il": "Ankara",
+    "ilce": "Sincan",
+    "mahalle": "Mustafa Kemal Mh.",
+    "ada_no": "4120",
+    "parsel_no": "8",
+    "tkgm_verified": true,
+    "description": "Sincan Yenikent Mustafa Kemal Mh. 0 Sıfır bina çift balkonlu 3+1 ara kat daire. Vestiyer, ankastre set, kombi doğalgaz, kat mülkiyetli (Portföy No: 358645).",
+    "listing_type": "Satılık",
+    "property_category": "Konut / Daire",
+    "price_display": "5.000.000 ₺",
+    "room_info": "3+1 (2. Kat Ara Kat)",
+    "net_gross_area": "125 m² Net / 135 m² Brüt",
+    "location": "Ankara / Sincan / Mustafa Kemal Mh.",
+    "db_id": 26
+  },
+  {
+    "id": "pf-27",
+    "type": "portfolio",
+    "title": "Sincan Yenikent M.Kemal Mh. Çift Balkonlu 4+1 Daire",
+    "il": "Ankara",
+    "ilce": "Sincan",
+    "mahalle": "Mustafa Kemal Mh.",
+    "ada_no": "4125",
+    "parsel_no": "3",
+    "tkgm_verified": true,
+    "description": "Sincan Yenikent Mustafa Kemal Mh. ebeveyn banyolu, çift geniş balkonlu, lüks tasarımlı 0 sıfır 4+1 konut (Portföy No: 357866 / İlan No: 1326738531).",
+    "listing_type": "Satılık",
+    "property_category": "Konut / Daire",
+    "price_display": "5.950.000 ₺",
+    "room_info": "4+1 (3. Kat Ara Kat)",
+    "net_gross_area": "135 m² Net / 149 m² Brüt",
+    "location": "Ankara / Sincan / Mustafa Kemal Mh.",
+    "db_id": 27
+  },
+  {
+    "id": "pf-28",
+    "type": "portfolio",
+    "title": "Sincan Atatürk Mh. 310/12 Ticari Bina / İşyeri",
+    "il": "Ankara",
+    "ilce": "Sincan",
+    "mahalle": "Atatürk Mh.",
+    "ada_no": "310",
+    "parsel_no": "12",
+    "tkgm_verified": true,
+    "description": "Sincan Atatürk Mh. 310 Ada 12 Parsel kat mülkiyetli kargir büro ve dükkan bina. Dükkan + üst kat büro ve ofislerden oluşan yüksek kira potansiyelli yatırım.",
+    "listing_type": "Satılık",
+    "property_category": "Ticari / İşyeri",
+    "price_display": "12.500.000 ₺",
+    "room_info": "Complx Ticari Bina",
+    "net_gross_area": "295 m² Brüt",
+    "location": "Ankara / Sincan / Atatürk Mh.",
+    "db_id": 28
+  },
+  {
+    "id": "pf-29",
+    "type": "portfolio",
+    "title": "İncek Bulvarı Paralelinde 8+2 İskanlı Lüks Villa",
+    "il": "Ankara",
+    "ilce": "Gölbaşı",
+    "mahalle": "İncek Mh.",
+    "ada_no": "1002",
+    "parsel_no": "15",
+    "tkgm_verified": true,
+    "description": "İncek Bulvarı paralelinde iskanı alınmış 8+2 lüks mühendislik harikası akıllı ikiz villa. Gece dış cephe ışıklandırmalı, 3D VR sanal tur imkanlı, geniş peyzaj bahçeli prestij mülk.",
+    "listing_type": "Satılık",
+    "property_category": "Villa",
+    "price_display": "69.000.000 ₺",
+    "room_info": "8+2 İkiz Villa",
+    "net_gross_area": "600 m²",
+    "location": "Ankara / Gölbaşı / İncek Mh.",
+    "db_id": 29
+  },
+  {
+    "id": "pf-30",
+    "type": "portfolio",
+    "title": "Kırıkkale Yahşihan Tek Tapu 7.820 m² Satılık Arsa",
+    "il": "Kırıkkale",
+    "ilce": "Yahşihan",
+    "mahalle": "Yahşihan Mh.",
+    "ada_no": "502",
+    "parsel_no": "18",
+    "tkgm_verified": true,
+    "description": "Kırıkkale Yahşihan mevkisinde tek tapulu 7.820 m² yatırımlık dev arsa. Sanayi, lojistik ve konut imar geliştirme potansiyeline sahip stratejik arazi (İlan No: 1329845926).",
+    "listing_type": "Satılık",
+    "property_category": "Arsa / Bahçe",
+    "price_display": "12.000.000 ₺",
+    "room_info": "7.820 m² Tek Tapu",
+    "net_gross_area": "7.820 m²",
+    "location": "Kırıkkale / Yahşihan / Yahşihan Mh.",
+    "db_id": 30
+  },
+  {
+    "id": "cbvip-prj-db31",
+    "type": "portfolio",
+    "title": "Yaşamkent'te Devren Kiralık Tam Donanımlı Burgerci -",
+    "db_id": 31,
+    "listing_type": "Devren Kiralık",
+    "property_category": "Cafe / Restoran / Bar",
+    "price_display": "2.400.000 ₺",
+    "room_info": "",
+    "net_gross_area": "140 m² Brüt / 65 m² Net",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Yaşamkent",
+    "ada_no": "",
+    "parsel_no": "",
+    "tkgm_verified": false,
+    "description": "aşamkent'te, prestijli bir lokasyonda devren kiralık tam donanımlı Burgerci! İşletme ruhsatı ve tüm gerekli izinlere sahip, hemen faaliyete geçmeye hazır bu eşsiz fırsatı kaçırmayın. Modern tasarımı ve geniş müşteri kapasitesi ile öne çıkan bu mekân, yatırımcılar için ideal bir seçenek sunuyor. Burgerci ön cephe İşletme Özellikleri Alan: bahçe teras ile birlikte net 140 m² net kullanım alanı Kişi Kapasitesi: İç mekanda 80 kişiye hizmet verebilen geniş oturma düzeni Masa Sayısı: 16 adet masa Asma Kat: Ek depolama veya özel alan olarak kullanılabilecek asma kat mevcuttur. Isıtma ve Soğutma: Konforlu bir ortam sağlayan modern klima sistemi Bina Yaşı: 11-15 yıl arası, bakımlı yapı Mutfak Ekipmanları: Tam donanımlı profesyonel mutfak (detaylar için arayınız) Dekorasyon: Modern ve davetkar iç tasarım Burgerci iç mekan Konum ve Çevre Avantajları Yaşamkent'in en işlek caddelerinden birinde, yüksek yaya ve araç trafiğine sahip stratejik bir konumda yer almaktadır. Bölgedeki diğer popüler işletmeler, okullar ve konut projeleri sayesinde sürekli bir müşteri potansiyeli bulunmaktadır. Kolay ulaşım imkanı ve çevresindeki sosyal olanaklar, işletmenizin başarısını destekleyecektir. Yatırım Potansiyeli Mevcut müşteri kitlesi ve işlek konumu ile yüksek ciro potansiyeli sunan bu işletme, devralındığı günden itibaren gelir elde etmeye hazırdır. Restoran ve lokanta kategorisinde, özellikle burger konseptinde hızla popülerleşen bu mekân, doğru yönetimle kısa sürede yatırımının karşılığını verecektir. Detaylı finansal bilgiler ve işletmenin geçmiş performansı hakkında bilgi almak için lütfen iletişime geçin. Yetkili Gayrimenkul Danışmanı: Suzanne TENEKECİOĞLU İletişim ve Randevu: 0535 489 56 56 Bu eşsiz fırsatı kaçırmamak için hemen arayın\n\nÖZELLİKLER: Tapu Durumu: Kat Mülkiyeti | Bina Yaşı: 11 | Bulunduğu Kat: ZEMİN | Kat Sayısı: 1 | Isıtma: Klima | Eşyalı: Hayır | Kullanım Durumu: Boş | Krediye Uygun: Hayır | Takasa Uygun: Hayır",
+    "location": "Ankara / Çankaya / Yaşamkent"
+  }
 ]

@@ -892,6 +892,8 @@ def api_self_healing_status():
 @app.route("/api/self-healing/trigger", methods=["POST"])
 def api_self_healing_trigger():
     """Anlık self-healing ve sistem bütünlük onarım döngüsünü tetikler."""
+    if not _admin_ok():
+        return jsonify({"success": False, "error": "Yetki yok"}), 403
     try:
         import nexa_self_healing
         report = nexa_self_healing.run_full_self_healing_cycle()
@@ -903,6 +905,8 @@ def api_self_healing_trigger():
 @app.route("/api/nexa-sync", methods=["POST"])
 def api_nexa_sync():
     """Otonom pipeline'ı elle tetikler: DB → JSON importer + CB yenileme."""
+    if not _admin_ok():
+        return jsonify({"success": False, "error": "Yetki yok"}), 403
     importer_ok = _run_importer()
     _refresh_cb_listings_bg()
     try:
