@@ -24,7 +24,7 @@ from datetime import datetime
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = Path(r"C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\nexa_database.db")
+DB_PATH = BASE_DIR / "nexa_database.db"
 MAP_PATH = BASE_DIR / "projects_map.json"
 PORTFOLIO_PATH = BASE_DIR / "nexa_portfolio_data.json"
 PRICES_PATH = BASE_DIR / "nexa_project_prices.json"

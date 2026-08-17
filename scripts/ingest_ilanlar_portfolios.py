@@ -8,9 +8,10 @@ from pathlib import Path
 # Ensure UTF-8 output
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PATH = Path(r'C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\nexa_database.db')
-BASE_ILANLAR = Path(r'C:\Users\USER\Desktop\NEXA\LABARATOUVAR\--------NEXA-CORE-------\MOVIES\EMLAK\PORTFYLERİM\İLANLAR')
-DEST_STATIC_DIR = Path(r'C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\static\documents\portfolios')
+BASE_DIR = Path(__file__).resolve().parent.parent
+DB_PATH = BASE_DIR / 'nexa_database.db'
+BASE_ILANLAR = BASE_DIR / 'ilanlar'
+DEST_STATIC_DIR = BASE_DIR / 'static' / 'documents' / 'portfolios'
 
 DEST_STATIC_DIR.mkdir(parents=True, exist_ok=True)
 

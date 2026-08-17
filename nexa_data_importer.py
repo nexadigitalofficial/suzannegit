@@ -18,7 +18,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 BASE_DIR = Path(__file__).parent
-DB_PATH = Path(r"C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\nexa_database.db")
+DB_PATH = BASE_DIR / "nexa_database.db"
 PRICES_OUT = BASE_DIR / "nexa_project_prices.json"
 PORTFOLIO_OUT = BASE_DIR / "nexa_portfolio_data.json"
 

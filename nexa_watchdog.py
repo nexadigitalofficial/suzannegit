@@ -18,7 +18,7 @@ logger = logging.getLogger("nexa.watchdog")
 SITE_DIR = Path(__file__).resolve().parent
 PROJELER_DIR = SITE_DIR / "projeler"
 STATE_FILE = SITE_DIR / "watch_state.json"
-DB = Path(r"C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\nexa_database.db")
+DB = SITE_DIR / "nexa_database.db"
 GARBAGE = re.compile(r"[\u0080-\u02FF]{4,}")
 
 FOLDER_TO_DB = {

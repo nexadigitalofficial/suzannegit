@@ -1,8 +1,6 @@
 {
   "host": "0.0.0.0",
   "port": 5002,
-  "nexa_db_dir": "C:/Users/USER/Desktop/NEXA_PRIME_v2_ENTERPRISE",
-  "projeler_dir": "C:/Users/USER/Desktop/3/projeler",
   "cb_listings_url": "https://www.cb.com.tr/ilanlar?officeid=470&officeuserid=17983",
   "log_dir": "logs",
   "telemetry_file": "logs/telemetry.jsonl",

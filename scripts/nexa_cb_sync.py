@@ -24,7 +24,7 @@ from pathlib import Path
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-DB_PATH = Path(r"C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\nexa_database.db")
+DB_PATH = Path(__file__).resolve().parent.parent / "nexa_database.db"
 AGENT_ID = "17983"          # Susanne Tenekecioğlu
 OFFICE_ID = "470"           # CB VIP Ankara Çankaya
 LISTINGS_URL = f"https://www.cb.com.tr/ilanlar?officeid={OFFICE_ID}&officeuserid={AGENT_ID}"

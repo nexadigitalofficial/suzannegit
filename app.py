@@ -49,7 +49,7 @@ def _load_config():
             cfg.update(json.loads(CONFIG_FILE.read_text(encoding="utf-8")))
         except Exception:
             pass
-    for env_key, cfg_key in (("NEXA_PORT", "port"), ("NEXA_PROJELER_DIR", "projeler_dir"),
+    for env_key, cfg_key in (("PORT", "port"), ("NEXA_PORT", "port"), ("NEXA_PROJELER_DIR", "projeler_dir"),
                              ("NEXA_HOST", "host"), ("NEXA_CB_URL", "cb_listings_url")):
         val = os.getenv(env_key)
         if val:

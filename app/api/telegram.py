@@ -49,7 +49,7 @@ async def configure_telegram_bot(
 
     # Save token to .env file for persistence
     try:
-        env_path = r"C:\Users\USER\Desktop\NEXA_PRIME_v2_ENTERPRISE\.env"
+        env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), ".env")
         env_content = ""
         if os.path.exists(env_path):
             with open(env_path, "r", encoding="utf-8") as f:
