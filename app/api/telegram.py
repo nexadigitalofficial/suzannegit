@@ -8,8 +8,8 @@ from app.services.telegram_service import telegram_manager
 
 router = APIRouter(prefix="/api/telegram", tags=["Telegram Bot"])
 
-# Master Admin PIN Key (Default: nexa2026, customizable via environment variable)
-ADMIN_PIN_KEY = os.getenv("NEXA_ADMIN_PIN", "nexa2026")
+# Master Admin PIN Key — yalnızca NEXA_ADMIN_PIN ortam değişkeninden okunur; tanımsızsa erişim reddedilir
+ADMIN_PIN_KEY = os.getenv("NEXA_ADMIN_PIN", "")
 
 @router.get("/status")
 async def get_telegram_bot_status():

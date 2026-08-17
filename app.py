@@ -279,15 +279,20 @@ def _db_portfolio_listings() -> list:
     except Exception:
         return []
 
+_listings_refresh_lock = threading.Lock()
+
 def _refresh_cb_listings_bg():
     def _run():
-        try:
-            data = fetch_cb_listings()
-            with _listings_lock:
-                _listings_cache["data"] = data
-                _listings_cache["ts"] = time.time()
-        except Exception:
-            pass
+        with _listings_refresh_lock:
+            if time.time() - _listings_cache["ts"] < 300:
+                return
+            try:
+                data = fetch_cb_listings()
+                with _listings_lock:
+                    _listings_cache["data"] = data
+                    _listings_cache["ts"] = time.time()
+            except Exception:
+                pass
     threading.Thread(target=_run, daemon=True).start()
 
 @app.route("/api/listings", methods=["GET"])
@@ -420,6 +425,8 @@ def api_track():
 @app.route("/api/appointments", methods=["POST"])
 def api_appointments():
     """Online randevu ve lead kayıt endpointi."""
+    if not _check_rate_limit(request.remote_addr or "0.0.0.0"):
+        return jsonify({"success": False, "message": "Çok fazla istek. Lütfen biraz bekleyin."}), 429
     data = request.get_json(silent=True) or {}
     name = (data.get("name") or "").strip()
     phone = (data.get("phone") or "").strip()
@@ -605,6 +612,10 @@ def static_files(filename):
 @app.after_request
 def _add_security_headers(resp):
     resp.headers["X-Content-Type-Options"] = "nosniff"
+    resp.headers["X-Frame-Options"] = "SAMEORIGIN"
+    resp.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    if not request.path.startswith("/stream/") and not request.path.startswith("/static/"):
+        resp.headers["Content-Security-Policy"] = "default-src 'self'; img-src 'self' data: https:; media-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; connect-src 'self' https:; frame-src https://www.youtube.com https://drive.google.com"
     return resp
 
 # ─── JSON hata handler'ları (yalnızca /api/ prefix'li istekler) ───
@@ -719,8 +730,10 @@ def stream_video(project_id):
             return redirect(f"https://drive.usercontent.google.com/download?id={m.group(1)}&export=download&confirm=t")
         return redirect(drive_url)
 
-    folder_name = project.get("folder_name") or ""
+    folder_name = (project.get("folder_name") or "").strip().replace("\\", "/").split("/")[-1]
     target_dir = PROJELER_DIR / folder_name
+    if not target_dir.resolve().is_relative_to(PROJELER_DIR.resolve()):
+        return "Invalid path", 400
 
     # MP4 selection priority
     _PRIORITY_WORDS_1 = ("tanitim", "intro", "main", "ana", "lansman", "animasyon", "promosyon", "promo")
@@ -951,8 +964,20 @@ def get_all_projects_ordered(include_hidden=False):
 
     return projects
 
+ADMIN_PIN = os.getenv("NEXA_ADMIN_PIN", "")
+
+def _admin_ok():
+    """NEXA_ADMIN_PIN env'i tanımlıysa X-Admin-Pin başlığıyla doğrular; tanımsızsa erişim kapalı."""
+    if not ADMIN_PIN:
+        return False
+    pin = request.headers.get("X-Admin-Pin", "")
+    import secrets as _secrets
+    return _secrets.compare_digest(pin, ADMIN_PIN)
+
 @app.route("/admin")
 def admin_page():
+    if not _admin_ok():
+        return jsonify({"success": False, "message": "Yetkisiz erişim."}), 403
     admin_file = BASE_DIR / "admin.html"
     if admin_file.exists():
         return send_file(admin_file)
@@ -960,6 +985,8 @@ def admin_page():
 
 @app.route("/api/admin/projects-order", methods=["GET", "POST"])
 def admin_projects_order_api():
+    if not _admin_ok():
+        return jsonify({"success": False, "message": "Yetkisiz erişim."}), 403
     if request.method == "POST":
         data = request.get_json(silent=True) or {}
         order_list = data.get("order", [])
@@ -982,6 +1009,8 @@ def admin_projects_order_api():
 
 @app.route("/api/admin/rag-meta", methods=["GET"])
 def admin_rag_meta():
+    if not _admin_ok():
+        return jsonify({"success": False, "message": "Yetkisiz erişim."}), 403
     projects = get_all_projects_ordered(include_hidden=True)
     locations = sorted(list(set(p.get("location") for p in projects if p.get("location"))))
     developers = sorted(list(set(p.get("developer") for p in projects if p.get("developer"))))

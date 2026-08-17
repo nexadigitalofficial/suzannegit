@@ -7,14 +7,14 @@ class Settings(BaseSettings):
     VERSION: str = "2.0.0-ENTERPRISE"
     ENVIRONMENT: str = "production"
     
-    SECRET_KEY: str = "nexa_prime_enterprise_super_secret_jwt_key_2026_x_y"
+    SECRET_KEY: str = ""
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 480
     
     DATABASE_URL: str = "nexa_database.db"
     
-    # Raw comma-separated string from env or fallback list
-    GEMINI_API_KEYS: str = "AIzaSyDZzmQH4vMUhZkk4rQ_JqtfXe1QhEQQ7cA,AIzaSyAwsbS9uKZCaCLZIUKQFXWiSVfFIxIbcYU"
+    # Yalnızca ortam değişkeninden okunur (GEMINI_API_KEYS); kodda asla anahtar tutulmaz
+    GEMINI_API_KEYS: str = ""
     
     TWILIO_ACCOUNT_SID: str = ""
     TWILIO_AUTH_TOKEN: str = ""
