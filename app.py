@@ -143,6 +143,12 @@ PROJELER_DIR = Path(CFG["projeler_dir"])
 STATIC_DIR = BASE_DIR / "static"
 JSON_FILE = BASE_DIR / "projects_map.json"
 
+try:
+    from flask_compress import Compress
+    Compress(app)
+except ImportError:
+    pass
+
 STATIC_DIR.mkdir(exist_ok=True)
 
 # ─── CHAT RATE LIMIT (production koruması) ───
@@ -336,8 +342,9 @@ def api_listings():
 @app.route("/api/projects", methods=["GET"])
 def api_projects():
     projects = get_all_projects_ordered(include_hidden=False)
-    return jsonify({"success": True, "data": projects})
-    return jsonify({"success": False, "message": "projects_map.json bulunamadı"})
+    resp = jsonify({"success": True, "data": projects})
+    resp.headers["Cache-Control"] = "public, max-age=300"
+    return resp
 
 @app.route("/api/nexa-ai-chat", methods=["POST"])
 def api_nexa_ai_chat():
@@ -378,9 +385,15 @@ def api_nexa_ai_chat():
 
     try:
         from concurrent.futures import ThreadPoolExecutor, TimeoutError
-        with ThreadPoolExecutor(max_workers=1) as executor:
+        executor = ThreadPoolExecutor(max_workers=1)
+        rag_reply = None
+        try:
             future = executor.submit(cognitive_chat, message, project=project, history=history)
             rag_reply = future.result(timeout=6.0)
+        except Exception:
+            rag_reply = None
+        finally:
+            executor.shutdown(wait=False, cancel_futures=True)
         if rag_reply:
             mode = "cognitive-rag"
             payload = {
@@ -540,7 +553,9 @@ def api_nexa_summaries():
         data = _load_summaries()
         items = [{"project_id": v.get("project_id"), "title": k, "summary": v.get("summary", "")}
                  for k, v in data.items()]
-        return jsonify({"success": True, "count": len(items), "summaries": items})
+        resp = jsonify({"success": True, "count": len(items), "summaries": items})
+        resp.headers["Cache-Control"] = "public, max-age=300"
+        return resp
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
@@ -577,7 +592,9 @@ def api_nexa_regions():
                 "tkgm_verified": bool(p.get("tkgm_verified")),
                 "summary": sum_text,
             })
-        return jsonify({"success": True, "count": len(out), "data": out})
+        resp = jsonify({"success": True, "count": len(out), "data": out})
+        resp.headers["Cache-Control"] = "public, max-age=300"
+        return resp
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
@@ -598,8 +615,8 @@ def site():
     site_file = BASE_DIR / "site.html"
     if not site_file.exists():
         return "site.html bulunamadı", 404
-    resp = send_file(str(site_file))
-    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    resp = Response(site_file.read_text(encoding="utf-8"), mimetype="text/html; charset=utf-8")
+    resp.headers['Cache-Control'] = 'public, max-age=3600, must-revalidate'
     return resp
 
 @app.route("/static/<path:filename>")
@@ -705,10 +722,16 @@ def file_serve():
 
     suffix = target.suffix.lower()
     if suffix == ".mp4":
-        return stream_file_response(target, "video/mp4")
+        resp = stream_file_response(target, "video/mp4")
+        resp.headers["Cache-Control"] = "public, max-age=604800"
+        return resp
     if suffix == ".pdf":
-        return send_file(str(target), mimetype="application/pdf")
-    return send_file(str(target))
+        resp = send_file(str(target), mimetype="application/pdf")
+        resp.headers["Cache-Control"] = "public, max-age=604800"
+        return resp
+    resp = send_file(str(target))
+    resp.headers["Cache-Control"] = "public, max-age=86400"
+    return resp
 
 @app.route("/stream/video/<project_id>")
 def stream_video(project_id):
@@ -721,14 +744,6 @@ def stream_video(project_id):
     project = next((p for p in projects if str(p.get("id")) == str(project_id) or str(p.get("db_id")) == str(project_id)), None)
     if not project:
         return "Project not found", 404
-
-    # BULUT ONIZLEME ONCELIGI: Drive'dan 206 Range ile stream (video indirilmez)
-    drive_url = project.get("drive_video_preview") or ""
-    if drive_url.startswith("http"):
-        m = re.search(r"/file/d/([\w-]{15,})", drive_url)
-        if m:
-            return redirect(f"https://drive.usercontent.google.com/download?id={m.group(1)}&export=download&confirm=t")
-        return redirect(drive_url)
 
     folder_name = (project.get("folder_name") or "").strip().replace("\\", "/").split("/")[-1]
     target_dir = PROJELER_DIR / folder_name
@@ -770,11 +785,44 @@ def stream_video(project_id):
         real_mp4 = mp4_files[0]
 
     if not real_mp4 or not real_mp4.exists():
-        if drive_url and drive_url.startswith("http"):
+        drive_url = project.get("drive_video_preview") or project.get("tanitim_cloud_url") or ""
+        if drive_url.startswith("http"):
+            m = re.search(r"/file/d/([\w-]{15,})", drive_url)
+            if m:
+                return redirect(f"https://drive.usercontent.google.com/download?id={m.group(1)}&export=media&confirm=t")
             return redirect(drive_url)
         return "Video file not found", 404
 
-    return stream_file_response(real_mp4, "video/mp4")
+    resp = stream_file_response(real_mp4, "video/mp4")
+    resp.headers["Cache-Control"] = "public, max-age=604800"
+    resp.headers["Accept-Ranges"] = "bytes"
+    return resp
+
+@app.route("/stream/pdf/<project_id>")
+def stream_pdf(project_id):
+    """watchdog'un ürettiği /stream/pdf/<id> bağlantıları için: projenin ilk PDF'ini servis eder."""
+    if not JSON_FILE.exists():
+        return "Map file not found", 404
+    with open(JSON_FILE, "r", encoding="utf-8") as f:
+        projects = json.load(f)
+    project = next((p for p in projects if str(p.get("id")) == str(project_id) or str(p.get("db_id")) == str(project_id)), None)
+    if not project:
+        return "Project not found", 404
+    pre = project.get("presentations") or []
+    if not pre:
+        return "PDF bulunamadı", 404
+    rel = pre[0].get("path") or pre[0].get("filename") or ""
+    if not rel:
+        return "PDF bulunamadı", 404
+    base = PROJELER_DIR.resolve()
+    target = (base / rel).resolve()
+    if target != base and base not in target.parents:
+        return "Geçersiz yol", 400
+    if not target.exists() or not target.is_file() or target.suffix.lower() != ".pdf":
+        return "PDF bulunamadı", 404
+    resp = send_file(str(target), mimetype="application/pdf")
+    resp.headers["Cache-Control"] = "public, max-age=604800"
+    return resp
 
 @app.route("/api/projects/<project_id>/report")
 def api_project_report(project_id):

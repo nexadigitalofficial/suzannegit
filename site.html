@@ -23,8 +23,11 @@
     <meta name="robots" content="index, follow">
     
     <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     
     <!-- GSAP Animations & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -73,6 +76,12 @@
             line-height: 1.8;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* iOS otomatik zoom'u engelle: input <16px focus'ta sayfayı büyütür */
+        input, textarea, select {
+            font-size: 16px !important;
         }
 
         /* Typography */
@@ -122,6 +131,7 @@
             width: 100%;
             z-index: 1000;
             padding: 1.1rem 5%;
+            padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -135,6 +145,7 @@
         .navbar.scrolled {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             padding: 0.85rem 5%;
+            padding-top: calc(0.85rem + env(safe-area-inset-top, 0px));
             background: rgba(255, 255, 255, 0.92);
         }
 
@@ -1951,6 +1962,46 @@
                 height: calc(100dvh - 80px - env(safe-area-inset-bottom));
                 max-height: none;
             }
+
+            /* ─── ULTRA MOBİL UYUM: 768px altı düzeltmeler ─── */
+            .navbar { padding: 1rem; padding-top: calc(1rem + env(safe-area-inset-top, 0px)); }
+            .navbar.scrolled { padding: 0.85rem 1rem; padding-top: calc(0.85rem + env(safe-area-inset-top, 0px)); }
+            .section-title { font-size: 30px !important; }
+            .filter-box { padding: 1.5rem 1.25rem !important; }
+            .contact-container { padding: 2rem 1.25rem !important; }
+            .hero-about-grid, .about-hero-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            .hero-about-grid { display: grid; }
+            .hero-banner-section { padding-top: calc(6.5rem + env(safe-area-inset-top, 0px)); }
+            .results-grid { grid-template-columns: 1fr !important; }
+            .card.project-card { flex: 0 0 calc(100vw - 40px); min-width: 0 !important; max-width: none !important; }
+            .card-actions { flex-wrap: wrap !important; }
+            .card-actions .btn { white-space: normal !important; flex: 1 1 auto; min-height: 40px; padding: 8px 10px !important; font-size: 12px !important; }
+            .card-footer .btn { min-height: 40px; }
+            .modal-close { width: 44px !important; height: 44px !important; font-size: 20px !important; }
+            .chat-chip { font-size: 13px !important; min-height: 40px; padding: 8px 14px !important; }
+            .mindmap-hint { font-size: 13px !important; }
+            .location-auto-badge { font-size: 13px !important; }
+            .filter-label { font-size: 13px !important; }
+            .tag, .badge { font-size: 12px !important; }
+            .appointment-grid-2 { grid-template-columns: 1fr !important; }
+            .chat-input { font-size: 16px !important; }
+            .chat-lead-input { font-size: 16px !important; }
+            .about-modal-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
+            .chat-messages, .modal-content, .chat-window { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+            .carousel-track { touch-action: pan-x; overscroll-behavior-x: contain; }
+            .video-modal-content { height: 90dvh !important; height: 90vh !important; }
+            .pdf-modal-content { height: 90dvh !important; height: 90vh !important; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-banner-actions { flex-direction: column !important; align-items: stretch !important; gap: 0.8rem !important; }
+            .hero-banner-actions .btn { width: 100%; text-align: center; }
+            .hero-banner-title { font-size: 26px !important; line-height: 1.25 !important; }
+            .hero-banner-subtitle { font-size: 14px !important; }
+            .appointment-grid-2, .appointment-grid-2 > div { grid-template-columns: 1fr !important; }
+            .card.project-card .card-footer { grid-template-columns: 1fr !important; }
+            .card.project-card .card-footer > div { grid-template-columns: 1fr 1fr 44px !important; }
+            .mobile-menu-btn { width: 44px; height: 44px; display: flex !important; align-items: center; justify-content: center; }
         }
     
         /* Photo Aspect Ratio & Uncropped Image Adjustments */
@@ -2276,6 +2327,7 @@
             color: #FFFFFF;
             border-color: var(--accent);
             box-shadow: 0 6px 20px rgba(0, 113, 227, 0.3);
+        }
         .card-price-prominent {
             font-size: 22px;
             font-weight: 800;
@@ -2363,7 +2415,7 @@
     <div id="splashScreen" class="splash-screen" aria-hidden="false">
         <div class="splash-inner">
             <div class="splash-media">
-                <img id="splashImg" src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" onerror="this.src='/static/img/suzanne_hero.jpeg'">
+                <img id="splashImg" src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" width="800" height="1000" onerror="this.src='/static/img/suzanne_hero.jpeg'">
                 <div class="splash-img-veil"></div>
                 <div class="splash-img-frame"></div>
             </div>
@@ -2459,7 +2511,7 @@
                 <div class="hero-right-card">
                     <div class="hero-profile-card">
                         <div class="hero-portrait-frame-sm">
-                            <img src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" onerror="this.src='/static/img/suzanne_hero.jpeg'">
+                            <img src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" width="800" height="1000" loading="lazy" onerror="this.src='/static/img/suzanne_hero.jpeg'">
                         </div>
                         <span class="section-badge" style="margin-bottom:4px; font-size:11px;">GAYRİMENKUL DANIŞMANI</span>
                         <h3 style="font-size:20px; font-weight:800; color:var(--text-primary); margin-bottom:2px;">Suzanne Tenekecioğlu</h3>
@@ -2646,7 +2698,7 @@
                     </div>
                 </div>
 
-                <div class="results-grid" id="results-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+                <div class="results-grid" id="results-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 24px;">
                     <!-- Dynamically populated matching cards -->
                 </div>
             </div>
@@ -2657,10 +2709,10 @@
     <!-- Hakkımda & Neden Biz Section (Moved Below Showcase) -->
     <section class="about-section container section-animate" id="about">
         <div class="about-compact-card">
-            <div style="display:grid; grid-template-columns: minmax(280px, 340px) 1fr; gap:3rem; align-items:center;">
+            <div class="hero-about-grid" style="display:grid; grid-template-columns: minmax(min(340px, 100%), 1fr); gap:3rem; align-items:center;">
                 <div style="text-align:center;">
                     <div class="hero-portrait-frame" style="max-width:280px; margin:0 auto 1.5rem; border-radius:24px; overflow:hidden; box-shadow:0 12px 36px rgba(0,0,0,0.12);">
-                        <img src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:auto; display:block;" onerror="this.src='/static/img/suzanne_hero.jpeg'">
+                        <img src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:auto; display:block;" width="800" height="1000" loading="lazy" onerror="this.src='/static/img/suzanne_hero.jpeg'">
                     </div>
                     <span class="section-badge">GAYRİMENKUL DANIŞMANI</span>
                     <h3 style="font-size:24px; font-weight:700; margin-bottom:4px;">Suzanne Tenekecioğlu</h3>
@@ -2743,7 +2795,7 @@
                     </div>
                 </div>
                 <div class="contact-map">
-                    <img src="/static/img/s5.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; opacity: 0.9;" onclick="openImageModal(this.src)" title="Tam Ekran Görüntüle" onerror="this.src='/static/img/suzanne.jpg'">
+                    <img src="/static/img/s5.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; opacity: 0.9;" width="800" height="600" loading="lazy" onclick="openImageModal(this.src)" title="Tam Ekran Görüntüle" onerror="this.src='/static/img/suzanne.jpg'">
                 </div>
             </div>
         </div>
@@ -2804,7 +2856,7 @@
                 <button class="chat-lead-btn" onclick="saveLeadFromInputs()" title="Bilgi + WhatsApp"><i class="fa-brands fa-whatsapp"></i></button>
             </div>
             <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Mesajınızı yazın..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Mesajınızı yazın..." onkeydown="if(event.key === 'Enter') { event.preventDefault(); sendChatMessage(); }">
                 <button class="chat-send" onclick="sendChatMessage()" aria-label="Gönder"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
@@ -2834,6 +2886,27 @@
     <!-- JavaScript Logic -->
     <script>
         
+        // ─── MOBILE NAVIGATION ───
+        function toggleMobileMenu(forceClose) {
+            const nav = document.getElementById('mobileNavLinks');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (!nav) return;
+            const open = typeof forceClose === 'boolean' ? !forceClose : !nav.classList.contains('open');
+            nav.classList.toggle('open', open);
+            if (btn) {
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                btn.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+            }
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+        document.addEventListener('click', function (e) {
+            const nav = document.getElementById('mobileNavLinks');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (nav && nav.classList.contains('open') && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+                toggleMobileMenu(true);
+            }
+        });
+
         // ─── EMBEDDED FALLBACK DATA FOR FILE:// PROTOCOL & OFFLINE ───
         const EMBEDDED_PROJECTS = [
   {
@@ -3983,7 +4056,8 @@
             if (msgEl) msgEl.style.display = 'none';
             if (modal) {
                 modal.style.display = 'flex';
-                // document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
             }
         }
 
@@ -3991,7 +4065,8 @@
             const modal = document.getElementById('aboutModal');
             if (modal) {
                 modal.style.display = 'flex';
-                // document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
             }
         }
 
@@ -4242,7 +4317,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
 
                     const html = `
-                        <div class="card project-card" id="site-card-${item.id}" onclick="openProjectReport('${item.id}')" style="cursor:pointer; display:flex; flex-direction:column; min-width:340px; max-width:360px; ${isBudgetMatch ? 'border: 2px solid var(--accent); box-shadow: 0 12px 36px rgba(0,113,227,0.18);' : ''}">
+                        <div class="card project-card" id="site-card-${item.id}" onclick="openProjectReport('${item.id}')" style="cursor:pointer; display:flex; flex-direction:column; min-width:min(340px, 88vw); max-width:360px; ${isBudgetMatch ? 'border: 2px solid var(--accent); box-shadow: 0 12px 36px rgba(0,113,227,0.18);' : ''}">
                             <div class="card-img-wrapper" id="site-card-img-${item.id}" data-preview-id="${item.id}">
                                 <img src="${imgSrc}" alt="${safeName}" loading="lazy" class="project-card-img" onerror="this.src='/static/img/placeholder.jpg'">
                                 <span class="badge sale" style="position:absolute; top:12px; left:12px; background:${isBudgetMatch ? '#34C759' : 'var(--accent)'}; color:#fff; font-weight:700; font-size:11px; padding:4px 10px; border-radius:20px;">${isBudgetMatch ? '⭐ BÜTÇENİZE UYGUN' : 'LANSMAN PROJESİ'}</span>
@@ -4381,6 +4456,18 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 const walk = (x - startX) * 2;
                 track.scrollLeft = scrollLeft - walk;
             });
+            track.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - track.offsetLeft;
+                scrollLeft = track.scrollLeft;
+            }, { passive: true });
+            track.addEventListener('touchend', () => { isDown = false; });
+            track.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                const x = e.touches[0].pageX - track.offsetLeft;
+                const walk = (x - startX) * 2;
+                track.scrollLeft = scrollLeft - walk;
+            }, { passive: true });
         }
 
         // Filter Logic
@@ -5119,6 +5206,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 modal.style.display = 'flex';
                 modal.style.opacity = '1';
                 modal.style.visibility = 'visible';
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
                 if(typeof gsap !== 'undefined') {
                     const container = modal.querySelector('.modal-container');
                     if(container) gsap.fromTo(container, { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
@@ -5137,6 +5226,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 }
                 modal.style.display = 'none';
                 document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
             }
         }
 
@@ -5211,7 +5301,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 imgWrapper.innerHTML = `
                     <div style="position:relative; width:100%; height:100%; background:#000; overflow:hidden;">
                         <button onclick="event.stopPropagation(); resetCardMedia('${id}', '${imgSrc}')" style="position:absolute; top:8px; right:8px; z-index:20; background:rgba(0,0,0,0.8); color:#fff; border:none; padding:5px 12px; border-radius:14px; font-size:11px; font-weight:700; cursor:pointer; backdrop-filter:blur(6px); display:inline-flex; align-items:center; gap:5px;" title="Görsele Dön"><i class="fa-solid fa-xmark"></i> Görsele Dön</button>
-                        <video controls autoplay style="width:100%; height:100%; object-fit:cover; display:block;">
+                        <video controls autoplay playsinline webkit-playsinline muted style="width:100%; height:100%; object-fit:cover; display:block;">
                             <source src="${cloudUrl}" type="video/mp4">
                         </video>
                     </div>
@@ -5230,7 +5320,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 imgWrapper.innerHTML = `
                     <div style="position:relative; width:100%; height:100%; background:#000; overflow:hidden;">
                         <button onclick="event.stopPropagation(); resetCardMedia('${id}', '${imgSrc}')" style="position:absolute; top:8px; right:8px; z-index:20; background:rgba(0,0,0,0.8); color:#fff; border:none; padding:5px 12px; border-radius:14px; font-size:11px; font-weight:700; cursor:pointer; backdrop-filter:blur(6px); display:inline-flex; align-items:center; gap:5px;" title="Görsele Dön"><i class="fa-solid fa-xmark"></i> Görsele Dön</button>
-                        <video controls autoplay loop style="width:100%; height:100%; object-fit:cover; display:block;">
+                        <video controls autoplay loop playsinline webkit-playsinline muted style="width:100%; height:100%; object-fit:cover; display:block;">
                             <source src="${slideshowUrl}" type="video/mp4">
                         </video>
                     </div>
@@ -5357,7 +5447,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 modal.style.opacity = '1';
                 modal.style.visibility = 'visible';
                 modal.style.pointerEvents = 'auto';
-                // document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
             }
         }
 
@@ -5871,10 +5962,10 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 <p style="margin-bottom:1rem;"><strong>Coldwell Banker VIP Ekosistemi</strong> bünyesinde lüks konut, markalı lansman projeleri ve ticari gayrimenkul alanında yatırımcılara profesyonel danışmanlık hizmeti sunmaktayım.</p>
                 <p style="margin-bottom:1rem;">Gayrimenkul sektörünün dinamik yapısını, hukuki süreçlerin güvenilirliğini ve müşteri memnuniyetini merkeze alan bir anlayışla hareket ediyorum. Yılların getirdiği mesleki birikim, analitik bakış açısı ve saha tecrübemle; mülkünüzü en doğru değerle pazarlamak veya hayalinizdeki yatırımı gerçeğe dönüştürmek için yanınızdayım.</p>
                 <p style="margin-bottom:1.5rem;">Piyasa analizlerinden hedef kitle belirlemeye, doğru pazarlama stratejilerinden müzakere süreçlerine kadar her detayı titizlikle yöneterek zamanınızı ve sermayenizi en verimli şekilde değerlendirmenizi sağlıyorum.</p>
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-top:1rem;">
-                    <img src="/static/img/s2.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
-                    <img src="/static/img/s3.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
-                    <img src="/static/img/s4.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
+                <div class="about-modal-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-top:1rem;">
+                    <img src="/static/img/s2.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
+                    <img src="/static/img/s3.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
+                    <img src="/static/img/s4.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
                 </div>
             </div>
         </div>
@@ -5895,7 +5986,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 </div>
             </div>
             <div id="videoPlayerContainer" style="position:relative; width:100%; padding-top:56.25%; background:#000;">
-                <video id="projectVideo" controls autoplay style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; display:none;"></video>
+                <video id="projectVideo" controls autoplay playsinline webkit-playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; display:none;"></video>
                 <iframe id="projectDriveIframe" src="" allow="autoplay; encrypted-media" allowfullscreen style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"></iframe>
             </div>
             <div style="padding:1rem 1.5rem; background:#242426; display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08);">
