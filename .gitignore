@@ -52,7 +52,6 @@ token.pickle
 drive_state.json
 watch_state.json
 youtube_state.json
-nexa_embedding_cache.json
 *.jsonl
 
 # Media binaries (100% Zero-Storage Cloud Preview)
