@@ -509,7 +509,7 @@ _LOCATION_KEYWORDS = ("ulaşım", "aks", "yakınlık", "nerede", "çevre", "hast
 
 # Y5/B9: Ollama 8K context'e sığmayan dev global bağlam için üst sınır
 # (Gemini 1M context destekliyor; kırpma yalnızca 8K yollardaki taşmayı önlemek için güvenlik bandı)
-MAX_PROMPT_CHARS = 20000
+MAX_PROMPT_CHARS = 12000
 
 
 def _trim_middle(text, limit=MAX_PROMPT_CHARS):

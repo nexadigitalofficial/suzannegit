@@ -389,7 +389,7 @@ def api_nexa_ai_chat():
         rag_reply = None
         try:
             future = executor.submit(cognitive_chat, message, project=project, history=history)
-            rag_reply = future.result(timeout=15.0)
+            rag_reply = future.result(timeout=30.0)
         except Exception:
             rag_reply = None
         finally:
