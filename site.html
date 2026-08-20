@@ -91,7 +91,7 @@
         }
 
         .section-title {
-            font-size: 42px;
+            font-size: clamp(28px, 4.5vw, 42px);
             font-weight: 300;
             margin-bottom: 0.8rem;
             letter-spacing: -0.8px;
@@ -100,7 +100,7 @@
         }
 
         .section-subtitle {
-            font-size: 17px;
+            font-size: clamp(15px, 2.2vw, 18px);
             color: var(--text-secondary);
             margin-bottom: 2.5rem;
             font-weight: 300;
@@ -367,7 +367,7 @@
         }
 
         .hero-giant-title {
-            font-size: 72px;
+            font-size: clamp(42px, 6vw, 72px);
             font-weight: 300;
             line-height: 1.08;
             color: var(--text-primary);
@@ -377,7 +377,7 @@
         }
 
         .hero-subtitle {
-            font-size: 20px;
+            font-size: clamp(16px, 2.5vw, 20px);
             font-weight: 300;
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
@@ -782,7 +782,7 @@
         }
 
         .card-title {
-            font-size: 18px;
+            font-size: clamp(16px, 2.2vw, 19px);
             font-weight: 600;
             margin-bottom: 0.4rem;
             display: -webkit-box;
@@ -793,7 +793,7 @@
         }
 
         .project-card .card-title {
-            font-size: 19px;
+            font-size: clamp(17px, 2.3vw, 20px);
         }
 
         .card-developer {
@@ -957,15 +957,19 @@
         }
 
         .chip {
-            padding: 0.65rem 1.3rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 980px;
             background: var(--bg);
             border: 1px solid var(--border);
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            min-height: 44px; /* HIG compliant touch target */
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .chip:hover {
@@ -1816,8 +1820,8 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.9);
             border: none;
@@ -1828,6 +1832,8 @@
             z-index: 10;
             font-size: 18px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            min-width: 44px;
+            min-height: 44px;
         }
 
         /* Video Modal */
@@ -2231,7 +2237,7 @@
             text-align: left;
         }
         .hero-banner-title {
-            font-size: 42px;
+            font-size: clamp(28px, 5vw, 42px);
             font-weight: 800;
             letter-spacing: -1px;
             line-height: 1.18;
@@ -2239,7 +2245,7 @@
             margin-bottom: 0.85rem;
         }
         .hero-banner-subtitle {
-            font-size: 16px;
+            font-size: clamp(15px, 2.2vw, 17px);
             color: var(--text-secondary);
             font-weight: 400;
             line-height: 1.6;
@@ -2258,6 +2264,66 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 1rem;
+        }
+
+        /* Mobile Sticky CTA Bar - Hero actions always accessible */
+        .hero-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.98) 20%, #FFFFFF 100%);
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+        }
+        .hero-sticky-cta.visible {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        }
+        .hero-sticky-cta .btn {
+            min-height: 44px;
+            min-width: 140px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 24px;
+        }
+
+        /* Sticky Filter Summary - Active filters always visible */
+        .filter-sticky-summary {
+            display: none;
+            position: sticky;
+            top: 70px;
+            z-index: 200;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .filter-sticky-summary.visible {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-sticky-summary .chip {
+            min-height: 32px;
+            font-size: 12px;
+            padding: 0.25rem 0.75rem;
+        }
+        .filter-sticky-summary .clear-all {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
         }
         .hero-profile-card {
             background: #FFFFFF;
@@ -2325,7 +2391,7 @@
             background: #FFFFFF;
             border: 1.5px solid rgba(0, 113, 227, 0.18);
             color: var(--text-primary);
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 30px;
             font-size: 14px;
             font-weight: 600;
@@ -2335,6 +2401,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            min-height: 44px; /* HIG compliant touch target */
         }
         .budget-btn:hover {
             border-color: var(--accent);
@@ -2647,6 +2714,13 @@
         </div>
     </section>
 
+    <!-- Mobile Sticky CTA Bar - Hero actions always accessible on scroll -->
+    <div class="hero-sticky-cta" id="heroStickyCta" role="region" aria-label="Hızlı erişim">
+        <a href="#showcase" onclick="switchShowcaseTab('projects')" class="btn btn-primary"><i class="fa-solid fa-building"></i> Projeleri Keşfet</a>
+        <button onclick="toggleChatbot()" class="btn btn-outline" style="background:rgba(94,92,230,0.08); color:#5E5CE6; border-color:rgba(94,92,230,0.3);"><i class="fa-solid fa-brain"></i> Alya'ya Sor</button>
+        <button onclick="openAppointmentModal('', 'Genel Proje Randevusu')" class="btn btn-outline" style="background:rgba(37,211,102,0.1); color:#128C7E; border-color:rgba(37,211,102,0.35);"><i class="fa-brands fa-whatsapp"></i> Randevu</button>
+    </div>
+
     <!-- Showcase Section (Segmented Control: Projeler & Portföy) -->
     <section class="showcase-section container" id="showcase" style="opacity: 1 !important; transform: none !important;">
         <div class="showcase-header-center">
@@ -2714,6 +2788,9 @@
         <!-- Filtering Section -->
     <section class="filter-section section-animate" id="search">
         <div class="container">
+            <!-- Sticky Filter Summary - Active filters always visible on scroll -->
+            <div class="filter-sticky-summary" id="filterStickySummary" role="region" aria-label="Aktif filtreler"></div>
+
             <div class="filter-box" style="background: var(--card-bg); border-radius: var(--radius); padding: 3rem 2.5rem; box-shadow: var(--card-shadow); border: 1px solid var(--border);">
                 <div style="text-align: center; max-width: 650px; margin: 0 auto 3rem;">
                     <span class="section-badge" style="background: rgba(0, 113, 227, 0.08); color: var(--accent); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 13px; letter-spacing: 1px;"><i class="fa-solid fa-sliders"></i> DETAYLI AKILLI ARAMA</span>
@@ -5055,6 +5132,39 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
         // Chatbot Widget Logic
         let isChatOpen = false;
+        
+        // iOS Virtual Keyboard Fix - Visual Viewport API
+        function handleVisualViewport() {
+            const viewport = window.visualViewport;
+            if (!viewport) return;
+            
+            const chatWindow = document.getElementById('chatWindow');
+            const chatInput = document.getElementById('chatInput');
+            
+            viewport.addEventListener('resize', () => {
+                if (chatWindow && chatWindow.classList.contains('open') && chatInput) {
+                    // Adjust chat window position when keyboard appears
+                    const keyboardHeight = window.innerHeight - viewport.height;
+                    if (keyboardHeight > 150) { // Keyboard is open
+                        chatWindow.style.bottom = `${keyboardHeight}px`;
+                    } else {
+                        chatWindow.style.bottom = '';
+                    }
+                }
+            });
+            
+            // Initial check
+            if (viewport) {
+                handleVisualViewport();
+            }
+        }
+
+        // Initialize viewport handler on load
+        if (window.visualViewport) {
+            handleVisualViewport();
+        }
+
+        let isChatOpen = false;
         function toggleChatbot() {
             const win = document.getElementById('chatWindow');
             const btnIcon = document.querySelector('#chatToggleBtn i');
@@ -5071,11 +5181,18 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         {duration:300, easing:'cubic-bezier(.34,1.56,.64,1)'}
                     );
                 }
-                setTimeout(() => { const i = document.getElementById('chatInput'); if (i) i.focus({preventScroll:true}); }, 350);
+                setTimeout(() => { 
+                    const i = document.getElementById('chatInput'); 
+                    if (i) i.focus({preventScroll:true}); 
+                }, 350);
             } else {
                 win.classList.remove('open');
                 if (btn) btn.setAttribute('aria-expanded', 'false');
                 btnIcon.className = 'fa-solid fa-brain';
+                
+                // Reset chat window position on close
+                const win = document.getElementById('chatWindow');
+                if (win) win.style.bottom = '';
             }
         }
 
@@ -6036,6 +6153,94 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             }, { passive: true });
         })();
 
+        // ─── HERO STICKY CTA & FILTER STICKY SUMMARY ───
+        (function initStickyUI() {
+            const heroStickyCta = document.getElementById('heroStickyCta');
+            const filterStickySummary = document.getElementById('filterStickySummary');
+            const filterBox = document.querySelector('.filter-box');
+            const heroSection = document.getElementById('hero');
+            
+            if (!heroStickyCta && !filterStickySummary) return;
+
+            let ticking = false;
+            const heroThreshold = 400; // Hero sticky CTA shows after 400px scroll
+            const filterThreshold = 200; // Filter summary shows earlier
+
+            function updateStickyUI() {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                
+                // Hero Sticky CTA
+                if (heroStickyCta) {
+                    const shouldShow = scrollY > heroThreshold;
+                    if (shouldShow && !heroStickyCta.classList.contains('visible')) {
+                        heroStickyCta.classList.add('visible');
+                    } else if (!shouldShow && heroStickyCta.classList.contains('visible')) {
+                        heroStickyCta.classList.remove('visible');
+                    }
+                }
+
+                // Filter Sticky Summary
+                if (filterStickySummary && filterBox && heroSection) {
+                    const filterBoxRect = filterBox.getBoundingClientRect();
+                    const heroRect = heroSection.getBoundingClientRect();
+                    
+                    // Show when filter box is near top of viewport
+                    const shouldShow = filterBoxRect.top < 100 && filterBoxRect.bottom > 100;
+                    
+                    if (shouldShow && !filterStickySummary.classList.contains('visible')) {
+                        filterStickySummary.classList.add('visible');
+                        // Populate with active filters
+                        updateFilterStickySummary();
+                    } else if (!shouldShow && filterStickySummary.classList.contains('visible')) {
+                        filterStickySummary.classList.remove('visible');
+                    }
+                }
+            }
+
+            function updateFilterStickySummary() {
+                const filterStickySummary = document.getElementById('filterStickySummary');
+                if (!filterStickySummary) return;
+                
+                const activeChips = document.querySelectorAll('.chip.active:not(.budget-btn)');
+                if (activeChips.length === 0) {
+                    filterStickySummary.innerHTML = '';
+                    return;
+                }
+                
+                let html = '<div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">';
+                activeChips.forEach(chip => {
+                    const text = chip.textContent.trim();
+                    html += `<span class="chip" style="padding:0.25rem 0.75rem; font-size:12px; min-height:32px;">${text}</span>`;
+                });
+                html += '<a href="#" class="clear-all" onclick="event.preventDefault(); clearAllFilters()"><i class="fa-solid fa-xmark"></i> Tümünü Temizle</a>';
+                html += '</div>';
+                filterStickySummary.innerHTML = html;
+            }
+
+            function onScroll() {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateStickyUI();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+
+            let ticking = false;
+            window.addEventListener('scroll', onScroll, { passive: true });
+            
+            // Initial check
+            updateStickyUI();
+            
+            // Update filter summary when chips change
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('chip') && !e.target.classList.contains('budget-btn')) {
+                    setTimeout(updateFilterStickySummary, 50);
+                }
+            });
+        })();
+
         window.addEventListener('load', () => {
             forceInitializeAll();
         });
@@ -6047,7 +6252,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         <div class="modal-container" style="background:#fff; width:100%; max-width:560px; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.06), rgba(94,92,230,0.06));">
                 <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> Proje & Danışmanlık Randevusu</h3>
-                <button onclick="closeModal('appointmentModal')" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('appointmentModal')" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="appointmentForm" onsubmit="submitAppointmentForm(event)" style="padding:1.75rem; display:flex; flex-direction:column; gap:1rem;">
                 <input type="hidden" id="aptProjectId" name="project_id" value="">
