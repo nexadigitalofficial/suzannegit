@@ -210,8 +210,11 @@ def ingest_changed(only_ingest=False):
 def _run_importer():
     try:
         import subprocess
+        kwargs = {}
+        if sys.platform == "win32" and hasattr(subprocess, "CREATE_NO_WINDOW"):
+            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
         subprocess.Popen([sys.executable, str(SITE_DIR / "nexa_data_importer.py")],
-                         cwd=str(SITE_DIR), creationflags=subprocess.CREATE_NO_WINDOW)
+                         cwd=str(SITE_DIR), **kwargs)
     except Exception:
         pass
 
