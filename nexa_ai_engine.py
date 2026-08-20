@@ -52,10 +52,13 @@ ILCELER = [
 MAHALLELER = [
     "beytepe", "yaşamkent", "yasamkent", "çakırlar", "cakirlar", "incek", "çayyolu",
     "cayyolu", "ümitköy", "umitkoy", "yalıkavak", "cevizlidere", "eğrikin", "egrikin",
-    "horos", "mustafa kemal", "atatürk", "adil bey",
+    "horos", "mustafa kemal", "atatürk", "adil bey", "esenboğa", "esenboga",
+    "yapracık", "yapracik", "saray", "kızılcaşar", "kizilcasar", "yukarıyurtçu",
+    "yukariyurtcu", "avsallar", "bağlıca", "baglica", "eskişehir", "eskisehir",
+    "dikmen", "lodumu",
 ]
 PROJE_SINONIMLERI = {
-    "angim": "ANGİM BEYTEPE", "angim beytepe": "ANGİM BEYTEPE", "beytepe": "ANGİM BEYTEPE",
+    "angim": "ANGİM BEYTEPE", "angim beytepe": "ANGİM BEYTEPE",
     "ankaport": "ANKAPORT - SARAY", "ankaport saray": "ANKAPORT - SARAY",
     "evart": "EVART YALIKAVAK", "evart yalikavak": "EVART YALIKAVAK",
     "nexa royal": "EVART YALIKAVAK", "nexa royal yalıkavak": "EVART YALIKAVAK",
@@ -78,12 +81,33 @@ PROJE_SINONIMLERI = {
     "excelance beytepe": "EXCELANCE BEYTEPE",
     "verde": "VERDE MONA", "verde mona": "VERDE MONA",
     "vip akademi": "VIP AKADEMİ", "vip akademi 2": "VIP AKADEMİ 2",
-    "vip marin": "VIP MARIN", "marin": "VIP MARIN", "alanya": "VIP MARIN", "avsallar": "VIP MARIN",
+    "vip marin": "VIP MARIN", "marin": "VIP MARIN",
     "vip yaşamkent": "VIP YAŞAMKENT - GÖKDEMİR STAR",
     "vip yenikent": "VIP YENİKENT", "vip çakırlar": "VIP ÇAKIRLAR",
     "vip üniversite": "VIP ÜNİVERSİTE", "viva": "VIVA - START BRAVO",
     "wm prime": "WM - PRIME", "wm": "WM - PRIME",
 }
+
+def parse_down_payment_value(dp_raw: str) -> int:
+    if not dp_raw:
+        return 0
+    t = dp_raw.lower().strip()
+    if any(w in t for w in ["peşinatsız", "%0", "0 tl", "0tl"]):
+        return 0
+    m = re.search(r'(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin|k\b)?', t)
+    if not m:
+        return 0
+    val_str = m.group(1).replace('.', '').replace(',', '.')
+    unit = m.group(2) or ""
+    try:
+        num = float(val_str)
+        if unit in ['bin', 'k'] or 'bin' in t:
+            return int(num * 1_000 if num < 10000 else num)
+        elif unit in ['milyon', 'mln', 'm'] or 'milyon' in t:
+            return int(num * 1_000_000 if num < 1000 else num)
+        return int(num) if num > 10000 else int(num * 1_000_000)
+    except Exception:
+        return 0
 
 def norm_text(t):
     s = (t or "").replace("İ", "i").replace("I", "ı").lower()
@@ -553,15 +577,7 @@ def score_item(item, budget, regions, rooms, goals, want_type, named_projects, a
     
     if down_payment_req:
         dp_raw = item.get("down_payment") or ""
-        dp_num = 0
-        m_dp = re.search(r'(\d+(?:[\.,]\d+)?)\s*(?:milyon|bin|tl|₺)?', dp_raw.lower())
-        if m_dp:
-            val_s = m_dp.group(1).replace('.', '').replace(',', '.')
-            try:
-                val = float(val_s)
-                dp_num = val if val > 10000 else val * 1000000
-            except Exception:
-                dp_num = 0
+        dp_num = parse_down_payment_value(dp_raw)
         
         if down_payment_req.get("zero_down"):
             if "0" in dp_raw or "peşinatsız" in dp_raw.lower() or "0%" in dp_raw:

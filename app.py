@@ -15,6 +15,7 @@ import logging
 from datetime import datetime
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from flask import Flask, send_file, send_from_directory, request, jsonify, Response, redirect
 
 try:
@@ -203,6 +204,9 @@ def _migrate_db(db_path):
             ("price_min", "ALTER TABLE projects ADD COLUMN price_min INTEGER"),
             ("price_max", "ALTER TABLE projects ADD COLUMN price_max INTEGER"),
             ("down_payment", "ALTER TABLE projects ADD COLUMN down_payment VARCHAR(100)"),
+            ("installment_terms", "ALTER TABLE projects ADD COLUMN installment_terms VARCHAR(255)"),
+            ("monthly_installment", "ALTER TABLE projects ADD COLUMN monthly_installment INTEGER"),
+            ("delivery_months", "ALTER TABLE projects ADD COLUMN delivery_months INTEGER"),
         ]
         for col, sql in migrations:
             if col not in existing:
@@ -211,6 +215,21 @@ def _migrate_db(db_path):
                     logging.getLogger('nexa.app').info(f"Migration: added column '{col}' to projects")
                 except Exception as e:
                     logging.getLogger('nexa.app').warning(f"Migration skip: {col}: {e}")
+        
+        indexes = [
+            "CREATE INDEX IF NOT EXISTS idx_documents_project_id ON documents(project_id)",
+            "CREATE INDEX IF NOT EXISTS idx_chunks_doc_id ON document_chunks(document_id)",
+            "CREATE INDEX IF NOT EXISTS idx_projects_is_portfolio ON projects(is_portfolio)",
+            "CREATE INDEX IF NOT EXISTS idx_projects_name_nocase ON projects(name COLLATE NOCASE)",
+            "CREATE INDEX IF NOT EXISTS idx_projects_price_num ON projects(price_numeric)",
+            "CREATE INDEX IF NOT EXISTS idx_customers_project_id ON customers(project_id)",
+            "CREATE INDEX IF NOT EXISTS idx_customers_stage ON customers(stage)",
+        ]
+        for idx_sql in indexes:
+            try:
+                cur.execute(idx_sql)
+            except Exception:
+                pass
         conn.commit()
         conn.close()
     except Exception as e:
@@ -220,6 +239,8 @@ _migrate_db(NEXA_DB_PATH)
 
 # ─── SETUP ───
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB limit
+_chat_executor = ThreadPoolExecutor(max_workers=8, thread_name_prefix="nexa_chat")
 PROJELER_DIR = Path(CFG["projeler_dir"])
 STATIC_DIR = BASE_DIR / "static"
 JSON_FILE = BASE_DIR / "projects_map.json"
@@ -347,7 +368,8 @@ def _db_portfolio_listings() -> list:
     """
     try:
         import sqlite3
-        db = sqlite3.connect(f"file:{NEXA_DB_PATH}?mode=ro", uri=True)
+        db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
+        db = sqlite3.connect(db_uri, uri=True)
         db.row_factory = sqlite3.Row
         rows = db.execute(
             "SELECT * FROM projects WHERE COALESCE(is_portfolio,0)=1 ORDER BY id DESC"
@@ -475,22 +497,19 @@ def api_nexa_ai_chat():
         project = None
 
     try:
-        from concurrent.futures import ThreadPoolExecutor, TimeoutError
-        executor = ThreadPoolExecutor(max_workers=1)
         rag_reply = None
         try:
-            future = executor.submit(cognitive_chat, message, project=project, history=history)
-            rag_reply = future.result(timeout=30.0)
+            future = _chat_executor.submit(cognitive_chat, message, project=project, history=history)
+            rag_reply = future.result(timeout=25.0)
         except Exception:
             rag_reply = None
-        finally:
-            executor.shutdown(wait=False, cancel_futures=True)
         if rag_reply:
             mode = "cognitive-rag"
             payload = {
                 "success": True,
                 "response": rag_reply,
                 "projects": cards,
+                "lead_score": result.get("lead_score", 3),
                 "mode": mode,
                 "elapsed_ms": int((time.time() - t0) * 1000),
             }
@@ -505,6 +524,7 @@ def api_nexa_ai_chat():
         "success": True,
         "response": result.get("response", "Nexa AI Analizi tamamlandı."),
         "projects": cards,
+        "lead_score": result.get("lead_score", 3),
         "mode": mode,
         "elapsed_ms": int((time.time() - t0) * 1000),
     }
@@ -608,7 +628,8 @@ def api_nexa_documents():
     folder = request.args.get("folder", type=str)  # D1: kategori adı (string)
     try:
         import sqlite3
-        conn = sqlite3.connect(f"file:{NEXA_DB_PATH}?mode=ro", uri=True)
+        db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
+        conn = sqlite3.connect(db_uri, uri=True)
         conn.row_factory = sqlite3.Row
         if project_id:
             rows = conn.execute(
@@ -657,7 +678,8 @@ def api_nexa_regions():
         from nexa_rag import _load_summaries
         summaries = _load_summaries()
         import sqlite3
-        conn = sqlite3.connect(f"file:{NEXA_DB_PATH}?mode=ro", uri=True)
+        db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
+        conn = sqlite3.connect(db_uri, uri=True)
         conn.row_factory = sqlite3.Row
         rows = conn.execute("""
             SELECT id, name, il, ilce, mahalle, location, description, ada_no, parsel_no,
@@ -695,7 +717,7 @@ def nexa_docs_file(filename):
     target = (base / filename).resolve()
     if base not in target.parents and target != base:
         return "Erişim engellendi", 403
-    if not target.exists():
+    if not target.exists() or not target.is_file():
         return "Dosya bulunamadı", 404
     resp = send_file(str(target))
     resp.headers["Cache-Control"] = "public, max-age=86400"
@@ -761,7 +783,7 @@ def stream_file_response(path: Path, mimetype: str):
             byte2 = int(g[1])
 
     # O6: RFC 7233 — başlangıç dosya sonunu aşarsa 416; bitiş sınırlanır
-    if byte1 >= file_size:
+    if byte1 >= file_size or (byte2 is not None and byte2 < byte1):
         return Response('', 416, headers={
             'Content-Range': f'bytes */{file_size}',
             'Accept-Ranges': 'bytes'})
@@ -891,7 +913,7 @@ def stream_video(project_id):
 
 @app.route("/stream/pdf/<project_id>")
 def stream_pdf(project_id):
-    """watchdog'un ürettiği /stream/pdf/<id> bağlantıları için: projenin ilk PDF'ini servis eder."""
+    """watchdog ve projects_map /stream/pdf/<id> bağlantıları için PDF dosyasını servis eder."""
     if not JSON_FILE.exists():
         return "Map file not found", 404
     with open(JSON_FILE, "r", encoding="utf-8") as f:
@@ -900,17 +922,29 @@ def stream_pdf(project_id):
     if not project:
         return "Project not found", 404
     pre = project.get("presentations") or []
-    if not pre:
-        return "PDF bulunamadı", 404
-    rel = pre[0].get("path") or pre[0].get("filename") or ""
-    if not rel:
-        return "PDF bulunamadı", 404
     base = PROJELER_DIR.resolve()
-    target = (base / rel).resolve()
-    if target != base and base not in target.parents:
-        return "Geçersiz yol", 400
-    if not target.exists() or not target.is_file() or target.suffix.lower() != ".pdf":
+    target = None
+    if pre:
+        folder_name = (project.get("folder_name") or project.get("title") or "").strip().replace("\\", "/").split("/")[-1]
+        rel = pre[0].get("path") or pre[0].get("filename") or ""
+        filename = os.path.basename(rel)
+        # 1. Deneme: projeler / folder_name / filename
+        cand1 = (base / folder_name / filename).resolve()
+        if cand1.exists() and cand1.is_file():
+            target = cand1
+        else:
+            # 2. Deneme: rel doğrudan (projeler/ ön eki temizlenerek)
+            clean_rel = rel.replace("projeler/", "").replace("projeler\\", "")
+            cand2 = (base / clean_rel).resolve()
+            if cand2.exists() and cand2.is_file():
+                target = cand2
+
+    if not target or not target.exists() or not target.is_file() or target.suffix.lower() != ".pdf":
+        drive_url = project.get("drive_pdf_preview") or ""
+        if drive_url.startswith("http"):
+            return redirect(drive_url)
         return "PDF bulunamadı", 404
+
     resp = send_file(str(target), mimetype="application/pdf")
     resp.headers["Cache-Control"] = "public, max-age=604800"
     return resp

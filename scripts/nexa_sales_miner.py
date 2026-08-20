@@ -29,12 +29,22 @@ def sync_sales_knowledge():
     if MAP_FILE.exists():
         projects = json.loads(MAP_FILE.read_text(encoding="utf-8"))
         for p in projects:
-            title = p.get("title") or p.get("name") or ""
-            matched_info = None
-            for s_name, s_data in graph.items():
-                if s_name.lower() == title.lower() or (len(s_name) > 4 and s_name.lower() in title.lower()):
-                    matched_info = s_data
-                    break
+            title = (p.get("title") or p.get("name") or "").strip()
+            matched_info = graph.get(title)
+            if not matched_info:
+                # Case-insensitive exact match
+                t_lower = title.lower()
+                for s_name, s_data in graph.items():
+                    if s_name.strip().lower() == t_lower:
+                        matched_info = s_data
+                        break
+            if not matched_info:
+                # Longest matching key (exact prefix/suffix)
+                sorted_graph = sorted(graph.items(), key=lambda kv: len(kv[0]), reverse=True)
+                for s_name, s_data in sorted_graph:
+                    if s_name.lower() in title.lower() or title.lower() in s_name.lower():
+                        matched_info = s_data
+                        break
             if matched_info:
                 p["price_display"] = matched_info["price_display"]
                 p["price_min"] = matched_info["price_min"]
@@ -109,7 +119,7 @@ def sync_sales_knowledge():
                     ada_no = ?,
                     parsel_no = ?,
                     tkgm_verified = 1
-                WHERE name = ? OR name LIKE ?
+                WHERE name = ?
             """, (
                 data["price_display"],
                 data["price_min"],
@@ -126,8 +136,7 @@ def sync_sales_knowledge():
                 data.get("mahalle", ""),
                 data.get("ada_no", ""),
                 data.get("parsel_no", ""),
-                name,
-                f"%{name}%"
+                name
             ))
         conn.commit()
         conn.close()

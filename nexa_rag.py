@@ -182,6 +182,20 @@ def _read_api_keys():
     return out
 
 
+_key_rot_lock = threading.Lock()
+_key_rotation_idx = 0
+
+def _get_rotated_api_keys():
+    global _key_rotation_idx
+    keys = _read_api_keys()
+    if not keys:
+        return []
+    with _key_rot_lock:
+        idx = _key_rotation_idx % len(keys)
+        _key_rotation_idx += 1
+        return keys[idx:] + keys[:idx]
+
+
 def _merge_summary(name, project_id, summary):
     data = _load_summaries()
     data[name] = {"summary": summary, "project_id": project_id, "ts": time.time()}
@@ -189,7 +203,8 @@ def _merge_summary(name, project_id, summary):
 
 
 def _load_db():
-    return sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    db_uri = f"file:{Path(DB_PATH).resolve().as_posix()}?mode=ro"
+    return sqlite3.connect(db_uri, uri=True)
 
 
 # ─── BELGE BESLEME KALİTESİ (RAG feed) ───
@@ -416,7 +431,7 @@ Kısa, şık ve maddeler halinde yaz. Dokümanda yer almasa bile gerçek coğraf
 
 def _gemini_generate(contents):
     from google import genai
-    keys = _read_api_keys()
+    keys = _get_rotated_api_keys()
     now = time.time()
     with _cache_lock:
         dead = set(_dead_models)
@@ -618,8 +633,15 @@ def cognitive_chat(user_message, project=None, history=None):
         return None
     is_location_query = any(kw in msg.lower() for kw in _LOCATION_KEYWORDS)
 
-    # P8: 5 dk TTL'li yanıt önbelleği — aynı soru Gemini'yi tekrar meşgul etmez
-    cache_key = ("P:" + project["name"]) if project else ("G:" + msg.lower().strip())
+    # P8: 5 dk TTL'li yanıt önbelleği — soru + geçmiş bazlı MD5 anahtarı
+    import hashlib
+    hist_snippet = ""
+    if history:
+        hist_snippet = "|".join([f"{h.get('role')}:{h.get('content') or h.get('text')}" for h in history[-3:] if isinstance(h, dict)])
+    proj_prefix = ("P:" + project["name"]) if project else "GLOBAL"
+    raw_key = f"{proj_prefix}::{msg.lower().strip()}::{hist_snippet}"
+    cache_key = hashlib.md5(raw_key.encode("utf-8")).hexdigest()
+
     with _cache_lock:
         hit = _reply_cache.get(cache_key)
         if hit and time.time() - hit[1] < REPLY_TTL:
@@ -647,16 +669,16 @@ def cognitive_chat(user_message, project=None, history=None):
             history_block = "ÖNCEKİ SOHBET (aynı ziyaretçi, bağlam için kullan; çelişiyorsa son mesaja uy):\n" + "\n".join(turns) + "\n\n"
 
     if project:
-        cached = get_project_summary(project["name"])
-        if cached:
-            return _cached(f"**{project['name']} — Proje Özeti**\n\n{cached}\n\n{CONTACT_LINE}")
-        try:
-            s = build_project_summary(project)
-            if s:
-                _save_summaries(_merge_summary(project["name"], project["id"], s))
-                return _cached(f"**{project['name']} — Proje Özeti**\n\n{s}\n\n{CONTACT_LINE}")
-        except Exception:
-            pass
+        is_broad_overview = (
+            len(msg) < 30 and (
+                msg.lower().strip() in (project["name"].lower(), "özet", "bilgi", "detay", "nedir") or
+                any(w in msg.lower() for w in ["hakkında bilgi", "özeti nedir", "genel bakış", "tanıt"])
+            )
+        )
+        if is_broad_overview and not is_location_query:
+            cached = get_project_summary(project["name"])
+            if cached:
+                return _cached(f"**{project['name']} — Proje Özeti**\n\n{cached}\n\n{CONTACT_LINE}")
         context = build_project_context(project["id"], query=msg)
         geo = ""
         if is_location_query or not context:
