@@ -58,8 +58,8 @@ PROJE_SINONIMLERI = {
     "angim": "ANGİM BEYTEPE", "angim beytepe": "ANGİM BEYTEPE", "beytepe": "ANGİM BEYTEPE",
     "ankaport": "ANKAPORT - SARAY", "ankaport saray": "ANKAPORT - SARAY",
     "evart": "EVART YALIKAVAK", "evart yalikavak": "EVART YALIKAVAK",
-    "nexa royal": "NEXA Royal Yalıkavak", "nexa royal yalıkavak": "NEXA Royal Yalıkavak",
-    "nexa royal yalikavak": "NEXA Royal Yalıkavak", "royal yalıkavak": "NEXA Royal Yalıkavak",
+    "nexa royal": "EVART YALIKAVAK", "nexa royal yalıkavak": "EVART YALIKAVAK",
+    "nexa royal yalikavak": "EVART YALIKAVAK", "royal yalıkavak": "EVART YALIKAVAK",
     "concept bulvar": "CONCEPT BULVAR", "concept": "CONCEPT BULVAR",
     "natura golf": "NATURA GOLF", "natura": "NATURA GOLF",
     "grande": "GRANDE YAŞAMKENT", "grande yaşamkent": "GRANDE YAŞAMKENT",
@@ -78,7 +78,8 @@ PROJE_SINONIMLERI = {
     "excelance beytepe": "EXCELANCE BEYTEPE",
     "verde": "VERDE MONA", "verde mona": "VERDE MONA",
     "vip akademi": "VIP AKADEMİ", "vip akademi 2": "VIP AKADEMİ 2",
-    "vip marin": "VIP MARIN", "vip yaşamkent": "VIP YAŞAMKENT - GÖKDEMİR STAR",
+    "vip marin": "VIP MARIN", "marin": "VIP MARIN", "alanya": "VIP MARIN", "avsallar": "VIP MARIN",
+    "vip yaşamkent": "VIP YAŞAMKENT - GÖKDEMİR STAR",
     "vip yenikent": "VIP YENİKENT", "vip çakırlar": "VIP ÇAKIRLAR",
     "vip üniversite": "VIP ÜNİVERSİTE", "viva": "VIVA - START BRAVO",
     "wm prime": "WM - PRIME", "wm": "WM - PRIME",
@@ -188,24 +189,25 @@ def extract_rooms(text):
     return None
 
 def extract_goals(text):
-    """Yatırım amaçları ve istem tipi (satılık/kiralık)."""
-    t = text.lower()
+    """Yatırım amaçları ve istem tipi (satılık/kiralık/yazlık/villa)."""
+    t = norm_text(text)
     goals = []
-    if "oturum" in t or "yaşam" in t or "yasam" in t or "kendim" in t or "taşınma" in t or "tasinma" in t:
+    if any(w in t for w in ["oturum", "yasam", "kendim", "tasinma"]):
         goals.append("oturum")
-    if "yatırım" in t or "yatirim" in t or "prim" in t or "kazanç" in t or "kazanc" in t or "değer" in t or "deger" in t:
+    if any(w in t for w in ["yatirim", "prim", "kazanc", "deger", "kira getirisi"]):
         goals.append("yatirim")
-    if "kiralık" in t or "kiralik" in t or "kira" in t or "kiracı" in t or "kiraci" in t or "amortisman" in t:
+    if any(w in t for w in ["kiralik", "kira", "kiraci", "amortisman"]):
         goals.append("kiralik")
+    
     want_type = None
-    if "kiralık" in t or "kiralik" in t or "kira" in t:
+    if any(w in t for w in ["kiralik", "kira"]):
         want_type = "Kiralık"
-    elif "satılık" in t or "satilik" in t or "satın" in t or "satin" in t or "alma" in t:
+    elif any(w in t for w in ["satilik", "satin", "alma", "almak"]):
         want_type = "Satılık"
-    if "yazlık" in t or "villa" in t or "villas" in t:
+        
+    if any(w in t for w in ["yazlik", "yazlık", "villa", "villas", "sahil", "deniz", "tatil", "bodrum", "alanya", "antalya", "mugla", "muğla", "yalikavak", "yalıkavak", "mustakil", "müstakil", "marin"]):
         goals.append("yazlık")
-        # Yazılık projesi satılık ilan olarak kabul edilir;
-        # want_type determined below based on listing_type match logic
+        
     return goals, want_type
 
 def extract_ada_parsel(text):
@@ -526,13 +528,24 @@ def score_item(item, budget, regions, rooms, goals, want_type, named_projects, a
             parts.append(f"{want_type} istemiyle uyumlu")
         elif item.get("listing_type"):
             score -= 15
-    # Yazılık (villa) tipi eklenmesi: listing_type "Yazılık" ise +15, degilse -15
-    if "yazlık" in goals and item.get("listing_type"):
-        if item.get("listing_type") == "Yazılık":
-            score += 15
-            parts.append("Yazılık istemiyle uyumlu")
+    # 5) İlan / Konsept Tipi (Yazlık / Villa / Sahil / Tatil)
+    is_summer_property = (
+        ilce in ("bodrum", "yalikavak", "alanya") or
+        il in ("antalya", "mugla") or
+        "villa" in t or "villa" in norm_text(item.get("room_info") or "") or
+        "marin" in t or "yalikavak" in t or "yazlik" in t or "tatil" in t or "evart" in t or
+        item.get("property_category") in ("Villa", "Müstakil", "Yazlık") or
+        item.get("category") in ("Villa", "Yazlık")
+    )
+
+    if "yazlık" in goals:
+        if is_summer_property:
+            score += 55
+            parts.append("Yazlık / Villa / Sahil konseptiyle birebir uyumlu")
+            item["_yazlik_hit"] = True
         else:
-            score -= 10
+            # Şehir içi standart dairelere ceza puanı ver ki yazlık aramasında Çubuk öğrenci dairesi çıkmasın!
+            score -= 25
 
     # 6) TKGM onayı
     if item.get("tkgm_verified"):
@@ -560,9 +573,9 @@ def score_item(item, budget, regions, rooms, goals, want_type, named_projects, a
             score += 20
             parts.append(f"Bölge ortalamasının altında fiyat avantajı sunar")
 
-    # 9) Kriter belirtilmediyse (ör. "En Uygun Projeler") Ankara portföyü öne çıkar
+    # 9) Kriter belirtilmediyse (ör. "En Uygun Projeler") Ankara portföyü öne çıkar (yazlık hariç)
     ankara_scope = (not regions) or (len(regions) == 1 and norm_text(regions[0]) == "ankara")
-    if ankara_scope and not named_projects and not rooms and not budget and not is_cheap_query:
+    if ankara_scope and not named_projects and not rooms and not budget and not is_cheap_query and "yazlık" not in goals:
         if il == "ankara":
             score += 10
             parts.append("Ankara portföyünde öne çıkan proje")
@@ -642,7 +655,11 @@ def process_nexa_query(user_query):
     scored.sort(key=lambda x: -x[0])
 
     cbs = [(s, it, p) for s, it, p in scored if it.get("type") == "project" or it.get("type") == "portfolio"]
-    if regions:
+    if "yazlık" in goals:
+        yazlik_hits = [x for x in cbs if x[1].get("_yazlik_hit")]
+        if yazlik_hits:
+            cbs = yazlik_hits
+    elif regions:
         # Bölge sorulduysa yalnızca o bölgedeki kayıtlar gösterilir (flag bazlı)
         region_hits = [x for x in cbs if x[1].get("_region_hit")]
         if region_hits:

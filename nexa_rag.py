@@ -55,8 +55,9 @@ _FALLBACK_CANONICAL_MATRIX = """- VIP ÜNİVERSİTE: Başlangıç Fiyatı: 1.350
 - ANKAPORT - SARAY: 3.040.000 TL - 8.350.000 TL (1+1, 2+1, 3+1, Saray / Pursaklar).
 - NARÇİN RONYA CITY - 1: 3.400.000 TL - 4.330.000 TL (1+1, 2+1, Yukarıyurtçu / Etimesgut).
 - GÖKDEMİR İMZA: 3.900.000 TL - 8.000.000 TL (1+1, 2+1, 3+1, Kızılcaşar / Gölbaşı).
+- VIP MARIN: 4.100.000 TL - 5.935.000 TL (1+1 ve 2+1 Lüks Sahil/Deniz Rezidansı, Avsallar / Alanya / Antalya).
 - ANGİM BEYTEPE: 4.500.000 TL - 22.890.000 TL (1+1'den 6+1'e, Beytepe / Çankaya).
-- EVART YALIKAVAK: 14.500.000 TL (Lüks Rezidans & Villa, Yalıkavak / Bodrum)."""
+- EVART YALIKAVAK: 14.500.000 TL (Lüks Deniz Manzaralı Villa & Rezidans, Yalıkavak / Bodrum / Muğla)."""
 
 _matrix_cache = {"text": None, "time": 0}
 
@@ -720,10 +721,11 @@ Kullanıcı: {msg}
 
 Kurallar:
 1. Soruyu markalı projelerin verilerine dayanarak cevapla. Kullanıcı kiralık ilan, arsa/villa/daire ilanı istiyorsa KİŞİSEL PORTFÖY İLANLARI bloğundaki gerçek ilanları da öner (fiyat ve lokasyonu birebir ver).
-2. Projeleri tanıtırken her proje için KISA PROJE ÖZETİ formatı kullan: adı — lokasyon — konsept/tipler — fiyat/ödeme özeti — teslim (varsa) — TKGM/ada-parsel. En fazla 5-6 satır/proje.
-3. Karşılaştırma sorularında şık bir Markdown tablosu kullan; rakamları yalnızca veriden al, uydurma.
-4. Bilgi bağlamda yoksa "danışmanımız netleştirecektir" de. İlgisiz sorularda kısa ve nazik bilgilendir.
-5. Markdown formatında, madde ve tablo kullan. Cevabı 500 kelimeyi aşmadan Türkçe yaz.
+2. YAZLIK / SAHİL / TATİL / VİLLA sorularında: Portföyümüzdeki tüm sahil ve yazlık projelerini (Alanya'daki VIP MARIN, Bodrum'daki EVART YALIKAVAK ve İncek'teki müstakil lüks villayı) eksiksiz ve açıkça tanıt. Şehir içi standart daireleri yazlık olarak önerme!
+3. Projeleri tanıtırken her proje için KISA PROJE ÖZETİ formatı kullan: adı — lokasyon — konsept/tipler — fiyat/ödeme özeti — teslim (varsa) — TKGM/ada-parsel. En fazla 5-6 satır/proje.
+4. Karşılaştırma sorularında şık bir Markdown tablosu kullan; rakamları yalnızca veriden al, uydurma.
+5. Bilgi bağlamda yoksa "danışmanımız netleştirecektir" de. İlgisiz sorularda kısa ve nazik bilgilendir.
+6. Markdown formatında, madde ve tablo kullan. Cevabı 500 kelimeyi aşmadan Türkçe yaz.
 Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
 """
         # Y5/B9: dev global bağlam (42K+) Ollama 8K context'e sığmayabilir; ortadan kırp.
