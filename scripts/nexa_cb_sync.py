@@ -223,10 +223,18 @@ def _ensure_columns(conn: sqlite3.Connection):
 
 
 def upsert_ilan(conn: sqlite3.Connection, ilan: dict) -> int:
-    cur = conn.execute(
-        "SELECT id FROM projects WHERE cb_url = ? OR cb_ilan_no = ?",
-        (ilan["cb_url"], ilan["cb_ilan_no"]),
-    )
+    cb_url = ilan.get("cb_url", "")
+    cb_ilan_no = ilan.get("cb_ilan_no", "")
+    if cb_ilan_no:
+        cur = conn.execute(
+            "SELECT id FROM projects WHERE cb_url = ? OR cb_ilan_no = ?",
+            (cb_url, cb_ilan_no),
+        )
+    else:
+        cur = conn.execute(
+            "SELECT id FROM projects WHERE cb_url = ?",
+            (cb_url,),
+        )
     row = cur.fetchone()
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     doc_title, doc_content = build_rag_doc(ilan)

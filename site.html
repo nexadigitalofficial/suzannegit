@@ -4545,7 +4545,8 @@
                     const pNum = item.price_numeric || (item.intelligence && item.intelligence.price) || (item.price_min) || 0;
                     const isBudgetMatch = (activeFilters.priceMin !== null && pNum >= activeFilters.priceMin && pNum <= activeFilters.priceMax);
 
-                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px;"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
+                    const hasVideo = item.has_video !== false && Boolean(item.has_video || item.drive_video_preview || item.promo_video_url || item.cloud_video_url || item.drive_vid_id);
+                    const videoBtn = hasVideo ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px;"><i class="fa-solid fa-play"></i> Tanıtım</button>` : '';
                     const slideshowBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.35); font-size:12px; padding:6px 10px;" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')"><i class="fa-solid fa-images"></i> Slayt</button>`;
                     const reportBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(0,113,227,0.08); color:var(--accent); border-color:rgba(0,113,227,0.25); font-size:12px; padding:6px 10px;" onclick="event.stopPropagation(); openProjectReport('${item.id}')"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
                     const pdfBtn = `<button class="btn btn-outline btn-sm" style="font-size:12px; padding:6px 10px;" onclick="event.stopPropagation(); openPdfPreview('${item.id}')"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
@@ -4561,7 +4562,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                             <div class="card-img-wrapper" id="site-card-img-${item.id}" data-preview-id="${item.id}">
                                 <img src="${imgSrc}" alt="${safeName}" loading="lazy" class="project-card-img" onerror="this.src='/static/img/placeholder.jpg'">
                                 <span class="badge sale" style="position:absolute; top:12px; left:12px; background:${isBudgetMatch ? '#34C759' : 'var(--accent)'}; color:#fff; font-weight:700; font-size:11px; padding:4px 10px; border-radius:20px;">${isBudgetMatch ? '⭐ BÜTÇENİZE UYGUN' : 'LANSMAN PROJESİ'}</span>
-                                <div class="video-play-overlay" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i></div>
+                                ${hasVideo ? `<div class="video-play-overlay" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i></div>` : ''}
                             </div>
                             <div class="card-content" style="padding:1.25rem; display:flex; flex-direction:column; flex-grow:1;">
                                 <h3 class="card-title" style="font-size:18px; font-weight:700; margin-bottom:4px; line-height:1.3;">${safeName}</h3>
@@ -5373,9 +5374,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 clearTimeout(timer);
             }
 
-            removeLoading();
-
             if (!data || data.success === false) {
+                removeLoading();
                 const fallback = (status === 429)
                     ? 'Çok hızlı soru gönderiyorsunuz. Birkaç saniye sonra tekrar deneyin.'
                     : 'Sistem kısa süreliğine meşgul. Bir dakika sonra tekrar deneyin veya Suzanne Hanım\'a doğrudan ulaşın.';
@@ -6439,7 +6439,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 </div>
             </div>
         </div>
-    </script>
+    </div>
 </div>
 </body>
 </html>

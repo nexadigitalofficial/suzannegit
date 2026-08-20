@@ -107,33 +107,114 @@ from nexa_rag import (cognitive_chat, _find_project_by_name, DOCS_DIR as NEXA_DO
 
 # After db connection setup, add safe migration:
 def _migrate_db(db_path):
-    """Add missing columns safely."""
+    """Add missing tables and columns safely."""
     import sqlite3
     import logging
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-    
-    # Ensure projects table exists before migrating
-    cur.execute("CREATE TABLE IF NOT EXISTS projects (id TEXT PRIMARY KEY, title TEXT)")
-    
-    existing = {r[1] for r in cur.execute("PRAGMA table_info(projects)").fetchall()}
-    migrations = [
-        ("featured", "ALTER TABLE projects ADD COLUMN featured INTEGER DEFAULT 0"),
-        ("display_order", "ALTER TABLE projects ADD COLUMN display_order INTEGER DEFAULT 0"),
-        ("price_numeric", "ALTER TABLE projects ADD COLUMN price_numeric INTEGER"),
-        ("price_min", "ALTER TABLE projects ADD COLUMN price_min INTEGER"),
-        ("price_max", "ALTER TABLE projects ADD COLUMN price_max INTEGER"),
-        ("down_payment", "ALTER TABLE projects ADD COLUMN down_payment VARCHAR(100)"),
-    ]
-    for col, sql in migrations:
-        if col not in existing:
-            try:
-                cur.execute(sql)
-                logging.getLogger('nexa.app').info(f"Migration: added column '{col}' to projects")
-            except Exception as e:
-                logging.getLogger('nexa.app').warning(f"Migration skip: {col}: {e}")
-    conn.commit()
-    conn.close()
+    try:
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        
+        # Ensure core tables exist before migrating
+        cur.execute("CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255), title TEXT)")
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS customers (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id INTEGER,
+                name VARCHAR(255),
+                phone VARCHAR(20),
+                email VARCHAR(255),
+                interested_units TEXT,
+                notes TEXT,
+                created_at TIMESTAMP,
+                last_contact TIMESTAMP,
+                stage VARCHAR(50) DEFAULT 'lead',
+                budget VARCHAR(100),
+                assigned_agent VARCHAR(100),
+                firebase_synced INTEGER DEFAULT 0,
+                UNIQUE(project_id, phone)
+            )
+        """)
+        cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_proj_phone ON customers(project_id, phone)")
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS documents (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id INTEGER,
+                doc_type VARCHAR(50),
+                title VARCHAR(255),
+                content TEXT,
+                file_url VARCHAR(500),
+                category VARCHAR(100),
+                created_at TIMESTAMP
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS document_chunks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                document_id INTEGER,
+                chunk_text TEXT,
+                embedding TEXT
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS units (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id INTEGER,
+                unit_type VARCHAR(50),
+                area_m2 FLOAT,
+                price FLOAT,
+                available_count INTEGER,
+                plan_url VARCHAR(500),
+                images TEXT,
+                delivery_date VARCHAR(100)
+            )
+        """)
+        
+        existing = {r[1] for r in cur.execute("PRAGMA table_info(projects)").fetchall()}
+        migrations = [
+            ("name", "ALTER TABLE projects ADD COLUMN name VARCHAR(255)"),
+            ("location", "ALTER TABLE projects ADD COLUMN location VARCHAR(255)"),
+            ("description", "ALTER TABLE projects ADD COLUMN description TEXT"),
+            ("cover_image_url", "ALTER TABLE projects ADD COLUMN cover_image_url VARCHAR(500)"),
+            ("lat", "ALTER TABLE projects ADD COLUMN lat FLOAT"),
+            ("lng", "ALTER TABLE projects ADD COLUMN lng FLOAT"),
+            ("ada_no", "ALTER TABLE projects ADD COLUMN ada_no VARCHAR(50)"),
+            ("parsel_no", "ALTER TABLE projects ADD COLUMN parsel_no VARCHAR(50)"),
+            ("tkgm_verified", "ALTER TABLE projects ADD COLUMN tkgm_verified INTEGER DEFAULT 0"),
+            ("created_at", "ALTER TABLE projects ADD COLUMN created_at TIMESTAMP"),
+            ("il", "ALTER TABLE projects ADD COLUMN il VARCHAR(100)"),
+            ("ilce", "ALTER TABLE projects ADD COLUMN ilce VARCHAR(100)"),
+            ("mahalle", "ALTER TABLE projects ADD COLUMN mahalle VARCHAR(100)"),
+            ("location_accuracy_score", "ALTER TABLE projects ADD COLUMN location_accuracy_score INTEGER DEFAULT 0"),
+            ("location_status", "ALTER TABLE projects ADD COLUMN location_status VARCHAR(50)"),
+            ("location_source", "ALTER TABLE projects ADD COLUMN location_source VARCHAR(255)"),
+            ("reverse_geocoded_address", "ALTER TABLE projects ADD COLUMN reverse_geocoded_address TEXT"),
+            ("is_portfolio", "ALTER TABLE projects ADD COLUMN is_portfolio INTEGER DEFAULT 0"),
+            ("listing_type", "ALTER TABLE projects ADD COLUMN listing_type VARCHAR(50)"),
+            ("property_category", "ALTER TABLE projects ADD COLUMN property_category VARCHAR(100)"),
+            ("price_display", "ALTER TABLE projects ADD COLUMN price_display VARCHAR(100)"),
+            ("room_info", "ALTER TABLE projects ADD COLUMN room_info VARCHAR(50)"),
+            ("net_gross_area", "ALTER TABLE projects ADD COLUMN net_gross_area VARCHAR(100)"),
+            ("cb_ilan_no", "ALTER TABLE projects ADD COLUMN cb_ilan_no VARCHAR(50)"),
+            ("cb_url", "ALTER TABLE projects ADD COLUMN cb_url VARCHAR(500)"),
+            ("cb_last_synced", "ALTER TABLE projects ADD COLUMN cb_last_synced TIMESTAMP"),
+            ("featured", "ALTER TABLE projects ADD COLUMN featured INTEGER DEFAULT 0"),
+            ("display_order", "ALTER TABLE projects ADD COLUMN display_order INTEGER DEFAULT 0"),
+            ("price_numeric", "ALTER TABLE projects ADD COLUMN price_numeric INTEGER"),
+            ("price_min", "ALTER TABLE projects ADD COLUMN price_min INTEGER"),
+            ("price_max", "ALTER TABLE projects ADD COLUMN price_max INTEGER"),
+            ("down_payment", "ALTER TABLE projects ADD COLUMN down_payment VARCHAR(100)"),
+        ]
+        for col, sql in migrations:
+            if col not in existing:
+                try:
+                    cur.execute(sql)
+                    logging.getLogger('nexa.app').info(f"Migration: added column '{col}' to projects")
+                except Exception as e:
+                    logging.getLogger('nexa.app').warning(f"Migration skip: {col}: {e}")
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        logging.getLogger('nexa.app').warning(f"Migration error: {e}")
 
 _migrate_db(NEXA_DB_PATH)
 
@@ -156,7 +237,17 @@ _rate_lock = threading.Lock()
 _rate_hits = {}
 
 
-def _check_rate_limit(ip):
+def _get_client_ip():
+    """Proxy arkasında doğru istemci IP adresini döner."""
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.remote_addr or "0.0.0.0"
+
+
+def _check_rate_limit(ip=None):
+    if ip is None:
+        ip = _get_client_ip()
     now = time.time()
     with _rate_lock:
         # O5: hafıza temizliği — 60 saniyeden eski IP kayıtlarını sil
@@ -348,7 +439,7 @@ def api_projects():
 
 @app.route("/api/nexa-ai-chat", methods=["POST"])
 def api_nexa_ai_chat():
-    client_ip = request.remote_addr or "?"
+    client_ip = _get_client_ip()
     if not _check_rate_limit(client_ip):
         telemetry({"event": "rate_limited", "ip": client_ip})
         return jsonify({"success": False,
@@ -438,7 +529,7 @@ def api_track():
 @app.route("/api/appointments", methods=["POST"])
 def api_appointments():
     """Online randevu ve lead kayıt endpointi."""
-    if not _check_rate_limit(request.remote_addr or "0.0.0.0"):
+    if not _check_rate_limit():
         return jsonify({"success": False, "message": "Çok fazla istek. Lütfen biraz bekleyin."}), 429
     data = request.get_json(silent=True) or {}
     name = (data.get("name") or "").strip()

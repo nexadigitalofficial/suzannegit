@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-NEXA AI v2 — Enhanced Project Analysis Pipeline
-Masaüstü NEXA_PRIME v2 Enterprise veritabanından aktarılan GERÇEK proje/portföy verisiyle çalışır.
+NEXA AI v2 — PROJE ZEKASI ANALİZ PİPERLİNE (FOLDER 3)
+Masaüstü NEXA_PRIME_v2_ENTERPRISE veritabanından aktarılan GERÇEK proje/portföy verisiyle çalışır.
 Her sorgu, bütçe / bölge / oda / amaç kıstaslarına göre GERÇEK puanlanır;
-her proje için kendi verisinden (ilçe, ada/parsel, TKGM onayı, fiyat, oda, alan)
+her proje için kendi verisinden (ilçe, ada/parsel, TKGM onayı, fiyat, oda, alan) üretilen
 farklı gerekçeler (rationale) döndürülür.
-Dialog yöneticisi: niyet tespiti, varlık çıkarma,clarification & context memory desteklidir.
 """
 
 import json
@@ -18,8 +17,8 @@ DATA_FILE = BASE_DIR / "nexa_portfolio_data.json"
 MAP_FILE = BASE_DIR / "projects_map.json"
 
 # ─── VERİ YÜKLEME ───
-import logging
-_eng_logger = logging.getLogger("nexa.engine")
+import logging as _eng_log
+_eng_logger = _eng_log.getLogger("nexa.engine")
 
 def load_portfolio():
     """Öncelik: güncel proje haritası (31 kart); portföy ilanları zengin dosyadan eklenir."""
@@ -50,17 +49,19 @@ ILCELER = [
     "yahşihan", "yahsihan", "keçiören", "kecioren", "mamak", "eryaman", "batıkent",
     "muğla", "mugla", "yalıkavak", "yalikavak",
 ]
-
 MAHALLELER = [
-    "beytepe", "yasamkent", "yasamkent", "çakırlar", "cakirlar", "incek",
-    "çayyolu", "cayyolu", "ümitköy", "umitkoy", "yalıkavak", "cevizlidere",
-    "egrikin", "eğrikin", "horos", "mustafa kemal", "atatürk", "adil bey",
+    "beytepe", "yaşamkent", "yasamkent", "çakırlar", "cakirlar", "incek", "çayyolu",
+    "cayyolu", "ümitköy", "umitkoy", "yalıkavak", "cevizlidere", "eğrikin", "egrikin",
+    "horos", "mustafa kemal", "atatürk", "adil bey",
 ]
-
 PROJE_SINONIMLERI = {
     "angim": "ANGİM BEYTEPE", "angim beytepe": "ANGİM BEYTEPE", "beytepe": "ANGİM BEYTEPE",
     "ankaport": "ANKAPORT - SARAY", "ankaport saray": "ANKAPORT - SARAY",
     "evart": "EVART YALIKAVAK", "evart yalikavak": "EVART YALIKAVAK",
+    "nexa royal": "NEXA Royal Yalıkavak", "nexa royal yalıkavak": "NEXA Royal Yalıkavak",
+    "nexa royal yalikavak": "NEXA Royal Yalıkavak", "royal yalıkavak": "NEXA Royal Yalıkavak",
+    "concept bulvar": "CONCEPT BULVAR", "concept": "CONCEPT BULVAR",
+    "natura golf": "NATURA GOLF", "natura": "NATURA GOLF",
     "grande": "GRANDE YAŞAMKENT", "grande yaşamkent": "GRANDE YAŞAMKENT",
     "gökdemir star": "GÖKDEMİR STAR", "gokdemir star": "GÖKDEMİR STAR",
     "gökdemir imza": "GÖKDEMİR İMZA", "gokdemir imza": "GÖKDEMİR İMZA",
@@ -84,231 +85,120 @@ PROJE_SINONIMLERI = {
 }
 
 def norm_text(t):
-    """Metni normalize eder: küçük harf, Türküceraretler temizler."""
     s = (t or "").replace("İ", "i").replace("I", "ı").lower()
     s = s.replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ü", "u").replace("ö", "o").replace("ç", "c")
     return s.replace("\u0307", "")
 
-# ─── NİYET TESPİTİ ───
-def detect_intent(text):
-    """
-    Kullanıcının mesajını analiz ederek PRIMARY intent ve SECONDARY intent'leri belirler.
-    Returns: (primary_intent, secondary_intents_list, entities_dict)
-    """
+def extract_budget(text):
+    """Bütçe: '5 milyon', '3.5m', '60 bin', '5000000', '5.000.000', '₺5M', '5-10M', '5 buçuk milyon'."""
+    t = text.lower().replace("₺", "")
+    if re.search(r'dolar|euro|usd|eur|\$|€', t):
+        return None
+    rng = re.search(r'(\d[\d.,]*)\s*[-–]\s*(\d[\d.,]*)\s*(?:milyon|mln|m\b|bin|tl)', t)
+    if rng:
+        g0 = rng.group(0)
+        hi = g0[-2:].lower()
+        lo = float(rng.group(1).replace(',', '.') or 0)
+        hi_n = float(rng.group(2).replace(',', '.'))
+        if 'milyon' in g0 or 'mln' in g0 or ('m' in hi and 'bin' not in g0):
+            return {"min": int(lo * 1_000_000), "max": int(hi_n * 1_000_000)}
+        if 'bin' in g0:
+            return {"min": int(lo * 1_000), "max": int(hi_n * 1_000)}
+        return {"min": int(lo), "max": int(hi_n)}
+    is_under = any(w in t for w in ["alti", "altı", "altinda", "altında", "kadar", "gecmeyen", "geçmeyen", "maksimum", "en fazla", "ust limit", "üst limit"])
+    
+    # Tekli: milyon / m / mln / bin
+    m = re.search(r'(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin)', t)
+    if m:
+        num = float(m.group(1).replace(',', '.'))
+        mul = 1_000 if m.group(2) == 'bin' else 1_000_000
+        val = int(num * mul)
+        if is_under:
+            return {"min": 0, "max": val}
+        return {"min": val, "max": None}
+    # M4: "5 buçuk milyon" / "5.5 milyon" (buçuk desteği)
+    m3 = re.search(r'(\d+)\s*(?:buçuk|bucuk)\s*(milyon|mln|m\b|bin)', t)
+    if m3:
+        num = float(m3.group(1)) + 0.5
+        mul = 1_000 if m3.group(2) == 'bin' else 1_000_000
+        val = int(num * mul)
+        if is_under:
+            return {"min": 0, "max": val}
+        return {"min": val, "max": None}
+    # M4: ham büyük sayı (binlik ayraçlı veya düz): "5.000.000", "5000000" — TL şartı yok
+    m2 = re.search(r'((?:\d{1,3}(?:\.\d{3})+|\d{4,}))\s*(?:tl|lira)?', t)
+    if m2:
+        raw = re.sub(r'\D', '', m2.group(1))
+        if len(raw) >= 6:
+            val = int(raw)
+            if is_under:
+                return {"min": 0, "max": val}
+            return {"min": val, "max": None}
+    return None
+
+def extract_region(text):
+    """İlçe + mahalle + proje adı bölge eşleşmeleri."""
     t = norm_text(text)
-    
-    # Intent definitions with keywords
-    intents = {
-        "project_search": ["proje", "ilan", "arayıorum", "bul", "projeler"],
-        "villa_search": ["yazlık", "villa", "villas", "luxury", "premium", "duplex", "vip villa"],
-        "rental_search": ["kiralık", "kiralik", "kira", "kiracı", "kiralama"],
-        "budget_inquiry": ["bütçe", "fiyat", "maliyet", "para", "cost"],
-        "region_inquiry": ["bölge", "il", "ilçe", "nerede", "where", "bolge"],
-        "room_query": ["oda", "odasını", "3+1", "2+1", "1+1", "oda sayısı"],
-        "tkdm_inquiry": ["tkgm", "tapu", "kira assimil"],
-        "comparison": ["karşılaştırma", "farklı mı", "farklı projeler"],
-        "small_talk": ["merhaba", "nasılsın", "günaydın", "hoşça kal", "teşekkür"],
-    }
-    
-    # Score each intent by keyword matches
-    scores = {}
-    for intent, keywords in intents.items():
-        score = sum(1 for w in keywords if w in t)
-        if score > 0:
-            scores[intent] = score
-    
-    # Primary intent: highest score (break ties by predefined order)
-    primary = max(scores.keys(), key=lambda k: (scores[k], list(intents.keys()).index(k))) if scores else "general"
-    
-    # Secondary intents: other intents with score > 0
-    secondary = [k for k, v in scores.items() if k != primary]
-    
-    # Entity extraction
-    entities = extract_all_entities(text)
-    
-    return primary, secondary, entities
+    found = []
+    for ilce in ILCELER:
+        if ilce in t:
+            label = {"cankaya": "Çankaya", "etimesgut": "Etimesgut", "yenimahalle": "Yenimahalle",
+                     "pursaklar": "Pursaklar", "cubuk": "Çubuk", "golbasi": "Gölbaşı",
+                     "sincan": "Sincan", "odunpazari": "Odunpazarı", "bodrum": "Bodrum",
+                     "alanya": "Alanya", "yahsihan": "Yahşihan", "kecioren": "Keçiören",
+                     "mamak": "Mamak", "eryaman": "Eryaman", "batikent": "Batıkent",
+                     "mugla": "Muğla", "yalikavak": "Yalıkavak"}.get(ilce, ilce.capitalize())
+            if label not in found:
+                found.append(label)
+    for mah in MAHALLELER:
+        if mah in t:
+            label = {"beytepe": "Beytepe", "yasamkent": "Yaşamkent", "cakirlar": "Çakırlar",
+                     "incek": "İncek", "cayyolu": "Çayyolu", "umitkoy": "Ümitköy",
+                     "yalikavak": "Yalıkavak", "cevizlidere": "Cevizlidere",
+                     "egrikin": "Eğrikin", "horos": "Horos"}.get(mah, mah.capitalize())
+            if label not in found:
+                found.append(label)
+    return found
 
+def extract_rooms(text):
+    """Oda tipi: '3+1', '4+1', '2 1' (M3: boşluklu yazım desteği)."""
+    m = re.search(r'(\d)\s*\+\s*(\d)', text)
+    if m:
+        return f"{m.group(1)}+{m.group(2)}"
+    m2 = re.search(r'(?<![\d.])([1-9])\s+([1-4])(?![\d])', text)
+    if m2:
+        return f"{m2.group(1)}+{m2.group(2)}"
+    return None
 
-# ─── AĞIRLIKLI SORU SORMA ───
-def generate_clarification_question(missing_fields):
-    """
-    Eksik bilgi gerektendiğinde kullanıcıya sorulacak akıllı soruları üretir.
-    """
-    questions = {
-        "budget": "Bütçeniz ne kadardır? (örnek: 5 milyon TL, 10-15 milyon TL aralığı)",
-        "region": "Hangi bölgeyi tercih ediyorsunuz? (Ankara, Çankaya, Şişli, bodrum vb.)",
-        "rooms": "Kaç oda arıyorsunuz? (1+1, 2+1, 3+1 vb.)",
-        "property_type": "Hangı tipi arıyorsunuz? (daire, villa,_ofis)",
-        "timeframe": "Projeniz ne zaman teslim edilecek? (hemen, 3 ay, 6 ay vb.)",
-    }
-    
-    questions_list = []
-    for field in missing_fields:
-        if field in questions:
-            questions_list.append(questions[field])
-    
-    if len(questions_list) == 1:
-        return questions_list[0]
-    elif len(questions_list) == 2:
-        return f"{questions_list[0]} ve {questions_list[1]}?"
-    elif len(questions_list) >= 3:
-        return "Lütfen aşağıdaki bilgileri giriniz: " + "; ".join(questions_list[:3])
-    else:
-        return "Lütfen ekstra bilgi giriniz."
+def extract_goals(text):
+    """Yatırım amaçları ve istem tipi (satılık/kiralık)."""
+    t = text.lower()
+    goals = []
+    if "oturum" in t or "yaşam" in t or "yasam" in t or "kendim" in t or "taşınma" in t or "tasinma" in t:
+        goals.append("oturum")
+    if "yatırım" in t or "yatirim" in t or "prim" in t or "kazanç" in t or "kazanc" in t or "değer" in t or "deger" in t:
+        goals.append("yatirim")
+    if "kiralık" in t or "kiralik" in t or "kira" in t or "kiracı" in t or "kiraci" in t or "amortisman" in t:
+        goals.append("kiralik")
+    want_type = None
+    if "kiralık" in t or "kiralik" in t or "kira" in t:
+        want_type = "Kiralık"
+    elif "satılık" in t or "satilik" in t or "satın" in t or "satin" in t or "alma" in t:
+        want_type = "Satılık"
+    if "yazlık" in t or "villa" in t or "villas" in t:
+        goals.append("yazlık")
+        # Yazılık projesi satılık ilan olarak kabul edilir;
+        # want_type determined below based on listing_type match logic
+    return goals, want_type
 
+def extract_ada_parsel(text):
+    """Sorgudaki ada/parsel numarası: 4-7 haneli bağımsız tam sayı.
+    Bütçe kalıpları birim (milyon/bin) istediği için çakışmaz; para birimi olanlar elenir."""
+    t = text.replace("₺", " ").replace("TL", " ").replace("$", " ").replace("€", " ")
+    t = re.sub(r'\d[\d.,]*\s*(?:milyon|mln|bin|ay|gün|hafta)', ' ', t, flags=re.I)
+    hits = re.findall(r'(?<![\d.])(\d{4,7})(?![\d])', t)
+    return [h for h in hits if h not in ("0",)][:3]
 
-# ─── CONTEXT YÖNETİCİ ───
-class ConversationContext:
-    """Kullanıcı ile yapılan etkileşimi hafızalandır ve ileriye taşır."""
-    def __init__(self):
-        self.budget = None
-        self.region = None
-        self.rooms = None
-        self.property_type = None
-        self.want_type = None
-        self.goals = []
-        self.conversation_history = []
-        
-    def update(self, **kwargs):
-        for k, v in kwargs.items():
-            setattr(self, k, v)
-    
-    def add_history(self, user_msg, bot_resp):
-        self.conversation_history.append({"user": user_msg, "bot_resp": bot_resp})
-        # Keep only last 8 exchanges to manage memory
-        if len(self.conversation_history) > 8:
-            self.conversation_history = self.conversation_history[-8:]
-
-# ─── VARLIK ÇIKARIMI ───
-def extract_all_entities(text):
-    """Metinden tüm çıkarılabilir varlığı (entities) çeker."""
-    t = norm_text(text)
-    entities = {}
-    
-    # Budget extraction
-    budget = extract_budget(text)
-    if budget:
-        entities["budget"] = budget
-    
-    # Region extraction
-    region = extract_region(text)
-    if region:
-        entities["region"] = region
-    
-    # Room count
-    rooms = extract_rooms(text)
-    if rooms:
-        entities["rooms"] = rooms
-    
-    # Property type detection
-    prop_type = detect_property_type(t)
-    if prop_type:
-        entities["property_type"] = prop_type
-    
-    # TKGM status
-    tkdm_keywords = ["tkgm", "tapu", "kira assimil"]
-    if any(k in t for k in tkdm_keywords):
-        entities["tkdm"] = True
-    
-    # Timeframe
-    timeframe_keywords = ["hemen", "bu ay", "bu yil", "yarın", "bu hafta", "3 ay", "6 ay", "teslim"]
-    tfound = [kw for kw in timeframe_keywords if kw in t]
-    if tfound:
-        entities["timeframe"] = tfound[0]
-    
-    return entities
-
-# ─── ... (diğer fonksiyonlar devam eder) ---
-# extract_budget, extract_region, extract_rooms, extract_goals, extract_ada_parsel, 
-# extract_keywords_and_projects, score_item, build_project_context, build_global_context
-# ve diğer fonksiyonlar ORİGİNAL kodla korunmalıdır.
-
-# ─── SON TESTLER ───
-if __name__ == "__main__":
-    import io, sys
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-    tests = [
-        "Ankara'da 3+1 proje arıyorum, bütçem 5 milyon",
-        "Çankaya İlanları",
-        "En Uygun Projeler",
-        "Kiralık ofis arıyorum Çankaya'da bütçem 60 bin",
-        "5-10M yatırım için lüks proje önerir misin?",
-        "Gölbaşı'nda arsa veya villa var mı?",
-        "MONZA MOON hakkında bilgi ver",
-    ]
-    for t in tests:
-        print("=" * 70)
-        print("SORU:", t)
-        # process_nexa_query would be called here in the original code
-        print("(test modu - process_nexa_query kullanılmıyor)")
-def process_nexa_query(user_query):
-    try:
-        items = load_portfolio()
-    except Exception:
-        items = []
-    q = user_query.strip()
-    ql = norm_text(q)
-
-    budget = extract_budget(q)
-    regions = extract_region(q)
-    rooms = extract_rooms(q)
-    goals, want_type = extract_goals(q)
-    named_projects = extract_keywords_and_projects(q)
-    ada_parsel = extract_ada_parsel(q)
-
-    # Lead Qualification Scoring (1-10)
-    lead_score = 3
-    if any(w in ql for w in ["gormek", "randevu", "bu hafta", "yerinde", "satin al", "arayin", "gorusmek", "ofisiniz"]):
-        lead_score = 9  # HOT LEAD
-    elif any(w in ql for w in ["butcem", "odeme", "pesinat", "taksit", "kredi", "vade", "nakit"]):
-        lead_score = 7  # SERIOUS LEAD
-    elif any(w in ql for w in ["fiyat", "kac para", "teslim", "ne zaman", "m2", "kac daire"]):
-        lead_score = 5  # CURIOUS LEAD
-    else:
-        lead_score = 3  # DISCOVERY
-
-    scored = []
-    for it in items:
-        it["_query_raw"] = q
-        # Kişisel portföy ilanları yalnızca kiralık isteminde skorlanır (kiralık envanter botta görünür)
-        if it.get("type") == "portfolio" and want_type != "Kiralık":
-            continue
-        s, parts = score_item(it, budget, regions, rooms, goals, want_type, named_projects, ada_parsel)
-        scored.append((s, it, parts))
-    scored.sort(key=lambda x: -x[0])
-
-    cbs = [(s, it, p) for s, it, p in scored if it.get("type") == "project" or it.get("type") == "portfolio"]
-    if regions:
-        # Bölge sorulduysa yalnızca o bölgedeki kayıtlar gösterilir (flag bazlı)
-        region_hits = [x for x in cbs if x[1].get("_region_hit")]
-        if region_hits:
-            cbs = region_hits
-    if named_projects:
-        # Proje adı ile sorulduysa yalnızca adı geçen projeler gösterilir (flag bazlı)
-        name_hits = [x for x in cbs if x[1].get("_name_hit")]
-        if name_hits:
-            cbs = name_hits
-    if ada_parsel:
-        # Ada/parsel sorulduysa o parsellik kayıtlar kesin önceliklidir
-        ada_hits = [x for x in cbs if x[1].get("_ada_hit")]
-        if ada_hits:
-            cbs = ada_hits
-    cb_matches = cbs[:3]
-
-    rental_notice = ""
-    if want_type == "Kiralık":
-        kiralik_var = any(it.get("type") == "portfolio" and it.get("listing_type") == "Kiralık"
-                          for it in items)
-        if kiralik_var:
-            rental_notice = ("\n_Not: Portföyümüzde kiralık ilanlarımız mevcut "
-                             "(ör. 56.000 ₺/ay kiralık rezidans); isterseniz onları gösterebilirim, "
-                             "aşağıdaki satılık projelerimiz de yatırım amaçlı değerlendirilebilir._")
-        else:
-            rental_notice = ("\n_Not: Kiralık envanterimiz şu an sistemde yer almıyor; aşağıdaki "
-                             "satılık projeler yatırım amaçlı değerlendirilebilir._")
-
-    # Rapor başlığı
-    
 def extract_keywords_and_projects(text):
     """Kullanıcının sorgusunda adı geçen projeler (M7: kısa sinonim, uzun eşleşmenin parçasıysa elenir)."""
     t = norm_text(text)
@@ -334,6 +224,113 @@ def extract_keywords_and_projects(text):
                     if other != name and other not in out and suffix in other:
                         out.append(other)
     return list(dict.fromkeys(out))
+
+
+# ─── NİYET TESPİTİ VE DİYALOG YÖNETİMİ ───
+def detect_property_type(text):
+    """Metinden emlak kategorisini tespit eder."""
+    t = norm_text(text)
+    if any(w in t for w in ["villa", "yazlik", "yazlık", "mustakil"]):
+        return "Villa"
+    if any(w in t for w in ["ofis", "buro", "ticari", "isyeri", "işyeri", "dukkan", "dükkan"]):
+        return "Ticari / Ofis"
+    if any(w in t for w in ["arsa", "tarla", "parsel", "bahce", "bahçe"]):
+        return "Arsa"
+    if any(w in t for w in ["rezidans", "residence"]):
+        return "Rezidans"
+    if any(w in t for w in ["daire", "konut", "ev", "apartman", "kat"]):
+        return "Konut / Daire"
+    return None
+
+
+def detect_intent(text):
+    """Kullanıcının mesajını analiz ederek niyetleri ve çıkarılan varlıkları belirler."""
+    t = norm_text(text)
+    intents = {
+        "project_search": ["proje", "ilan", "ariyorum", "arıyorum", "bul", "projeler"],
+        "villa_search": ["yazlik", "yazlık", "villa", "villas", "luxury", "premium", "duplex", "vip villa"],
+        "rental_search": ["kiralik", "kiralık", "kira", "kiraci", "kiracı", "kiralama"],
+        "budget_inquiry": ["butce", "bütçe", "fiyat", "maliyet", "para", "cost"],
+        "region_inquiry": ["bolge", "bölge", "il", "ilce", "ilçe", "nerede", "where"],
+        "room_query": ["oda", "odasini", "3+1", "2+1", "1+1", "oda sayisi"],
+        "tkdm_inquiry": ["tkgm", "tapu", "parsel", "ada"],
+        "small_talk": ["merhaba", "selam", "gunaydin", "günaydın", "iyi gunler", "tesekkur", "teşekkür"],
+    }
+    scores = {}
+    for intent, keywords in intents.items():
+        score = sum(1 for w in keywords if w in t)
+        if score > 0:
+            scores[intent] = score
+    primary = max(scores.keys(), key=lambda k: (scores[k], list(intents.keys()).index(k))) if scores else "general"
+    secondary = [k for k, v in scores.items() if k != primary]
+    entities = extract_all_entities(text)
+    return primary, secondary, entities
+
+
+def generate_clarification_question(missing_fields):
+    """Eksik bilgi gerektiğinde kullanıcıya sorulacak akıllı soruları üretir."""
+    questions = {
+        "budget": "Bütçeniz ne kadardır? (örnek: 5 milyon TL, 10-15 milyon TL aralığı)",
+        "region": "Hangi bölgeyi tercih ediyorsunuz? (Ankara, Çankaya, Beytepe, Bodrum vb.)",
+        "rooms": "Kaç oda arıyorsunuz? (1+1, 2+1, 3+1 vb.)",
+        "property_type": "Hangi tipi arıyorsunuz? (daire, villa, ofis, arsa)",
+        "timeframe": "Projeniz ne zaman teslim edilsin? (hemen, 3 ay, 6 ay vb.)",
+    }
+    q_list = [questions[f] for f in missing_fields if f in questions]
+    if len(q_list) == 1:
+        return q_list[0]
+    elif len(q_list) == 2:
+        return f"{q_list[0]} ve {q_list[1]}?"
+    elif len(q_list) >= 3:
+        return "Lütfen şu bilgileri belirtiniz: " + "; ".join(q_list[:3])
+    return "Size en uygun portföyü seçebilmem için bütçe ve bölge tercihinizi paylaşabilir misiniz?"
+
+
+class ConversationContext:
+    """Kullanıcı etkileşim geçmişini yönetir."""
+    def __init__(self):
+        self.budget = None
+        self.region = None
+        self.rooms = None
+        self.property_type = None
+        self.want_type = None
+        self.goals = []
+        self.conversation_history = []
+
+    def update(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+    def add_history(self, user_msg, bot_resp):
+        self.conversation_history.append({"user": user_msg, "bot_resp": bot_resp})
+        if len(self.conversation_history) > 8:
+            self.conversation_history = self.conversation_history[-8:]
+
+
+def extract_all_entities(text):
+    """Metinden tüm çıkarılabilir varlıkları çeker."""
+    t = norm_text(text)
+    entities = {}
+    budget = extract_budget(text)
+    if budget:
+        entities["budget"] = budget
+    region = extract_region(text)
+    if region:
+        entities["region"] = region
+    rooms = extract_rooms(text)
+    if rooms:
+        entities["rooms"] = rooms
+    prop_type = detect_property_type(t)
+    if prop_type:
+        entities["property_type"] = prop_type
+    if any(k in t for k in ["tkgm", "tapu", "parsel", "ada"]):
+        entities["tkgm"] = True
+    timeframe_keywords = ["hemen", "bu ay", "bu yil", "yarin", "bu hafta", "3 ay", "6 ay", "teslim"]
+    tfound = [kw for kw in timeframe_keywords if kw in t]
+    if tfound:
+        entities["timeframe"] = tfound[0]
+    return entities
+
 
 # ─── PUANLAMA ───
 def _norm_price_num(raw):
