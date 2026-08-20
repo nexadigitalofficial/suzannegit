@@ -2521,7 +2521,7 @@
             .filter-chips { gap: 8px !important; }
             .section-badge { padding: 5px 12px !important; }
 
-            /* Alya — thumb zone ortalamasi */
+            /* Mira — thumb zone ortalamasi */
             .chatbot-widget { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; bottom: calc(100px + env(safe-area-inset-bottom)) !important; }
             .chat-toggle { width: 60px !important; height: 60px !important; font-size: 24px !important; }
             .toggle-tip { display: none !important; }
@@ -2666,7 +2666,7 @@
                             <i class="fa-solid fa-building"></i> Projeleri Keşfet
                         </a>
                         <button onclick="toggleChatbot()" class="btn btn-outline" style="padding:12px 22px; font-size:15px; font-weight:700; background:rgba(94,92,230,0.08); color:#5E5CE6; border-color:rgba(94,92,230,0.3);">
-                            <i class="fa-solid fa-brain"></i> Alya'ya Soru Sor
+                            <i class="fa-solid fa-brain"></i> Mira'ya Soru Sor
                         </button>
                         <button onclick="openAppointmentModal('', 'Genel Proje Randevusu')" class="btn btn-outline" style="padding:12px 22px; font-size:15px; font-weight:700; background:rgba(37,211,102,0.1); color:#128C7E; border-color:rgba(37,211,102,0.35);">
                             <i class="fa-brands fa-whatsapp"></i> Randevu Al
@@ -2718,7 +2718,7 @@
     <!-- Mobile Sticky CTA Bar - Hero actions always accessible on scroll -->
     <div class="hero-sticky-cta" id="heroStickyCta" role="region" aria-label="Hızlı erişim">
         <a href="#showcase" onclick="switchShowcaseTab('projects')" class="btn btn-primary"><i class="fa-solid fa-building"></i> Projeleri Keşfet</a>
-        <button onclick="toggleChatbot()" class="btn btn-outline" style="background:rgba(94,92,230,0.08); color:#5E5CE6; border-color:rgba(94,92,230,0.3);"><i class="fa-solid fa-brain"></i> Alya'ya Sor</button>
+        <button onclick="toggleChatbot()" class="btn btn-outline" style="background:rgba(94,92,230,0.08); color:#5E5CE6; border-color:rgba(94,92,230,0.3);"><i class="fa-solid fa-brain"></i> Mira'ya Sor</button>
         <button onclick="openAppointmentModal('', 'Genel Proje Randevusu')" class="btn btn-outline" style="background:rgba(37,211,102,0.1); color:#128C7E; border-color:rgba(37,211,102,0.35);"><i class="fa-brands fa-whatsapp"></i> Randevu</button>
     </div>
 
@@ -3011,7 +3011,7 @@
     <div class="chatbot-widget">
         <button class="chat-toggle" onclick="toggleChatbot()" id="chatToggleBtn" aria-label="Asistan" aria-expanded="false">
             <i class="fa-solid fa-brain"></i>
-            <span class="toggle-tip">Alya — Dijital Asistan'a Sor</span>
+            <span class="toggle-tip">Mira — Dijital Asistan'a Sor</span>
         </button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
@@ -3020,7 +3020,7 @@
                     <span class="status-dot"></span>
                 </div>
                 <div class="chat-title">
-                    <h4>Alya</h4>
+                    <h4>Mira</h4>
                     <p><span class="live-dot"></span> Proje Rehberi • Çevrimiçi</p>
                 </div>
                 <div class="chat-waves"><span></span><span></span><span></span><span></span><span></span></div>
@@ -6062,8 +6062,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     const tooltip = document.querySelector('.chat-toggle-tooltip, .toggle-tip');
                     if (tooltip) tooltip.textContent = `${name} — Dijital Asistan'a Sor`;
                     document.querySelectorAll('.hero-cta-btn, .chatbot-widget .hero-cta-btn, .chat-title h4, button').forEach(btn => {
-                        if (btn.textContent.includes("Alya'ya") || btn.textContent.includes("Ala'ya")) {
-                            btn.innerHTML = btn.innerHTML.replace(/Alya|Ala/g, name);
+                        if (btn.textContent.includes("Mira'ya") || btn.textContent.includes("Mira")) {
+                            btn.innerHTML = btn.innerHTML.replace(/Mira/g, name);
                         }
                     });
                 }

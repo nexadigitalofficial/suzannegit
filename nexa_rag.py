@@ -656,7 +656,7 @@ def cognitive_chat(user_message, project=None, history=None):
                 project.get("mahalle") or "", project["name"])
         canonical_matrix = _build_canonical_matrix()
         system = f"""
-Sen Nexa / Alya — Gayrimenkul Satış Operasyon Sistemi'nin kıdemli lüks yatırım danışmanısın.
+Sen Nexa / Mira — Gayrimenkul Satış Operasyon Sistemi'nin kıdemli lüks yatırım danışmanısın.
 
 CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ (BU VERİLERİ KESİNLİKLE BİREBİR KULLAN, ASLA DEĞİŞTİRME VEYA UYDURMA):
 {canonical_matrix}

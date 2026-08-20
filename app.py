@@ -493,7 +493,7 @@ def api_config():
     """Genel sistem konfigürasyonu."""
     return jsonify({
         "success": True,
-        "assistant_name": CFG.get("assistant_display_name", "Alya"),
+        "assistant_name": CFG.get("assistant_display_name", "Mira"),
         "default_agent": {
             "name": "Yiğit Narin",
             "title": "Gayrimenkul Mühendisi & VIP Proje Danışmanı",
@@ -507,7 +507,7 @@ def api_config():
 @app.route("/healthz")
 def healthz():
     return jsonify({"status": "ok", "service": "nexa-cb-vip",
-                    "assistant": CFG.get("assistant_display_name", "Alya"),
+                    "assistant": CFG.get("assistant_display_name", "Mira"),
                     "time": datetime.now().isoformat(),
                     "port": CFG["port"]})
 
