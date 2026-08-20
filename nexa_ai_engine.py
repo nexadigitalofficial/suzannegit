@@ -18,7 +18,7 @@ DATA_FILE = BASE_DIR / "nexa_portfolio_data.json"
 MAP_FILE = BASE_DIR / "projects_map.json"
 
 # ─── VERİ YÜKLEME ───
-import logging as _eng_log
+import logging
 _eng_logger = logging.getLogger("nexa.engine")
 
 def load_portfolio():
