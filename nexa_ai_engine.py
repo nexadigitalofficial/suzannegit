@@ -181,6 +181,10 @@ def extract_goals(text):
         want_type = "Kiralık"
     elif "satılık" in t or "satilik" in t or "satın" in t or "satin" in t or "alma" in t:
         want_type = "Satılık"
+    if "yazlık" in t or "villa" in t or "villas" in t:
+        goals.append("yazlık")
+        # Yazılık projesi satılık ilan olarak kabul edilir;
+        # want_type determined below based on listing_type match logic
     return goals, want_type
 
 def extract_ada_parsel(text):
@@ -387,12 +391,20 @@ def score_item(item, budget, regions, rooms, goals, want_type, named_projects, a
         score += 8
         parts.append("Guncel fiyat icin danisman bilgi verebilir")
 
-    # 5) İlan tipi (satılık / kiralık)
-    if want_type and item.get("listing_type") == want_type:
-        score += 15
-        parts.append(f"{want_type} istemiyle uyumlu")
-    elif want_type and item.get("listing_type"):
-        score -= 15
+    # 5) İlan tipi (satılık / kiralık / yazılık)
+    if want_type:
+        if item.get("listing_type") == want_type:
+            score += 15
+            parts.append(f"{want_type} istemiyle uyumlu")
+        elif item.get("listing_type"):
+            score -= 15
+    # Yazılık (villa) tipi eklenmesi: listing_type "Yazılık" ise +15, degilse -15
+    if "yazlık" in goals and item.get("listing_type"):
+        if item.get("listing_type") == "Yazılık":
+            score += 15
+            parts.append("Yazılık istemiyle uyumlu")
+        else:
+            score -= 10
 
     # 6) TKGM onayı
     if item.get("tkgm_verified"):

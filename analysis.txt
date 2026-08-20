@@ -1,0 +1,31 @@
+# ANALYSIS: Chatbot "yazlık" filtering issue
+print('=== ANALYSIS: Chatbot yazlık filtering issue ===')
+print()
+
+# Check extract_goals function
+print('1. extract_goals() checks for:')
+print('   - kiralık, kiralik, kira -> want_type = "Kiralık"')
+print('   - satılık, satilik, satın, satin, alma -> want_type = "Satılık"')
+print('   - yazlık, villa -> NOT IN THE FUNCTION')
+print()
+
+# Check score_item type matching
+print('2. score_item() type matching (line 390):')
+print('   if want_type and item.get("listing_type") == want_type:')
+print('       -> +15 points, "{want_type} istemiyle uyumlu"')
+print('   elif want_type and item.get("listing_type"):')
+print('       -> -15 points penalty')
+print()
+print('   BUT: if want_type is None (not recognized), NO scoring happens!')
+print()
+print('3. The real issue:')
+print('   When user says "yazlık istiyorum":')
+print('   - extract_goals() does NOT recognize "yazlık"')
+print('   - want_type remains None')
+print('   - No +15 or -15 type scoring occurs')
+print('   - Projects scored only on budget, region, rooms, etc.')
+print('   - Top 3 scored projects returned (may include non-villa types)')
+print()
+print('4. SOLUTION: Add "yazlık" and "villa" recognition to extract_goals')
+print('   Option A: Add to existing checks')
+print('   Option B: Create new property type category')
