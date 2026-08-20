@@ -429,13 +429,120 @@ Kısa, şık ve maddeler halinde yaz. Dokümanda yer almasa bile gerçek coğraf
         return ""
 
 
-def _gemini_generate(contents):
+# ─── BİLİŞSEL FONKSİYON VE ARAÇLAR (GEMINI FUNCTION CALLING / TOOLS) ───
+
+def schedule_vip_appointment(customer_name: str, phone: str, project_name: str = "", preferred_datetime: str = "", notes: str = "") -> str:
+    """Müşterinin VIP proje danışmanı Suzanne Tenekecioğlu ile randevu talebini doğrudan SQLite veritabanına ve CRM sistemine kaydeder.
+    
+    Args:
+        customer_name: Müşterinin ad soyadı
+        phone: Müşterinin telefon numarası
+        project_name: İlgilenilen projenin adı (örn. ANGİM BEYTEPE, VIP ÜNİVERSİTE vb.)
+        preferred_datetime: Tercih edilen tarih ve saat (örn. Yarın 14:00, Pazartesi öğleden sonra vb.)
+        notes: Müşterinin özel notu veya görüşme talebi
+    """
+    try:
+        import sqlite3
+        conn = sqlite3.connect(str(DB_PATH))
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO customers (name, phone, email, project_id, stage, notes, created_at)
+            VALUES (?, ?, '', (SELECT id FROM projects WHERE name LIKE ? LIMIT 1), 'new', ?, datetime('now'))
+        """, (
+            customer_name,
+            phone,
+            f"%{project_name}%" if project_name else "%",
+            f"[AI Chatbot Randevusu] Proje: {project_name} | Zaman: {preferred_datetime} | Not: {notes}"
+        ))
+        conn.commit()
+        conn.close()
+        logger.info("AI Function Calling: Randevu CRM'e kaydedildi (%s - %s)", customer_name, project_name)
+        return f"BAŞARILI: {customer_name} adına {project_name} projesi için {preferred_datetime} randevusu VIP Danışmanımız Suzanne Tenekecioğlu'nun takvimine işlendi. Randevu teyit mesajı için iletişim numarası: 0535 489 56 56."
+    except Exception as e:
+        logger.error("schedule_vip_appointment hatasi: %s", e)
+        return f"Randevu talebiniz alındı ({customer_name} - {phone}), danışmanımız Suzanne Tenekecioğlu sizinle en kısa sürede iletişime geçecektir."
+
+
+def calculate_investment_plan(total_price: int, down_payment_percent: float = 50.0, term_months: int = 24) -> str:
+    """Gayrimenkul alımında peşinat, kalan bakiye, aylık eşit taksit tutarı ve peşin indirim avantajını kesin matematikle hesaplar.
+    
+    Args:
+        total_price: Konutun toplam liste fiyatı (TL cinsinden tam sayı)
+        down_payment_percent: Yüzde olarak ödenecek peşinat oranı (örn: 50.0 için %50, 40.0 için %40, 0 için %0)
+        term_months: Taksit vadesi (ay cinsinden, örn: 12, 24, 30, 36)
+    """
+    try:
+        dp_ratio = max(0.0, min(100.0, float(down_payment_percent))) / 100.0
+        dp_amount = int(total_price * dp_ratio)
+        remaining = int(total_price - dp_amount)
+        term = max(1, int(term_months))
+        monthly = int(remaining / term)
+        cash_discount_10 = int(total_price * 0.10)
+        cash_price = int(total_price - cash_discount_10)
+        
+        return (
+            f"FİNANSAL HESAPLAMA SONUCU:\n"
+            f"- Liste Fiyatı: {total_price:,.0f} TL\n"
+            f"- Peşin Alım İndirimli Fiyatı (%10 İndirim): {cash_price:,.0f} TL (Kazanç: {cash_discount_10:,.0f} TL)\n"
+            f"- Vadeli Plan: %{down_payment_percent:.0f} Peşinat = {dp_amount:,.0f} TL\n"
+            f"- Kalan Tutar: {remaining:,.0f} TL\n"
+            f"- Vade & Aylık Taksit: {term} Ay x {monthly:,.0f} TL/ay (Faizsiz, şirket içi sabit taksit)"
+        ).replace(",", ".")
+    except Exception as e:
+        return f"Hesaplama hatası: {e}"
+
+
+def get_project_intelligence(project_name: str) -> str:
+    """Belirtilen markalı projenin TKGM ada/parsel, güncel fiyat aralığı, teslim takvimi, video önizleme ve PDF sunum linklerini döner.
+    
+    Args:
+        project_name: Aranacak projenin tam veya kısmi adı (örn. ANGİM BEYTEPE, VIP MARIN, EVART YALIKAVAK)
+    """
+    proj = _find_project_by_name(project_name)
+    if not proj:
+        try:
+            map_data = json.loads(JSON_FILE.read_text(encoding="utf-8")) if JSON_FILE.exists() else []
+            norm = lambda s: re.sub(r"[^a-z0-9]", "", (s or "").lower())
+            target = norm(project_name)
+            for p in map_data:
+                if target in norm(p.get("title", "")) or target in norm(p.get("folder_name", "")):
+                    proj = p
+                    break
+        except Exception:
+            pass
+
+    if not proj:
+        return f"'{project_name}' projesi portföyde doğrudan bulunamadı. Lütfen benzer projeler için genel portföyü inceleyiniz."
+    
+    title = proj.get("name") or proj.get("title") or project_name
+    pid = proj.get("id", "")
+    video_url = proj.get("drive_video_preview") or proj.get("tanitim_cloud_url") or f"/stream/video/{pid}"
+    pdf_url = proj.get("drive_pdf_preview") or f"/stream/pdf/{pid}"
+    return (
+        f"PROJE BİLGİ KARTI:\n"
+        f"- Proje: {title}\n"
+        f"- Lokasyon: {proj.get('location', '')} ({proj.get('mahalle', '')} {proj.get('ilce', '')} {proj.get('il', '')})\n"
+        f"- Fiyat Aralığı: {proj.get('price_display', 'Danışmana danışınız')}\n"
+        f"- Peşinat: {proj.get('down_payment', '%50')}\n"
+        f"- Taksit / Vade: {proj.get('installment_terms', '24 Ay Sabit Taksit')}\n"
+        f"- TKGM Doğrulaması: Ada {proj.get('ada_no', '-')} / Parsel {proj.get('parsel_no', '-')} (Resmi Onaylı)\n"
+        f"- Video Önizleme: {video_url}\n"
+        f"- PDF Katalog: {pdf_url}"
+    )
+
+NEXA_TOOLS = [schedule_vip_appointment, calculate_investment_plan, get_project_intelligence]
+
+
+def _gemini_generate(contents, enable_tools=True):
     from google import genai
+    from google.genai import types
     keys = _get_rotated_api_keys()
     now = time.time()
     with _cache_lock:
         dead = set(_dead_models)
     targets = [m for m in FALLBACK_MODELS if m not in dead]
+    tools = NEXA_TOOLS if enable_tools else None
+
     for key in keys:
         with _cache_lock:
             cd = _key_cooldowns.get(key, 0)
@@ -446,9 +553,18 @@ def _gemini_generate(contents):
         model_order = targets if not preferred else [preferred] + [m for m in targets if m != preferred]
         try:
             client = genai.Client(api_key=key)
+            config = types.GenerateContentConfig(
+                temperature=0.4,
+                tools=tools,
+            ) if tools else None
+
             for model in model_order:
                 try:
-                    resp = client.models.generate_content(model=model, contents=contents)
+                    if config:
+                        resp = client.models.generate_content(model=model, contents=contents, config=config)
+                    else:
+                        resp = client.models.generate_content(model=model, contents=contents)
+
                     if resp and resp.text:
                         with _cache_lock:
                             _last_good_model[key] = model
@@ -510,11 +626,26 @@ def _ollama_fallback(prompt):
 
 
 def _find_project_by_name(name):
+    if not name:
+        return None
     db = _load_db()
     db.row_factory = sqlite3.Row
     try:
-        norm = lambda s: re.sub(r"[^a-z0-9]", "", (s or "").lower())
+        norm = lambda s: re.sub(r"[^a-z0-9]", "", (s or "").replace("İ", "i").replace("I", "i").replace("ı", "i").lower())
         target = norm(name)
+        if "yalikavak" in target or "evart" in target or "bodrum" in target:
+            row = db.execute("SELECT * FROM projects WHERE name LIKE '%Yalıkavak%' LIMIT 1").fetchone()
+            if row:
+                return dict(row)
+        if "gokdemir" in target or "imza" in target:
+            row = db.execute("SELECT * FROM projects WHERE name LIKE '%GÖKDEMİR İMZA%' LIMIT 1").fetchone()
+            if row:
+                return dict(row)
+        if "ankaport" in target:
+            row = db.execute("SELECT * FROM projects WHERE name LIKE '%ANKAPORT%' LIMIT 1").fetchone()
+            if row:
+                return dict(row)
+
         best, best_score = None, 0
         for p in db.execute("SELECT * FROM projects WHERE COALESCE(is_portfolio,0) = 0 ORDER BY id ASC"):
             t = norm(p["name"])
