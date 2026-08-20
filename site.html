@@ -1825,6 +1825,13 @@
             border-radius: var(--radius);
             overflow: hidden;
         }
+        #videoModal .modal-container {
+            max-height: 92vh;
+        }
+        #videoModal .modal-container video,
+        #videoModal .modal-container iframe {
+            max-height: calc(92vh - 120px);
+        }
 
         .video-container {
             width: 100%;
@@ -1989,8 +1996,9 @@
             .about-modal-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
             .chat-messages, .modal-content, .chat-window { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
             .carousel-track { touch-action: pan-x; overscroll-behavior-x: contain; }
-            .video-modal-content { height: 90dvh !important; height: 90vh !important; }
-            .pdf-modal-content { height: 90dvh !important; height: 90vh !important; }
+            #videoModal .modal-container { max-width: 95vw !important; max-height: 85vh !important; }
+            #videoModal .modal-container #videoPlayerContainer { max-height: calc(85vh - 130px) !important; padding-top: 0 !important; height: auto !important; aspect-ratio: 16 / 9; }
+            #pdfModal .modal-container { height: 90dvh !important; height: 90vh !important; }
         }
 
         @media (max-width: 480px) {
@@ -2439,6 +2447,11 @@
             .chat-toggle { width: 60px !important; height: 60px !important; font-size: 24px !important; }
             .toggle-tip { display: none !important; }
             .chat-window { position: fixed !important; left: 16px !important; right: 16px !important; bottom: calc(180px + env(safe-area-inset-bottom)) !important; width: auto !important; max-width: none !important; transform-origin: bottom center !important; }
+            /* Video modal — tam gorunurluk */
+            #videoModal .modal-container { max-width: 96vw !important; max-height: 82vh !important; }
+            #videoModal #videoPlayerContainer { max-height: calc(82vh - 130px) !important; }
+            #videoModal #videoPlayerContainer video,
+            #videoModal #videoPlayerContainer iframe { max-height: 100% !important; object-fit: contain !important; }
         }
 
         @media (max-width: 480px) {
@@ -2463,6 +2476,10 @@
             .filter-step-card > div:first-child { flex-wrap: wrap; gap: 0.5rem !important; }
             .location-auto-badge { margin-left: 0 !important; }
             .step-num { width: 26px !important; height: 26px !important; font-size: 13px !important; }
+            #videoModal .modal-container { max-height: 78vh !important; border-radius: 16px !important; }
+            #videoModal #videoPlayerContainer { max-height: calc(78vh - 110px) !important; }
+            #videoModal .modal-container > div:first-child { padding: 0.75rem 1rem !important; }
+            #videoModal .modal-container > div:last-child { padding: 0.75rem 1rem !important; }
         }
 
         @media (max-width: 360px) {
