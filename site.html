@@ -2521,16 +2521,75 @@
             .filter-chips { gap: 8px !important; }
             .section-badge { padding: 5px 12px !important; }
 
-            /* Mira — thumb zone ortalamasi */
-            .chatbot-widget { left: 50% !important; right: auto !important; transform: translateX(-50%) !important; bottom: calc(100px + env(safe-area-inset-bottom)) !important; }
-            .chat-toggle { width: 60px !important; height: 60px !important; font-size: 24px !important; }
+            /* Mira — thumb zone ergonomisi & tam viewport kontrolü */
+            .chatbot-widget {
+                left: 50% !important;
+                right: auto !important;
+                transform: translateX(-50%) !important;
+                bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
+                z-index: 99999 !important;
+            }
+            .chat-toggle {
+                width: 56px !important;
+                height: 56px !important;
+                font-size: 22px !important;
+                box-shadow: 0 8px 24px rgba(94,92,230,0.4) !important;
+            }
             .toggle-tip { display: none !important; }
-            .chat-window { position: fixed !important; left: 16px !important; right: 16px !important; bottom: calc(180px + env(safe-area-inset-bottom)) !important; width: auto !important; max-width: none !important; transform-origin: bottom center !important; }
-            /* Video modal — tam gorunurluk */
+            .chat-window {
+                position: fixed !important;
+                left: 10px !important;
+                right: 10px !important;
+                bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+                width: auto !important;
+                max-width: none !important;
+                height: min(540px, calc(100dvh - 100px - env(safe-area-inset-top, 0px))) !important;
+                max-height: calc(100dvh - 100px - env(safe-area-inset-top, 0px)) !important;
+                border-radius: 20px !important;
+                box-shadow: 0 12px 40px rgba(0,0,0,0.3) !important;
+                transform-origin: bottom center !important;
+                z-index: 100000 !important;
+            }
+            .chat-window.open {
+                height: min(540px, calc(100dvh - 100px - env(safe-area-inset-top, 0px))) !important;
+                max-height: calc(100dvh - 100px - env(safe-area-inset-top, 0px)) !important;
+            }
+            .floating-wa-btn {
+                bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
+                left: 14px !important;
+                width: 52px !important;
+                height: 52px !important;
+                font-size: 26px !important;
+                z-index: 9999 !important;
+            }
+            .wa-tooltip { display: none !important; }
+
+            /* Video modal — tam görünürlük */
             #videoModal .modal-container { max-width: 96vw !important; max-height: 82vh !important; }
             #videoModal #videoPlayerContainer { max-height: calc(82vh - 130px) !important; }
             #videoModal #videoPlayerContainer video,
             #videoModal #videoPlayerContainer iframe { max-height: 100% !important; object-fit: contain !important; }
+
+            /* iOS Input Zoom Engeli & Dokunma Alanları */
+            input, textarea, select, .chat-input, .chat-lead-input, #filter-keyword-input, #aptProjectName, #aptName, #aptPhone, #aptEmail, #aptDateTime, #aptNotes {
+                font-size: 16px !important;
+            }
+            .budget-btn, .chip, .segment-btn, .btn {
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .apt-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .apt-btns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0.5rem; }
+        }
+
+        @media (max-width: 560px) {
+            .apt-grid-2 { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
+            .apt-btns-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+            .modal-overlay { padding: 0.75rem !important; }
+            .modal-container { border-radius: 18px !important; max-height: 90dvh !important; }
+            #appointmentForm { padding: 1.25rem 1rem !important; }
+            #aboutModal .modal-container, #reportModal .modal-container { max-height: 88dvh !important; }
+            #reportModalBody { padding: 1.25rem 1rem !important; }
         }
 
         @media (max-width: 480px) {
@@ -2542,10 +2601,11 @@
             .hero-banner-section { padding: 4.5rem 0 1rem !important; }
             .hero-giant-title { font-size: 26px !important; }
             .hero-portrait-frame-sm { width: 96px !important; height: 96px !important; }
-            .hero-banner-actions .btn { padding: 12px 16px !important; font-size: 14px !important; }
-            .budget-btn { font-size: 11.5px !important; padding: 7px 10px !important; }
-            .about-compact-card { margin: 1.5rem auto 1.25rem !important; }
-            .card.project-card { min-width: 0 !important; }
+            .hero-banner-actions .btn { padding: 12px 16px !important; font-size: 14px !important; width: 100%; text-align: center; }
+            .hero-banner-actions { flex-direction: column !important; align-items: stretch !important; gap: 0.75rem !important; }
+            .budget-btn { font-size: 12px !important; padding: 8px 12px !important; min-height: 40px; }
+            .about-compact-card { margin: 1.5rem auto 1.25rem !important; padding: 1.25rem 1rem !important; }
+            .card.project-card { min-width: 0 !important; width: calc(100vw - 32px) !important; flex: 0 0 calc(100vw - 32px) !important; }
             .card-price-prominent { font-size: 19px !important; }
             .card-footer .btn { font-size: 12px !important; padding: 8px !important; }
             .why-me-grid > div { padding: 1rem !important; }
@@ -2559,14 +2619,16 @@
             #videoModal #videoPlayerContainer { max-height: calc(78vh - 110px) !important; }
             #videoModal .modal-container > div:first-child { padding: 0.75rem 1rem !important; }
             #videoModal .modal-container > div:last-child { padding: 0.75rem 1rem !important; }
+            .chat-window { left: 6px !important; right: 6px !important; }
         }
 
         @media (max-width: 360px) {
-            .container { padding: 0 0.875rem; }
-            .section-title { font-size: 21px !important; }
-            .hero-banner-title { font-size: 22px !important; }
-            .budget-btn { padding: 6px 8px !important; font-size: 11px !important; }
+            .container { padding: 0 0.75rem; }
+            .section-title { font-size: 20px !important; }
+            .hero-banner-title { font-size: 21px !important; }
+            .budget-btn { padding: 6px 10px !important; font-size: 11px !important; }
             .card-actions { gap: 4px !important; }
+            .chat-window { left: 4px !important; right: 4px !important; }
         }
 
     </style>
@@ -2620,7 +2682,7 @@
     <!-- Fixed Translucent Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#" class="logo" style="display:flex; align-items:center; gap:0.5rem;">
-            <iframe src="https://imgur.com/a/ugA4k8Hembed" style="border:none; height:36px; width:auto; border-radius:8px; overflow:hidden;" allowfullscreen scrolling="no" allow="autoplay" title="Suzanne Logo - Imgur Album"></iframe>
+            <img src="https://i.imgur.com/ugA4k8H.png" alt="Suzanne Tenekecioğlu Logo" style="height:36px; width:auto; object-fit:contain; border-radius:6px;" onerror="this.src='/static/img/suzanne_hero.jpeg'">
             <span style="font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--text-primary); letter-spacing:-0.5px; display:none;">SUZANNE TENEKECİOĞLU</span>
             <span class="logo-dot"></span>
         </a>
@@ -2801,7 +2863,7 @@
                     <!-- Free-text Keyword Instant Search Box -->
                     <div style="position: relative; max-width: 540px; margin: 0 auto;">
                         <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 18px;"></i>
-                        <input type="text" id="filter-keyword-input" oninput="applyFilters()" placeholder="Proje Adı, Geliştirici, Ada/Parsel No veya Bölge yazın..." style="width: 100%; padding: 14px 20px 14px 48px; border-radius: 30px; border: 2px solid rgba(0,113,227,0.2); font-size: 15px; background: rgba(255,255,255,0.9); outline: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,113,227,0.06);" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='rgba(0,113,227,0.2)'">
+                        <input type="text" id="filter-keyword-input" oninput="applyFilters()" placeholder="Proje Adı, Geliştirici, Ada/Parsel No veya Bölge yazın..." style="width: 100%; padding: 14px 20px 14px 48px; border-radius: 30px; border: 2px solid rgba(0,113,227,0.2); font-size: 16px; background: rgba(255,255,255,0.9); outline: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,113,227,0.06);" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='rgba(0,113,227,0.2)'">
                     </div>
                 </div>
 
@@ -6315,45 +6377,45 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         <div class="modal-container" style="background:#fff; width:100%; max-width:560px; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.06), rgba(94,92,230,0.06));">
                 <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> Proje & Danışmanlık Randevusu</h3>
-                <button onclick="closeModal('appointmentModal')" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('appointmentModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="appointmentForm" onsubmit="submitAppointmentForm(event)" style="padding:1.75rem; display:flex; flex-direction:column; gap:1rem;">
                 <input type="hidden" id="aptProjectId" name="project_id" value="">
                 <div>
                     <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">İlgilendiğiniz Proje / Konu</label>
-                    <input type="text" id="aptProjectName" readonly style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.12); background:#f5f5f7; font-size:14px; font-weight:600; color:var(--accent);">
+                    <input type="text" id="aptProjectName" readonly style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.12); background:#f5f5f7; font-size:16px; font-weight:600; color:var(--accent);">
                 </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="apt-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                     <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Adınız Soyadınız *</label>
-                        <input type="text" id="aptName" required placeholder="Adınız Soyadınız" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:14px;">
+                        <input type="text" id="aptName" required placeholder="Adınız Soyadınız" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                     <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Telefon Numaranız *</label>
-                        <input type="tel" id="aptPhone" required placeholder="05XX XXX XX XX" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:14px;">
+                        <input type="tel" id="aptPhone" required placeholder="05XX XXX XX XX" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                 </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="apt-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                     <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">E-posta (Opsiyonel)</label>
-                        <input type="email" id="aptEmail" placeholder="ornek@mail.com" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:14px;">
+                        <input type="email" id="aptEmail" placeholder="ornek@mail.com" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                     <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Tercih Edilen Gün/Saat</label>
-                        <input type="text" id="aptDateTime" placeholder="Örn: Cumartesi 14:00" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:14px;">
+                        <input type="text" id="aptDateTime" placeholder="Örn: Cumartesi 14:00" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                 </div>
                 <div>
                     <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Özel Notunuz</label>
-                    <textarea id="aptNotes" rows="2" placeholder="Ödeme planı, yerinde inceleme veya sunum talebi..." style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:14px; resize:none;"></textarea>
+                    <textarea id="aptNotes" rows="2" placeholder="Ödeme planı, yerinde inceleme veya sunum talebi..." style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; resize:none;"></textarea>
                 </div>
                 <div id="aptStatusMsg" style="display:none; font-size:13px; padding:10px; border-radius:10px; text-align:center;"></div>
                 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:0.5rem;">
-                    <button type="button" onclick="sendDirectWhatsAppAppointment()" class="btn btn-outline" style="background:#25D366; color:#fff; border:none; padding:12px; font-size:14px; font-weight:700; justify-content:center;">
+                <div class="apt-btns-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:0.5rem;">
+                    <button type="button" onclick="sendDirectWhatsAppAppointment()" class="btn btn-outline" style="background:#25D366; color:#fff; border:none; padding:12px; font-size:14px; font-weight:700; justify-content:center; min-height:44px;">
                         <i class="fa-brands fa-whatsapp"></i> WhatsApp ile Randevu
                     </button>
-                    <button type="submit" id="aptSubmitBtn" class="btn btn-primary" style="padding:12px; font-size:14px; font-weight:700; justify-content:center;">
+                    <button type="submit" id="aptSubmitBtn" class="btn btn-primary" style="padding:12px; font-size:14px; font-weight:700; justify-content:center; min-height:44px;">
                         <i class="fa-solid fa-check"></i> Randevuyu Kaydet
                     </button>
                 </div>
@@ -6366,7 +6428,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         <div class="modal-container" style="background:#fff; width:100%; max-width:800px; max-height:85vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:#f8f9fa;">
                 <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);">Suzanne Tenekecioğlu — Özgeçmiş &amp; Vizyon</h3>
-                <button onclick="closeModal('aboutModal')" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('aboutModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div style="padding:2rem; overflow-y:auto; font-size:15px; line-height:1.8; color:var(--text-primary);">
                 <p style="margin-bottom:1rem;"><strong>Coldwell Banker VIP Ekosistemi</strong> bünyesinde lüks konut, markalı lansman projeleri ve ticari gayrimenkul alanında yatırımcılara profesyonel danışmanlık hizmeti sunmaktayım.</p>
@@ -6391,8 +6453,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     <span id="videoDriveBadge" style="background:rgba(66,133,244,0.18); color:#6BA5FF; border:1px solid rgba(66,133,244,0.35); font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; display:inline-flex; align-items:center; gap:5px;"><i class="fa-brands fa-google-drive"></i> Drive Önizleme</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <a id="videoDriveOpenBtn" href="#" target="_blank" class="btn btn-outline btn-sm" style="font-size:12px; padding:6px 12px; color:#fff; border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.06);"><i class="fa-solid fa-arrow-up-right-from-square"></i> Drive'da Aç</a>
-                    <button onclick="closeModal('videoModal')" style="background:rgba(255,255,255,0.12); border:none; color:#fff; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
+                    <a id="videoDriveOpenBtn" href="#" target="_blank" class="btn btn-outline btn-sm" style="font-size:12px; padding:6px 12px; color:#fff; border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.06); min-height:40px; display:inline-flex; align-items:center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Drive'da Aç</a>
+                    <button onclick="closeModal('videoModal')" aria-label="Kapat" style="background:rgba(255,255,255,0.12); border:none; color:#fff; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <div id="videoPlayerContainer" style="position:relative; width:100%; padding-top:56.25%; background:#000;">
@@ -6412,9 +6474,9 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:#f8f9fa;">
                 <h3 id="pdfModalTitle" style="margin:0; font-size:17px; font-weight:700; color:var(--text-primary);">Proje Sunum Dosyası</h3>
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <a id="pdfOpenTabBtn" href="#" target="_blank" class="btn btn-outline btn-sm" style="font-size:13px; padding:6px 12px;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Yeni Sekmede Aç</a>
-                    <a id="pdfDownloadBtn" href="#" target="_blank" class="btn btn-primary btn-sm" style="font-size:13px; padding:6px 12px;"><i class="fa-solid fa-download"></i> İndir</a>
-                    <button onclick="closeModal('pdfModal')" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
+                    <a id="pdfOpenTabBtn" href="#" target="_blank" class="btn btn-outline btn-sm" style="font-size:13px; padding:6px 12px; min-height:40px; display:inline-flex; align-items:center;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Yeni Sekmede Aç</a>
+                    <a id="pdfDownloadBtn" href="#" target="_blank" class="btn btn-primary btn-sm" style="font-size:13px; padding:6px 12px; min-height:40px; display:inline-flex; align-items:center;"><i class="fa-solid fa-download"></i> İndir</a>
+                    <button onclick="closeModal('pdfModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <div id="pdfViewerContainer" style="width:100%; height:100%; background:#f5f5f7; overflow:hidden;"></div>
@@ -6426,7 +6488,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         <div class="modal-container" style="background:#fff; width:100%; max-width:850px; max-height:85vh; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.3);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.05), rgba(94,92,230,0.05));">
                 <h3 id="reportProjectTitle" style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-brain" style="color:var(--accent);"></i> Nexa AI Zeka Raporu</h3>
-                <button onclick="closeModal('reportModal')" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px;"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('reportModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="reportModalBody" style="padding:2rem; overflow-y:auto; font-size:15px; line-height:1.7; color:var(--text-primary);">
                 <!-- Dynamic Markdown Intelligence Report Content -->
