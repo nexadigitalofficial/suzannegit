@@ -2755,8 +2755,8 @@
                 <!-- Sağ Kolon: Suzan Hanım Görseli & Hakkımda Profil Kartı -->
                 <div class="hero-right-card">
                     <div class="hero-profile-card">
-                        <div class="hero-portrait-frame-sm">
-                            <img src="https://i.imgur.com/ugA4k8H.png" alt="Logo" width="800" height="1000" loading="lazy" onerror="this.src='/static/img/suzanne_hero.jpeg'">
+                        <div class="hero-portrait-frame-sm" style="overflow:hidden; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+                            <img src="https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png" alt="Suzanne Tenekecioğlu" width="800" height="1000" loading="eager" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;" onerror="this.src='/static/img/suzanne_hero.jpeg'">
                         </div>
                         <span class="section-badge" style="margin-bottom:4px; font-size:11px;">GAYRİMENKUL DANIŞMANI</span>
                         <h3 style="font-size:20px; font-weight:800; color:var(--text-primary); margin-bottom:2px;">Suzanne Tenekecioğlu</h3>
@@ -2946,7 +2946,7 @@
                         <span id="mindmap-hint" style="font-size:11px; color:var(--text-secondary); margin-left:auto;">Seçimleriniz burada canlı olarak listelenir, WhatsApp ile danışmana iletebilirsiniz.</span>
                     </div>
                     <div id="mindmap-selections" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:0.8rem;"></div>
-                    <div id="mindmap-projects" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;"></div>
+<div id="mindmap-projects" style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto;"></div>
                     <div style="display:flex; gap:0.6rem; margin-top:0.9rem; flex-wrap:wrap; align-items:center;">
                         <button id="mindmap-wa-btn" onclick="mindMapToWhatsApp()" style="background:#25D366; color:#fff; border:none; padding:8px 16px; border-radius:24px; font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px;"><i class="fa-brands fa-whatsapp"></i> Seçimlerimi WhatsApp'a Gönder</button>
                         <span style="font-size:11px; color:var(--text-secondary);" id="mindmap-note"></span>
@@ -2967,7 +2967,7 @@
             <div class="hero-about-grid" style="display:grid; grid-template-columns: minmax(min(340px, 100%), 1fr); gap:3rem; align-items:center;">
                 <div style="text-align:center;">
                     <div class="hero-portrait-frame" style="max-width:280px; margin:0 auto 1.5rem; border-radius:24px; overflow:hidden; box-shadow:0 12px 36px rgba(0,0,0,0.12);">
-                        <img src="/static/img/s1.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:auto; display:block;" width="800" height="1000" loading="lazy" onerror="this.src='/static/img/suzanne_hero.jpeg'">
+                        <img src="https://i.ibb.co/kssB1Ckg/Ekran-g-r-nt-s-2026-08-20-162248.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:auto; display:block;" width="800" height="1000" loading="lazy" onerror="this.src='/static/img/suzanne_hero.jpeg'">
                     </div>
                     <span class="section-badge">GAYRİMENKUL DANIŞMANI</span>
                     <h3 style="font-size:24px; font-weight:700; margin-bottom:4px;">Suzanne Tenekecioğlu</h3>
@@ -3050,7 +3050,7 @@
                     </div>
                 </div>
                 <div class="contact-map">
-                    <img src="/static/img/s5.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; opacity: 0.9;" width="800" height="600" loading="lazy" onclick="openImageModal(this.src)" title="Tam Ekran Görüntüle" onerror="this.src='/static/img/suzanne.jpg'">
+                    <img src="https://i.ibb.co/DgCXv13B/Ekran-g-r-nt-s-2026-08-20-162308.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; border-radius:18px;" width="800" height="600" loading="lazy" onclick="openImageModal(this.src)" title="Tam Ekran Görüntüle" onerror="this.src='/static/img/suzanne.jpg'">
                 </div>
             </div>
         </div>
@@ -3058,31 +3058,35 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
+        <div class="container footer-content">
             <p>Suzanne Tenekecioğlu &copy; 2026. Tüm hakları saklıdır.</p>
             <div class="footer-links">
-                <a href="#">Gizlilik Politikası</a>
-                <a href="#">Kullanım Koşulları</a>
+                <a href="#about">Hakkımda</a>
+                <a href="#showcase">Projeler</a>
+                <a href="#search">Arama</a>
+                <a href="#contact">İletişim</a>
             </div>
         </div>
     </footer>
 
-    <!-- Fixed Floating WhatsApp Button (Bottom-Left Corner) -->
+    <!-- Floating Action Buttons: WhatsApp + AI Chatbot -->
     <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20gayrimenkul%20dan%C4%B1%C5%9Fmanl%C4%B1%C4%9F%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="floating-wa-btn" id="floatingWaBtn" title="WhatsApp ile İletişime Geçin">
         <i class="fa-brands fa-whatsapp"></i>
-        <span class="wa-tooltip">WhatsApp İletişim (+90 535 489 56 56)</span>
+        <span class="wa-tooltip">WhatsApp'tan Yazın</span>
     </a>
 
-    <!-- Interactive Nexa AI Proje Rehberi Floating Chatbot (Bottom-Right Corner) -->
-    <div class="chatbot-widget">
-        <button class="chat-toggle" onclick="toggleChatbot()" id="chatToggleBtn" aria-label="Asistan" aria-expanded="false">
-            <i class="fa-solid fa-brain"></i>
+    <div class="chatbot-widget" id="chatbotWidget">
+        <button class="chat-toggle-orb" onclick="toggleChatbot()" aria-label="Yapay Zeka Danışman" id="chatToggleOrb">
+            <span class="orb-pulse"></span>
+            <div class="orb-core">
+                <i class="fa-solid fa-brain"></i>
+            </div>
             <span class="toggle-tip">Mira — Dijital Asistan'a Sor</span>
         </button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
-                <div class="chat-avatar">
-                    <i class="fa-solid fa-brain"></i>
+                <div class="chat-avatar" style="overflow:hidden; border-radius:50%; border:2px solid var(--accent); width:38px; height:38px; position:relative; flex-shrink:0;">
+                    <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu Asistanı" style="width:100%; height:100%; object-fit:cover; display:block;">
                     <span class="status-dot"></span>
                 </div>
                 <div class="chat-title">
@@ -7290,9 +7294,10 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 <p style="margin-bottom:1rem;">Gayrimenkul sektörünün dinamik yapısını, hukuki süreçlerin güvenilirliğini ve müşteri memnuniyetini merkeze alan bir anlayışla hareket ediyorum. Yılların getirdiği mesleki birikim, analitik bakış açısı ve saha tecrübemle; mülkünüzü en doğru değerle pazarlamak veya hayalinizdeki yatırımı gerçeğe dönüştürmek için yanınızdayım.</p>
                 <p style="margin-bottom:1.5rem;">Piyasa analizlerinden hedef kitle belirlemeye, doğru pazarlama stratejilerinden müzakere süreçlerine kadar her detayı titizlikle yöneterek zamanınızı ve sermayenizi en verimli şekilde değerlendirmenizi sağlıyorum.</p>
                 <div class="about-modal-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-top:1rem;">
-                    <img src="/static/img/s2.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
-                    <img src="/static/img/s3.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
-                    <img src="/static/img/s4.jpeg" alt="Suzanne Tenekecioğlu" style="width:100%; height:140px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)" onerror="this.src='/static/img/suzanne.jpg'">
+                    <img src="https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:150px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)">
+                    <img src="https://i.ibb.co/kssB1Ckg/Ekran-g-r-nt-s-2026-08-20-162248.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:150px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)">
+                    <img src="https://i.ibb.co/DgCXv13B/Ekran-g-r-nt-s-2026-08-20-162308.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:150px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)">
+                    <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:150px; object-fit:cover; border-radius:12px; cursor:pointer;" width="400" height="280" loading="lazy" onclick="openImageModal(this.src)">
                 </div>
             </div>
         </div>
