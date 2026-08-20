@@ -158,8 +158,12 @@ def pull_once():
 def _trigger_ingest():
     try:
         import subprocess
+        import sys as _sys
+        kwargs = {}
+        if _sys.platform == 'win32':
+            kwargs['creationflags'] = subprocess.CREATE_NO_WINDOW
         subprocess.Popen([sys.executable, str(SITE_DIR / "nexa_watchdog.py")],
-                         cwd=str(SITE_DIR), creationflags=subprocess.CREATE_NO_WINDOW)
+                         cwd=str(SITE_DIR), **kwargs)
     except Exception:
         pass
 
