@@ -17,20 +17,29 @@ DATA_FILE = BASE_DIR / "nexa_portfolio_data.json"
 MAP_FILE = BASE_DIR / "projects_map.json"
 
 # ─── VERİ YÜKLEME ───
+import logging as _eng_log
+_eng_logger = _eng_log.getLogger("nexa.engine")
+
 def load_portfolio():
     """Öncelik: güncel proje haritası (31 kart); portföy ilanları zengin dosyadan eklenir."""
     items = []
     if MAP_FILE.exists():
-        with open(MAP_FILE, "r", encoding="utf-8") as f:
-            for it in json.load(f):
-                it = dict(it)
-                it.setdefault("type", "project")
-                items.append(it)
-    if DATA_FILE.exists():
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            for it in json.load(f):
-                if it.get("type") == "portfolio":
+        try:
+            with open(MAP_FILE, "r", encoding="utf-8") as f:
+                for it in json.load(f):
+                    it = dict(it)
+                    it.setdefault("type", "project")
                     items.append(it)
+        except Exception as e:
+            _eng_logger.warning("projects_map.json yuklenemedi: %s", e)
+    if DATA_FILE.exists():
+        try:
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                for it in json.load(f):
+                    if it.get("type") == "portfolio":
+                        items.append(it)
+        except Exception as e:
+            _eng_logger.warning("nexa_portfolio_data.json yuklenemedi (portfoy atlandi): %s", e)
     return items
 
 # ─── NİTELİK ÇIKARIMI ───
