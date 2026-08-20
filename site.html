@@ -2860,10 +2860,10 @@
                     <h2 class="section-title" style="font-size: 38px; font-weight: 700; margin: 0.8rem 0 0.5rem; color: var(--text-primary);">Aradığınızı Bulun</h2>
                     <p class="section-subtitle" style="margin-bottom:1.5rem; color: var(--text-secondary); font-size: 16px;">Fiyat, bölge, oda sayısı, ada/parsel ve Proje Adına göre anlık akıllı arama ve filtreleme.</p>
                     
-                    <!-- Free-text Keyword Instant Search Box -->
+                    <!-- Free-text Keyword Instant Search Box (150ms Debounced) -->
                     <div style="position: relative; max-width: 540px; margin: 0 auto;">
                         <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 18px;"></i>
-                        <input type="text" id="filter-keyword-input" oninput="applyFilters()" placeholder="Proje Adı, Geliştirici, Ada/Parsel No veya Bölge yazın..." style="width: 100%; padding: 14px 20px 14px 48px; border-radius: 30px; border: 2px solid rgba(0,113,227,0.2); font-size: 16px; background: rgba(255,255,255,0.9); outline: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,113,227,0.06);" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='rgba(0,113,227,0.2)'">
+                        <input type="text" id="filter-keyword-input" oninput="debouncedApplyFilters()" placeholder="Proje Adı, Geliştirici, Ada/Parsel No veya Bölge yazın..." style="width: 100%; padding: 14px 20px 14px 48px; border-radius: 30px; border: 2px solid rgba(0,113,227,0.2); font-size: 16px; background: rgba(255,255,255,0.9); outline: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,113,227,0.06);" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='rgba(0,113,227,0.2)'">
                     </div>
                 </div>
 
@@ -4893,6 +4893,12 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             applyFilters();
         }
 
+        let _filterDebounceTimer = null;
+        function debouncedApplyFilters() {
+            clearTimeout(_filterDebounceTimer);
+            _filterDebounceTimer = setTimeout(applyFilters, 150);
+        }
+
         // ─── ZİHİN HARİTASI: seçimlerin canlı rehber özeti (NotebookLM tarzı) ───
         function activeFilterLabels() {
             const labels = [];
@@ -6185,6 +6191,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             } catch(e) { }
         }
 
+        let _isLiveSyncStarted = false;
         function forceInitializeAll() {
             if (typeof fetchAssistantConfig === 'function') fetchAssistantConfig();
             try {
@@ -6205,10 +6212,13 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             generateLocationFilters();
             applyFilters();
 
-            // Fetch live dynamic order from backend
-            fetchProjects();
-            fetchPortfolio();
-}
+            // Fetch live dynamic order from backend once
+            if (!_isLiveSyncStarted) {
+                _isLiveSyncStarted = true;
+                fetchProjects();
+                fetchPortfolio();
+            }
+        }
 
         // Initialize immediately if DOM is ready, otherwise wait for DOMContentLoaded
         function initApp() {
@@ -6233,9 +6243,6 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 ci.addEventListener('input', syncSend);
                 syncSend();
             }
-
-            setTimeout(forceInitializeAll, 100);
-            setTimeout(forceInitializeAll, 500);
         }
 
         if (document.readyState === 'loading') {
@@ -6245,7 +6252,9 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         }
 
         window.addEventListener('load', () => {
-            forceInitializeAll();
+            if (!_isLiveSyncStarted) {
+                forceInitializeAll();
+            }
         });
 
         // ─── CHATBOT SCROLL-REVEAL: Aşağı kaydırınca thumb-zone'a gel ───

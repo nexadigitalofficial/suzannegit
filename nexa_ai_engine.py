@@ -90,47 +90,57 @@ def norm_text(t):
     return s.replace("\u0307", "")
 
 def extract_budget(text):
-    """Bütçe: '5 milyon', '3.5m', '60 bin', '5000000', '5.000.000', '₺5M', '5-10M', '5 buçuk milyon'."""
+    """Bütçe: '5 milyon', '3.5m', '60 bin', '5000000', '5.000.000', '₺5M', '5-10M', '5 buçuk milyon', '$100k', '150 bin USD'."""
     t = text.lower().replace("₺", "")
-    if re.search(r'dolar|euro|usd|eur|\$|€', t):
-        return None
-    rng = re.search(r'(\d[\d.,]*)\s*[-–]\s*(\d[\d.,]*)\s*(?:milyon|mln|m\b|bin|tl)', t)
+    
+    # Döviz kuru çarpanı (USD / EUR)
+    fx_rate = 1.0
+    if re.search(r'dolar|usd|\$', t):
+        fx_rate = 36.5
+    elif re.search(r'euro|eur|avro|€', t):
+        fx_rate = 38.5
+
+    rng = re.search(r'(\d[\d.,]*)\s*[-–]\s*(\d[\d.,]*)\s*(?:milyon|mln|m\b|bin|k\b|tl|usd|eur|\$|€)?', t)
     if rng:
         g0 = rng.group(0)
         hi = g0[-2:].lower()
         lo = float(rng.group(1).replace(',', '.') or 0)
         hi_n = float(rng.group(2).replace(',', '.'))
         if 'milyon' in g0 or 'mln' in g0 or ('m' in hi and 'bin' not in g0):
-            return {"min": int(lo * 1_000_000), "max": int(hi_n * 1_000_000)}
-        if 'bin' in g0:
-            return {"min": int(lo * 1_000), "max": int(hi_n * 1_000)}
-        return {"min": int(lo), "max": int(hi_n)}
+            return {"min": int(lo * 1_000_000 * fx_rate), "max": int(hi_n * 1_000_000 * fx_rate)}
+        if 'bin' in g0 or 'k' in hi:
+            return {"min": int(lo * 1_000 * fx_rate), "max": int(hi_n * 1_000 * fx_rate)}
+        return {"min": int(lo * fx_rate), "max": int(hi_n * fx_rate)}
+    
     is_under = any(w in t for w in ["alti", "altı", "altinda", "altında", "kadar", "gecmeyen", "geçmeyen", "maksimum", "en fazla", "ust limit", "üst limit"])
     
-    # Tekli: milyon / m / mln / bin
-    m = re.search(r'(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin)', t)
+    # Tekli: milyon / m / mln / bin / k
+    m = re.search(r'(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin|k\b)', t)
     if m:
         num = float(m.group(1).replace(',', '.'))
-        mul = 1_000 if m.group(2) == 'bin' else 1_000_000
-        val = int(num * mul)
+        unit = m.group(2)
+        mul = 1_000 if unit in ['bin', 'k'] else 1_000_000
+        val = int(num * mul * fx_rate)
         if is_under:
             return {"min": 0, "max": val}
         return {"min": val, "max": None}
-    # M4: "5 buçuk milyon" / "5.5 milyon" (buçuk desteği)
-    m3 = re.search(r'(\d+)\s*(?:buçuk|bucuk)\s*(milyon|mln|m\b|bin)', t)
+    
+    # "5 buçuk milyon" / "5.5 milyon" (buçuk desteği)
+    m3 = re.search(r'(\d+)\s*(?:buçuk|bucuk)\s*(milyon|mln|m\b|bin|k\b)', t)
     if m3:
         num = float(m3.group(1)) + 0.5
-        mul = 1_000 if m3.group(2) == 'bin' else 1_000_000
-        val = int(num * mul)
+        mul = 1_000 if m3.group(2) in ['bin', 'k'] else 1_000_000
+        val = int(num * mul * fx_rate)
         if is_under:
             return {"min": 0, "max": val}
         return {"min": val, "max": None}
-    # M4: ham büyük sayı (binlik ayraçlı veya düz): "5.000.000", "5000000" — TL şartı yok
-    m2 = re.search(r'((?:\d{1,3}(?:\.\d{3})+|\d{4,}))\s*(?:tl|lira)?', t)
+    
+    # Ham büyük sayı (binlik ayraçlı veya düz): "5.000.000", "5000000"
+    m2 = re.search(r'((?:\d{1,3}(?:\.\d{3})+|\d{4,}))\s*(?:tl|lira|usd|eur|\$|€)?', t)
     if m2:
         raw = re.sub(r'\D', '', m2.group(1))
-        if len(raw) >= 6:
-            val = int(raw)
+        if len(raw) >= 5:
+            val = int(int(raw) * fx_rate)
             if is_under:
                 return {"min": 0, "max": val}
             return {"min": val, "max": None}
@@ -161,13 +171,20 @@ def extract_region(text):
     return found
 
 def extract_rooms(text):
-    """Oda tipi: '3+1', '4+1', '2 1' (M3: boşluklu yazım desteği)."""
-    m = re.search(r'(\d)\s*\+\s*(\d)', text)
+    """Oda tipi: '3+1', '4+1', '2 1', '1+0', 'studio', 'villa', 'dubleks'."""
+    t = text.lower()
+    if "stüdyo" in t or "studio" in t or "1+0" in t or "0+1" in t:
+        return "1+0"
+    m = re.search(r'(\d(?:\.5)?)\s*\+\s*(\d)', text)
     if m:
         return f"{m.group(1)}+{m.group(2)}"
-    m2 = re.search(r'(?<![\d.])([1-9])\s+([1-4])(?![\d])', text)
+    m2 = re.search(r'(?<![\d.])([1-9])\s+([0-4])(?![\d])', text)
     if m2:
         return f"{m2.group(1)}+{m2.group(2)}"
+    if "villa" in t or "villas" in t:
+        return "Villa"
+    if "dubleks" in t or "dublex" in t:
+        return "Dubleks"
     return None
 
 def extract_goals(text):
