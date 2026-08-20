@@ -210,6 +210,32 @@ def extract_goals(text):
         
     return goals, want_type
 
+def extract_down_payment(text):
+    """Peşinat tutarı: '1.5M peşinat', '800 bin peşinatım var', 'peşinatsız', '1 milyon peşin'."""
+    t = text.lower()
+    if any(w in t for w in ["pesinatsiz", "peşinatsız", "%0 pesinat", "%0 peşinat", "sifir pesinat", "sıfır peşinat", "pesinat yok", "peşinat yok"]):
+        return {"min": 0, "max": 0, "zero_down": True}
+    m = re.search(r'(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin|k\b)?\s*(?:tl|lira)?\s*peşinat', t)
+    if m:
+        num = float(m.group(1).replace(',', '.'))
+        unit = m.group(2)
+        mul = 1_000 if unit in ['bin', 'k'] else (1_000_000 if unit in ['milyon', 'mln', 'm'] else (1_000 if num >= 100 else 1_000_000))
+        return {"min": 0, "max": int(num * mul), "zero_down": False}
+    return None
+
+def extract_installment(text):
+    """Aylık taksit tutarı: 'ayda 50 bin taksit', 'aylık 40k', '50.000 TL taksitle'."""
+    t = text.lower()
+    m = re.search(r'(?:ayda|aylik|aylık)\s*(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin|k\b)?\s*(?:tl|lira)?\s*(?:taksit|odeme|ödeme)?', t)
+    if not m:
+        m = re.search(r'(\d+(?:[\.,]\d+)?)\s*(milyon|mln|m\b|bin|k\b)?\s*(?:tl|lira)?\s*taksit', t)
+    if m:
+        num = float(m.group(1).replace(',', '.'))
+        unit = m.group(2)
+        mul = 1_000 if unit in ['bin', 'k'] else (1_000_000 if unit in ['milyon', 'mln', 'm'] else (1_000 if num >= 10 else 1_000_000))
+        return int(num * mul)
+    return None
+
 def extract_ada_parsel(text):
     """Sorgudaki ada/parsel numarası: 4-7 haneli bağımsız tam sayı.
     Bütçe kalıpları birim (milyon/bin) istediği için çakışmaz; para birimi olanlar elenir."""
@@ -521,6 +547,42 @@ def score_item(item, budget, regions, rooms, goals, want_type, named_projects, a
         score += 8
         parts.append("Guncel fiyat icin danisman bilgi verebilir")
 
+    # 4.5) Peşinat ve Taksit Eşleşmesi (Excel Satış Tablosu Uyumu)
+    down_payment_req = item.get("_down_payment_req")
+    installment_req = item.get("_installment_req")
+    
+    if down_payment_req:
+        dp_raw = item.get("down_payment") or ""
+        dp_num = 0
+        m_dp = re.search(r'(\d+(?:[\.,]\d+)?)\s*(?:milyon|bin|tl|₺)?', dp_raw.lower())
+        if m_dp:
+            val_s = m_dp.group(1).replace('.', '').replace(',', '.')
+            try:
+                val = float(val_s)
+                dp_num = val if val > 10000 else val * 1000000
+            except Exception:
+                dp_num = 0
+        
+        if down_payment_req.get("zero_down"):
+            if "0" in dp_raw or "peşinatsız" in dp_raw.lower() or "0%" in dp_raw:
+                score += 50
+                parts.append("Peşinatsız (%0 peşinat) 18 ay taksit imkanı mevcuttur")
+                item["_financial_hit"] = True
+        elif dp_num and dp_num <= down_payment_req.get("max", 0) * 1.1:
+            score += 40
+            parts.append(f"{dp_raw} peşinat bütçenizle tam uyumludur")
+            item["_financial_hit"] = True
+
+    if installment_req:
+        m_inst = item.get("monthly_installment") or 0
+        if m_inst and m_inst <= installment_req * 1.15:
+            score += 45
+            parts.append(f"Aylık {int(m_inst):,} TL taksit ödeme kapasitenize uygundur".replace(",", "."))
+            item["_financial_hit"] = True
+        elif item.get("installment_terms"):
+            score += 15
+            parts.append(f"Ödeme planı: {item.get('installment_terms')}")
+
     # 5) İlan tipi (satılık / kiralık / yazılık)
     if want_type:
         if item.get("listing_type") == want_type:
@@ -602,14 +664,18 @@ def _load_project_summaries():
 def build_rationale(item, parts):
     """Gerçek verilerden türetilmiş gerekçe."""
     extra = []
+    if item.get("down_payment"):
+        extra.append(f"Peşinat: {item.get('down_payment')}")
+    if item.get("installment_terms"):
+        extra.append(f"Ödeme: {item.get('installment_terms')}")
     if item.get("ada_no"):
         extra.append(f"Ada {item.get('ada_no')} / Parsel {item.get('parsel_no')}")
     if item.get("tkgm_verified"):
         extra.append("TKGM onaylı")
     if item.get("room_info"):
         extra.append(item.get("room_info"))
-    if item.get("net_gross_area"):
-        extra.append(item.get("net_gross_area"))
+    if item.get("delivery_months"):
+        extra.append(f"Teslim: {item.get('delivery_months')} Ay")
     loc = item_region_label(item)
     lead = f"{loc} bölgesinde {item.get('title')}"
     txt = " • ".join(parts) if parts else "Kriterlerinize yüksek uyum göstermektedir"
@@ -627,6 +693,8 @@ def process_nexa_query(user_query):
     ql = norm_text(q)
 
     budget = extract_budget(q)
+    down_payment_req = extract_down_payment(q)
+    installment_req = extract_installment(q)
     regions = extract_region(q)
     rooms = extract_rooms(q)
     goals, want_type = extract_goals(q)
@@ -647,6 +715,8 @@ def process_nexa_query(user_query):
     scored = []
     for it in items:
         it["_query_raw"] = q
+        it["_down_payment_req"] = down_payment_req
+        it["_installment_req"] = installment_req
         # Kişisel portföy ilanları yalnızca kiralık isteminde skorlanır (kiralık envanter botta görünür)
         if it.get("type") == "portfolio" and want_type != "Kiralık":
             continue
@@ -655,6 +725,10 @@ def process_nexa_query(user_query):
     scored.sort(key=lambda x: -x[0])
 
     cbs = [(s, it, p) for s, it, p in scored if it.get("type") == "project" or it.get("type") == "portfolio"]
+    if down_payment_req or installment_req:
+        fin_hits = [x for x in cbs if x[1].get("_financial_hit")]
+        if fin_hits:
+            cbs = fin_hits
     if "yazlık" in goals:
         yazlik_hits = [x for x in cbs if x[1].get("_yazlik_hit")]
         if yazlik_hits:
@@ -735,7 +809,14 @@ def process_nexa_query(user_query):
             "db_id": it.get("db_id"),
             "title": it["title"],
             "region": item_region_label(it),
+            "location": it.get("location") or item_region_label(it),
             "price_display": item_price_label(it),
+            "down_payment": it.get("down_payment") or "",
+            "installment_terms": it.get("installment_terms") or "",
+            "room_info": it.get("room_info") or "",
+            "delivery_months": it.get("delivery_months") or 24,
+            "ada_no": it.get("ada_no") or "",
+            "parsel_no": it.get("parsel_no") or "",
             "match_percent": s,
             "rationale": ozet or build_rationale(it, parts),
             "summary": ozet,

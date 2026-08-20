@@ -87,6 +87,14 @@ def _build_canonical_matrix():
                 if down_payment:
                     line += f", Peşinat: {down_payment}"
                 
+                installment_terms = p.get("installment_terms")
+                if installment_terms:
+                    line += f", Ödeme Planı: {installment_terms}"
+                
+                delivery_months = p.get("delivery_months")
+                if delivery_months:
+                    line += f", Teslim: {delivery_months} Ay"
+                
                 parts = []
                 
                 rooms = p.get("rooms") or p.get("room_info")

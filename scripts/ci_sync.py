@@ -89,6 +89,16 @@ def main():
     if not ok:
         any_failed = True
 
+    # 5. Sales & Financial Miner (Excel XLSX & Finansal Bilgi Senkronizasyonu)
+    try:
+        from scripts.nexa_sales_miner import sync_sales_knowledge
+        ok, msg = run_step("Sales Miner", sync_sales_knowledge)
+    except ImportError:
+        ok, msg = False, "Sales Miner modülü bulunamadı (scripts/nexa_sales_miner.py)"
+    results.append((ok, msg))
+    if not ok:
+        any_failed = True
+
     # Özet
     log.info("=" * 60)
     log.info("CI SYNC ÖZET")
