@@ -734,11 +734,15 @@ Cevabı 450 kelimeyi aşmadan Türkçe yaz.
         except Exception:
             pass
         pf_block = "\n".join(pf_lines) if pf_lines else "(portföy ilanı yok)"
+        canonical_matrix = _build_canonical_matrix()
         system = f"""
 Sen Nexa — Bilişkin Gayrimenkul Ekosistemi'nin Baş Portföy & Yatırım Stratejisti AI Danışmanısın (NEXA PRIME v2).
 Tüm portföydeki MARKALI PROJELERİ çapraz analiz eden kıdemli danışmansın.
 
 {history_block}
+CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ (BU VERİLERİ KESİNLİKLE BİREBİR KULLAN, ASLA DEĞİŞTİRME VEYA UYDURMA):
+{canonical_matrix}
+
 {prompt_summaries}
 
 TÜM PORTFÖY RAG BAĞLAMI (proje metadata + kayıtlı doküman özetleri/fiyat listeleri):
@@ -750,7 +754,9 @@ KİŞİSEL PORTFÖY İLANLARI (satılık/kiralık ilan envanteri — soru ilan a
 Kullanıcı: {msg}
 
 Kurallar:
-1. Soruyu markalı projelerin verilerine dayanarak cevapla. Kullanıcı kiralık ilan, arsa/villa/daire ilanı istiyorsa KİŞİSEL PORTFÖY İLANLARI bloğundaki gerçek ilanları da öner (fiyat ve lokasyonu birebir ver).
+1. YATIRIM & TAVSİYE SORULARI ("Ne alayım?", "Yatırım yapmak istiyorum", "Kira getirisi / prim potansiyeli"): 
+   - Kullanıcı açıkça "kiralık daire/ofis arıyorum" demedikçe, yatırım sorularında SATILIK MARKALI PROJELERİ öner.
+   - Bütçeye göre en yüksek prim ve kira getirisi sunan projeleri (Öğrenci/kampüs kira talebi: VIP ÜNİVERSİTE, JOVEN KAMPÜS, WM - PRIME; Prestij/rezidans: ANGİM BEYTEPE, GÖKDEMİR İMZA, ANKAPORT SARAY; Sahil/lüks: EVART YALIKAVAK, VIP MARIN) yatırım gerekçeleriyle (taksit imkanı, peşin alım indirimi, tapu/ada-parsel güvencesi, kiralama hızı) açıkla.
 2. YAZLIK / SAHİL / TATİL / VİLLA sorularında: Portföyümüzdeki tüm sahil ve yazlık projelerini (Alanya'daki VIP MARIN, Bodrum'daki EVART YALIKAVAK ve İncek'teki müstakil lüks villayı) eksiksiz ve açıkça tanıt. Şehir içi standart daireleri yazlık olarak önerme!
 3. Projeleri tanıtırken her proje için KISA PROJE ÖZETİ formatı kullan: adı — lokasyon — konsept/tipler — fiyat/ödeme özeti — teslim (varsa) — TKGM/ada-parsel. En fazla 5-6 satır/proje.
 4. Karşılaştırma sorularında şık bir Markdown tablosu kullan; rakamları yalnızca veriden al, uydurma.
