@@ -2,15 +2,16 @@ name: NEXA Database & RAG Sync
 
 on:
   schedule:
-    - cron: '0 2 * * 1'      # Haftada bir, her Pazartesi 02:00 UTC (TRT 05:00)
-  workflow_dispatch:         # Manuel tetikleme (GitHub Actions sayfasından "Run workflow")
+    - cron: '0 2 * * *'      # Her gün 02:00 UTC (TRT 05:00) tam otonom çalışır
+  workflow_dispatch:         # Manuel tetikleme (isteğe bağlı)
   push:
     paths:
       - 'scripts/ci_sync.py'
+      - 'scripts/nexa_sales_miner.py'
       - '.github/workflows/update_db.yml'
 
 env:
-  PYTHON_VERSION: '3.13'
+  PYTHON_VERSION: '3.11'
   PIP_CACHE_DIR: ~/.cache/pip
 
 permissions:
