@@ -2,7 +2,7 @@ name: NEXA Database & RAG Sync
 
 on:
   schedule:
-    - cron: '0 */6 * * *'    # Her 6 saatte bir (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 2 * * 1'      # Haftada bir, her Pazartesi 02:00 UTC (TRT 05:00)
   workflow_dispatch:         # Manuel tetikleme (GitHub Actions sayfasından "Run workflow")
   push:
     paths:
