@@ -895,35 +895,16 @@ def _run_importer() -> bool:
         return False
 
 
-def _autonomous_sync_loop():
-    """Açılışta importer + CB yenileme; ardından her 30 dakikada bir tekrar."""
-    try:
-        _refresh_cb_listings_bg()
-    except Exception:
-        pass
-    _run_importer()
-    while True:
-        time.sleep(1800)
-        try:
-            _refresh_cb_listings_bg()
-        except Exception:
-            pass
-        try:
-            _run_importer()
-        except Exception:
-            pass
-
-
-def _autonomous_self_healing_daemon():
-    """Arka planda her 15 dakikada bir çalışan otonom self-healing & bütünlük nöbetçisi."""
-    time.sleep(5)  # Sunucu başladıktan 5 saniye sonra ilk denetim
-    while True:
-        try:
-            import nexa_self_healing
-            nexa_self_healing.run_full_self_healing_cycle()
-        except Exception as e:
-            logger.warning("Otonom self-healing hatası: %s", e)
-        time.sleep(900)  # Her 15 dakikada bir periyodik otonom denetim ve iyileştirme
+# ─── OTOMATİK PİPELİNE: GITHUB ACTIONS ÇALIŞTIRIR ───
+# Bu fonksiyonlar sunucuda DAEMON olarak ÇALIŞMAZ.
+# Pipeline (CB sync + importer + self-healing + summaries)
+# her 6 saatte bir GitHub Actions (.github/workflows/update_db.yml)
+# tarafından tetiklenir. Sunucuda sadece API endpoint'leri kalır.
+#
+# Manuel tetikleme için:
+#   POST /api/nexa-sync        → importer + CB sync
+#   POST /api/self-healing/trigger → self-healing
+#   GET  /api/self-healing/status  → health score
 
 
 @app.route("/api/self-healing/status", methods=["GET"])
@@ -1078,32 +1059,11 @@ def admin_rag_meta():
 def index():
     return redirect("/site", code=302)
 
-def _autonomous_youtube_loop():
-    """Drive'da videosu olmayan kartların local videolarını YouTube'a yükler.
-    OAuth token yoksa sessizce bekler (kullanıcı ilk çalıştırmayı elle yapar)."""
-    from pathlib import Path as _P
-    _base = _P(__file__).parent
-    if not (_base / "youtube_token.json").exists():
-        logger.info("youtube token yok — youtube_uploader elle calistirilinca ilk onay verilecek")
-    while True:
-        try:
-            import youtube_uploader
-            cards = json.loads((_base / "projects_map.json").read_text(encoding="utf-8"))
-            todo = [c for c in cards
-                    if not c.get("drive_video_preview") and not c.get("youtube_video_preview")
-                    and youtube_uploader.find_video(c.get("folder_name"))]
-            if todo and (_base / "youtube_token.json").exists():
-                youtube_uploader.main()
-        except Exception as e:
-            logger.warning("youtube upload turu hatasi: %s", e)
-        time.sleep(3600)
-
 
 if __name__ == "__main__":
     logger.info("[START] NEXA CB VIP — http://localhost:%s", CFG["port"])
-    threading.Thread(target=generate_all_project_summaries, daemon=True, name="auto-summaries").start()
-    threading.Thread(target=_autonomous_sync_loop, daemon=True, name="auto-sync").start()
-    threading.Thread(target=_autonomous_self_healing_daemon, daemon=True, name="auto-self-healing").start()
+    # Development modunda sadece watchdog + drive-puller başlar
+    # (CI pipeline: CB sync, importer, self-healing, summaries → GitHub Actions)
     try:
         import nexa_watchdog
         threading.Thread(target=nexa_watchdog.watchdog_loop, daemon=True, name="watchdog").start()
@@ -1114,10 +1074,5 @@ if __name__ == "__main__":
         threading.Thread(target=nexa_drive_puller.drive_loop, daemon=True, name="drive-puller").start()
     except Exception as e:
         logger.warning("drive puller baslatilamadi: %s", e)
-    try:
-        import youtube_uploader
-        threading.Thread(target=_autonomous_youtube_loop, daemon=True, name="youtube-uploader").start()
-    except Exception as e:
-        logger.warning("youtube uploader baslatilamadi: %s", e)
     app.run(host=CFG["host"], port=int(CFG["port"]), debug=False, use_reloader=False, threaded=True)
 
