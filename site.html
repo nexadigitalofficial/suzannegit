@@ -4124,6 +4124,57 @@
   }
     ];
 
+        const EMBEDDED_LISTINGS = [
+  {
+    "id": "cbvip-port-1",
+    "title": "Adil Bey Çankaya Kiralık Prestij Rezidans",
+    "type": "Kiralık",
+    "listing_type": "Kiralık",
+    "price_display": "56.000 TL / Ay",
+    "price": 56000,
+    "location": "Çankaya, Ankara",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Adil Bey",
+    "room_info": "3+1",
+    "property_category": "Rezidans",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_20.jpg",
+    "link": "/portfolio/adil-bey-cankaya"
+  },
+  {
+    "id": "cbvip-port-2",
+    "title": "Çankaya Cevizlidere Satılık 3+1 Daire (Semra Yağmur)",
+    "type": "Satılık",
+    "listing_type": "Satılık",
+    "price_display": "4.500.000 TL",
+    "price": 4500000,
+    "location": "Çankaya, Ankara",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Cevizlidere",
+    "room_info": "3+1",
+    "property_category": "Daire",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_21.jpg",
+    "link": "/portfolio/cankaya-cevizlidere"
+  },
+  {
+    "id": "cbvip-port-3",
+    "title": "Sincan Yenikent M.Kemal Mh. 3+1 Satılık Daire",
+    "type": "Satılık",
+    "listing_type": "Satılık",
+    "price_display": "1.850.000 TL",
+    "price": 1850000,
+    "location": "Sincan, Ankara",
+    "il": "Ankara",
+    "ilce": "Sincan",
+    "mahalle": "M.Kemal Mah.",
+    "room_info": "3+1",
+    "property_category": "Daire",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_22.jpg",
+    "link": "/portfolio/sincan-yenikent"
+  }
+];
+
         let portfolioData = [];
         let projectsData = EMBEDDED_PROJECTS;
         let nexaRegionData = [];
@@ -6093,10 +6144,10 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             // Fetch live dynamic order from backend
             fetchProjects();
             fetchPortfolio();
-        }
+}
 
-        // Call on DOMContentLoaded & window load
-        document.addEventListener('DOMContentLoaded', () => {
+        // Initialize immediately if DOM is ready, otherwise wait for DOMContentLoaded
+        function initApp() {
             forceInitializeAll();
             try {
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -6121,6 +6172,16 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
             setTimeout(forceInitializeAll, 100);
             setTimeout(forceInitializeAll, 500);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+
+        window.addEventListener('load', () => {
+            forceInitializeAll();
         });
 
         // ─── CHATBOT SCROLL-REVEAL: Aşağı kaydırınca thumb-zone'a gel ───
@@ -6228,7 +6289,6 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 }
             }
 
-            let ticking = false;
             window.addEventListener('scroll', onScroll, { passive: true });
             
             // Initial check
