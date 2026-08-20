@@ -140,7 +140,7 @@ def generate_clarification_question(missing_fields):
         "rooms": "Kaç oda arıyorsunuz? (1+1, 2+1, 3+1 vb.)",
         "property_type": "Hangı tipi arıyorsunuz? (daire, villa,_ofis)",
         "timeframe": "Projeniz ne zaman teslim edilecek? (hemen, 3 ay, 6 ay vb.)",
-    """
+    }
     
     questions_list = []
     for field in missing_fields:
@@ -240,5 +240,4 @@ if __name__ == "__main__":
         print("=" * 70)
         print("SORU:", t)
         # process_nexa_query would be called here in the original code
-        print("(test modu - process_nexa_query kullanılmıyor)")
-"
+        print("(test modu - process_nexa_query kullanılmıyor)")
