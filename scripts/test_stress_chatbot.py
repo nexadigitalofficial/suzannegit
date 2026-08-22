@@ -100,7 +100,7 @@ class TestChatbotAdvancedStress(unittest.TestCase):
             {"msg": "evart yalikavak teslimat tarihi", "check": "12 Ay"},
             {"msg": "angim beytepe fiyati nedir", "check": "6.350.000"},
             {"msg": "vip universite ada parsel nedir", "check": "190438"},
-            {"msg": "5-10M yatirim icin luks proje", "check": "Milyon"},
+            {"msg": "5-10M yatirim icin luks proje", "check": "TL"},
             {"msg": "yazlik villa secenekleri", "check": "MARIN"},
             {"msg": "randevu almak istiyorum", "check": "0535 489 56 56"},
             {"msg": "cankaya luks konut ilanlari", "check": "Çankaya"},

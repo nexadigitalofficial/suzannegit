@@ -536,6 +536,19 @@ def api_nexa_ai_chat():
     cards = result.get("projects", [])
     mode = "heuristic"
 
+    # Randevu talebi veya saf selamlama ise anında doğrulanmış yanıtı dön
+    ql = message.lower()
+    if any(w in ql for w in ["randevu", "arama", "görüşme", "gorusme", "ulas", "ulaş", "telefon", "numara", "gsm"]) and result.get("lead_score", 0) >= 8:
+        payload = {
+            "success": True,
+            "response": result.get("response"),
+            "projects": [],
+            "lead_score": 9,
+            "mode": "appointment-direct",
+            "elapsed_ms": int((time.time() - t0) * 1000),
+        }
+        return jsonify(payload)
+
     project = None
     try:
         named = extract_keywords_and_projects(message)

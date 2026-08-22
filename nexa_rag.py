@@ -249,15 +249,28 @@ def _clean_chunk(text):
     return " ".join(pieces) or None
 
 
-# SUNUM/ÖDEME/FİYAT içeren belgeler önce, IBAN/BANKA/SÖZLEŞME/HİSSE en son
-_DOC_PRIORITY_SQL = """
+# ─── BELGE VE SÖZLEŞME BESLEME KALİTESİ (RAG Feed & Contract Miner) ───
+def _get_doc_priority_sql(query=None):
+    """Sorgunun niteliğine göre sözleşme, protokol veya sunum belgelerine öncelik verir."""
+    ql = (query or "").lower()
+    is_legal = any(w in ql for w in ["sözleşme", "sozlesme", "madde", "şart", "sart", "protokol", "hukuk", "ceza", "fesih", "garanti", "teslim", "devir", "noter", "vekalet", "hisse", "tapu", "taahhüt", "yüklenici", "taraflar", "tazminat"])
+    if is_legal:
+        return """
+        CASE
+            WHEN UPPER(d.title) LIKE '%SÖZLEŞME%' OR UPPER(d.title) LIKE '%SOZLESME%'
+              OR UPPER(d.title) LIKE '%PROTOKOL%' OR UPPER(d.title) LIKE '%ŞARTNAME%'
+              OR UPPER(d.title) LIKE '%VEKALET%' OR UPPER(d.title) LIKE '%HİSSE%'
+              OR UPPER(d.title) LIKE '%TAAHHÜT%' OR UPPER(d.title) LIKE '%TESLİM%' THEN 0
+            WHEN UPPER(d.title) LIKE '%ÖDEME%' OR UPPER(d.title) LIKE '%FİYAT%' OR UPPER(d.title) LIKE '%SUNUM%' THEN 1
+            ELSE 2
+        END"""
+    return """
     CASE
         WHEN UPPER(d.title) LIKE '%SUNUM%' OR UPPER(d.title) LIKE '%ÖDEME%'
           OR UPPER(d.title) LIKE '%FIYAT%' OR UPPER(d.title) LIKE '%FİYAT%' THEN 0
-        WHEN UPPER(d.title) LIKE '%IBAN%' OR UPPER(d.title) LIKE '%BANKA%'
-          OR UPPER(d.title) LIKE '%SÖZLEŞME%' OR UPPER(d.title) LIKE '%SOZLESME%'
-          OR UPPER(d.title) LIKE '%HİSSE%' OR UPPER(d.title) LIKE '%HISSE%' THEN 2
-        ELSE 1
+        WHEN UPPER(d.title) LIKE '%SÖZLEŞME%' OR UPPER(d.title) LIKE '%SOZLESME%'
+          OR UPPER(d.title) LIKE '%PROTOKOL%' OR UPPER(d.title) LIKE '%ŞARTNAME%' THEN 1
+        ELSE 2
     END"""
 
 
@@ -268,37 +281,42 @@ def build_project_context(db_id, query=None):
         p = dict(db.execute("SELECT * FROM projects WHERE id = ?", (db_id,)).fetchone())
         ptype = (f"BİREYSEL PORTFÖY İLANI ({p['listing_type'] or 'İlan'})"
                  if p.get("is_portfolio") else "MARKALI PROJE")
+        deliv_str = f"{p.get('delivery_months')} Ay Teslim" if p.get('delivery_months') else "Lansman / Sözleşmeye Göre Teslim"
         meta = "\n".join([
             "=== PORTFÖY / PROJE METADATA ===",
             f"[AD]: {p['name']}",
             f"[EKOSİSTEM]: {ptype}",
             f"[GAYRİMENKUL TİPİ]: {p.get('property_category') or 'Belirtilmedi'}",
             f"[FİYAT / BEDEL]: {p.get('price_display') or 'Fiyat Belirtilmedi'}",
+            f"[PEŞİNAT / VADE]: {p.get('down_payment') or ''} • {p.get('installment_terms') or ''}",
+            f"[TESLİMAT SÜRESİ]: {deliv_str}",
             f"[ODA / YAPI]: {p.get('room_info') or 'Belirtilmedi'}",
             f"[NET / BRÜT ALAN]: {p.get('net_gross_area') or 'Belirtilmedi'}",
             f"[LOKASYON]: {p.get('location') or ''} ({p.get('ilce') or ''} / {p.get('il') or ''})",
-            f"[ADA/PARSEL]: {p.get('ada_no') or '-'}/{p.get('parsel_no') or '-'} (TKGM: {'Evet' if p.get('tkgm_verified') else 'Hayır'})",
+            f"[ADA/PARSEL]: {p.get('ada_no') or '-'}/{p.get('parsel_no') or '-'} (TKGM Onay: {'Evet' if p.get('tkgm_verified') else 'Hayır'})",
             f"[AÇIKLAMA]: {p.get('description') or 'Açıklama girilmedi.'}",
         ])
         chunks = []
         raw_chunks = []
+        doc_prio_sql = _get_doc_priority_sql(query)
         for r in db.execute(f"""
-            SELECT d.title, d.category, dc.chunk_text
+            SELECT d.title, d.category, d.doc_type, dc.chunk_text
             FROM document_chunks dc JOIN documents d ON dc.document_id = d.id
             WHERE d.project_id = ? AND LENGTH(TRIM(dc.chunk_text)) > 0
-            ORDER BY {_DOC_PRIORITY_SQL}, d.id, dc.id
-            LIMIT 24
+            ORDER BY {doc_prio_sql}, d.id, dc.id
+            LIMIT 60
         """, (db_id,)):
             txt = _clean_chunk(r["chunk_text"])
             if txt is None:
                 continue
-            raw_chunks.append((f"[{r['category'] or 'Belge'} - {r['title']}]: {txt[:400]}", txt))
+            cat_label = r['category'] or r['doc_type'] or 'Belge'
+            raw_chunks.append((f"[{cat_label.upper()} - {r['title']}]: {txt[:450]}", txt))
         chosen = _rank_chunks(query, raw_chunks) if query else raw_chunks
         if query:
-            # P17: gerçek vektör araması önce denenir; yeterli sonuç varsa öne konur
+            # P17: gerçek vektör araması denenir
             try:
                 from nexa_vector_rag import vector_search
-                vres = vector_search(query, project_id=db_id, top_k=8)
+                vres = vector_search(query, project_id=db_id, top_k=10)
                 if vres and len(vres) >= 2:
                     v_chosen = []
                     for vr in vres:
@@ -306,15 +324,15 @@ def build_project_context(db_id, query=None):
                         if not t:
                             continue
                         title = vr.get("document_title") or "Belge"
-                        v_chosen.append((f"[{title}]: {t[:400]}", t))
+                        v_chosen.append((f"[{title}]: {t[:450]}", t))
                     if v_chosen:
                         chosen = v_chosen
             except Exception as e:
                 logger.warning("Vektör arama devre disi: %s", e)
-        chunks = [item[0] if isinstance(item, tuple) else str(item) for item in (chosen or [])[:12]]
+        chunks = [item[0] if isinstance(item, tuple) else str(item) for item in (chosen or [])[:14]]
         if not chunks:
-            chunks.append("[BELGE]: Bu proje için sistemde henüz anlamlı doküman içeriği bulunmuyor (belge yüklenmemiş veya çözümlenememiş olabilir).")
-        return meta + "\n" + "\n\n".join(chunks)
+            chunks.append("[BELGE]: Bu proje için sistemde henüz taranmış ek doküman bulunmuyor; kayıtlı portföy ve sözleşme şartları geçerlidir.")
+        return meta + "\n\n=== PROJE RESMİ BELGELERİ, SÖZLEŞMELER VE FİYAT LİSTELERİ ===\n" + "\n\n".join(chunks)
     finally:
         db.close()
 
@@ -713,7 +731,7 @@ def _ollama_fallback(prompt):
             return None
         resp = httpx.post("http://localhost:11434/api/generate",
                           json={"model": model, "prompt": prompt, "stream": False},
-                          timeout=6.0)
+                          timeout=12.0)
         if resp.status_code == 200:
             return (resp.json().get("response") or "")[:2000]
     except Exception:
@@ -979,11 +997,15 @@ PROJE ÖZETLERİ:
 </KULLANICI_SORUSU>
 
 Kurallar:
-0. SELAMLAMA & TANIŞMA ("merhaba", "selam", "günaydın" vb.): Kendini tanıt, Ankara, Bodrum ve Alanya portföyümüzü özetle, bütçe/bölge sor. Rastgele liste dökme.
-1. YATIRIM & TAVSİYE SORULARI: Kullanıcı bütçesine veya amacına göre en yüksek getiri sağlayan projeleri (kira getirisi, prim, şirket içi taksit) nedenleriyle öner.
+0. SELAMLAMA & TANIŞMA ("merhaba", "selam", "günaydın", "iyi günler", "kimsiniz" vb.):
+   - Kendini mutlaka "Coldwell Banker VIP Gayrimenkul Baş Danışmanı **Suzanne Tenekecioğlu'nun Bilişsel Portföy & Yatırım Danışmanıyım**" olarak tanıt. Asla '[Adınız]' yazma.
+   - Ankara (Beytepe, Çankaya, İncek, Pursaklar, Çubuk), Bodrum (Yalıkavak) ve Alanya'daki markalı projelerimizi ve lüks portföyümüzü özetle.
+   - Müşteriden bütçe aralığı, hedef bölge veya aradığı daire tipini sor. Selamlamada rastgele proje kartları dökme.
+1. YATIRIM & TAVSİYE SORULARI: Kullanıcı bütçesine veya amacına göre en yüksek getiri sağlayan projeleri (kira getirisi, prim, şirket içi faizsiz taksit) gerekçeleriyle öner.
 2. YAZLIK / SAHİL / TATİL / VİLLA sorularında: Portföyümüzdeki Alanya VIP MARIN, Bodrum EVART YALIKAVAK ve İncek lüks villalarını açıkça tanıt.
-3. Bilgi bağlamda yoksa "danışmanımız netleştirecektir" de.
-4. Markdown formatında, şık madde ve tablolarla 450 kelimeyi aşmadan Türkçe yaz.
+3. SÖZLEŞME VE HUKUKİ SORULAR: Projelerin resmi satış vaadi sözleşmesi, garanti şartları (2 yıl malzeme/işçilik), gecikme kira cezai şartı ve noter onaylı tapu devir şartlarını doküman bağlamından açıkça aktar.
+4. Bilgi bağlamda yoksa "danışmanımız Suzanne Tenekecioğlu netleştirecektir" de.
+5. Markdown formatında, şık madde ve tablolarla 450 kelimeyi aşmadan Türkçe yaz.
 Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
 """
         system = _trim_middle(system, 12000)
