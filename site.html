@@ -6871,10 +6871,26 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 const sec = line.match(/^([📌💡⭐💎🏆🔑📈🏙️💰✅❌🚀📋🧭📊])\s*([A-ZÇĞİÖŞÜ][A-ZÇĞİÖŞÜ0-9 .,:&'"'-]{1,64})$/u);
                 if (sec) {
                     flushBlock();
-                    html += '<div style="display:flex;align-items:center;gap:10px;margin:1.5rem 0 0.5rem;">'
+                    html += '<div style="display:flex;align-items:center;gap:10px;margin:1.3rem 0 0.5rem;">'
                           + '<span style="width:4px;height:20px;background:var(--accent);border-radius:3px;display:inline-block;"></span>'
                           + '<span style="font-size:14px;font-weight:800;letter-spacing:0.8px;color:var(--text-primary);text-transform:uppercase;">' + sec[1] + ' ' + inline(sec[2]) + '</span>'
                           + '</div>';
+                    continue;
+                }
+
+                // Emoji etiket satırı: 📍 Lokasyon: ... veya ⏳ Teslim: ... veya 💰 Fiyat: ...
+                const emojiRow = line.match(/^([📍💰💳⏳🏢📑🔑🏛️📈⭐💎🏆✅❌🚀📋🧭📊])\s*(\*\*[^*:\n]+\*\*|[^*:\n]+)[:：]\s*(.+)$/);
+                if (emojiRow) {
+                    flushPara(); flushTable(); closeLists();
+                    const icon = emojiRow[1];
+                    const rawLabel = emojiRow[2].replace(/^[*\s]+|[*\s]+$/g, '').trim();
+                    const val = emojiRow[3].trim();
+                    html += '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;margin:5px 0;background:rgba(0,113,227,0.035);border-radius:12px;border:1px solid rgba(0,113,227,0.09);box-shadow:0 1px 3px rgba(0,0,0,0.02);">'
+                          + '<span style="font-size:16px;line-height:1.3;flex-shrink:0;">' + icon + '</span>'
+                          + '<div style="flex:1;font-size:13.5px;line-height:1.5;">'
+                          + '<strong style="color:var(--text-primary);">' + inline(rawLabel) + ':</strong> '
+                          + '<span style="color:var(--text-secondary);font-weight:500;">' + inline(val) + '</span>'
+                          + '</div></div>';
                     continue;
                 }
 
@@ -6884,9 +6900,9 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     flushPara(); flushTable();
                     const lab = spec[1].replace(/^[*\s]+|[*\s]+$/g, '').trim();
                     const val = spec[2].trim().replace(/^[*\s]+/, '');
-                    html += '<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;padding:5px 0;">'
-                          + '<span style="min-width:120px;font-size:13px;font-weight:700;color:var(--text-secondary);white-space:nowrap;">' + inline(lab) + '</span>'
-                          + '<span style="font-size:14px;font-weight:600;color:var(--text-primary);">' + inline(val) + '</span>'
+                    html += '<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;padding:4px 0;margin:2px 0;">'
+                          + '<span style="min-width:110px;font-size:13px;font-weight:700;color:var(--text-secondary);white-space:nowrap;">• ' + inline(lab) + ':</span>'
+                          + '<span style="font-size:13.5px;font-weight:600;color:var(--text-primary);">' + inline(val) + '</span>'
                           + '</div>';
                     continue;
                 }
@@ -6897,7 +6913,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     flushBlock();
                     inCta = true;
                     html += '<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:1.2rem 0 0.5rem;padding:1rem 1.25rem;border-radius:14px;background:linear-gradient(135deg,rgba(37,211,102,0.10),rgba(0,113,227,0.06));border:1px solid rgba(37,211,102,0.3);">'
-                          + '<div style="font-size:14px;font-weight:800;color:var(--text-primary);"><i class="fa-solid fa-phone" style="color:#25D366;"></i> ' + inline(cta[1]) + '</div>'
+                          + '<div style="font-size:13.5px;font-weight:800;color:var(--text-primary);"><i class="fa-solid fa-phone" style="color:#25D366;"></i> ' + inline(cta[1]) + '</div>'
                           + '<div style="display:flex;gap:8px;">'
                           + '<a href="https://wa.me/905354895656" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>'
                           + '<a href="tel:+905354895656" style="display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;text-decoration:none;"><i class="fa-solid fa-phone"></i> Hemen Ara</a>'

@@ -833,7 +833,7 @@ def process_nexa_query(user_query):
 
     cb_matches = cbs[: (1 if len(named_projects) == 1 else 3)]
 
-    # 4. TEKİL PROJE İNCELEME DİYALOĞU
+    # 4. TEKİL PROJE İNCELEME DİYALOĞU & SORU ODAKLI YANITLAMA
     summaries = _load_project_summaries()
     if len(named_projects) == 1 and cb_matches:
         s, target_proj, parts = cb_matches[0]
@@ -843,22 +843,114 @@ def process_nexa_query(user_query):
         p_dp = target_proj.get("down_payment") or "%50 Peşinat"
         p_terms = target_proj.get("installment_terms") or "24 Ay Sabit Taksit"
         p_rooms = target_proj.get("room_info") or "1+1, 2+1, 3+1"
+        p_delivery_m = target_proj.get("delivery_months")
+        p_delivery = target_proj.get("delivery_display") or (f"{p_delivery_m} Ay Teslim" if p_delivery_m else "Lansman / Sözleşmeye Göre Teslim")
         p_ada = target_proj.get("ada_no") or "-"
         p_parsel = target_proj.get("parsel_no") or "-"
         tkgm_badge = "TKGM Onaylı Resmi Parsel" if target_proj.get("tkgm_verified") else "Ruhsatlı Parsel"
         ozet = summaries.get(p_name, {}).get("summary") or target_proj.get("description") or ""
 
-        response_text = (
-            f"**{p_name}** projesi portföyümüzün öne çıkan seçkin yatırımlarındandır. İşte projenin doğrulanmış güncel detayları:\n\n"
-            f"📍 **Lokasyon:** {p_loc}\n"
-            f"💰 **Fiyat Aralığı:** {p_price}\n"
-            f"💳 **Ödeme Kolaylığı:** {p_dp} • {p_terms} (Faizsiz, şirket bünyesinde)\n"
-            f"🏢 **Daire Tipleri:** {p_rooms}\n"
-            f"📑 **Tapu / Parsel:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
-            f"💡 **Proje Özeti & Avantajları:**\n{ozet[:450]}\n\n"
-            f"---\n"
-            f"📞 _Detaylı kat planları, sözleşme şartları ve güncel fiyat listesi için **0535 489 56 56** hattından danışmanımız Suzanne Tenekecioğlu'na ulaşabilirsiniz._"
-        )
+        # Soru türünü tespit et
+        is_delivery_q = any(w in ql for w in ["teslim", "ne zaman", "bitis", "anahtar", "tarihi", "teslimat", "teslim suresi"])
+        is_payment_q = any(w in ql for w in ["fiyat", "kac para", "pesinat", "taksit", "odeme", "vade", "maliyet", "faiz", "pesin", "kredi"])
+        is_unit_q = any(w in ql for w in ["m2", "metrekare", "oda", "1+1", "2+1", "3+1", "4+1", "kat plan", "daire tipi", "kac daire"])
+        is_location_q = any(w in ql for w in ["nerede", "lokasyon", "ulasim", "konum", "mesafe", "harita", "cevre", "hangi ilce", "adres"])
+        is_legal_q = any(w in ql for w in ["tapu", "ada", "parsel", "tkgm", "ruhsat", "iskan", "guvence", "resmi"])
+        is_invest_q = any(w in ql for w in ["kira", "ogrenci", "prim", "getiri", "yatirim", "amortisman", "kiraci", "deger"])
+
+        if is_delivery_q:
+            response_text = (
+                f"**{p_name} — Teslim Tarihi ve İnşaat Durumu**\n\n"
+                f"⏳ **Teslim Takvimi:** **{p_delivery}**\n"
+                f"Projede inşaat takvimi planlanan program dahilinde hızla ilerlemekte olup teslim tarihi ve bağımsız bölüm hakları resmi sözleşme ile güvence altındadır.\n\n"
+                f"📍 **Lokasyon:** {p_loc}\n"
+                f"💰 **Fiyat Aralığı:** {p_price}\n"
+                f"💳 **Ödeme Kolaylığı:** {p_dp} • {p_terms} (Faizsiz, şirket bünyesinde)\n"
+                f"🏢 **Daire Tipleri:** {p_rooms}\n"
+                f"📑 **Resmi Tapu:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+                f"💡 **Proje Özeti & Avantajları:**\n{ozet[:450]}\n\n"
+                f"---\n"
+                f"📞 _Şantiye ilerleme durumu, teslim sözleşme maddeleri ve güncel müsait daireler için **0535 489 56 56** hattından danışmanımız Suzanne Tenekecioğlu'na ulaşabilirsiniz._"
+            )
+        elif is_payment_q:
+            response_text = (
+                f"**{p_name} — Fiyat & Şirket İçi Ödeme Planı**\n\n"
+                f"💰 **Fiyat Aralığı:** **{p_price}**\n"
+                f"💳 **Peşinat:** **{p_dp}**\n"
+                f"📈 **Taksit / Vade:** **{p_terms}** *(Banka kredisiz, faizsiz doğrudan şirket bünyesinde)*\n\n"
+                f"📍 **Lokasyon:** {p_loc}\n"
+                f"⏳ **Teslim Süresi:** {p_delivery}\n"
+                f"🏢 **Daire Tipleri:** {p_rooms}\n"
+                f"📑 **Tapu / Parsel:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+                f"💡 **Ödeme Avantajı:**\n{ozet[:400]}\n\n"
+                f"---\n"
+                f"📞 _Peşin alım indirimi ve size özel ödeme planı simülasyonu için **0535 489 56 56** hattından Suzanne Tenekecioğlu ile görüşebilirsiniz._"
+            )
+        elif is_unit_q:
+            response_text = (
+                f"**{p_name} — Daire Tipleri & Kat Planları**\n\n"
+                f"🏢 **Daire Seçenekleri:** **{p_rooms}**\n\n"
+                f"📍 **Lokasyon:** {p_loc}\n"
+                f"💰 **Fiyat:** {p_price}\n"
+                f"💳 **Ödeme:** {p_dp} • {p_terms}\n"
+                f"⏳ **Teslim:** {p_delivery}\n"
+                f"📑 **Tapu / Parsel:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+                f"💡 **Mimari Detaylar & Yaşam Alanları:**\n{ozet[:450]}\n\n"
+                f"---\n"
+                f"📞 _Kat planları, brüt/net m² dökümleri ve müsait cepheler için **0535 489 56 56** hattından Suzanne Hanım ile görüşebilirsiniz._"
+            )
+        elif is_location_q:
+            response_text = (
+                f"**{p_name} — Lokasyon ve Çevre Aksları**\n\n"
+                f"📍 **Proje Lokasyonu:** **{p_loc}**\n"
+                f"📑 **Resmi Parsel:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+                f"💰 **Fiyat Aralığı:** {p_price}\n"
+                f"💳 **Ödeme Kolaylığı:** {p_dp} • {p_terms}\n"
+                f"⏳ **Teslimat:** {p_delivery}\n"
+                f"🏢 **Daire Tipleri:** {p_rooms}\n\n"
+                f"💡 **Lokasyon Avantajları & Ulaşım:**\n{ozet[:450]}\n\n"
+                f"---\n"
+                f"📞 _Yerinde sunum, örnek daire ziyareti ve konum paylaşımı için **0535 489 56 56** hattından Suzanne Tenekecioğlu'na ulaşabilirsiniz._"
+            )
+        elif is_legal_q:
+            response_text = (
+                f"**{p_name} — Resmi Tapu ve TKGM Parsel Doğrulaması**\n\n"
+                f"📑 **Resmi Parsel:** **Ada {p_ada} / Parsel {p_parsel}**\n"
+                f"🏛️ **Tapu Durumu:** **{tkgm_badge}** (Tapu ve Kadastro Genel Müdürlüğü MEGSİS resmi veritabanıyla doğrulanmıştır)\n\n"
+                f"📍 **Lokasyon:** {p_loc}\n"
+                f"💰 **Fiyat:** {p_price}\n"
+                f"💳 **Ödeme:** {p_dp} • {p_terms}\n"
+                f"⏳ **Teslim Süresi:** {p_delivery}\n\n"
+                f"💡 **Hukuki Güvence & Notlar:**\n{ozet[:400]}\n\n"
+                f"---\n"
+                f"📞 _Tapu devir süreçleri ve resmi sözleşme detayları için **0535 489 56 56** hattından danışmanımız Suzanne Tenekecioğlu ile iletişime geçebilirsiniz._"
+            )
+        elif is_invest_q:
+            response_text = (
+                f"**{p_name} — Yatırım Değerlemesi, Kira Getirisi & Amortisman**\n\n"
+                f"🔑 **Yatırım Özeti:** **{p_loc}** bölgesinde yüksek prim ve düzenli kira getirisi potansiyeli sunmaktadır.\n\n"
+                f"💰 **Giriş Fiyatı:** {p_price}\n"
+                f"💳 **Ödeme Avantajı:** {p_dp} • {p_terms} (Sermaye korumalı taksit)\n"
+                f"⏳ **Teslimat:** {p_delivery}\n"
+                f"🏢 **Daire Tipleri:** {p_rooms}\n"
+                f"📑 **Tapu:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+                f"💡 **Yatırım Gerekçesi & Getiri Notu:**\n{ozet[:450]}\n\n"
+                f"---\n"
+                f"📞 _Kira amortisman tabloları ve VIP yatırım analizi için **0535 489 56 56** doğrudan hattımızdan Suzanne Tenekecioğlu'na ulaşabilirsiniz._"
+            )
+        else:
+            response_text = (
+                f"**{p_name}** projesi portföyümüzün öne çıkan seçkin yatırımlarındandır. İşte projenin doğrulanmış güncel detayları:\n\n"
+                f"📍 **Lokasyon:** {p_loc}\n"
+                f"💰 **Fiyat Aralığı:** {p_price}\n"
+                f"💳 **Ödeme Kolaylığı:** {p_dp} • {p_terms} (Faizsiz, şirket bünyesinde)\n"
+                f"⏳ **Teslim Tarihi:** {p_delivery}\n"
+                f"🏢 **Daire Tipleri:** {p_rooms}\n"
+                f"📑 **Tapu / Parsel:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+                f"💡 **Proje Özeti & Avantajları:**\n{ozet[:450]}\n\n"
+                f"---\n"
+                f"📞 _Detaylı kat planları, sözleşme şartları ve güncel fiyat listesi için **0535 489 56 56** hattından danışmanımız Suzanne Tenekecioğlu'na ulaşabilirsiniz._"
+            )
     else:
         # 5. GENEL PORTFÖY / KARŞILAŞTIRMA & TAVSİYE DİYALOĞU
         def fmt_money(v):
@@ -878,9 +970,11 @@ def process_nexa_query(user_query):
             terms = it.get("installment_terms") or "Esnek Vade"
             loc = item_region_label(it)
             ada_str = f"Ada {it.get('ada_no')}/{it.get('parsel_no')}" if it.get("ada_no") else "Ruhsatlı"
+            del_str = it.get("delivery_display") or (f"{it.get('delivery_months')} Ay Teslim" if it.get("delivery_months") else "")
+            del_part = f" | Teslim: {del_str}" if del_str else ""
             proj_items.append(
                 f"{idx}. **{it['title']}** ({loc})\n"
-                f"   • Fiyat: **{ip}** | Ödeme: {dp}, {terms}\n"
+                f"   • Fiyat: **{ip}** | Ödeme: {dp}, {terms}{del_part}\n"
                 f"   • Tip: {it.get('room_info', 'Konut')} | Tapu: {ada_str} (TKGM Onaylı)\n"
                 f"   • Yatırım Notu: {build_rationale(it, parts)[:220]}"
             )

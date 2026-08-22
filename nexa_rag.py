@@ -902,6 +902,15 @@ def cognitive_chat(user_message, project=None, history=None):
         if turns:
             history_block = "<SOHBET_GECMISI>\n" + "\n".join(turns) + "\n</SOHBET_GECMISI>\n\n"
 
+    if not project:
+        try:
+            from nexa_ai_engine import extract_keywords_and_projects
+            named = extract_keywords_and_projects(msg)
+            if len(named) == 1:
+                project = _find_project_by_name(named[0])
+        except Exception:
+            pass
+
     if project:
         is_broad_overview = (
             len(msg) < 30 and (
@@ -921,56 +930,38 @@ def cognitive_chat(user_message, project=None, history=None):
                 project.get("mahalle") or "", project["name"])
         canonical_matrix = _build_canonical_matrix()
         system = f"""
-Sen Nexa / Mira — Gayrimenkul Satış Operasyon Sistemi'nin kıdemli lüks yatırım danışmanısın.
+Sen Coldwell Banker VIP Gayrimenkul Baş Danışmanı **Suzanne Tenekecioğlu'nun Kıdemli Bilişsel Portföy & Yatırım Danışmanısın** (NEXA PRIME v2).
+İncelenen Proje: {project['name']}
+Lokasyon: {project.get('location') or project.get('ilce') or ''}
+Fiyat: {project.get('price_display') or ''} | Peşinat: {project.get('down_payment') or ''} | Taksit: {project.get('installment_terms') or ''} | Teslim: {project.get('delivery_months') or ''} Ay
+Daire Tipleri: {project.get('room_info') or ''} | Ada/Parsel: {project.get('ada_no') or ''}/{project.get('parsel_no') or ''} (TKGM Onay: {'Evet' if project.get('tkgm_verified') else 'Ruhsatlı'})
 
-CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ (BU VERİLERİ KESİNLİKLE BİREBİR KULLAN, ASLA DEĞİŞTİRME VEYA UYDURMA):
+CANONICAL PROJE GERÇEKLERİ:
 {canonical_matrix}
 
-Son derece profesyonel, elit, ikna edici ve karizmatik bir dille yanıt ver.
-
-İncelenen Proje: {project['name']}
-
 {history_block}
-RAG BAĞLAMI (metadata + dokümanlar):
-{context if context else 'Bu proje için özel doküman bağlamı yok; genel portföy verisi geçerli.'}
+RAG DOKÜMAN BAĞLAMI:
+{context if context else 'Proje resmi kayıtları ve fiyat listesi geçerlidir.'}
 
-GEO-INTELLIGENCE:
-{geo if geo else '(lokasyon aksı sorgusu bağlamdan yanıtlanacak)'}
+GEO BİLGİSİ:
+{geo if geo else ''}
 
 <KULLANICI_SORUSU>
 {msg}
 </KULLANICI_SORUSU>
 
 Kurallar:
-1. Fiyat, teslim, metrekare, ödeme planı varsa RAG'daki rakamları birebir ver.
-2. ULAŞIM/ÇEVRE sorularında GEO verisini kullanarak tramvay, hastane, üniversite, otoyol akslarını anlat; 'dokümanda yok' deme.
-3. Uydurma veri ekleme; bilinmeyeni 'danışmanımız netleştirecektir' diyerek kapat.
-4. Madde/liste kullan, markdown. Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
-Cevabı 450 kelimeyi aşmadan Türkçe yaz.
+1. Kullanıcının sorusuna DOĞRUDAN ve NET yanıt ver (örneğin teslim tarihi sorulmuşsa teslim süresini ve inşaat durumunu net olarak açıkla).
+2. Fiyat, teslimat süresi, metrekare, ödeme planı ve ada/parsel bilgilerini yukarıdaki doğrulanmış verilerden birebir aktar.
+3. Elit, ikna edici, profesyonel bir üslup ve şık Markdown formatı (madde imleri, kalın başlıklar) kullan.
+4. Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
+Cevabı 400 kelimeyi aşmadan Türkçe yaz.
 """
-        system = _trim_middle(system, MAX_PROMPT_CHARS)
+        system = _trim_middle(system, 6000)
     else:
-        context = build_global_context()
         summaries = _load_summaries()
         summ_block = "\n".join(
-            f"- {n}: {d.get('summary', '')}" for n, d in summaries.items() if d.get("summary"))
-        prompt_summaries = f"""
-ÖNCEDEN ÜRETİLMİŞ PROJE ÖZETLERİ (bu blok doğrudan kullanılabilir, eksik proje varsa aşağıdaki RAG bağlamından tamamla):
-{summ_block[:6000] if summ_block else '(henüz üretilmemiş — RAG bağlamından yararlan)'}
-"""
-        pf_lines = []
-        try:
-            pf = json.loads(PORTFOLIO_FILE.read_text(encoding="utf-8")) if PORTFOLIO_FILE.exists() else []
-            for it in pf:
-                if it.get("type") == "portfolio":
-                    pf_lines.append(
-                        f"- {it.get('title','')} | {it.get('ilce','') or it.get('mahalle','')} | "
-                        f"{it.get('listing_type','')} | {it.get('price_display','')} | "
-                        f"{it.get('room_info','') or it.get('property_category','')}"
-                        + (f" | Ada {it.get('ada_no')}/{it.get('parsel_no')}" if it.get('ada_no') else ""))
-        except Exception:
-            pass
-        pf_block = "\n".join(pf_lines) if pf_lines else "(portföy ilanı yok)"
+            f"- {n}: {d.get('summary', '')[:200]}" for n, d in list(summaries.items())[:10] if d.get("summary"))
         canonical_matrix = _build_canonical_matrix()
         system = f"""
 Sen Coldwell Banker VIP Gayrimenkul Baş Danışmanı **Suzanne Tenekecioğlu'nun Kıdemli Bilişsel Portföy & Yatırım Danışmanısın** (NEXA PRIME v2).
@@ -980,34 +971,22 @@ Tüm portföydeki MARKALI PROJELERİ ve VIP gayrimenkulleri analiz eden lüks ya
 CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ (BU VERİLERİ KESİNLİKLE BİREBİR KULLAN, ASLA DEĞİŞTİRME VEYA UYDURMA):
 {canonical_matrix}
 
-{prompt_summaries}
-
-TÜM PORTFÖY RAG BAĞLAMI (proje metadata + kayıtlı doküman özetleri/fiyat listeleri):
-{context}
-
-KİŞİSEL PORTFÖY İLANLARI (satılık/kiralık ilan envanteri — soru ilan arayışıysa buradan göster):
-{pf_block}
+PROJE ÖZETLERİ:
+{summ_block}
 
 <KULLANICI_SORUSU>
 {msg}
 </KULLANICI_SORUSU>
 
 Kurallar:
-0. SELAMLAMA & TANIŞMA ("merhaba", "selam", "günaydın", "iyi günler", "kimsiniz" vb.):
-   - Kendini **Suzanne Tenekecioğlu'nun Bilişsel Portföy & Yatırım Danışmanı** olarak tanıt.
-   - Ankara (Beytepe, Çankaya, İncek, Pursaklar, Çubuk), Bodrum (Yalıkavak) ve Alanya'daki portföyümüzü özetle.
-   - Müşteriden bütçe aralığı, hedef lokasyon veya aradığı daire tipini sor. Selamlamada rastgele proje listesi dökme!
-1. YATIRIM & TAVSİYE SORULARI ("Ne alayım?", "Yatırım yapmak istiyorum", "Kira getirisi / prim potansiyeli"): 
-   - Kullanıcı açıkça "kiralık daire/ofis arıyorum" demedikçe, yatırım sorularında SATILIK MARKALI PROJELERİ öner.
-   - Bütçeye göre en yüksek prim ve kira getirisi sunan projeleri (Öğrenci/kampüs kira talebi: VIP ÜNİVERSİTE, JOVEN KAMPÜS, WM - PRIME; Prestij/rezidans: ANGİM BEYTEPE, GÖKDEMİR İMZA, ANKAPORT SARAY; Sahil/lüks: EVART YALIKAVAK, VIP MARIN) yatırım gerekçeleriyle (taksit imkanı, peşin alım indirimi, tapu/ada-parsel güvencesi, kiralama hızı) açıkla.
-2. YAZLIK / SAHİL / TATİL / VİLLA sorularında: Portföyümüzdeki tüm sahil ve yazlık projelerini (Alanya'daki VIP MARIN, Bodrum'daki EVART YALIKAVAK ve İncek'teki müstakil lüks villayı) eksiksiz ve açıkça tanıt. Şehir içi standart daireleri yazlık olarak önerme!
-3. Projeleri tanıtırken her proje için KISA PROJE ÖZETİ formatı kullan: adı — lokasyon — konsept/tipler — fiyat/ödeme özeti — teslim (varsa) — TKGM/ada-parsel. En fazla 5-6 satır/proje.
-4. Karşılaştırma sorularında şık bir Markdown tablosu kullan; rakamları yalnızca veriden al, uydurma.
-5. Bilgi bağlamda yoksa "danışmanımız netleştirecektir" de. İlgisiz sorularda kısa ve nazik bilgilendir.
-6. Markdown formatında, madde ve tablo kullan. Cevabı 500 kelimeyi aşmadan Türkçe yaz.
+0. SELAMLAMA & TANIŞMA ("merhaba", "selam", "günaydın" vb.): Kendini tanıt, Ankara, Bodrum ve Alanya portföyümüzü özetle, bütçe/bölge sor. Rastgele liste dökme.
+1. YATIRIM & TAVSİYE SORULARI: Kullanıcı bütçesine veya amacına göre en yüksek getiri sağlayan projeleri (kira getirisi, prim, şirket içi taksit) nedenleriyle öner.
+2. YAZLIK / SAHİL / TATİL / VİLLA sorularında: Portföyümüzdeki Alanya VIP MARIN, Bodrum EVART YALIKAVAK ve İncek lüks villalarını açıkça tanıt.
+3. Bilgi bağlamda yoksa "danışmanımız netleştirecektir" de.
+4. Markdown formatında, şık madde ve tablolarla 450 kelimeyi aşmadan Türkçe yaz.
 Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
 """
-        system = _trim_middle(system, MAX_PROMPT_CHARS)
+        system = _trim_middle(system, 12000)
     try:
         reply = _gemini_generate(system)
         if reply and len(reply.strip()) > 20:
