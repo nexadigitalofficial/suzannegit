@@ -835,7 +835,12 @@ def serve_brand_video():
     if not vpath.exists():
         vpath = STATIC_DIR / "1.mp4"
     if vpath.exists():
-        return stream_file_response(vpath, "video/mp4")
+        resp = stream_file_response(vpath, "video/mp4")
+        resp.headers["Cache-Control"] = "public, max-age=604800, immutable"
+        resp.headers["Access-Control-Allow-Origin"] = "*"
+        resp.headers["Access-Control-Allow-Methods"] = "GET, HEAD, OPTIONS"
+        resp.headers["Access-Control-Allow-Headers"] = "Range, Accept-Encoding"
+        return resp
     return "Video bulunamadı", 404
 
 # ─── P15: güvenlik başlıkları (tüm yanıtlara) ───
