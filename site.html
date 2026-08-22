@@ -2035,7 +2035,7 @@
         }
 
         /* ─── Splash / Açılış Ekranı ─── */
-        /* ─── Grand Cinematic MP4 Splash Screen ─── */
+        /* ─── Ultra-Grand Animatic Cinema MP4 Splash Screen ─── */
         .splash-screen {
             position: fixed;
             inset: 0;
@@ -2043,19 +2043,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #06060c;
+            background: #040408;
             overflow: hidden;
-            transition: opacity 0.8s cubic-bezier(.4, 0, .2, 1), visibility 0.8s;
+            transition: opacity 0.8s cubic-bezier(.4, 0, .2, 1), visibility 0.8s, transform 0.8s cubic-bezier(.4, 0, .2, 1);
             cursor: pointer;
         }
         .splash-ambient-bg {
             position: absolute;
-            inset: -25px;
+            inset: -30px;
             overflow: hidden;
-            filter: blur(50px) brightness(0.35);
-            opacity: 0.75;
+            filter: blur(60px) brightness(0.4);
+            opacity: 0.85;
             pointer-events: none;
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
         .splash-ambient-video {
             width: 100%;
@@ -2065,32 +2065,38 @@
         .splash-ambient-overlay {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(6,6,12,0.3) 0%, rgba(6,6,12,0.85) 85%);
+            background: radial-gradient(circle at center, rgba(4,4,8,0.2) 0%, rgba(4,4,8,0.9) 85%);
         }
         .splash-screen.hidden {
             opacity: 0;
             visibility: hidden;
+            transform: scale(1.08);
             pointer-events: none;
         }
         .splash-cinematic-card {
             position: relative;
             z-index: 10;
-            width: 92vw;
-            max-width: 880px;
+            width: 95vw;
+            max-width: 1040px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1.25rem;
+            animation: splashCardIn 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes splashCardIn {
+            from { opacity: 0; transform: scale(0.92) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .splash-main-video-wrap {
             width: 100%;
             position: relative;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
-            max-height: 520px;
+            max-height: 68vh;
             background: #000;
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 80px rgba(0, 113, 227, 0.25);
+            box-shadow: 0 45px 120px rgba(0, 0, 0, 0.95), 0 0 0 1.5px rgba(255, 255, 255, 0.2), 0 0 100px rgba(0, 113, 227, 0.35);
         }
         .splash-main-video-wrap video {
             width: 100%;
@@ -2100,9 +2106,9 @@
         }
         .splash-video-overlay-top {
             position: absolute;
-            top: 16px;
-            left: 16px;
-            right: 16px;
+            top: 20px;
+            left: 20px;
+            right: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -2110,42 +2116,43 @@
             z-index: 4;
         }
         .splash-badge-vip {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 215, 0, 0.35);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 215, 0, 0.4);
             color: #FFD700;
             font-size: 13px;
             font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 20px;
+            padding: 7px 16px;
+            border-radius: 24px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            gap: 7px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            letter-spacing: 0.3px;
         }
         .splash-badge-ai {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 113, 227, 0.4);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(0, 113, 227, 0.45);
             color: #60a5fa;
             font-size: 13px;
             font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 20px;
+            padding: 7px 16px;
+            border-radius: 24px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            gap: 7px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
         }
         .splash-video-overlay-bottom {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 3rem 1.5rem 1.25rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.92) 100%);
+            padding: 4rem 2rem 1.75rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.95) 100%);
             pointer-events: none;
             z-index: 4;
             display: flex;
@@ -2155,72 +2162,106 @@
         }
         .splash-brand-title {
             font-family: 'Outfit', 'Inter', sans-serif;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
             color: #fff;
-            letter-spacing: 1.2px;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.85);
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 14px rgba(0,0,0,0.9);
+            background: linear-gradient(135deg, #FFFFFF 0%, #D4AF37 50%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .splash-brand-desc {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
-            margin-top: 4px;
-            text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.85);
+            letter-spacing: 0.4px;
         }
         .splash-bottom-bar {
             width: 100%;
-            max-width: 620px;
+            max-width: 680px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            align-items: center;
+            gap: 12px;
+        }
+        .splash-progress-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
         .splash-progress-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
+            letter-spacing: 0.3px;
         }
         .splash-bar {
-            height: 5px;
+            height: 6px;
             border-radius: 980px;
             background: rgba(255, 255, 255, 0.12);
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
         }
         .splash-bar-fill {
             height: 100%;
             width: 0%;
             border-radius: 980px;
-            background: linear-gradient(90deg, #0071E3, #5E5CE6, #60a5fa);
-            box-shadow: 0 0 16px rgba(94, 92, 230, 0.85);
+            background: linear-gradient(90deg, #0071E3, #5E5CE6, #60a5fa, #FFD700);
+            box-shadow: 0 0 20px rgba(94, 92, 230, 0.9);
             transition: width 0.1s linear;
         }
-        .splash-enter-hint {
-            text-align: center;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.45);
-            display: flex;
+        .splash-enter-btn {
+            background: linear-gradient(135deg, #0071E3, #5E5CE6);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 980px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 30px rgba(0, 113, 227, 0.5), 0 0 20px rgba(94, 92, 230, 0.4);
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            letter-spacing: 0.4px;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.5px;
         }
-        @media (max-width: 640px) {
+        .splash-enter-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(0, 113, 227, 0.7);
+        }
+        @media (max-width: 768px) {
             .splash-main-video-wrap {
-                aspect-ratio: 4 / 3;
-                border-radius: 18px;
+                aspect-ratio: 16 / 10;
+                border-radius: 20px;
+                max-height: 60vh;
             }
             .splash-brand-title {
-                font-size: 19px;
+                font-size: 21px;
             }
             .splash-brand-desc {
-                font-size: 12px;
+                font-size: 13px;
             }
             .splash-badge-vip, .splash-badge-ai {
                 font-size: 11px;
-                padding: 4px 10px;
+                padding: 5px 12px;
+            }
+            .splash-video-overlay-top {
+                top: 12px; left: 12px; right: 12px;
+            }
+            .splash-video-overlay-bottom {
+                padding: 2.5rem 1rem 1rem;
+            }
+            .splash-enter-btn {
+                padding: 10px 22px;
+                font-size: 13px;
             }
         }
 
@@ -2758,7 +2799,7 @@
 </head>
 <body>
 
-    <!-- Grand Cinematic MP4 Splash / Açılış Ekranı -->
+    <!-- Ultra-Grand Animatic Cinema MP4 Splash / Açılış Ekranı -->
     <div id="splashScreen" class="splash-screen" aria-hidden="false" onclick="dismissSplash()">
         <!-- Ambient Blur Video Background -->
         <div class="splash-ambient-bg">
@@ -2777,7 +2818,7 @@
 
                 <!-- Floating Badges Top -->
                 <div class="splash-video-overlay-top">
-                    <div class="splash-badge-vip"><i class="fa-solid fa-crown"></i> Coldwell Banker VIP</div>
+                    <div class="splash-badge-vip"><i class="fa-solid fa-crown" style="color:#FFD700;"></i> Coldwell Banker VIP <span style="opacity:0.65; font-size:11px; margin-left:4px;">| Office 470</span></div>
                     <div class="splash-badge-ai"><i class="fa-solid fa-brain"></i> Nexa AI Portföy Zekası</div>
                 </div>
 
@@ -2788,18 +2829,20 @@
                 </div>
             </div>
 
-            <!-- Sleek Loading Bar & Enter Hint -->
+            <!-- Sleek Loading Bar & Grand Enter Action -->
             <div class="splash-bottom-bar">
-                <div class="splash-progress-info">
-                    <span><i class="fa-solid fa-circle-notch fa-spin"></i> Sistem Yükleniyor...</span>
-                    <span id="splashPct">0%</span>
+                <div class="splash-progress-container">
+                    <div class="splash-progress-info">
+                        <span><i class="fa-solid fa-circle-notch fa-spin"></i> Proje ve Portföy Zeka Katmanı Yükleniyor...</span>
+                        <span id="splashPct">0%</span>
+                    </div>
+                    <div class="splash-bar">
+                        <div class="splash-bar-fill" id="splashBar"></div>
+                    </div>
                 </div>
-                <div class="splash-bar">
-                    <div class="splash-bar-fill" id="splashBar"></div>
-                </div>
-                <div class="splash-enter-hint">
-                    <span>(Geçmek için ekrana tıklayınız)</span>
-                </div>
+                <button type="button" class="splash-enter-btn" onclick="event.stopPropagation(); dismissSplash();">
+                    <i class="fa-solid fa-sparkles"></i> SİTEYİ VE PORTFÖYÜ KEŞFET <i class="fa-solid fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -7296,8 +7339,12 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             if (splash && !splash.classList.contains('hidden')) {
                 splash.classList.add('hidden');
                 setTimeout(() => {
-                    try { splash.style.display = 'none'; } catch(e){}
-                }, 800);
+                    try { 
+                        splash.style.display = 'none';
+                        const amb = document.querySelector('.splash-ambient-video');
+                        if (amb) amb.pause();
+                    } catch(e){}
+                }, 850);
             }
         }
 
@@ -7309,7 +7356,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
             let progress = 0;
             const startTime = Date.now();
-            const duration = 2400;
+            const duration = 3800;
 
             const interval = setInterval(() => {
                 const elapsed = Date.now() - startTime;
@@ -7319,9 +7366,9 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    setTimeout(dismissSplash, 350);
+                    setTimeout(dismissSplash, 400);
                 }
-            }, 40);
+            }, 35);
         })();
 
         if (document.readyState === 'loading') {
