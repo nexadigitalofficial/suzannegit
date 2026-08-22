@@ -31,6 +31,15 @@ def run_step(name: str, func, *args, **kwargs) -> tuple[bool, str]:
     t0 = time.time()
     try:
         result = func(*args, **kwargs)
+        if isinstance(result, dict):
+            if result.get("errors") and len(result["errors"]) > 0 and result.get("upserted", 0) == 0 and result.get("fetched", 0) > 0:
+                dt = time.time() - t0
+                log.error("✗ %s KISMİ/TAM HATA (%.1fs): %s", name, dt, result["errors"])
+                return False, f"{name} FAILED: {result['errors'][:2]}"
+            if "health_score" in result and result["health_score"] < 60:
+                dt = time.time() - t0
+                log.error("✗ %s KRİTİK SAĞLIK SKORU: %%%d", name, result["health_score"])
+                return False, f"{name} LOW HEALTH SCORE: {result['health_score']}%"
         dt = time.time() - t0
         log.info("✓ %s tamam (%.1fs)", name, dt)
         return True, f"{name} OK ({dt:.1f}s)"
@@ -59,7 +68,17 @@ def main():
     if not ok:
         any_failed = True
 
-    # 2. Data Importer (DB → JSON fiyat/oda çıkarma)
+    # 2. Sales & Financial Miner (Kanonik Bilgi Grafiği ve Fiyatları İşle)
+    try:
+        from scripts.nexa_sales_miner import sync_sales_knowledge
+        ok, msg = run_step("Sales Miner", sync_sales_knowledge)
+    except ImportError:
+        ok, msg = False, "Sales Miner modülü bulunamadı (scripts/nexa_sales_miner.py)"
+    results.append((ok, msg))
+    if not ok:
+        any_failed = True
+
+    # 3. Data Importer (DB → JSON fiyat/oda çıkarma)
     try:
         import nexa_data_importer
         ok, msg = run_step("Data Importer", nexa_data_importer.main)
@@ -69,7 +88,7 @@ def main():
     if not ok:
         any_failed = True
 
-    # 3. Self-Healing (DB şema + kanonik veri + RAG + NLP)
+    # 4. Self-Healing (DB şema + kanonik veri + RAG + NLP)
     try:
         import nexa_self_healing
         ok, msg = run_step("Self-Healing", nexa_self_healing.run_full_self_healing_cycle)
@@ -79,22 +98,12 @@ def main():
     if not ok:
         any_failed = True
 
-    # 4. AI Summaries (Gemini ile proje özetleri)
+    # 5. AI Summaries (Gemini ile proje özetleri)
     try:
         import nexa_rag
         ok, msg = run_step("AI Summaries", nexa_rag.generate_all_project_summaries)
     except ImportError:
         ok, msg = False, "RAG modülü bulunamadı (nexa_rag.py)"
-    results.append((ok, msg))
-    if not ok:
-        any_failed = True
-
-    # 5. Sales & Financial Miner (Excel XLSX & Finansal Bilgi Senkronizasyonu)
-    try:
-        from scripts.nexa_sales_miner import sync_sales_knowledge
-        ok, msg = run_step("Sales Miner", sync_sales_knowledge)
-    except ImportError:
-        ok, msg = False, "Sales Miner modülü bulunamadı (scripts/nexa_sales_miner.py)"
     results.append((ok, msg))
     if not ok:
         any_failed = True

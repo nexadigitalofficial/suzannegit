@@ -122,6 +122,13 @@ def heal_database_schema(db_path: Path = DB_PATH) -> dict:
         if "stage" not in cust_cols:
             cur.execute("ALTER TABLE customers ADD COLUMN stage VARCHAR(50) DEFAULT 'Yeni Talep'")
             fixes.append("Eksik DB sütunu eklendi: customers.stage")
+
+        # 3. Orphan document chunks temizliği
+        cur.execute("DELETE FROM document_chunks WHERE document_id NOT IN (SELECT id FROM documents)")
+        deleted_orphans = cur.rowcount
+        if deleted_orphans > 0:
+            fixes.append(f"Yetim chunk temizlendi: {deleted_orphans} adet document_chunks kaydı silindi")
+            logger.info("Self-healing: %d yetim document_chunk temizlendi", deleted_orphans)
             
         conn.commit()
         conn.close()
@@ -346,6 +353,7 @@ def run_full_self_healing_cycle() -> dict:
     
     report = {
         "status": status,
+        "passed": (health_score >= 80),
         "health_score": health_score,
         "last_run": now_iso,
         "total_checks": total_checks,

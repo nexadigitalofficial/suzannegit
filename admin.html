@@ -308,6 +308,16 @@
             }
         }
 
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         function renderProjectRows() {
             const container = document.getElementById('cardListContainer');
             if (!container) return;
@@ -318,33 +328,38 @@
             }
 
             container.innerHTML = allProjects.map((p, idx) => {
-                const thumb = p.image || (p.images && p.images[0]) || '/static/img/placeholder.jpg';
+                const thumb = escapeHtml(p.image || (p.images && p.images[0]) || '/static/img/placeholder.jpg');
                 const isPinned = p.is_pinned === true;
                 const isHidden = p.is_hidden === true;
-                const priceText = p.price_display || (p.price ? p.price + ' TL' : 'Danışınız');
+                const safeTitle = escapeHtml(p.title || p.name || 'Proje');
+                const safeLoc = escapeHtml(p.location || 'Ankara');
+                const safeDev = escapeHtml(p.developer || 'Coldwell Banker VIP');
+                const priceText = escapeHtml(p.price_display || (p.price ? p.price + ' TL' : 'Danışınız'));
+                const safeVideo = escapeHtml(p.drive_video_preview || '#');
+                const safeId = escapeHtml(String(p.id));
 
                 return `
-                    <div class="project-row ${isPinned ? 'pinned' : ''} ${isHidden ? 'hidden-card' : ''}" data-id="${p.id}" id="row-${p.id}">
+                    <div class="project-row ${isPinned ? 'pinned' : ''} ${isHidden ? 'hidden-card' : ''}" data-id="${safeId}" id="row-${safeId}">
                         <div class="row-order">
-                            <input type="number" min="1" max="${allProjects.length}" value="${idx + 1}" class="rank-input" onchange="changeRank('${p.id}', this.value)">
+                            <input type="number" min="1" max="${allProjects.length}" value="${idx + 1}" class="rank-input" onchange="changeRank('${safeId}', this.value)">
                         </div>
-                        <img src="${thumb}" alt="${p.title}" class="row-thumb" onerror="this.src='/static/img/placeholder.jpg'">
+                        <img src="${thumb}" alt="${safeTitle}" class="row-thumb" onerror="this.onerror=null; this.src='/static/img/placeholder.jpg'">
                         <div class="row-title-box">
-                            <h3>${p.title || p.name || 'Proje'} ${isPinned ? '⭐' : ''}</h3>
-                            <p><i class="fa-solid fa-location-dot" style="color:var(--accent);"></i> ${p.location || 'Ankara'} • ${p.developer || 'Coldwell Banker VIP'}</p>
+                            <h3>${safeTitle} ${isPinned ? '⭐' : ''}</h3>
+                            <p><i class="fa-solid fa-location-dot" style="color:var(--accent);"></i> ${safeLoc} • ${safeDev}</p>
                         </div>
                         <div class="row-price">${priceText}</div>
                         <div>
                             <span class="row-badge-pill"><i class="fa-brands fa-google-drive"></i> Drive Stream</span>
                         </div>
                         <div class="row-actions">
-                            <button onclick="moveRow('${p.id}', -1)" class="action-btn" title="Yukarı Taşı"><i class="fa-solid fa-arrow-up"></i></button>
-                            <button onclick="moveRow('${p.id}', 1)" class="action-btn" title="Aşağı Taşı"><i class="fa-solid fa-arrow-down"></i></button>
-                            <button onclick="togglePin('${p.id}')" class="action-btn pin-btn ${isPinned ? 'active' : ''}" title="Öne Çıkar"><i class="fa-solid fa-star"></i></button>
-                            <button onclick="toggleHide('${p.id}')" class="action-btn hide-btn ${isHidden ? 'active' : ''}" title="Gizle / Göster"><i class="fa-solid ${isHidden ? 'fa-eye-slash' : 'fa-eye'}"></i></button>
+                            <button onclick="moveRow('${safeId}', -1)" class="action-btn" title="Yukarı Taşı"><i class="fa-solid fa-arrow-up"></i></button>
+                            <button onclick="moveRow('${safeId}', 1)" class="action-btn" title="Aşağı Taşı"><i class="fa-solid fa-arrow-down"></i></button>
+                            <button onclick="togglePin('${safeId}')" class="action-btn pin-btn ${isPinned ? 'active' : ''}" title="Öne Çıkar"><i class="fa-solid fa-star"></i></button>
+                            <button onclick="toggleHide('${safeId}')" class="action-btn hide-btn ${isHidden ? 'active' : ''}" title="Gizle / Göster"><i class="fa-solid ${isHidden ? 'fa-eye-slash' : 'fa-eye'}"></i></button>
                         </div>
                         <div>
-                            <a href="${p.drive_video_preview || '#'}" target="_blank" class="btn btn-secondary" style="font-size:11px; padding:4px 8px;"><i class="fa-solid fa-play"></i> Video</a>
+                            <a href="${safeVideo}" target="_blank" class="btn btn-secondary" style="font-size:11px; padding:4px 8px;"><i class="fa-solid fa-play"></i> Video</a>
                         </div>
                     </div>
                 `;

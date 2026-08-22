@@ -5537,23 +5537,28 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             const track = document.querySelector(`#${carouselId} .carousel-track`);
             if(!track) return;
             let isDown = false;
+            let isDragging = false;
             let startX;
             let scrollLeft;
 
             track.addEventListener('mousedown', (e) => {
                 isDown = true;
-                track.style.cursor = 'grabbing';
+                isDragging = false;
                 startX = e.pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
             });
-            track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
-            track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
+            track.addEventListener('mouseleave', () => { isDown = false; isDragging = false; track.style.cursor = 'grab'; });
+            track.addEventListener('mouseup', () => { isDown = false; setTimeout(() => { isDragging = false; }, 50); track.style.cursor = 'grab'; });
             track.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
-                e.preventDefault();
                 const x = e.pageX - track.offsetLeft;
                 const walk = (x - startX) * 1.5;
-                track.scrollLeft = scrollLeft - walk;
+                if (Math.abs(x - startX) > 8) {
+                    isDragging = true;
+                    track.style.cursor = 'grabbing';
+                    e.preventDefault();
+                    track.scrollLeft = scrollLeft - walk;
+                }
             });
         }
 
@@ -6005,24 +6010,29 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     grid.insertAdjacentHTML('beforeend', cardHtml);
                 } else {
                     const p = item;
-                    const safeTitle = (p.title || 'Portföy İlanı').replace(/'/g, "\'");
-                    const waMsg = `Merhaba Suzanne Hanım, ${safeTitle} ilanı hakkında detaylı bilgi almak istiyorum.`;
+                    const safeTitle = escapeHtml(p.title || 'Portföy İlanı');
+                    const waMsg = `Merhaba Suzanne Hanım, ${p.title || 'Portföy İlanı'} ilanı hakkında detaylı bilgi almak istiyorum.`;
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
+                    const escLoc = escapeHtml(p.location || p.loc || 'Bölge');
+                    const escPrice = escapeHtml(p.price_display || (p.price ? formatPrice(p.price) : 'Danışınız'));
+                    const escType = escapeHtml(p.type || 'Satılık');
+                    const safeImg = escapeHtml(p.img || p.thumbnail || p.image || '/static/img/placeholder.jpg');
+                    const safeLink = typeof p.link === 'string' ? p.link.replace(/[\u0000-\u001f'"\\]/g, '') : '#';
 
                     const cardHtml = `
-                        <div class="card listing-card" onclick="openListingDetail('${p.link}')" style="display:flex; flex-direction:column; background:#fff; border-radius:22px; overflow:hidden; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:all 0.3s ease;">
+                        <div class="card listing-card" onclick="openListingDetail('${safeLink}')" style="display:flex; flex-direction:column; background:#fff; border-radius:22px; overflow:hidden; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:all 0.3s ease;">
                             <div class="card-img-wrapper" style="position:relative; height:200px; overflow:hidden;">
-                                <img src="${p.img}" alt="${safeTitle}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
-                                <span class="badge ${p.type === 'Kiralık' ? 'rent' : 'sale'}" style="position:absolute; top:12px; left:12px; background:${p.type === 'Kiralık' ? '#34C759' : '#0071E3'}; color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px;">${p.type || 'Satılık'}</span>
+                                <img src="${safeImg}" alt="${safeTitle}" loading="lazy" style="width:100%; height:100%; object-fit:cover;" onerror="this.onerror=null; this.src='/static/img/placeholder.jpg';">
+                                <span class="badge ${p.type === 'Kiralık' ? 'rent' : 'sale'}" style="position:absolute; top:12px; left:12px; background:${p.type === 'Kiralık' ? '#34C759' : '#0071E3'}; color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px;">${escType}</span>
                                 <span style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); color:#FFD700; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;"><i class="fa-solid fa-star"></i> AI Skoru: ${aiScore}</span>
                             </div>
                             <div class="card-content" style="padding:1.25rem; display:flex; flex-direction:column; flex-grow:1;">
                                 <h3 class="card-title" style="font-size:16px; font-weight:700; margin-bottom:6px; line-height:1.3;">${safeTitle}</h3>
-                                <div style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;"><i class="fa-solid fa-location-dot"></i> ${p.loc || 'Bölge'}</div>
+                                <div style="font-size:13px; color:var(--text-secondary); margin-bottom:12px;"><i class="fa-solid fa-location-dot"></i> ${escLoc}</div>
                                 <div style="margin-top:auto; padding-top:12px; border-top:1px solid rgba(0,0,0,0.06);">
-                                    <div style="font-size:16px; font-weight:700; color:var(--accent); margin-bottom:10px;">${p.price}</div>
+                                    <div style="font-size:16px; font-weight:700; color:var(--accent); margin-bottom:10px;">${escPrice}</div>
                                     <div style="display:flex; gap:8px;">
-                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openListingDetail('${p.link}')" style="font-size:12px; padding:6px 12px; flex:1;"><i class="fa-solid fa-eye"></i> İlan Detayı</button>
+                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openListingDetail('${safeLink}')" style="font-size:12px; padding:6px 12px; flex:1;"><i class="fa-solid fa-eye"></i> İlan Detayı</button>
                                         <a href="${waUrl}" target="_blank" class="btn btn-outline btn-sm" onclick="event.stopPropagation()" style="font-size:12px; padding:6px 12px; color:#128C7E; border-color:rgba(37,211,102,0.4);"><i class="fa-brands fa-whatsapp"></i></a>
                                     </div>
                                 </div>
@@ -6047,12 +6057,11 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             
             viewport.addEventListener('resize', () => {
                 if (chatWindow && chatWindow.classList.contains('open') && chatInput) {
-                    // Adjust chat window position when keyboard appears
                     const keyboardHeight = window.innerHeight - viewport.height;
-                    if (keyboardHeight > 150) { // Keyboard is open
-                        chatWindow.style.bottom = `${keyboardHeight}px`;
+                    if (keyboardHeight > 150) {
+                        chatWindow.style.setProperty('bottom', `${keyboardHeight + 10}px`, 'important');
                     } else {
-                        chatWindow.style.bottom = '';
+                        chatWindow.style.removeProperty('bottom');
                     }
                 }
             });
@@ -6066,12 +6075,12 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         let isChatOpen = false;
         function toggleChatbot() {
             const win = document.getElementById('chatWindow');
-            const btnIcon = document.querySelector('#chatToggleBtn i');
-            const btn = document.getElementById('chatToggleBtn');
+            const btn = document.getElementById('chatToggleOrb') || document.getElementById('chatToggleBtn');
+            const btnIcon = document.querySelector('#chatToggleOrb .orb-core i') || document.querySelector('#chatToggleBtn i');
             isChatOpen = !isChatOpen;
             
             if(isChatOpen) {
-                win.classList.add('open');
+                if (win) win.classList.add('open');
                 if (btn) btn.setAttribute('aria-expanded', 'true');
                 if (btnIcon) btnIcon.className = 'fa-solid fa-xmark';
                 if (btnIcon && btnIcon.animate) {
@@ -6084,18 +6093,13 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     const i = document.getElementById('chatInput'); 
                     if (i) i.focus({preventScroll:true}); 
                 }, 350);
-                // Default budget: 1-3 Milyon TL selected when chat opens
-                setTimeout(() => {
-                    const budgetBtn = document.querySelector('.budget-btn[data-min="0"][data-max="3000000"]');
-                    if (budgetBtn) budgetBtn.click();
-                }, 400);
             } else {
-                if (win) win.classList.remove('open');
+                if (win) {
+                    win.classList.remove('open');
+                    win.style.removeProperty('bottom');
+                }
                 if (btn) btn.setAttribute('aria-expanded', 'false');
                 if (btnIcon) btnIcon.className = 'fa-solid fa-brain';
-                
-                // Reset chat window position on close
-                if (win) win.style.bottom = '';
             }
         }
 
@@ -6367,7 +6371,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             ['appointmentModal', 'aboutModal', 'videoModal', 'pdfModal', 'reportModal', 'imageModal', 'detailModal'].forEach(closeModal);
             const chatWin = document.getElementById('chatWindow');
             if (chatWin && chatWin.classList.contains('open')) {
-                toggleChat();
+                toggleChatbot();
             }
         }
 

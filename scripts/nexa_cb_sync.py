@@ -34,10 +34,26 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 AGENT_LAST_LOG = Path(__file__).parent / "nexa_cb_sync_last.json"
 
 
-def _fetch(url: str) -> str:
+def _fetch(url: str, retries: int = 3, backoff_base: float = 2.0) -> str:
+    import urllib.error
+    import random
     req = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8", errors="ignore")
+    for attempt in range(1, retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return r.read().decode("utf-8", errors="ignore")
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 500, 502, 503, 504) and attempt < retries:
+                sleep_time = (backoff_base ** attempt) + random.uniform(0.5, 1.5)
+                time.sleep(sleep_time)
+                continue
+            raise e
+        except (urllib.error.URLError, TimeoutError) as e:
+            if attempt < retries:
+                sleep_time = (backoff_base ** attempt) + random.uniform(0.5, 1.5)
+                time.sleep(sleep_time)
+                continue
+            raise e
 
 
 def _clean(txt: str) -> str:
@@ -304,7 +320,9 @@ def sync_once(verbose: bool = True) -> dict:
     if not listings:
         return report
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(str(DB_PATH), timeout=30.0)
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA busy_timeout=30000;")
     try:
         _ensure_columns(conn)
         for entry in listings:
@@ -315,7 +333,9 @@ def sync_once(verbose: bool = True) -> dict:
                 report["upserted"] += 1
                 if verbose:
                     print(f"  + {ilan['name']} | {ilan['price_display'] or '-'} | {ilan['location'] or '-'}")
+                time.sleep(0.3)
             except Exception as e:
+                conn.rollback()
                 report["errors"].append(f"{entry.get('link', '?')}: {e}")
                 if verbose:
                     print(f"  ! {entry.get('link', '?')} hata: {e}")

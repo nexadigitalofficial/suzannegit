@@ -35,17 +35,22 @@ DB_PATH = NEXA_ROOT / "nexa_database.db"
 DOCS_DIR = NEXA_ROOT / "static" / "documents"
 SUMMARIES_FILE = Path(__file__).resolve().parent / "nexa_project_summaries.json"
 PORTFOLIO_FILE = Path(__file__).resolve().parent / "nexa_portfolio_data.json"
+MAP_FILE = NEXA_ROOT / "projects_map.json"
 
 # ─── KOTA / PERFORMANS YÖNETİMİ (P8/P9) ───
 _key_cooldowns = {}          # key -> süre sonu (429/401 tespitinde 60 sn yasak)
+_dead_keys = set()           # kalıcı geçersiz anahtarlar (403/leaked/invalid)
 _last_good_model = {}        # key -> son başarılı model (öncelikle dene)
 _reply_cache = {}            # normalize sorgu -> (yanıt, zaman)
 _cache_lock = threading.Lock()
 _save_lock = threading.Lock()
+_ctx_build_lock = threading.Lock()
 _global_ctx_cache = {}       # E9: global context (60 sn TTL)
 REPLY_TTL = 300              # 5 dk
 KEY_COOLDOWN = 60
 GLOBAL_CTX_TTL = 60          # saniye
+DEAD_MODEL_TTL = 900         # 15 dk sonra 404 modeli tekrar dene
+_dead_models = {}            # model_name -> expiration_timestamp
 
 _FALLBACK_CANONICAL_MATRIX = """- VIP ÜNİVERSİTE: Başlangıç Fiyatı: 1.350.000 TL, Peşinat: 825.000 TL (%50), 257 adet 1+1 daire, Zemin+8 kat. Lokasyon: Ankara / Çubuk / Esenboğa (Yıldırım Beyazıt Üniversitesi Kampüsü tam karşısı). Yerden ısıtma, yüksek öğrenci/akademisyen kiralama talebi. Ada: 190438, Parsel: 15 (TKGM Onaylı).
 - WM - PRIME: 1.799.000 TL (1+1 daireler, Odunpazarı / Eskişehir).
@@ -278,31 +283,23 @@ def build_project_context(db_id, query=None):
             raw_chunks.append((f"[{r['category'] or 'Belge'} - {r['title']}]: {txt[:400]}", txt))
         chosen = _rank_chunks(query, raw_chunks) if query else raw_chunks
         if query:
-            # P17: gerçek vektör araması önce denenir; yeterli sonuç varsa öne konur,
-            # yetersizse (embedding modeli yok / <2 eşleşme) eski keyword yöntemi aynen kullanılır.
+            # P17: gerçek vektör araması önce denenir; yeterli sonuç varsa öne konur
             try:
                 from nexa_vector_rag import vector_search
                 vres = vector_search(query, project_id=db_id, top_k=8)
                 if vres and len(vres) >= 2:
-                    chosen = []
+                    v_chosen = []
                     for vr in vres:
                         t = (vr.get("chunk_text") or "").strip()
                         if not t:
                             continue
                         title = vr.get("document_title") or "Belge"
-                        chosen.append((f"[{title}]: {t[:400]}", t))
-                    seen = {l[1][:60] for l in chosen}
-                    for line, txt in _rank_chunks(query, raw_chunks):
-                        if len(chosen) >= 12:
-                            break
-                        if txt[:60] not in seen:
-                            chosen.append((line, txt))
-                            seen.add(txt[:60])
+                        v_chosen.append((f"[{title}]: {t[:400]}", t))
+                    if v_chosen:
+                        chosen = v_chosen
             except Exception as e:
-                logger.warning("Vektör arama devre disi, eski yontemle devam: %s", e)
-        chunks = []
-        for line, _txt in chosen[:12]:
-            chunks.append(line)
+                logger.warning("Vektör arama devre disi: %s", e)
+        chunks = [item[0] if isinstance(item, tuple) else str(item) for item in (chosen or [])[:12]]
         if not chunks:
             chunks.append("[BELGE]: Bu proje için sistemde henüz anlamlı doküman içeriği bulunmuyor (belge yüklenmemiş veya çözümlenememiş olabilir).")
         return meta + "\n" + "\n\n".join(chunks)
@@ -316,57 +313,62 @@ def build_global_context():
         cached = _global_ctx_cache.get("ctx")
         if cached and now - cached[1] < GLOBAL_CTX_TTL:
             return cached[0]
-    db = _load_db()
-    db.row_factory = sqlite3.Row
-    try:
-        projects = db.execute("""
-            SELECT id, name, location, il, ilce, mahalle, description, ada_no, parsel_no,
-                   tkgm_verified, is_portfolio, listing_type, property_category,
-                   price_display, room_info, net_gross_area
-            FROM projects WHERE COALESCE(is_portfolio,0) = 0 ORDER BY id ASC
-        """).fetchall()
-        if not projects:
-            return "Sistemde henüz kayıtlı proje bulunmamaktadır."
-        parts = []
-        for proj in projects:
-            ptype = (f"BİREYSEL PORTFÖY ({proj['listing_type'] or 'İlan'})"
-                     if proj['is_portfolio'] else "MARKALI PROJE")
-            specs = (f"Kategori: {proj['property_category'] or '-'}, "
-                     f"Oda: {proj['room_info'] or '-'}, Alan: {proj['net_gross_area'] or '-'}")
-            loc = proj['location'] or f"{proj['ilce'] or ''} / {proj['il'] or ''}"
-            chunks = []
-            for r in db.execute(f"""
-                SELECT d.title, d.doc_type, dc.chunk_text
-                FROM document_chunks dc JOIN documents d ON dc.document_id = d.id
-                WHERE d.project_id = ? AND LENGTH(TRIM(dc.chunk_text)) > 0
-                ORDER BY {_DOC_PRIORITY_SQL}, d.id, dc.id
-                LIMIT 16
-            """, (proj['id'],)):
-                txt = _clean_chunk(r["chunk_text"])
-                if txt is None:
-                    continue
-                chunks.append(f"  • [{r['doc_type'].upper()} - {r['title']}]: {txt[:260]}")
-                if len(chunks) >= 8:
-                    break
-            if not chunks:
-                chunks = ["  • (Henüz taranmış özel belge bulunmuyor)"]
-            parts.append("\n".join([
-                "---",
-                f"İLAN/PROJE ID: {proj['id']} [{ptype}]",
-                f"AD: {proj['name']}",
-                f"FİYAT: {proj['price_display'] or 'Fiyat Belirtilmedi'} | {specs}",
-                f"LOKASYON: {loc} (İl: {proj['il'] or '-'}, İlçe: {proj['ilce'] or '-'}, Mahalle: {proj['mahalle'] or '-'})",
-                f"ADA/PARSEL: {proj['ada_no'] or '-'}/{proj['parsel_no'] or '-'} (TKGM Onay: {'Evet' if proj['tkgm_verified'] else 'Hayır'})",
-                f"AÇIKLAMA: {proj['description'] or 'Açıklama yok.'}",
-                "BELGE/VERİ ÖZETLERİ:",
-                "\n".join(chunks),
-            ]))
-        result = "\n\n".join(parts)
+    with _ctx_build_lock:
         with _cache_lock:
-            _global_ctx_cache["ctx"] = (result, now)
-        return result
-    finally:
-        db.close()
+            cached = _global_ctx_cache.get("ctx")
+            if cached and now - cached[1] < GLOBAL_CTX_TTL:
+                return cached[0]
+        db = _load_db()
+        db.row_factory = sqlite3.Row
+        try:
+            projects = db.execute("""
+                SELECT id, name, location, il, ilce, mahalle, description, ada_no, parsel_no,
+                       tkgm_verified, is_portfolio, listing_type, property_category,
+                       price_display, room_info, net_gross_area
+                FROM projects WHERE COALESCE(is_portfolio,0) = 0 ORDER BY id ASC
+            """).fetchall()
+            if not projects:
+                return "Sistemde henüz kayıtlı proje bulunmamaktadır."
+            parts = []
+            for proj in projects:
+                ptype = (f"BİREYSEL PORTFÖY ({proj['listing_type'] or 'İlan'})"
+                         if proj['is_portfolio'] else "MARKALI PROJE")
+                specs = (f"Kategori: {proj['property_category'] or '-'}, "
+                         f"Oda: {proj['room_info'] or '-'}, Alan: {proj['net_gross_area'] or '-'}")
+                loc = proj['location'] or f"{proj['ilce'] or ''} / {proj['il'] or ''}"
+                chunks = []
+                for r in db.execute(f"""
+                    SELECT d.title, d.doc_type, dc.chunk_text
+                    FROM document_chunks dc JOIN documents d ON dc.document_id = d.id
+                    WHERE d.project_id = ? AND LENGTH(TRIM(dc.chunk_text)) > 0
+                    ORDER BY {_DOC_PRIORITY_SQL}, d.id, dc.id
+                    LIMIT 16
+                """, (proj['id'],)):
+                    txt = _clean_chunk(r["chunk_text"])
+                    if txt is None:
+                        continue
+                    chunks.append(f"  • [{r['doc_type'].upper()} - {r['title']}]: {txt[:260]}")
+                    if len(chunks) >= 8:
+                        break
+                if not chunks:
+                    chunks = ["  • (Henüz taranmış özel belge bulunmuyor)"]
+                parts.append("\n".join([
+                    "---",
+                    f"İLAN/PROJE ID: {proj['id']} [{ptype}]",
+                    f"AD: {proj['name']}",
+                    f"FİYAT: {proj['price_display'] or 'Fiyat Belirtilmedi'} | {specs}",
+                    f"LOKASYON: {loc} (İl: {proj['il'] or '-'}, İlçe: {proj['ilce'] or '-'}, Mahalle: {proj['mahalle'] or '-'})",
+                    f"ADA/PARSEL: {proj['ada_no'] or '-'}/{proj['parsel_no'] or '-'} (TKGM Onay: {'Evet' if proj['tkgm_verified'] else 'Hayır'})",
+                    f"AÇIKLAMA: {proj['description'] or 'Açıklama yok.'}",
+                    "BELGE/VERİ ÖZETLERİ:",
+                    "\n".join(chunks),
+                ]))
+            result = "\n\n".join(parts)
+            with _cache_lock:
+                _global_ctx_cache["ctx"] = (result, now)
+            return result
+        finally:
+            db.close()
 
 
 # ─── SORGU ODAKLI CHUNK SEÇİMİ (Y4 pragmatik iyileştirme) ───
@@ -431,6 +433,26 @@ Kısa, şık ve maddeler halinde yaz. Dokümanda yer almasa bile gerçek coğraf
 
 # ─── BİLİŞSEL FONKSİYON VE ARAÇLAR (GEMINI FUNCTION CALLING / TOOLS) ───
 
+# ─── BİLİŞSEL FONKSİYON VE ARAÇLAR (GEMINI FUNCTION CALLING / TOOLS) ───
+
+def _sanitize_numeric(val, default=0.0):
+    if isinstance(val, (int, float)):
+        return float(val)
+    if not val:
+        return default
+    cleaned = re.sub(r"[^\d.,]", "", str(val))
+    if "." in cleaned and "," in cleaned:
+        cleaned = cleaned.replace(".", "").replace(",", ".")
+    elif "," in cleaned:
+        cleaned = cleaned.replace(",", ".")
+    elif cleaned.count(".") > 1:
+        cleaned = cleaned.replace(".", "")
+    try:
+        return float(cleaned)
+    except ValueError:
+        return default
+
+
 def schedule_vip_appointment(customer_name: str, phone: str, project_name: str = "", preferred_datetime: str = "", notes: str = "") -> str:
     """Müşterinin VIP proje danışmanı Suzanne Tenekecioğlu ile randevu talebini doğrudan SQLite veritabanına ve CRM sistemine kaydeder.
     
@@ -442,51 +464,71 @@ def schedule_vip_appointment(customer_name: str, phone: str, project_name: str =
         notes: Müşterinin özel notu veya görüşme talebi
     """
     try:
-        import sqlite3
-        conn = sqlite3.connect(str(DB_PATH))
-        cur = conn.cursor()
-        cur.execute("""
-            INSERT INTO customers (name, phone, email, project_id, stage, notes, created_at)
-            VALUES (?, ?, '', (SELECT id FROM projects WHERE name LIKE ? LIMIT 1), 'new', ?, datetime('now'))
-        """, (
-            customer_name,
-            phone,
-            f"%{project_name}%" if project_name else "%",
-            f"[AI Chatbot Randevusu] Proje: {project_name} | Zaman: {preferred_datetime} | Not: {notes}"
-        ))
-        conn.commit()
-        conn.close()
-        logger.info("AI Function Calling: Randevu CRM'e kaydedildi (%s - %s)", customer_name, project_name)
-        return f"BAŞARILI: {customer_name} adına {project_name} projesi için {preferred_datetime} randevusu VIP Danışmanımız Suzanne Tenekecioğlu'nun takvimine işlendi. Randevu teyit mesajı için iletişim numarası: 0535 489 56 56."
+        c_name = str(customer_name or "").strip()
+        c_phone = re.sub(r"[^\d+]", "", str(phone or "").strip())
+        if not c_name or not c_phone:
+            return "Randevu kaydı için isim ve geçerli bir telefon numarası gereklidir."
+        
+        proj_name_clean = str(project_name or "").strip()
+        pref_dt = str(preferred_datetime or "En kısa sürede").strip()
+        user_notes = str(notes or "").strip()
+
+        with sqlite3.connect(str(DB_PATH), timeout=30.0) as conn:
+            conn.execute("PRAGMA journal_mode=WAL;")
+            conn.execute("PRAGMA busy_timeout=30000;")
+            cur = conn.cursor()
+            proj_clause = "(SELECT id FROM projects WHERE name LIKE ? LIMIT 1)" if proj_name_clean else "NULL"
+            note_text = f"[AI Chatbot Randevusu] Proje: {proj_name_clean or 'Genel'} | Zaman: {pref_dt} | Danışman: Suzanne Tenekecioğlu | Not: {user_notes}"
+            if proj_name_clean:
+                cur.execute(f"""
+                    INSERT INTO customers (name, phone, email, project_id, stage, assigned_agent, notes, created_at)
+                    VALUES (?, ?, '', {proj_clause}, 'appointment', 'Suzanne Tenekecioğlu', ?, datetime('now'))
+                    ON CONFLICT(project_id, phone) DO UPDATE SET
+                        notes = excluded.notes,
+                        stage = 'appointment'
+                """, (c_name, c_phone, f"%{proj_name_clean}%", note_text))
+            else:
+                cur.execute(f"""
+                    INSERT INTO customers (name, phone, email, project_id, stage, assigned_agent, notes, created_at)
+                    VALUES (?, ?, '', NULL, 'appointment', 'Suzanne Tenekecioğlu', ?, datetime('now'))
+                """, (c_name, c_phone, note_text))
+            conn.commit()
+
+        logger.info("AI Function Calling: Randevu CRM'e kaydedildi (%s - %s)", c_name, proj_name_clean)
+        return f"BAŞARILI: {c_name} adına {proj_name_clean or 'seçkin projelerimiz'} için {pref_dt} randevusu VIP Danışmanımız Suzanne Tenekecioğlu'nun takvimine işlendi. Randevu teyit ve detayları için iletişim numaramız: 0535 489 56 56."
     except Exception as e:
         logger.error("schedule_vip_appointment hatasi: %s", e)
-        return f"Randevu talebiniz alındı ({customer_name} - {phone}), danışmanımız Suzanne Tenekecioğlu sizinle en kısa sürede iletişime geçecektir."
+        return f"Randevu talebiniz başarıyla alındı ({customer_name} - {phone}). Danışmanımız Suzanne Tenekecioğlu sizinle en kısa sürede iletişime geçecektir (0535 489 56 56)."
 
 
-def calculate_investment_plan(total_price: int, down_payment_percent: float = 50.0, term_months: int = 24) -> str:
+def calculate_investment_plan(total_price, down_payment_percent = 50.0, term_months = 24) -> str:
     """Gayrimenkul alımında peşinat, kalan bakiye, aylık eşit taksit tutarı ve peşin indirim avantajını kesin matematikle hesaplar.
     
     Args:
-        total_price: Konutun toplam liste fiyatı (TL cinsinden tam sayı)
+        total_price: Konutun toplam liste fiyatı (TL cinsinden sayı veya metin)
         down_payment_percent: Yüzde olarak ödenecek peşinat oranı (örn: 50.0 için %50, 40.0 için %40, 0 için %0)
         term_months: Taksit vadesi (ay cinsinden, örn: 12, 24, 30, 36)
     """
     try:
-        dp_ratio = max(0.0, min(100.0, float(down_payment_percent))) / 100.0
-        dp_amount = int(total_price * dp_ratio)
-        remaining = int(total_price - dp_amount)
-        term = max(1, int(term_months))
+        tot_p = int(_sanitize_numeric(total_price, 0))
+        if tot_p <= 0:
+            return "Lütfen hesaplama için geçerli bir toplam tutar belirtiniz."
+        dp_pct = max(0.0, min(100.0, _sanitize_numeric(down_payment_percent, 50.0)))
+        dp_ratio = dp_pct / 100.0
+        dp_amount = int(tot_p * dp_ratio)
+        remaining = int(tot_p - dp_amount)
+        term = max(1, int(_sanitize_numeric(term_months, 24)))
         monthly = int(remaining / term)
-        cash_discount_10 = int(total_price * 0.10)
-        cash_price = int(total_price - cash_discount_10)
+        cash_discount_10 = int(tot_p * 0.10)
+        cash_price = int(tot_p - cash_discount_10)
         
         return (
             f"FİNANSAL HESAPLAMA SONUCU:\n"
-            f"- Liste Fiyatı: {total_price:,.0f} TL\n"
-            f"- Peşin Alım İndirimli Fiyatı (%10 İndirim): {cash_price:,.0f} TL (Kazanç: {cash_discount_10:,.0f} TL)\n"
-            f"- Vadeli Plan: %{down_payment_percent:.0f} Peşinat = {dp_amount:,.0f} TL\n"
-            f"- Kalan Tutar: {remaining:,.0f} TL\n"
-            f"- Vade & Aylık Taksit: {term} Ay x {monthly:,.0f} TL/ay (Faizsiz, şirket içi sabit taksit)"
+            f"- Liste Fiyatı: {tot_p:,.0f} TL\n"
+            f"- Peşin Alım İndirimli Fiyatı (%10 İndirim): {cash_price:,.0f} TL (Peşin Alım Kazancı: {cash_discount_10:,.0f} TL)\n"
+            f"- Vadeli Plan: %{dp_pct:.0f} Peşinat = {dp_amount:,.0f} TL\n"
+            f"- Kalan Bakiye: {remaining:,.0f} TL\n"
+            f"- Vade & Sabit Taksit: {term} Ay x {monthly:,.0f} TL/ay (Faizsiz, şirket içi sabit taksit)"
         ).replace(",", ".")
     except Exception as e:
         return f"Hesaplama hatası: {e}"
@@ -501,11 +543,11 @@ def get_project_intelligence(project_name: str) -> str:
     proj = _find_project_by_name(project_name)
     if not proj:
         try:
-            map_data = json.loads(JSON_FILE.read_text(encoding="utf-8")) if JSON_FILE.exists() else []
+            map_data = json.loads(MAP_FILE.read_text(encoding="utf-8")) if MAP_FILE.exists() else []
             norm = lambda s: re.sub(r"[^a-z0-9]", "", (s or "").lower())
             target = norm(project_name)
             for p in map_data:
-                if target in norm(p.get("title", "")) or target in norm(p.get("folder_name", "")):
+                if target in norm(p.get("title", "")) or target in norm(p.get("folder_name", "")) or target in norm(p.get("name", "")):
                     proj = p
                     break
         except Exception:
@@ -536,14 +578,40 @@ NEXA_TOOLS = [schedule_vip_appointment, calculate_investment_plan, get_project_i
 def _gemini_generate(contents, enable_tools=True):
     from google import genai
     from google.genai import types
+
+    TOOL_MAP = {
+        "schedule_vip_appointment": schedule_vip_appointment,
+        "calculate_investment_plan": calculate_investment_plan,
+        "get_project_intelligence": get_project_intelligence
+    }
+
+    def _dispatch_function_call(fn_call):
+        name = getattr(fn_call, "name", None) or (fn_call.get("name") if isinstance(fn_call, dict) else "")
+        raw_args = getattr(fn_call, "args", None) or (fn_call.get("args") if isinstance(fn_call, dict) else {})
+        args = dict(raw_args) if raw_args else {}
+        func = TOOL_MAP.get(name)
+        if not func:
+            return f"Hata: Tanımsız fonksiyon '{name}'."
+        try:
+            logger.info("AI Function Calling executed: %s with args %s", name, args)
+            return func(**args)
+        except TypeError as te:
+            logger.error("Function argument mismatch (%s): %s", name, te)
+            return f"Fonksiyon parametre hatası ({name}): {te}"
+        except Exception as ex:
+            logger.error("Function execution error (%s): %s", name, ex)
+            return f"İşlem sırasında hata oluştu: {ex}"
+
     keys = _get_rotated_api_keys()
     now = time.time()
     with _cache_lock:
-        dead = set(_dead_models)
+        dead = {m for m, exp in _dead_models.items() if exp > now}
     targets = [m for m in FALLBACK_MODELS if m not in dead]
     tools = NEXA_TOOLS if enable_tools else None
 
     for key in keys:
+        if key in _dead_keys:
+            continue
         with _cache_lock:
             cd = _key_cooldowns.get(key, 0)
             preferred = _last_good_model.get(key)
@@ -562,6 +630,20 @@ def _gemini_generate(contents, enable_tools=True):
                 try:
                     if config:
                         resp = client.models.generate_content(model=model, contents=contents, config=config)
+                        # Function Calling dispatch handling
+                        if resp and resp.function_calls:
+                            tool_outputs = []
+                            for fn in resp.function_calls:
+                                out = _dispatch_function_call(fn)
+                                tool_outputs.append(f"[{getattr(fn, 'name', 'Araç')} Sonucu]:\n{out}")
+                            follow_up = f"{contents}\n\nARAÇ YANITLARI:\n" + "\n\n".join(tool_outputs) + "\n\nYukarıdaki araç sonuçlarını temel alarak müşteriye şık, net ve elit bir yanıt oluştur."
+                            follow_resp = client.models.generate_content(model=model, contents=follow_up)
+                            if follow_resp and follow_resp.text:
+                                with _cache_lock:
+                                    _last_good_model[key] = model
+                                return follow_resp.text
+                            elif tool_outputs:
+                                return "\n\n".join(tool_outputs)
                     else:
                         resp = client.models.generate_content(model=model, contents=contents)
 
@@ -571,6 +653,11 @@ def _gemini_generate(contents, enable_tools=True):
                         return resp.text
                 except Exception as e:
                     msg = str(e)
+                    if "leaked" in msg.lower() or "api key not valid" in msg.lower() or "permission_denied" in msg.lower():
+                        with _cache_lock:
+                            _dead_keys.add(key)
+                        logger.warning("Anahtar %s kalici olarak devre disi birakildi", key[-6:])
+                        break
                     if _is_quota_error(msg):
                         with _cache_lock:
                             _key_cooldowns[key] = time.time() + KEY_COOLDOWN
@@ -578,7 +665,7 @@ def _gemini_generate(contents, enable_tools=True):
                         break
                     if "404" in msg or "no longer available" in msg:
                         with _cache_lock:
-                            _dead_models.add(model)
+                            _dead_models[model] = time.time() + DEAD_MODEL_TTL
                     logger.warning("Model %s failed (%s)", model, msg[:120])
                     continue
         except Exception as e:
@@ -689,8 +776,9 @@ def _load_summaries():
 def _save_summaries(data):
     try:
         with _save_lock:
-            SUMMARIES_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1),
-                                      encoding="utf-8")
+            tmp = SUMMARIES_FILE.with_suffix(".json.tmp")
+            tmp.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+            tmp.replace(SUMMARIES_FILE)
     except Exception as e:
         logger.warning("Ozet kaydedilemedi: %s", e)
 
@@ -774,9 +862,9 @@ def cognitive_chat(user_message, project=None, history=None):
     cache_key = hashlib.md5(raw_key.encode("utf-8")).hexdigest()
 
     with _cache_lock:
-        hit = _reply_cache.get(cache_key)
-        if hit and time.time() - hit[1] < REPLY_TTL:
-            return hit[0]
+        cached = _reply_cache.get(cache_key)
+        if cached and (time.time() - cached[1] < REPLY_TTL):
+            return cached[0]
 
     def _cached(reply):
         if reply:
@@ -791,13 +879,19 @@ def cognitive_chat(user_message, project=None, history=None):
     history_block = ""
     if history:
         turns = []
+        def _clean_hist_text(t):
+            cleaned = re.sub(r"(?i)(system\s*:|kurallar\s*:|sen\s+nexa\s+değilsin|canonical)", "", str(t))
+            return re.sub(r"[\r\n]+", " ", cleaned).strip()[:350]
+
         for h in history[-8:]:
             role = h.get("role") if isinstance(h, dict) else "user"
             text = (h.get("content") or h.get("text") if isinstance(h, dict) else str(h) or "").strip()
-            if text:
-                turns.append(f"{'Müşteri' if role == 'user' else 'Nexa'}: {text[:400]}")
+            clean_t = _clean_hist_text(text)
+            if clean_t:
+                speaker = "MUSTERI" if role == "user" else "ASISTAN"
+                turns.append(f"<{speaker}>{clean_t}</{speaker}>")
         if turns:
-            history_block = "ÖNCEKİ SOHBET (aynı ziyaretçi, bağlam için kullan; çelişiyorsa son mesaja uy):\n" + "\n".join(turns) + "\n\n"
+            history_block = "<SOHBET_GECMISI>\n" + "\n".join(turns) + "\n</SOHBET_GECMISI>\n\n"
 
     if project:
         is_broad_overview = (
@@ -834,7 +928,9 @@ RAG BAĞLAMI (metadata + dokümanlar):
 GEO-INTELLIGENCE:
 {geo if geo else '(lokasyon aksı sorgusu bağlamdan yanıtlanacak)'}
 
-Kullanıcı: {msg}
+<KULLANICI_SORUSU>
+{msg}
+</KULLANICI_SORUSU>
 
 Kurallar:
 1. Fiyat, teslim, metrekare, ödeme planı varsa RAG'daki rakamları birebir ver.
@@ -843,6 +939,7 @@ Kurallar:
 4. Madde/liste kullan, markdown. Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
 Cevabı 450 kelimeyi aşmadan Türkçe yaz.
 """
+        system = _trim_middle(system, MAX_PROMPT_CHARS)
     else:
         context = build_global_context()
         summaries = _load_summaries()
@@ -882,7 +979,9 @@ TÜM PORTFÖY RAG BAĞLAMI (proje metadata + kayıtlı doküman özetleri/fiyat 
 KİŞİSEL PORTFÖY İLANLARI (satılık/kiralık ilan envanteri — soru ilan arayışıysa buradan göster):
 {pf_block}
 
-Kullanıcı: {msg}
+<KULLANICI_SORUSU>
+{msg}
+</KULLANICI_SORUSU>
 
 Kurallar:
 1. YATIRIM & TAVSİYE SORULARI ("Ne alayım?", "Yatırım yapmak istiyorum", "Kira getirisi / prim potansiyeli"): 
@@ -895,8 +994,6 @@ Kurallar:
 6. Markdown formatında, madde ve tablo kullan. Cevabı 500 kelimeyi aşmadan Türkçe yaz.
 Sonuna şu iletişim satırını ekle: {CONTACT_LINE}
 """
-        # Y5/B9: dev global bağlam (42K+) Ollama 8K context'e sığmayabilir; ortadan kırp.
-        # Gemini 1M destekliyor, bu yüzden kırpma yalnızca taşma riskini önleyen güvenlik bandı.
         system = _trim_middle(system, MAX_PROMPT_CHARS)
     try:
         reply = _gemini_generate(system)

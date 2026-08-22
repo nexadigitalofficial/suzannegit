@@ -98,49 +98,64 @@ def sync_sales_knowledge():
 
     # 3. SQLite güncelle
     if DB_PATH.exists():
-        conn = sqlite3.connect(str(DB_PATH))
-        cur = conn.cursor()
-        for name, data in graph.items():
-            cur.execute("""
-                UPDATE projects SET
-                    price_display = ?,
-                    price_min = ?,
-                    price_max = ?,
-                    price_numeric = ?,
-                    down_payment = ?,
-                    installment_terms = ?,
-                    monthly_installment = ?,
-                    delivery_months = ?,
-                    room_info = ?,
-                    location = ?,
-                    il = ?,
-                    ilce = ?,
-                    mahalle = ?,
-                    ada_no = ?,
-                    parsel_no = ?,
-                    tkgm_verified = 1
-                WHERE name = ?
-            """, (
-                data["price_display"],
-                data["price_min"],
-                data["price_max"],
-                data["price_numeric"],
-                data["down_payment"],
-                data.get("installment_terms", ""),
-                data.get("monthly_installment", 0),
-                data.get("delivery_months", 24),
-                data["room_info"],
-                data["location"],
-                data.get("il", "Ankara"),
-                data.get("ilce", "Çankaya"),
-                data.get("mahalle", ""),
-                data.get("ada_no", ""),
-                data.get("parsel_no", ""),
-                name
-            ))
-        conn.commit()
-        conn.close()
-        print("[3/3] SQLite database senkronizasyonu tamamlandı.")
+        conn = sqlite3.connect(str(DB_PATH), timeout=30.0)
+        conn.execute("PRAGMA journal_mode=WAL;")
+        conn.execute("PRAGMA busy_timeout=30000;")
+        try:
+            cur = conn.cursor()
+            for name, data in graph.items():
+                norm_name = name.strip().upper().replace("İ", "I")
+                cur.execute("""
+                    UPDATE projects SET
+                        price_display = ?,
+                        price_min = ?,
+                        price_max = ?,
+                        price_numeric = ?,
+                        down_payment = ?,
+                        installment_terms = ?,
+                        monthly_installment = ?,
+                        delivery_months = ?,
+                        room_info = ?,
+                        location = ?,
+                        il = ?,
+                        ilce = ?,
+                        mahalle = ?,
+                        ada_no = ?,
+                        parsel_no = ?,
+                        tkgm_verified = 1
+                    WHERE UPPER(name) = UPPER(?)
+                       OR UPPER(REPLACE(name, 'İ', 'I')) = ?
+                       OR UPPER(name) LIKE ?
+                       OR UPPER(?) LIKE '%' || UPPER(name) || '%'
+                """, (
+                    data["price_display"],
+                    data["price_min"],
+                    data["price_max"],
+                    data["price_numeric"],
+                    data["down_payment"],
+                    data.get("installment_terms", ""),
+                    data.get("monthly_installment", 0),
+                    data.get("delivery_months", 24),
+                    data["room_info"],
+                    data["location"],
+                    data.get("il", "Ankara"),
+                    data.get("ilce", "Çankaya"),
+                    data.get("mahalle", ""),
+                    data.get("ada_no", ""),
+                    data.get("parsel_no", ""),
+                    name,
+                    norm_name,
+                    f"%{name}%",
+                    name
+                ))
+            conn.commit()
+            print("[3/3] SQLite database senkronizasyonu tamamlandı.")
+        except Exception as e:
+            conn.rollback()
+            print(f"[3/3] SQLite senkronizasyon hatası: {e}")
+            raise e
+        finally:
+            conn.close()
     return True
 
 

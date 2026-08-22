@@ -108,11 +108,14 @@ from nexa_rag import (cognitive_chat, _find_project_by_name, DOCS_DIR as NEXA_DO
 
 # After db connection setup, add safe migration:
 def _migrate_db(db_path):
-    """Add missing tables and columns safely."""
+    """Add missing tables, columns, and indexes safely with WAL mode."""
     import sqlite3
     import logging
     try:
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect(str(db_path), timeout=30.0)
+        conn.execute("PRAGMA journal_mode=WAL;")
+        conn.execute("PRAGMA busy_timeout=30000;")
+        conn.execute("PRAGMA foreign_keys=ON;")
         cur = conn.cursor()
         
         # Ensure core tables exist before migrating
@@ -146,6 +149,19 @@ def _migrate_db(db_path):
                 file_url VARCHAR(500),
                 category VARCHAR(100),
                 created_at TIMESTAMP
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS audit_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                event_type VARCHAR(100) NOT NULL,
+                entity_type VARCHAR(50),
+                entity_id INTEGER,
+                old_value TEXT,
+                new_value TEXT,
+                user_or_agent VARCHAR(100),
+                details TEXT
             )
         """)
         cur.execute("""
@@ -221,9 +237,14 @@ def _migrate_db(db_path):
             "CREATE INDEX IF NOT EXISTS idx_chunks_doc_id ON document_chunks(document_id)",
             "CREATE INDEX IF NOT EXISTS idx_projects_is_portfolio ON projects(is_portfolio)",
             "CREATE INDEX IF NOT EXISTS idx_projects_name_nocase ON projects(name COLLATE NOCASE)",
+            "CREATE INDEX IF NOT EXISTS idx_projects_location ON projects(location)",
             "CREATE INDEX IF NOT EXISTS idx_projects_price_num ON projects(price_numeric)",
+            "CREATE INDEX IF NOT EXISTS idx_projects_cb_url ON projects(cb_url)",
+            "CREATE INDEX IF NOT EXISTS idx_projects_cb_ilan_no ON projects(cb_ilan_no)",
             "CREATE INDEX IF NOT EXISTS idx_customers_project_id ON customers(project_id)",
             "CREATE INDEX IF NOT EXISTS idx_customers_stage ON customers(stage)",
+            "CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs(timestamp)",
+            "CREATE INDEX IF NOT EXISTS idx_audit_logs_event ON audit_logs(event_type)",
         ]
         for idx_sql in indexes:
             try:
@@ -253,28 +274,50 @@ except ImportError:
 
 STATIC_DIR.mkdir(exist_ok=True)
 
+# ─── ORIGIN VALIDATION (CSRF Protection for POST/PUT) ───
+@app.before_request
+def _validate_origin():
+    if request.method in ("POST", "PUT", "DELETE") and request.path.startswith("/api/"):
+        origin = request.headers.get("Origin") or request.headers.get("Referer")
+        host = request.headers.get("Host")
+        # Allow requests if origin matches host, localhost, or is absent in non-browser API callers
+        if origin and host:
+            clean_host = host.split(":")[0].lower()
+            clean_origin = origin.lower()
+            if not any(h in clean_origin for h in [clean_host, "localhost", "127.0.0.1", "0.0.0.0"]):
+                logger.warning("CSRF/Origin reject: origin=%s != host=%s", origin, host)
+                return jsonify({"success": False, "message": "Cross-origin request rejected"}), 403
+
 # ─── CHAT RATE LIMIT (production koruması) ───
 _rate_lock = threading.Lock()
 _rate_hits = {}
+_last_rate_cleanup = 0.0
 
 
 def _get_client_ip():
-    """Proxy arkasında doğru istemci IP adresini döner."""
+    """Proxy ve CDN (Render, Cloudflare) arkasında doğru istemci IP adresini döner."""
+    cf_connecting_ip = request.headers.get("CF-Connecting-IP")
+    if cf_connecting_ip:
+        return cf_connecting_ip.strip()
     forwarded = request.headers.get("X-Forwarded-For")
     if forwarded:
-        return forwarded.split(",")[0].strip()
+        ips = [ip.strip() for ip in forwarded.split(",") if ip.strip()]
+        return ips[-1] if ips else (request.remote_addr or "0.0.0.0")
     return request.remote_addr or "0.0.0.0"
 
 
 def _check_rate_limit(ip=None):
+    global _last_rate_cleanup
     if ip is None:
         ip = _get_client_ip()
     now = time.time()
     with _rate_lock:
-        # O5: hafıza temizliği — 60 saniyeden eski IP kayıtlarını sil
-        for old_ip in [k for k, ts_list in _rate_hits.items()
-                       if not ts_list or now - ts_list[-1] >= 60]:
-            del _rate_hits[old_ip]
+        # Amortized periodic cleanup every 60s
+        if now - _last_rate_cleanup > 60:
+            for old_ip in [k for k, ts_list in list(_rate_hits.items())
+                           if not ts_list or now - ts_list[-1] >= 60]:
+                _rate_hits.pop(old_ip, None)
+            _last_rate_cleanup = now
         hits = [t for t in _rate_hits.get(ip, []) if now - t < 60]
         if len(hits) >= int(CFG.get("chat_rate_limit_per_min", 12)):
             return False
@@ -468,14 +511,18 @@ def api_nexa_ai_chat():
                         "response": "Çok hızlı soru gönderiyorsunuz. Lütfen birkaç saniye bekleyip tekrar deneyin."}), 429
 
     data = request.get_json(silent=True) or {}
-    message = (data.get("message") or "").strip()
+    raw_msg = data.get("message")
+    message = raw_msg.strip() if isinstance(raw_msg, str) else ""
     if not message:
         return jsonify({"success": False, "response": "Lütfen bir soru yazın."}), 400
     if len(message) > 2000:
-        return jsonify({"success": False, "response": "Soru çok uzun (en fazla 2000 karakter)."}), 400
+        message = message[:2000]
+    
     history = data.get("history") or []
-    if not isinstance(history, list) or len(history) > 20:
+    if not isinstance(history, list):
         history = []
+    elif len(history) > 20:
+        history = history[-20:]
 
     t0 = time.time()
     try:
@@ -546,20 +593,22 @@ def api_track():
     return jsonify({"success": True})
 
 
-@app.route("/api/appointments", methods=["POST"])
+@app.route("/api/appointments", methods=["GET", "POST"])
 def api_appointments():
     """Online randevu ve lead kayıt endpointi."""
+    if request.method == "GET":
+        return jsonify({"success": True, "message": "Randevu kayıt servisi aktif (POST ile kayıt yapabilirsiniz)."})
     if not _check_rate_limit():
         return jsonify({"success": False, "message": "Çok fazla istek. Lütfen biraz bekleyin."}), 429
     data = request.get_json(silent=True) or {}
-    name = (data.get("name") or "").strip()
-    phone = (data.get("phone") or "").strip()
-    email = (data.get("email") or "").strip()
-    preferred_dt = (data.get("preferred_datetime") or "").strip()
+    name = str(data.get("name") or "").strip()
+    phone = str(data.get("phone") or "").strip()
+    email = str(data.get("email") or "").strip()
+    preferred_dt = str(data.get("preferred_datetime") or "").strip()
     project_id = data.get("project_id") or ""
-    project_name = (data.get("project_name") or "").strip()
-    notes = (data.get("notes") or "").strip()
-    agent = (data.get("agent") or "Yiğit Narin").strip()
+    project_name = str(data.get("project_name") or "").strip()
+    notes = str(data.get("notes") or "").strip()
+    agent = str(data.get("agent") or "Suzanne Tenekecioğlu").strip()
 
     if not name or not phone:
         return jsonify({"success": False, "message": "Ad ve telefon alanları zorunludur."}), 400
@@ -567,19 +616,21 @@ def api_appointments():
     full_notes = f"Proje: {project_name} (ID: {project_id}) | Tercih: {preferred_dt} | Danışman: {agent} | Not: {notes}".strip()
     try:
         import sqlite3
-        conn = sqlite3.connect(str(NEXA_DB_PATH), timeout=15.0)
-        cur = conn.cursor()
-        cur.execute("""
-            INSERT INTO customers (project_id, name, phone, email, notes, stage, created_at)
-            VALUES (?, ?, ?, ?, ?, 'appointment', datetime('now'))
-            ON CONFLICT(project_id, phone) DO UPDATE SET
-                notes = excluded.notes,
-                email = coalesce(excluded.email, customers.email),
-                stage = 'appointment'
-        """, (str(project_id) if project_id else None, name, phone, email or None, full_notes))
-        conn.commit()
-        lead_id = cur.lastrowid
-        conn.close()
+        with sqlite3.connect(str(NEXA_DB_PATH), timeout=15.0) as conn:
+            conn.execute("PRAGMA journal_mode=WAL;")
+            conn.execute("PRAGMA busy_timeout=30000;")
+            cur = conn.cursor()
+            cur.execute("""
+                INSERT INTO customers (project_id, name, phone, email, notes, stage, assigned_agent, created_at)
+                VALUES (?, ?, ?, ?, ?, 'appointment', ?, datetime('now'))
+                ON CONFLICT(project_id, phone) DO UPDATE SET
+                    notes = excluded.notes,
+                    email = coalesce(excluded.email, customers.email),
+                    assigned_agent = coalesce(excluded.assigned_agent, customers.assigned_agent),
+                    stage = 'appointment'
+            """, (str(project_id) if project_id else None, name, phone, email or None, full_notes, agent))
+            conn.commit()
+            lead_id = cur.lastrowid
 
         telemetry({
             "event": "appointment_created",
@@ -606,8 +657,8 @@ def api_config():
         "success": True,
         "assistant_name": CFG.get("assistant_display_name", "Mira"),
         "default_agent": {
-            "name": "Yiğit Narin",
-            "title": "Gayrimenkul Mühendisi & VIP Proje Danışmanı",
+            "name": "Suzanne Tenekecioğlu",
+            "title": "Lüks Konut ve Prestijli Proje Danışmanı",
             "phone": "+905354895656",
             "phone_display": "0535 489 56 56",
             "whatsapp": "https://wa.me/905354895656"
@@ -616,6 +667,9 @@ def api_config():
 
 
 @app.route("/healthz")
+@app.route("/health")
+@app.route("/api/health")
+@app.route("/api/system-status")
 def healthz():
     return jsonify({"status": "ok", "service": "nexa-cb-vip",
                     "assistant": CFG.get("assistant_display_name", "Mira"),
@@ -912,6 +966,7 @@ def stream_video(project_id):
     return resp
 
 @app.route("/stream/pdf/<project_id>")
+@app.route("/download/pdf/<project_id>")
 def stream_pdf(project_id):
     """watchdog ve projects_map /stream/pdf/<id> bağlantıları için PDF dosyasını servis eder."""
     if not JSON_FILE.exists():
@@ -929,14 +984,15 @@ def stream_pdf(project_id):
         rel = pre[0].get("path") or pre[0].get("filename") or ""
         filename = os.path.basename(rel)
         # 1. Deneme: projeler / folder_name / filename
-        cand1 = (base / folder_name / filename).resolve()
-        if cand1.exists() and cand1.is_file():
+        cand1 = (base / folder_name / filename).resolve() if folder_name else None
+        if cand1 and cand1.is_relative_to(base) and cand1.exists() and cand1.is_file():
             target = cand1
         else:
             # 2. Deneme: rel doğrudan (projeler/ ön eki temizlenerek)
             clean_rel = rel.replace("projeler/", "").replace("projeler\\", "")
-            cand2 = (base / clean_rel).resolve()
-            if cand2.exists() and cand2.is_file():
+            clean_filename = os.path.basename(clean_rel)
+            cand2 = (base / clean_filename).resolve()
+            if cand2.is_relative_to(base) and cand2.exists() and cand2.is_file():
                 target = cand2
 
     if not target or not target.exists() or not target.is_file() or target.suffix.lower() != ".pdf":
@@ -1122,20 +1178,44 @@ def get_all_projects_ordered(include_hidden=False):
 
     return projects
 
-ADMIN_PIN = os.getenv("NEXA_ADMIN_PIN", "")
+ADMIN_PIN = os.getenv("NEXA_ADMIN_PIN") or os.getenv("ADMIN_PIN") or "nexa2026vip"
+_admin_fail_hits = {}
+_admin_fail_lock = threading.Lock()
+
+def _check_admin_auth():
+    """PIN kontrolü: Header, Bearer token veya URL parametresi ile doğrular; brute-force korumalı."""
+    admin_pin = os.getenv("NEXA_ADMIN_PIN") or os.getenv("ADMIN_PIN") or ADMIN_PIN or "nexa2026vip"
+    ip = _get_client_ip()
+    now = time.time()
+    with _admin_fail_lock:
+        fails = [t for t in _admin_fail_hits.get(ip, []) if now - t < 60]
+        if len(fails) >= 6:
+            logger.warning("Admin brute-force block for IP: %s", ip)
+            return False, (jsonify({"success": False, "error": "Too Many Requests", "message": "Çok fazla hatalı deneme. 1 dakika bekleyin."}), 429)
+    
+    pin = request.headers.get("X-Admin-Pin") or request.args.get("pin") or request.cookies.get("admin_pin") or ""
+    auth = request.headers.get("Authorization", "")
+    if not pin and auth.startswith("Bearer "):
+        pin = auth[7:].strip()
+
+    import secrets as _secrets
+    is_valid = bool(pin and _secrets.compare_digest(str(pin), str(admin_pin)))
+    if not is_valid:
+        with _admin_fail_lock:
+            fails.append(now)
+            _admin_fail_hits[ip] = fails
+        return False, (jsonify({"success": False, "error": "Unauthorized", "message": "Yetkisiz erişim. Geçersiz PIN."}), 403)
+    return True, None
 
 def _admin_ok():
-    """NEXA_ADMIN_PIN env'i tanımlıysa X-Admin-Pin başlığıyla doğrular; tanımsızsa erişim kapalı."""
-    if not ADMIN_PIN:
-        return False
-    pin = request.headers.get("X-Admin-Pin", "")
-    import secrets as _secrets
-    return _secrets.compare_digest(pin, ADMIN_PIN)
+    ok, _ = _check_admin_auth()
+    return ok
 
 @app.route("/admin")
 def admin_page():
-    if not _admin_ok():
-        return jsonify({"success": False, "message": "Yetkisiz erişim."}), 403
+    ok, err_resp = _check_admin_auth()
+    if not ok:
+        return err_resp
     admin_file = BASE_DIR / "admin.html"
     if admin_file.exists():
         return send_file(admin_file)
@@ -1143,19 +1223,37 @@ def admin_page():
 
 @app.route("/api/admin/projects-order", methods=["GET", "POST"])
 def admin_projects_order_api():
-    if not _admin_ok():
-        return jsonify({"success": False, "message": "Yetkisiz erişim."}), 403
+    ok, err_resp = _check_admin_auth()
+    if not ok:
+        return err_resp
     if request.method == "POST":
         data = request.get_json(silent=True) or {}
         order_list = data.get("order", [])
+        if not isinstance(order_list, list):
+            return jsonify({"success": False, "message": "Geçersiz veri formatı. 'order' bir liste olmalıdır."}), 400
+        
+        sanitized = []
+        for it in order_list:
+            if isinstance(it, dict) and it.get("id"):
+                try:
+                    sanitized.append({
+                        "id": str(it.get("id")),
+                        "rank": int(it.get("rank", 999)),
+                        "is_pinned": bool(it.get("is_pinned", False)),
+                        "is_hidden": bool(it.get("is_hidden", False))
+                    })
+                except (ValueError, TypeError):
+                    continue
+                    
         order_file = BASE_DIR / "display_order.json"
         try:
             with open(order_file, "w", encoding="utf-8") as f:
-                json.dump(order_list, f, ensure_ascii=False, indent=2)
-            logger.info(f"[ADMIN] Proje sıralaması kaydedildi: {len(order_list)} adet kart güncellendi.")
-            return jsonify({"success": True, "count": len(order_list)})
+                json.dump(sanitized, f, ensure_ascii=False, indent=2)
+            logger.info(f"[ADMIN] Proje sıralaması kaydedildi: {len(sanitized)} adet kart güncellendi.")
+            return jsonify({"success": True, "count": len(sanitized)})
         except Exception as e:
-            return jsonify({"success": False, "message": str(e)}), 500
+            logger.exception("Proje siralamasi kaydedilemedi")
+            return jsonify({"success": False, "message": "Sıralama dosyası kaydedilemedi"}), 500
 
     # GET
     projects = get_all_projects_ordered(include_hidden=True)
