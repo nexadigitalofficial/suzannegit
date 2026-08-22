@@ -503,6 +503,7 @@ def api_projects():
     return resp
 
 @app.route("/api/nexa-ai-chat", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def api_nexa_ai_chat():
     client_ip = _get_client_ip()
     if not _check_rate_limit(client_ip):
