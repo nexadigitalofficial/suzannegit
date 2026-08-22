@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-08-23T00:06:15.956231",
+  "status": "OPTIMAL",
+  "health_score": 100.0,
+  "state": {
+    "total_projects": 31,
+    "projects_with_docs": 45,
+    "total_docs": 1072,
+    "total_chunks": 1954,
+    "error_rate": 0.0,
+    "health_score": 100.0,
+    "timestamp": "2026-08-23T00:06:15.949762"
+  },
+  "anomalies": [],
+  "predictions": {
+    "forecast_window": "24h",
+    "potential_issues": [
+      {
+        "issue": "Sistem kararlı çalışma eğiliminde",
+        "probability": 0.05,
+        "preventive_action": "Rutin izleme devam ediyor"
+      }
+    ],
+    "system_risk_score": 0.02
+  },
+  "coordination": {
+    "status": "coordinated",
+    "active_tasks_count": 0,
+    "tasks": []
+  },
+  "guardian": {
+    "status": "healthy",
+    "fixes_applied": [],
+    "fixes_count": 0
+  },
+  "optimizer": {
+    "status": "optimized",
+    "optimizations": [
+      "SQLite PRAGMA optimize yürütüldü."
+    ],
+    "timestamp": "2026-08-23T00:06:15.956231"
+  },
+  "learning": {
+    "lessons_learned_count": 3,
+    "lessons": [
+      "31 projenin tümü 4 boyutlu doküman (sözleşme, satış takip, sunum, yatırım) ile RAG'a bağlandı.",
+      "Ters proxy arkasındaki IP ve CSRF doğrulaması güçlendirildi.",
+      "Multi-format (XLSX, DOCX, PDF) metin çıkarma motoru devreye alındı."
+    ],
+    "learning_health_score": 100
+  }
+}

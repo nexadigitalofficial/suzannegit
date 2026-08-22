@@ -17,12 +17,18 @@
     <meta name="twitter:title" content="Coldwell Banker VIP | Prestijli Lansman Projeleri">
     <meta name="twitter:description" content="Suzanne Tenekecioğlu - Lüks Konut ve Prestijli Proje Danışmanı.">
     <meta name="twitter:image" content="https://i.imgur.com/ugA4k8H.png">
-    <!-- SEO & Favicon -->
+    <!-- SEO, Favicon & PWA Manifest -->
     <link rel="canonical" href="/site">
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/suzanne_icon_circle_32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/static/img/suzanne_icon_circle_192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/suzanne_icon_circle_180.png">
     <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="theme-color" content="#040408">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Suzanne VIP">
     <meta name="msapplication-TileImage" content="/static/img/suzanne_icon_circle_192.png">
     <meta name="robots" content="index, follow">
     
@@ -39,6 +45,15 @@
 
     <style>
         :root {
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+            --sal: env(safe-area-inset-left, 0px);
+            --sar: env(safe-area-inset-right, 0px);
+            --navbar-height-base: 64px;
+            --navbar-height: calc(var(--navbar-height-base) + var(--sat));
+            --app-height: 100vh;
+            --app-dvh: 100dvh;
+
             --white: #FFFFFF;
             --bg: #F5F5F7;
             --text-primary: #1D1D1F;
@@ -1942,78 +1957,316 @@
             .contact-container { flex-direction: column; gap: 2rem; }
         }
 
+        /* ═══════════════════════════════════════════════════════════════════════════
+           NEXA PRIME v2: MASTER MOBILE-FIRST RESPONSIVE ARCHITECTURE
+           ═══════════════════════════════════════════════════════════════════════════ */
+        .nav-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 4, 8, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100000;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+        }
+        .nav-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* Carousel Indicator Dots */
+        .carousel-dots-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            margin-top: 10px;
+            padding: 6px 0;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.18);
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .carousel-dot.active {
+            width: 24px;
+            background: var(--accent);
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.35);
+        }
+
+        /* Bottom Sheet Drag Handle Bar */
+        .bottom-sheet-handle-bar {
+            display: none;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0 6px;
+            cursor: grab;
+            touch-action: none;
+            flex-shrink: 0;
+            background: inherit;
+        }
+        .bottom-sheet-handle {
+            width: 38px;
+            height: 5px;
+            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.22);
+            transition: background 0.2s ease;
+        }
+        #videoModal .bottom-sheet-handle { background: rgba(255, 255, 255, 0.35); }
+
         @media (max-width: 768px) {
-            .navbar { padding: 1rem; }
+            .navbar { 
+                padding-top: calc(0.9rem + var(--sat));
+                padding-bottom: 0.9rem;
+                padding-left: max(16px, calc(1rem + var(--sal)));
+                padding-right: max(16px, calc(1rem + var(--sar)));
+            }
+            .navbar.scrolled {
+                padding-top: calc(0.75rem + var(--sat));
+                padding-bottom: 0.75rem;
+            }
             .nav-links, .nav-social-actions { display: none; }
-            .mobile-menu-btn { display: block; }
+            .mobile-menu-btn { 
+                display: flex !important; 
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: rgba(0, 0, 0, 0.04);
+                border: 1px solid rgba(0, 0, 0, 0.06);
+                font-size: 20px;
+                color: var(--text-primary);
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                touch-action: manipulation;
+            }
+            .mobile-menu-btn:active {
+                transform: scale(0.92);
+                background: rgba(0, 113, 227, 0.1);
+                color: var(--accent);
+            }
+
             .nav-links.open {
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: var(--navbar-height);
                 left: 0;
                 right: 0;
-                background: var(--glass);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                padding: 1rem 5%;
-                gap: 0.4rem;
+                width: 100%;
+                max-height: calc(100dvh - var(--navbar-height));
+                max-height: calc(var(--app-dvh, 100vh) - var(--navbar-height));
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(30px);
+                -webkit-backdrop-filter: blur(30px);
+                padding: 1.25rem calc(1rem + var(--sar)) calc(2rem + var(--sab)) calc(1rem + var(--sal));
+                gap: 0.6rem;
                 border-bottom: 1px solid var(--border);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
                 z-index: 100002;
+                transform: translateY(-8px);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            }
+            .nav-links.open.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .nav-links .nav-link {
+                font-size: 15px;
+                font-weight: 600;
+                padding: 12px 16px;
+                border-radius: 14px;
+                background: rgba(0, 0, 0, 0.025);
+                color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                min-height: 48px;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                touch-action: manipulation;
+            }
+            .nav-links .nav-link:active {
+                background: rgba(0, 113, 227, 0.12);
+                color: var(--accent);
+                transform: scale(0.98);
+            }
+            .drawer-mobile-footer {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(0, 0, 0, 0.06);
+            }
+            .drawer-contact-call {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: rgba(0, 113, 227, 0.08);
+                color: var(--accent);
+                font-weight: 700;
+                font-size: 14px;
+                padding: 12px;
+                border-radius: 14px;
+                min-height: 48px;
+                text-decoration: none;
+            }
+            .drawer-social-row {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .drawer-social-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                min-height: 44px;
+                border-radius: 12px;
+                font-size: 13px;
+                font-weight: 700;
+                color: #FFF;
+                text-decoration: none;
             }
             
             .hero-giant-title { font-size: 42px; }
             .segmented-control { width: 300px; height: 48px; }
             .segment-btn { font-size: 14px; }
-            
             .why-me-grid { grid-template-columns: 1fr; }
             .about-gallery-banner { grid-template-columns: 1fr; }
 
-            .card { flex: 0 0 300px; }
-            .project-card { flex: 0 0 320px; }
-            .results-grid { grid-template-columns: 1fr; }
-
-            /* ─── ULTRA MOBİL UYUM: 768px altı düzeltmeler ─── */
-            .navbar { padding: 1rem; padding-top: calc(1rem + env(safe-area-inset-top, 0px)); }
-            .navbar.scrolled { padding: 0.85rem 1rem; padding-top: calc(0.85rem + env(safe-area-inset-top, 0px)); }
             .section-title { font-size: 30px !important; }
             .filter-box { padding: 1.5rem 1.25rem !important; }
             .contact-container { padding: 2rem 1.25rem !important; }
             .hero-about-grid, .about-hero-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
-            .hero-about-grid { display: grid; }
-            .hero-banner-section { padding-top: calc(6.5rem + env(safe-area-inset-top, 0px)); }
+            .hero-banner-section { padding-top: calc(6rem + var(--sat)) !important; }
             .results-grid { grid-template-columns: 1fr !important; }
-            .card.project-card { flex: 0 0 calc(100% - 16px); min-width: 0 !important; max-width: none !important; }
+
+            /* Carousel Zero-Jitter Touch Snap */
+            .carousel-track { 
+                touch-action: pan-y pinch-zoom !important; 
+                -webkit-overflow-scrolling: touch; 
+                overscroll-behavior-x: contain;
+                scroll-snap-type: x mandatory !important;
+                padding: 0.5rem 1rem 1rem !important;
+            }
+            .card.project-card, .card.listing-card { 
+                flex: 0 0 calc(100vw - 44px) !important; 
+                max-width: 360px !important; 
+                min-width: 275px !important; 
+                scroll-snap-align: center !important;
+                scroll-snap-stop: always !important;
+            }
             .card-actions { flex-wrap: wrap !important; }
-            .card-actions .btn { white-space: normal !important; flex: 1 1 auto; min-height: 40px; padding: 8px 10px !important; font-size: 12px !important; }
-            .card-footer .btn { min-height: 40px; }
+            .card-actions .btn { white-space: normal !important; flex: 1 1 auto; min-height: 44px; padding: 8px 10px !important; font-size: 12px !important; }
+            .card-footer .btn { min-height: 44px; }
+
+            /* Bottom Sheet Modals */
+            .modal-overlay {
+                align-items: flex-end !important;
+                justify-content: center !important;
+                padding: 0 !important;
+            }
+            .modal-container, .modal-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                max-height: 90dvh !important;
+                max-height: 90vh !important;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                border-top-left-radius: 24px !important;
+                border-top-right-radius: 24px !important;
+                margin: 0 !important;
+                transform: translateY(100%);
+                transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+                box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.35) !important;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch;
+            }
+            .modal-overlay.active .modal-container,
+            .modal-overlay.active .modal-content {
+                transform: translateY(0) !important;
+            }
+            .bottom-sheet-handle-bar { display: flex !important; }
             .modal-close { width: 44px !important; height: 44px !important; font-size: 20px !important; }
+
+            /* Sticky Modal Footers */
+            .modal-sticky-footer, .apt-btns-grid, #reportModalFooter {
+                position: sticky !important;
+                bottom: 0 !important;
+                background: #fff !important;
+                padding: 10px 1.25rem calc(12px + var(--sab)) !important;
+                z-index: 10 !important;
+                border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06) !important;
+                margin-top: auto !important;
+            }
+
+            /* Prevent iOS Auto-Zoom */
+            input, select, textarea, .chat-input, .chat-lead-input, #appointmentForm input, #appointmentForm textarea {
+                font-size: 16px !important;
+                -webkit-text-size-adjust: 100%;
+            }
+
             .chat-chip { font-size: 13px !important; min-height: 40px; padding: 8px 14px !important; }
-            .mindmap-hint { font-size: 13px !important; }
-            .location-auto-badge { font-size: 13px !important; }
-            .filter-label { font-size: 13px !important; }
-            .tag, .badge { font-size: 12px !important; }
-            .appointment-grid-2 { grid-template-columns: 1fr !important; }
-            .chat-input { font-size: 16px !important; }
-            .chat-lead-input { font-size: 16px !important; }
-            .about-modal-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
-            .chat-messages, .modal-content, .chat-window, #appointmentForm, #reportModalBody { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
-            .carousel-track { touch-action: pan-y pinch-zoom !important; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
-            #videoModal .modal-container { max-width: 95vw !important; max-height: 85vh !important; max-height: 85dvh !important; }
-            #videoModal .modal-container #videoPlayerContainer { max-height: calc(85vh - 130px) !important; max-height: calc(85dvh - 130px) !important; padding-top: 0 !important; height: auto !important; aspect-ratio: 16 / 9; }
-            #pdfModal .modal-container { height: 90vh !important; height: 90dvh !important; }
+            .chat-messages, .chat-window, #appointmentForm, #reportModalBody { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+            #videoModal .modal-container { max-width: 100% !important; max-height: 85dvh !important; }
+            #pdfModal .modal-container { height: 90dvh !important; }
         }
 
         @media (max-width: 480px) {
-            .hero-banner-actions { flex-direction: column !important; align-items: stretch !important; gap: 0.8rem !important; }
-            .hero-banner-actions .btn { width: 100%; text-align: center; }
-            .hero-banner-title { font-size: 26px !important; line-height: 1.25 !important; }
+            .hero-banner-section { padding-top: calc(5.2rem + var(--sat)) !important; }
+            .hero-banner-actions { flex-direction: column !important; align-items: stretch !important; gap: 0.75rem !important; }
+            .hero-banner-actions .btn { width: 100%; min-height: 48px; text-align: center; font-size: 14.5px !important; }
+            .hero-banner-title { font-size: clamp(23px, 6.8vw, 32px) !important; line-height: 1.25 !important; }
             .hero-banner-subtitle { font-size: 14px !important; }
             .appointment-grid-2, .appointment-grid-2 > div { grid-template-columns: 1fr !important; }
             .card.project-card .card-footer { grid-template-columns: 1fr !important; }
             .card.project-card .card-footer > div { grid-template-columns: 1fr 1fr 44px !important; }
             .mobile-menu-btn { width: 44px; height: 44px; display: flex !important; align-items: center; justify-content: center; }
+
+            /* Floating Orbs Coordinated Spacing */
+            .floating-wa-btn {
+                position: fixed !important;
+                left: 12px !important;
+                bottom: calc(14px + var(--sab)) !important;
+                width: 52px !important;
+                height: 52px !important;
+                font-size: 26px !important;
+                z-index: 9999 !important;
+            }
+            .chatbot-widget {
+                position: fixed !important;
+                right: 12px !important;
+                bottom: calc(14px + var(--sab)) !important;
+                z-index: 99999 !important;
+            }
+            .chat-toggle {
+                width: 54px !important;
+                height: 54px !important;
+                font-size: 23px !important;
+            }
         }
     
         /* Photo Aspect Ratio & Uncropped Image Adjustments */
@@ -3271,12 +3524,30 @@
             <span class="logo-dot"></span>
         </a>
         <div class="nav-links" id="mobileNavLinks">
-            <a href="#about" class="nav-link">Hakkımda</a>
-            <a href="#showcase" onclick="switchShowcaseTab('projects'); scrollToSection('showcase');" class="nav-link">Projeler</a>
-            <a href="#showcase" onclick="switchShowcaseTab('portfolio'); scrollToSection('showcase');" class="nav-link">Portföy</a>
-            <a href="#search" class="nav-link">Arama</a>
-            <a href="#contact" class="nav-link">İletişim</a>
-            <a href="/admin" target="_blank" class="nav-link" style="color:var(--accent); font-weight:700;"><i class="fa-solid fa-sliders"></i> Yönetim</a>
+            <a href="#about" class="nav-link"><span><i class="fa-solid fa-user-tie" style="color:var(--accent); margin-right:8px;"></i> Hakkımda</span></a>
+            <a href="#showcase" onclick="switchShowcaseTab('projects'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-building" style="color:var(--accent); margin-right:8px;"></i> Projeler</span></a>
+            <a href="#showcase" onclick="switchShowcaseTab('portfolio'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-house" style="color:var(--accent); margin-right:8px;"></i> Portföy</span></a>
+            <a href="#search" class="nav-link"><span><i class="fa-solid fa-magnifying-glass" style="color:var(--accent); margin-right:8px;"></i> Arama</span></a>
+            <a href="#contact" class="nav-link"><span><i class="fa-solid fa-envelope" style="color:var(--accent); margin-right:8px;"></i> İletişim</span></a>
+            <a href="/admin" target="_blank" class="nav-link" style="color:var(--accent); font-weight:700;"><span><i class="fa-solid fa-sliders" style="margin-right:8px;"></i> Yönetim Paneli</span></a>
+            
+            <!-- Drawer Mobile Quick Action Grid -->
+            <div class="drawer-mobile-footer">
+                <a href="tel:+905354895656" class="drawer-contact-call">
+                    <i class="fa-solid fa-phone"></i> 0535 489 56 56 (Hemen Ara)
+                </a>
+                <div class="drawer-social-row">
+                    <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m" target="_blank" class="drawer-social-btn" style="background:#25D366;">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="drawer-social-btn" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);">
+                        <i class="fa-brands fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://facebook.com" target="_blank" class="drawer-social-btn" style="background:#1877F2;">
+                        <i class="fa-brands fa-facebook-f"></i> Facebook
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="nav-social-actions">
             <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20gayrimenkul%20dan%C4%B1%C5%9Fmanl%C4%B1%C4%9F%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="nav-social-btn whatsapp-btn" title="WhatsApp">
@@ -3722,28 +3993,131 @@
     <!-- JavaScript Logic -->
     <script>
         
-        // ─── MOBILE NAVIGATION ───
+        // ═════════════════════════════════════════════════════════════════════
+        // 1. DYNAMIC VIEWPORT & SAFE-AREA METRIC SYNCHRONIZER
+        // ═════════════════════════════════════════════════════════════════════
+        (function initDynamicViewportEngine() {
+            function updateViewportMetrics() {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+                document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+                
+                const dvh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
+                document.documentElement.style.setProperty('--dvh', `${dvh}px`);
+                document.documentElement.style.setProperty('--app-dvh', `${window.visualViewport ? window.visualViewport.height : window.innerHeight}px`);
+            }
+
+            window.addEventListener('resize', updateViewportMetrics, { passive: true });
+            window.addEventListener('orientationchange', () => {
+                setTimeout(updateViewportMetrics, 100);
+            }, { passive: true });
+
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', updateViewportMetrics, { passive: true });
+            }
+
+            updateViewportMetrics();
+        })();
+
+        // ═════════════════════════════════════════════════════════════════════
+        // 2. BULLETPROOF IOS SCROLL-LOCK MANAGER
+        // ═════════════════════════════════════════════════════════════════════
+        const ScrollLockManager = {
+            _scrollY: 0,
+            _isLocked: false,
+
+            lock() {
+                if (this._isLocked) return;
+                this._scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+                document.body.style.position = 'fixed';
+                document.body.style.top = `-${this._scrollY}px`;
+                document.body.style.left = '0';
+                document.body.style.right = '0';
+                document.body.style.width = '100%';
+                document.body.style.overflow = 'hidden';
+                this._isLocked = true;
+            },
+
+            unlock() {
+                if (!this._isLocked) return;
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.left = '';
+                document.body.style.right = '';
+                document.body.style.width = '';
+                document.body.style.overflow = '';
+                window.scrollTo(0, this._scrollY);
+                this._isLocked = false;
+            }
+        };
+
+        // ═════════════════════════════════════════════════════════════════════
+        // 3. MOBILE DRAWER NAVIGATION CONTROLLER
+        // ═════════════════════════════════════════════════════════════════════
         function toggleMobileMenu(forceClose) {
             const nav = document.getElementById('mobileNavLinks');
             const btn = document.querySelector('.mobile-menu-btn');
-            if (!nav) return;
-            const open = typeof forceClose === 'boolean' ? !forceClose : !nav.classList.contains('open');
-            nav.classList.toggle('open', open);
-            if (btn) {
-                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-                btn.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+            let backdrop = document.getElementById('navBackdrop');
+
+            if (!backdrop) {
+                backdrop = document.createElement('div');
+                backdrop.id = 'navBackdrop';
+                backdrop.className = 'nav-backdrop';
+                backdrop.onclick = () => toggleMobileMenu(true);
+                document.body.appendChild(backdrop);
             }
-            document.body.style.overflow = open ? 'hidden' : '';
+
+            if (!nav) return;
+            const shouldOpen = typeof forceClose === 'boolean' ? !forceClose : !nav.classList.contains('open');
+
+            if (shouldOpen) {
+                nav.classList.add('open');
+                void nav.offsetWidth;
+                nav.classList.add('active');
+                backdrop.classList.add('active');
+                if (btn) {
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                }
+                ScrollLockManager.lock();
+            } else {
+                nav.classList.remove('active');
+                backdrop.classList.remove('active');
+                if (btn) {
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+                setTimeout(() => {
+                    nav.classList.remove('open');
+                }, 300);
+                ScrollLockManager.unlock();
+            }
         }
+
         document.addEventListener('click', function (e) {
             const nav = document.getElementById('mobileNavLinks');
-            const btn = document.querySelector('.mobile-menu-btn');
             if (nav && nav.classList.contains('open')) {
-                if (e.target.closest('.nav-link') || (!nav.contains(e.target) && !btn.contains(e.target))) {
+                if (e.target.closest('.nav-link') || e.target.closest('.drawer-social-btn') || e.target.closest('.drawer-contact-call')) {
                     toggleMobileMenu(true);
                 }
             }
         });
+
+        // Sticky CTA body class observer
+        (function enhanceStickyCTAObserver() {
+            const heroStickyCta = document.getElementById('heroStickyCta');
+            if (!heroStickyCta) return;
+
+            const observer = new MutationObserver(() => {
+                if (heroStickyCta.classList.contains('visible')) {
+                    document.body.classList.add('sticky-cta-active');
+                } else {
+                    document.body.classList.remove('sticky-cta-active');
+                }
+            });
+
+            observer.observe(heroStickyCta, { attributes: true, attributeFilter: ['class'] });
+        })();
 
         // ─── EMBEDDED FALLBACK DATA FOR FILE:// PROTOCOL & OFFLINE ───
         const EMBEDDED_PROJECTS = [
@@ -6048,6 +6422,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     console.error('Error rendering project card:', item, e);
                 }
             });
+            initCarouselIndicators('projects-carousel');
         }
 
         function renderPortfolioCarousel() {
@@ -6097,6 +6472,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 `;
                 track.insertAdjacentHTML('beforeend', html);
             });
+            initCarouselIndicators('portfolio-carousel');
         }
 
         function showPortfolioError() {
@@ -6128,56 +6504,259 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             track.scrollBy({ left: cardWidth * direction, behavior: 'smooth' });
         }
 
+        // ═════════════════════════════════════════════════════════════════════
+        // A. HARDWARE-ACCELERATED CAROUSEL CONTROLLER & DYNAMIC INDICATORS
+        // ═════════════════════════════════════════════════════════════════════
+        function initCarouselIndicators(carouselId) {
+            const container = document.getElementById(carouselId);
+            if (!container) return;
+
+            const track = container.querySelector('.carousel-track');
+            if (!track) return;
+
+            let dotsContainer = container.querySelector('.carousel-dots-container');
+            if (!dotsContainer) {
+                dotsContainer = document.createElement('div');
+                dotsContainer.className = 'carousel-dots-container';
+                dotsContainer.id = `${carouselId}-dots`;
+                container.appendChild(dotsContainer);
+            }
+            dotsContainer.innerHTML = '';
+
+            const cards = Array.from(track.querySelectorAll('.card:not(.skeleton-card)'));
+            if (cards.length <= 1) return;
+
+            cards.forEach((card, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `carousel-dot ${idx === 0 ? 'active' : ''}`;
+                dot.setAttribute('aria-label', `Slide ${idx + 1}`);
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = Array.from(dotsContainer.querySelectorAll('.carousel-dot'));
+
+            if ('IntersectionObserver' in window) {
+                if (track._observer) track._observer.disconnect();
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+                            const activeIndex = cards.indexOf(entry.target);
+                            if (activeIndex !== -1) {
+                                dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+                            }
+                        }
+                    });
+                }, { root: track, threshold: 0.55 });
+
+                cards.forEach(card => observer.observe(card));
+                track._observer = observer;
+            } else {
+                track.addEventListener('scroll', () => {
+                    const scrollLeft = track.scrollLeft;
+                    const cardWidth = cards[0] ? (cards[0].offsetWidth + 18) : 300;
+                    const activeIndex = Math.min(Math.round(scrollLeft / cardWidth), cards.length - 1);
+                    dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+                }, { passive: true });
+            }
+        }
+
         function initTouchSwipe(carouselId) {
-            const track = document.querySelector(`#${carouselId} .carousel-track`);
-            if(!track) return;
+            const container = document.getElementById(carouselId);
+            if (!container) return;
+            const track = container.querySelector('.carousel-track');
+            if (!track) return;
+
+            initCarouselIndicators(carouselId);
+
+            // Desktop pointer-drag only (ignores touch to let native 120Hz CSS scroll-snap glide)
             let isDown = false;
-            let isDragging = false;
             let startX = 0;
             let scrollLeft = 0;
+            let isDragging = false;
 
-            const startDrag = (e) => {
+            track.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'touch') return;
                 isDown = true;
                 isDragging = false;
-                const pageX = e.pageX !== undefined ? e.pageX : (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
-                startX = pageX - track.offsetLeft;
+                startX = e.pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
-            };
+                track.style.cursor = 'grabbing';
+            });
 
-            const endDrag = () => {
-                isDown = false;
-                setTimeout(() => { isDragging = false; }, 80);
-                track.style.cursor = 'grab';
-            };
-
-            const onDrag = (e) => {
-                if (!isDown) return;
-                const pageX = e.pageX !== undefined ? e.pageX : (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
-                const x = pageX - track.offsetLeft;
-                const walk = (x - startX) * 1.5;
-                if (Math.abs(x - startX) > 8) {
+            track.addEventListener('pointermove', (e) => {
+                if (!isDown || e.pointerType === 'touch') return;
+                const x = e.pageX - track.offsetLeft;
+                const walk = (x - startX);
+                if (Math.abs(walk) > 6) {
                     isDragging = true;
-                    track.style.cursor = 'grabbing';
-                    if (e.cancelable && e.type === 'touchmove') e.preventDefault();
                     track.scrollLeft = scrollLeft - walk;
                 }
+            });
+
+            const stopDrag = (e) => {
+                if (e.pointerType === 'touch') return;
+                isDown = false;
+                track.style.cursor = 'default';
+                setTimeout(() => { isDragging = false; }, 50);
             };
 
-            track.addEventListener('mousedown', startDrag);
-            track.addEventListener('touchstart', startDrag, { passive: true });
-            track.addEventListener('mouseleave', endDrag);
-            track.addEventListener('mouseup', endDrag);
-            track.addEventListener('touchend', endDrag);
-            track.addEventListener('mousemove', onDrag);
-            track.addEventListener('touchmove', onDrag, { passive: false });
+            track.addEventListener('pointerup', stopDrag);
+            track.addEventListener('pointerleave', stopDrag);
 
-            // Suppress accidental card clicks when user is dragging/swiping
             track.addEventListener('click', (e) => {
                 if (isDragging) {
                     e.preventDefault();
                     e.stopPropagation();
                 }
             }, true);
+        }
+
+        // ═════════════════════════════════════════════════════════════════════
+        // B. BOTTOM-SHEET SWIPE-TO-DISMISS TOUCH ENGINE
+        // ═════════════════════════════════════════════════════════════════════
+        function initBottomSheetGestures(modalId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            const container = modal.querySelector('.modal-container') || modal.querySelector('.modal-content');
+            if (!container) return;
+
+            if (!container.querySelector('.bottom-sheet-handle-bar')) {
+                const handleBar = document.createElement('div');
+                handleBar.className = 'bottom-sheet-handle-bar';
+                handleBar.innerHTML = '<div class="bottom-sheet-handle"></div>';
+                container.insertBefore(handleBar, container.firstChild);
+            }
+
+            const handleBar = container.querySelector('.bottom-sheet-handle-bar');
+            if (!handleBar || handleBar._hasSwipeListener) return;
+            handleBar._hasSwipeListener = true;
+
+            let startY = 0;
+            let currentY = 0;
+            let isSwiping = false;
+
+            const onTouchStart = (e) => {
+                if (window.innerWidth > 768) return;
+                const touch = e.touches[0];
+                startY = touch.clientY;
+                currentY = startY;
+                isSwiping = true;
+                container.style.transition = 'none';
+            };
+
+            const onTouchMove = (e) => {
+                if (!isSwiping || window.innerWidth > 768) return;
+                const touch = e.touches[0];
+                currentY = touch.clientY;
+                const deltaY = currentY - startY;
+
+                if (deltaY > 0) {
+                    if (e.cancelable) e.preventDefault();
+                    container.style.transform = `translateY(${deltaY}px)`;
+                }
+            };
+
+            const onTouchEnd = () => {
+                if (!isSwiping || window.innerWidth > 768) return;
+                isSwiping = false;
+                const deltaY = currentY - startY;
+                container.style.transition = 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)';
+
+                if (deltaY > 80) {
+                    container.style.transform = 'translateY(100%)';
+                    setTimeout(() => {
+                        closeModal(modalId);
+                        container.style.removeProperty('transform');
+                        container.style.removeProperty('transition');
+                    }, 300);
+                } else {
+                    container.style.transform = 'translateY(0)';
+                }
+            };
+
+            handleBar.addEventListener('touchstart', onTouchStart, { passive: true });
+            handleBar.addEventListener('touchmove', onTouchMove, { passive: false });
+            handleBar.addEventListener('touchend', onTouchEnd, { passive: true });
+        }
+
+        function initAllBottomSheetModals() {
+            ['appointmentModal', 'aboutModal', 'videoModal', 'pdfModal', 'reportModal', 'imageModal', 'detailModal'].forEach(initBottomSheetGestures);
+        }
+
+        // ═════════════════════════════════════════════════════════════════════
+        // C. VISUAL VIEWPORT API & VIRTUAL KEYBOARD MANAGER
+        // ═════════════════════════════════════════════════════════════════════
+        function initVisualViewportManager() {
+            const vv = window.visualViewport;
+            if (!vv) return;
+
+            const floatingWa = document.getElementById('floatingWaBtn');
+            const chatbotWidget = document.getElementById('chatbotWidget');
+            const chatWindow = document.getElementById('chatWindow');
+
+            function updateViewportLayout() {
+                const isFormFocused = document.activeElement && 
+                    ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+                const keyboardHeight = Math.max(0, window.innerHeight - vv.height - (vv.offsetTop || 0));
+                const isKeyboardOpen = keyboardHeight > 80 || isFormFocused;
+
+                if (isKeyboardOpen) {
+                    if (floatingWa) {
+                        floatingWa.style.opacity = '0';
+                        floatingWa.style.pointerEvents = 'none';
+                        floatingWa.style.transform = 'scale(0.8)';
+                    }
+                    if (chatbotWidget && (!chatWindow || !chatWindow.classList.contains('open'))) {
+                        chatbotWidget.style.opacity = '0';
+                        chatbotWidget.style.pointerEvents = 'none';
+                    }
+                } else {
+                    if (floatingWa) {
+                        floatingWa.style.opacity = '1';
+                        floatingWa.style.pointerEvents = 'auto';
+                        floatingWa.style.transform = 'scale(1)';
+                    }
+                    if (chatbotWidget) {
+                        chatbotWidget.style.opacity = '1';
+                        chatbotWidget.style.pointerEvents = 'none';
+                    }
+                }
+
+                if (chatWindow && chatWindow.classList.contains('open')) {
+                    if (keyboardHeight > 50) {
+                        chatWindow.style.setProperty('bottom', `${keyboardHeight + 10}px`, 'important');
+                        chatWindow.style.setProperty('height', `calc(${vv.height}px - 20px)`, 'important');
+                        chatWindow.style.setProperty('max-height', `calc(${vv.height}px - 20px)`, 'important');
+                    } else {
+                        chatWindow.style.removeProperty('bottom');
+                        chatWindow.style.removeProperty('height');
+                        chatWindow.style.removeProperty('max-height');
+                    }
+                    if (typeof scrollToBottom === 'function') scrollToBottom();
+                }
+
+                const activeModalContainer = document.querySelector('.modal-overlay.active .modal-container, .modal-overlay.active .modal-content');
+                if (activeModalContainer && isKeyboardOpen) {
+                    activeModalContainer.style.maxHeight = `${vv.height - 16}px`;
+                    if (document.activeElement && activeModalContainer.contains(document.activeElement)) {
+                        setTimeout(() => {
+                            document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 120);
+                    }
+                } else if (activeModalContainer) {
+                    activeModalContainer.style.removeProperty('max-height');
+                }
+            }
+
+            vv.addEventListener('resize', updateViewportLayout);
+            vv.addEventListener('scroll', updateViewportLayout);
+            window.addEventListener('orientationchange', () => setTimeout(updateViewportLayout, 200));
         }
 
         // Filter Logic
@@ -7697,6 +8276,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             } catch(e) { console.log('GSAP optional plugin load:', e); }
             initTouchSwipe('projects-carousel');
             initTouchSwipe('portfolio-carousel');
+            initAllBottomSheetModals();
+            initVisualViewportManager();
             initAnimations();
             initLeadRow();
             initBrandVideos();
@@ -8217,6 +8798,129 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         window.addEventListener('load', () => {
             forceInitializeAll();
         });
+
+        // ═════════════════════════════════════════════════════════════════════
+        // PWA SERVICE WORKER REGISTRATION & LIFECYCLE CONTROLLER
+        // ═════════════════════════════════════════════════════════════════════
+        (function initServiceWorkerLifecycle() {
+            if (!('serviceWorker' in navigator)) return;
+
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                refreshing = true;
+                console.log('[PWA] Controller güncellendi, yeni sürüm yükleniyor...');
+                window.location.reload();
+            });
+
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .then((registration) => {
+                        console.log('[PWA] Service Worker aktif. Kapsam:', registration.scope);
+
+                        // Periyodik güncelleme kontrolü (60 dakikada bir)
+                        setInterval(() => {
+                            registration.update().catch(e => console.debug('[PWA] Güncelleme denetimi:', e));
+                        }, 60 * 60 * 1000);
+
+                        // Kullanıcı sekmeye döndüğünde güncelleme kontrolü
+                        document.addEventListener('visibilitychange', () => {
+                            if (document.visibilityState === 'visible') {
+                                registration.update().catch(e => console.debug('[PWA] Sekme denetimi:', e));
+                            }
+                        });
+
+                        if (registration.waiting) {
+                            showUpdateToast(registration.waiting);
+                        }
+
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            if (!newWorker) return;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdateToast(newWorker);
+                                }
+                            });
+                        });
+                    })
+                    .catch((err) => {
+                        console.warn('[PWA] Service Worker kaydı:', err);
+                    });
+            });
+
+            function showUpdateToast(worker) {
+                if (document.getElementById('pwa-update-toast')) return;
+                const toast = document.createElement('div');
+                toast.id = 'pwa-update-toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 24px;
+                    right: 24px;
+                    z-index: 1000000;
+                    background: rgba(12, 12, 20, 0.95);
+                    color: #FFFFFF;
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    border-radius: 16px;
+                    padding: 14px 20px;
+                    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+                    backdrop-filter: blur(14px);
+                    -webkit-backdrop-filter: blur(14px);
+                    display: flex;
+                    align-items: center;
+                    gap: 14px;
+                    font-family: 'Inter', -apple-system, sans-serif;
+                    font-size: 13px;
+                    animation: pwaSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                `;
+                toast.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <i class="fa-solid fa-arrows-rotate fa-spin" style="color:var(--accent, #0071E3);"></i>
+                        <span>Yeni VIP sürüm hazır.</span>
+                    </div>
+                    <button id="pwa-update-btn" style="background:linear-gradient(135deg, #0071E3, #0A84FF); color:#fff; border:none; padding:6px 14px; border-radius:8px; font-weight:600; font-size:12px; cursor:pointer;">Yenile</button>
+                    <button id="pwa-close-btn" style="background:transparent; border:none; color:#8E8E93; font-size:16px; cursor:pointer; padding:0 4px;">&times;</button>
+                `;
+                if (!document.getElementById('pwa-keyframes')) {
+                    const st = document.createElement('style');
+                    st.id = 'pwa-keyframes';
+                    st.textContent = `@keyframes pwaSlideIn { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }`;
+                    document.head.appendChild(st);
+                }
+                document.body.appendChild(toast);
+                document.getElementById('pwa-update-btn').onclick = () => {
+                    if (worker) worker.postMessage({ action: 'skipWaiting' });
+                    toast.remove();
+                };
+                document.getElementById('pwa-close-btn').onclick = () => toast.remove();
+            }
+
+            // Real-time Offline/Online status
+            window.addEventListener('offline', () => toggleOfflineBadge(true));
+            window.addEventListener('online', () => toggleOfflineBadge(false));
+
+            function toggleOfflineBadge(isOffline) {
+                let badge = document.getElementById('pwa-net-badge');
+                if (!badge) {
+                    badge = document.createElement('div');
+                    badge.id = 'pwa-net-badge';
+                    badge.style.cssText = 'position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:1000000; padding:7px 16px; border-radius:20px; font-size:12px; font-weight:600; font-family:sans-serif; transition:all 0.3s ease; display:none; align-items:center; gap:6px; box-shadow:0 6px 20px rgba(0,0,0,0.4);';
+                    document.body.appendChild(badge);
+                }
+                if (isOffline) {
+                    badge.style.background = 'rgba(255, 69, 58, 0.95)';
+                    badge.style.color = '#fff';
+                    badge.innerHTML = '<i class="fa-solid fa-wifi"></i> Çevrimdışı Mod (Önbellek Aktif)';
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.background = 'rgba(48, 209, 88, 0.95)';
+                    badge.style.color = '#fff';
+                    badge.innerHTML = '<i class="fa-solid fa-check"></i> Tekrar Çevrimiçi';
+                    badge.style.display = 'flex';
+                    setTimeout(() => { if (badge) badge.style.display = 'none'; }, 3000);
+                }
+            }
+        })();
     </script>
 
     

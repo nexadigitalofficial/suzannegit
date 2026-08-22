@@ -829,12 +829,24 @@ def favicon():
         fav = STATIC_DIR / "favicon.ico"
     return send_file(fav, mimetype="image/png")
 
-@app.route("/apple-touch-icon.png")
-def apple_touch_icon():
-    icon = STATIC_DIR / "img" / "suzanne_icon_circle_180.png"
-    if not icon.exists():
-        icon = STATIC_DIR / "apple-touch-icon.png"
-    return send_file(icon, mimetype="image/png")
+@app.route("/manifest.json")
+def pwa_manifest():
+    mfile = STATIC_DIR / "manifest.json"
+    if mfile.exists():
+        resp = Response(mfile.read_text(encoding="utf-8"), mimetype="application/manifest+json")
+        resp.headers["Cache-Control"] = "public, max-age=86400"
+        return resp
+    return jsonify({"error": "manifest not found"}), 404
+
+@app.route("/sw.js")
+def service_worker():
+    swfile = STATIC_DIR / "sw.js"
+    if swfile.exists():
+        resp = Response(swfile.read_text(encoding="utf-8"), mimetype="application/javascript")
+        resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        resp.headers["Service-Worker-Allowed"] = "/"
+        return resp
+    return "Service Worker not found", 404
 
 @app.route("/static/<path:filename>")
 def static_files(filename):
@@ -864,7 +876,7 @@ def _add_security_headers(resp):
     resp.headers["X-Frame-Options"] = "SAMEORIGIN"
     resp.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     if not request.path.startswith("/stream/") and not request.path.startswith("/static/"):
-        resp.headers["Content-Security-Policy"] = "default-src 'self'; img-src 'self' data: https:; media-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; connect-src 'self' https:; frame-src https://www.youtube.com https://drive.google.com"
+        resp.headers["Content-Security-Policy"] = "default-src 'self'; img-src 'self' data: https:; media-src 'self' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; connect-src 'self' https:; frame-src https://www.youtube.com https://drive.google.com; manifest-src 'self'; worker-src 'self'"
     return resp
 
 # ─── JSON hata handler'ları (yalnızca /api/ prefix'li istekler) ───

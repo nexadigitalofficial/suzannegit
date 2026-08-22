@@ -1,0 +1,90 @@
+{
+  "name": "Suzanne Tenekecioğlu | Coldwell Banker VIP",
+  "short_name": "Suzanne VIP",
+  "description": "Coldwell Banker VIP Prestijli Lansman Projeleri ve VIP Gayrimenkul Yatırım Danışmanlığı — Suzanne Tenekecioğlu",
+  "id": "/site",
+  "start_url": "/site",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#040408",
+  "theme_color": "#040408",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "lifestyle",
+    "finance",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/static/img/suzanne_icon_circle_16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/img/suzanne_icon_circle_32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/img/suzanne_icon_circle_64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/img/suzanne_icon_circle_180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/img/suzanne_favicon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/img/suzanne_icon_circle_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/static/img/suzanne_favicon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Lansman Projeleri",
+      "short_name": "Projeler",
+      "description": "Coldwell Banker VIP portföyündeki seçkin gayrimenkul projeleri",
+      "url": "/site#projects",
+      "icons": [
+        {
+          "src": "/static/img/suzanne_icon_circle_192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "VIP Randevu & İletişim",
+      "short_name": "Randevu",
+      "description": "Suzanne Tenekecioğlu ile doğrudan özel randevu ve görüşme",
+      "url": "/site#contact",
+      "icons": [
+        {
+          "src": "/static/img/suzanne_icon_circle_192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
