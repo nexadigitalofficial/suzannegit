@@ -5241,18 +5241,34 @@
             if (nameInput) nameInput.value = projectName || 'Genel Portföy & VIP Proje';
             if (msgEl) msgEl.style.display = 'none';
             if (modal) {
+                modal.classList.add('active');
                 modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.visibility = 'visible';
+                modal.style.pointerEvents = 'auto';
                 document.body.style.overflow = 'hidden';
                 document.documentElement.style.overflow = 'hidden';
+                if(typeof gsap !== 'undefined') {
+                    const container = modal.querySelector('.modal-container');
+                    if(container) gsap.fromTo(container, { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
+                }
             }
         }
 
         function openAboutModal() {
             const modal = document.getElementById('aboutModal');
             if (modal) {
+                modal.classList.add('active');
                 modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.visibility = 'visible';
+                modal.style.pointerEvents = 'auto';
                 document.body.style.overflow = 'hidden';
                 document.documentElement.style.overflow = 'hidden';
+                if(typeof gsap !== 'undefined') {
+                    const container = modal.querySelector('.modal-container');
+                    if(container) gsap.fromTo(container, { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
+                }
             }
         }
 
@@ -6459,9 +6475,11 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if(modal) {
+                modal.classList.add('active');
                 modal.style.display = 'flex';
                 modal.style.opacity = '1';
                 modal.style.visibility = 'visible';
+                modal.style.pointerEvents = 'auto';
                 document.body.style.overflow = 'hidden';
                 document.documentElement.style.overflow = 'hidden';
                 if(typeof gsap !== 'undefined') {
@@ -6480,10 +6498,11 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     const iframe = document.getElementById('projectDriveIframe');
                     if(iframe) iframe.src = '';
                 }
+                modal.classList.remove('active');
                 modal.style.display = 'none';
-                modal.style.opacity = '';
-                modal.style.visibility = '';
-                modal.style.pointerEvents = '';
+                modal.style.opacity = '0';
+                modal.style.visibility = 'hidden';
+                modal.style.pointerEvents = 'none';
                 document.body.style.overflow = '';
                 document.documentElement.style.overflow = '';
             }
