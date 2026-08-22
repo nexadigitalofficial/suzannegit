@@ -1192,8 +1192,8 @@
             right: 28px;
         }
 
-        /* NEXA ORB — konik gradyan + dönen shine halkası + Suzanne Avatar + çift pulse */
-        .chat-toggle, .chat-toggle-orb {
+        /* NEXA ORB — konik gradyan + dönen shine halkası + çift pulse */
+        .chat-toggle {
             position: relative;
             width: 72px;
             height: 72px;
@@ -1205,13 +1205,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 3px;
+            font-size: 28px;
             box-shadow: 0 8px 32px rgba(0, 113, 227, 0.45), 0 0 0 6px rgba(94, 92, 230, 0.14), 0 0 0 12px rgba(94, 92, 230, 0.07);
             transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease;
             animation: orb-breath 3.4s ease-in-out infinite;
-            z-index: 10;
         }
-        .chat-toggle::before, .chat-toggle-orb::before {
+        .chat-toggle::before {
             content: '';
             position: absolute;
             inset: -4px;
@@ -1226,7 +1225,7 @@
             opacity: .85;
             pointer-events: none;
         }
-        .chat-toggle::after, .chat-toggle-orb::after {
+        .chat-toggle::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -1235,51 +1234,9 @@
             animation: orb-pulse 2.6s ease-out infinite;
             box-shadow: 0 0 0 0 rgba(94, 92, 230, 0.45);
         }
-        .chat-toggle:hover, .chat-toggle-orb:hover {
+        .chat-toggle:hover {
             transform: scale(1.08);
             box-shadow: 0 10px 40px rgba(94, 92, 230, 0.55), 0 0 0 8px rgba(94, 92, 230, 0.16), 0 0 0 16px rgba(94, 92, 230, 0.08);
-        }
-        .orb-core {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            overflow: hidden;
-            background: linear-gradient(135deg, #0A0F2C, #1E1B4B);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
-        }
-        .orb-brain-icon {
-            font-size: 28px;
-            color: #ffffff;
-            display: inline-block;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 16px #5E5CE6);
-            animation: brain-spin-float 3.6s ease-in-out infinite;
-        }
-        .chat-toggle:hover .orb-brain-icon, .chat-toggle-orb:hover .orb-brain-icon {
-            transform: scale(1.15);
-        }
-        @keyframes brain-spin-float {
-            0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 14px #5E5CE6); }
-            25% { transform: scale(1.08) rotate(-10deg); filter: drop-shadow(0 0 12px #5EEAD4) drop-shadow(0 0 20px #AF52DE); }
-            50% { transform: scale(1.16) rotate(0deg); filter: drop-shadow(0 0 16px #60A5FA) drop-shadow(0 0 26px #FF2D55); }
-            75% { transform: scale(1.08) rotate(10deg); filter: drop-shadow(0 0 12px #5EEAD4) drop-shadow(0 0 20px #5E5CE6); }
-            100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 14px #5E5CE6); }
-        }
-        .orb-live-badge {
-            position: absolute;
-            bottom: 3px;
-            right: 3px;
-            width: 14px;
-            height: 14px;
-            background: #34C759;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            box-shadow: 0 0 10px #34C759;
-            animation: live-blink 1.6s ease-in-out infinite;
-            z-index: 5;
         }
         .toggle-tip {
             position: absolute;
@@ -1311,7 +1268,7 @@
             border-right: 1px solid rgba(94, 92, 230, 0.35);
             border-top: 1px solid rgba(94, 92, 230, 0.35);
         }
-        .chat-toggle:hover .toggle-tip, .chat-toggle-orb:hover .toggle-tip {
+        .chat-toggle:hover .toggle-tip {
             opacity: 1;
             transform: translateY(-50%) translateX(0);
         }
@@ -1325,7 +1282,6 @@
             0%, 100% { box-shadow: 0 8px 32px rgba(0, 113, 227, 0.4), 0 0 0 6px rgba(94, 92, 230, 0.14), 0 0 0 12px rgba(94, 92, 230, 0.07); }
             50% { box-shadow: 0 8px 42px rgba(94, 92, 230, 0.55), 0 0 0 9px rgba(94, 92, 230, 0.18), 0 0 0 18px rgba(94, 92, 230, 0.09); }
         }
-
         /* Cam panel: aurora glow + neon kenarlık */
         .chat-window {
             position: absolute;
@@ -3205,13 +3161,9 @@
     </a>
 
     <div class="chatbot-widget" id="chatbotWidget">
-        <button class="chat-toggle chat-toggle-orb" onclick="toggleChatbot()" aria-label="Suzanne Tenekecioğlu Bilişsel Portföy Asistanı" id="chatToggleOrb">
-            <span class="orb-pulse"></span>
-            <div class="orb-core">
-                <i class="fa-solid fa-brain orb-brain-icon"></i>
-                <span class="orb-live-badge"></span>
-            </div>
-            <span class="toggle-tip">Mira — Suzanne Asistan'a Sor</span>
+        <button class="chat-toggle" onclick="toggleChatbot()" id="chatToggleBtn" aria-label="Asistan" aria-expanded="false">
+            <i class="fa-solid fa-brain"></i>
+            <span class="toggle-tip">Mira — Dijital Asistan'a Sor</span>
         </button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
@@ -6214,8 +6166,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         let isChatOpen = false;
         function toggleChatbot() {
             const win = document.getElementById('chatWindow');
-            const btn = document.getElementById('chatToggleOrb') || document.getElementById('chatToggleBtn');
-            const btnIcon = document.querySelector('#chatToggleOrb .orb-core i') || document.querySelector('#chatToggleBtn i');
+            const btn = document.getElementById('chatToggleBtn') || document.getElementById('chatToggleOrb');
+            const btnIcon = document.querySelector('#chatToggleBtn i, #chatToggleOrb i, .chat-toggle i');
             isChatOpen = !isChatOpen;
             
             if(isChatOpen) {
@@ -6241,7 +6193,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     win.style.removeProperty('max-height');
                 }
                 if (btn) btn.setAttribute('aria-expanded', 'false');
-                if (btnIcon) btnIcon.className = 'fa-solid fa-brain orb-brain-icon';
+                if (btnIcon) btnIcon.className = 'fa-solid fa-brain';
             }
         }
 
