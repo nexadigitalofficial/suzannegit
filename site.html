@@ -1246,26 +1246,33 @@
             height: 100%;
             border-radius: 50%;
             overflow: hidden;
-            background: #0A0F2C;
+            background: linear-gradient(135deg, #0A0F2C, #1E1B4B);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
         }
-        .orb-core img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            transition: transform 0.4s ease;
+        .orb-brain-icon {
+            font-size: 28px;
+            color: #ffffff;
+            display: inline-block;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 16px #5E5CE6);
+            animation: brain-spin-float 3.6s ease-in-out infinite;
         }
-        .chat-toggle:hover .orb-core img, .chat-toggle-orb:hover .orb-core img {
-            transform: scale(1.1);
+        .chat-toggle:hover .orb-brain-icon, .chat-toggle-orb:hover .orb-brain-icon {
+            transform: scale(1.15);
+        }
+        @keyframes brain-spin-float {
+            0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 14px #5E5CE6); }
+            25% { transform: scale(1.08) rotate(-10deg); filter: drop-shadow(0 0 12px #5EEAD4) drop-shadow(0 0 20px #AF52DE); }
+            50% { transform: scale(1.16) rotate(0deg); filter: drop-shadow(0 0 16px #60A5FA) drop-shadow(0 0 26px #FF2D55); }
+            75% { transform: scale(1.08) rotate(10deg); filter: drop-shadow(0 0 12px #5EEAD4) drop-shadow(0 0 20px #5E5CE6); }
+            100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 14px #5E5CE6); }
         }
         .orb-live-badge {
             position: absolute;
-            bottom: 2px;
-            right: 2px;
+            bottom: 3px;
+            right: 3px;
             width: 14px;
             height: 14px;
             background: #34C759;
@@ -3112,10 +3119,10 @@
         <button class="chat-toggle chat-toggle-orb" onclick="toggleChatbot()" aria-label="Suzanne Tenekecioğlu Bilişsel Portföy Asistanı" id="chatToggleOrb">
             <span class="orb-pulse"></span>
             <div class="orb-core">
-                <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu" />
+                <i class="fa-solid fa-brain orb-brain-icon"></i>
                 <span class="orb-live-badge"></span>
             </div>
-            <span class="toggle-tip">Suzanne Asistan'a Sor</span>
+            <span class="toggle-tip">Mira — Suzanne Asistan'a Sor</span>
         </button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
@@ -6133,7 +6140,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     win.style.removeProperty('bottom');
                 }
                 if (btn) btn.setAttribute('aria-expanded', 'false');
-                if (btnIcon) btnIcon.className = 'fa-solid fa-brain';
+                if (btnIcon) btnIcon.className = 'fa-solid fa-brain orb-brain-icon';
             }
         }
 

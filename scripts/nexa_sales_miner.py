@@ -79,6 +79,8 @@ def sync_sales_knowledge():
             "down_payment": data["down_payment"],
             "installment_terms": data.get("installment_terms", ""),
             "monthly_installment": data.get("monthly_installment", 0),
+            "delivery_months": data.get("delivery_months", 24),
+            "delivery_display": data.get("delivery_display", f"{data.get('delivery_months', 24)} Ay Teslim"),
             "rooms": [r.strip() for r in data["room_info"].split(",")],
             "description": data.get("sales_highlights", "")
         }
