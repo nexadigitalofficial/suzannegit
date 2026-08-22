@@ -47,27 +47,27 @@ def _boot_background_workers():
     except Exception as e:
         logger.warning("drive-puller başlatılamadı: %s", e)
 
-    # ─── GITHUB ACTIONS'A TAŞINAN DAEMLER (SUNUCUDAN KALDIRILDI) ───
-    #
-    # ✗ auto-sync (CB.com.tr + Data Importer)
-    #   → GitHub Actions: scripts/nexa_cb_sync.py + nexa_data_importer.py
-    #
-    # ✗ auto-self-healing
-    #   → GitHub Actions: nexa_self_healing.run_full_self_healing_cycle()
-    #
-    # ✗ auto-summaries (AI özet üretimi)
-    #   → GitHub Actions: nexa_rag.generate_all_project_summaries()
-    #
-    # ✗ youtube-uploader
-    #   → GitHub Actions'a taşındı (opsiyonel, videosu olmayan kartlar için)
-    #
-    # Bu daemon'ların sunucudan kaldırılması:
-    # - RAM/CPU kullanımını %60-70 azaltır
-    # - Tek hata noktasını (self-healing JSON corruption) ortadan kaldırır
-    # - Render Pro'da daha stabil, hızlı yanıt süreleri sağlar
-    #
+    # Cognitive Nucleus: Otonom bilişsel akıl yürütme, anomali ve sağlık izleme döngüsü
+    try:
+        from nexa_autonomous_system import cognitive_nucleus
+        def _cognitive_loop():
+            while True:
+                try:
+                    cognitive_nucleus.run_single_cognitive_cycle()
+                except Exception as ce:
+                    logger.debug("Cognitive cycle error: %s", ce)
+                time.sleep(60)
 
-    logger.info("Background workers booted (watchdog + drive-puller only)")
+        threading.Thread(
+            target=_cognitive_loop,
+            daemon=True,
+            name="cognitive-nucleus"
+        ).start()
+        logger.info("cognitive-nucleus daemon started")
+    except Exception as e:
+        logger.warning("cognitive-nucleus başlatılamadı: %s", e)
+
+    logger.info("Background workers booted (watchdog + drive-puller + cognitive-nucleus)")
 
 
 _boot_background_workers()

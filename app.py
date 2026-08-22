@@ -696,6 +696,18 @@ def healthz():
                     "time": datetime.now().isoformat(),
                     "port": CFG["port"]})
 
+@app.route("/api/cognitive/status", methods=["GET"])
+@app.route("/api/cognitive/reasoning", methods=["GET"])
+def api_cognitive_status():
+    """NEXA PRIME v2 Autonomous Cognitive System real-time monitoring endpoint."""
+    try:
+        from nexa_autonomous_system import CognitiveMonitoringDashboard, cognitive_nucleus
+        data = CognitiveMonitoringDashboard.get_dashboard_data()
+        return jsonify({"success": True, "data": data})
+    except Exception as e:
+        logger.warning("Cognitive status error: %s", e)
+        return jsonify({"success": False, "error": str(e)}), 500
+
 @app.route("/api/nexa-documents", methods=["GET"])
 def api_nexa_documents():
     project_id = request.args.get("project_id", type=int)
