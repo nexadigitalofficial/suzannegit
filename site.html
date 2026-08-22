@@ -1176,7 +1176,7 @@
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        /* Interactive Floating Chatbot (Bottom-Right) */
+        /* Interactive Floating Chatbot (Bottom-Right & Center on Scroll) */
         .chatbot-widget {
             position: fixed;
             bottom: calc(24px + env(safe-area-inset-bottom));
@@ -1193,8 +1193,8 @@
             bottom: calc(100px + env(safe-area-inset-bottom));
         }
 
-        /* NEXA ORB — konik gradyan + dönen shine halkası + çift pulse */
-        .chat-toggle {
+        /* NEXA ORB — konik gradyan + dönen shine halkası + Suzanne Avatar + çift pulse */
+        .chat-toggle, .chat-toggle-orb {
             position: relative;
             width: 72px;
             height: 72px;
@@ -1206,12 +1206,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            padding: 3px;
             box-shadow: 0 8px 32px rgba(0, 113, 227, 0.45), 0 0 0 6px rgba(94, 92, 230, 0.14), 0 0 0 12px rgba(94, 92, 230, 0.07);
             transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease;
             animation: orb-breath 3.4s ease-in-out infinite;
+            z-index: 10;
         }
-        .chat-toggle::before {
+        .chat-toggle::before, .chat-toggle-orb::before {
             content: '';
             position: absolute;
             inset: -4px;
@@ -1226,7 +1227,7 @@
             opacity: .85;
             pointer-events: none;
         }
-        .chat-toggle::after {
+        .chat-toggle::after, .chat-toggle-orb::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -1235,12 +1236,44 @@
             animation: orb-pulse 2.6s ease-out infinite;
             box-shadow: 0 0 0 0 rgba(94, 92, 230, 0.45);
         }
-        .chat-toggle:hover {
-
-            /* Scroll-reveal için geçiş */
-            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, left .6s cubic-bezier(.34, 1.56, .64, 1), right .6s cubic-bezier(.34, 1.56, .64, 1), bottom .6s cubic-bezier(.34, 1.56, .64, 1), transform .6s cubic-bezier(.34, 1.56, .64, 1);
+        .chat-toggle:hover, .chat-toggle-orb:hover {
             transform: scale(1.08);
             box-shadow: 0 10px 40px rgba(94, 92, 230, 0.55), 0 0 0 8px rgba(94, 92, 230, 0.16), 0 0 0 16px rgba(94, 92, 230, 0.08);
+        }
+        .orb-core {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #0A0F2C;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .orb-core img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+        }
+        .chat-toggle:hover .orb-core img, .chat-toggle-orb:hover .orb-core img {
+            transform: scale(1.1);
+        }
+        .orb-live-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: #34C759;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px #34C759;
+            animation: live-blink 1.6s ease-in-out infinite;
+            z-index: 5;
         }
         .toggle-tip {
             position: absolute;
@@ -1272,7 +1305,7 @@
             border-right: 1px solid rgba(94, 92, 230, 0.35);
             border-top: 1px solid rgba(94, 92, 230, 0.35);
         }
-        .chat-toggle:hover .toggle-tip {
+        .chat-toggle:hover .toggle-tip, .chat-toggle-orb:hover .toggle-tip {
             opacity: 1;
             transform: translateY(-50%) translateX(0);
         }
@@ -3044,9 +3077,9 @@
                     </div>
                     
                     <div class="social-links">
-                        <a href="https://wa.me/905354895656" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="https://instagram.com" target="_blank" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://facebook.com" target="_blank" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://wa.me/905354895656" target="_blank" class="social-link wa-link" aria-label="WhatsApp" title="WhatsApp (+90 535 489 56 56)"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="social-link ig-link" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank" class="social-link fb-link" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     </div>
                 </div>
                 <div class="contact-map">
@@ -3076,22 +3109,23 @@
     </a>
 
     <div class="chatbot-widget" id="chatbotWidget">
-        <button class="chat-toggle-orb" onclick="toggleChatbot()" aria-label="Yapay Zeka Danışman" id="chatToggleOrb">
+        <button class="chat-toggle chat-toggle-orb" onclick="toggleChatbot()" aria-label="Suzanne Tenekecioğlu Bilişsel Portföy Asistanı" id="chatToggleOrb">
             <span class="orb-pulse"></span>
             <div class="orb-core">
-                <i class="fa-solid fa-brain"></i>
+                <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu" />
+                <span class="orb-live-badge"></span>
             </div>
-            <span class="toggle-tip">Mira — Dijital Asistan'a Sor</span>
+            <span class="toggle-tip">Suzanne Asistan'a Sor</span>
         </button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
-                <div class="chat-avatar" style="overflow:hidden; border-radius:50%; border:2px solid var(--accent); width:38px; height:38px; position:relative; flex-shrink:0;">
+                <div class="chat-avatar" style="overflow:hidden; border-radius:50%; border:2px solid var(--accent); width:42px; height:42px; position:relative; flex-shrink:0;">
                     <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu Asistanı" style="width:100%; height:100%; object-fit:cover; display:block;">
                     <span class="status-dot"></span>
                 </div>
                 <div class="chat-title">
-                    <h4>Mira</h4>
-                    <p><span class="live-dot"></span> Proje Rehberi • Çevrimiçi</p>
+                    <h4>Suzanne Tenekecioğlu</h4>
+                    <p><span class="live-dot"></span> Bilişsel Portföy Asistanı • Çevrimiçi</p>
                 </div>
                 <div class="chat-waves"><span></span><span></span><span></span><span></span><span></span></div>
                 <button class="chat-close" onclick="toggleChatbot()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
