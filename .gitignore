@@ -57,6 +57,8 @@ youtube_state.json
 # Media binaries (100% Zero-Storage Cloud Preview)
 projeler/
 *.mp4
+!1.mp4
+!static/1.mp4
 *.pdf
 *.zip
 *.tar.gz
