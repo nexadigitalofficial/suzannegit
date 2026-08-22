@@ -58,7 +58,7 @@ def _fetch(url: str, retries: int = 3, backoff_base: float = 2.0) -> str:
 
 def _clean(txt: str) -> str:
     txt = html_mod.unescape(txt or "")
-    txt = re.sub(r"<[^>]+>", "", txt)
+    txt = re.sub(r"<[^>]+>", " ", txt)
     return re.sub(r"\s+", " ", txt).strip()
 
 

@@ -283,8 +283,9 @@ def _validate_origin():
         # Allow requests if origin matches host, localhost, or is absent in non-browser API callers
         if origin and host:
             clean_host = host.split(":")[0].lower()
-            clean_origin = origin.lower()
-            if not any(h in clean_origin for h in [clean_host, "localhost", "127.0.0.1", "0.0.0.0"]):
+            import urllib.parse
+            origin_host = urllib.parse.urlparse(origin).hostname or ""
+            if origin_host not in (clean_host, "localhost", "127.0.0.1", "0.0.0.0"):
                 logger.warning("CSRF/Origin reject: origin=%s != host=%s", origin, host)
                 return jsonify({"success": False, "message": "Cross-origin request rejected"}), 403
 
@@ -413,11 +414,13 @@ def _db_portfolio_listings() -> list:
         import sqlite3
         db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
         db = sqlite3.connect(db_uri, uri=True)
-        db.row_factory = sqlite3.Row
-        rows = db.execute(
-            "SELECT * FROM projects WHERE COALESCE(is_portfolio,0)=1 ORDER BY id DESC"
-        ).fetchall()
-        db.close()
+        try:
+            db.row_factory = sqlite3.Row
+            rows = db.execute(
+                "SELECT * FROM projects WHERE COALESCE(is_portfolio,0)=1 ORDER BY id DESC"
+            ).fetchall()
+        finally:
+            db.close()
         out = []
         for r in rows:
             p = dict(r)
@@ -630,7 +633,8 @@ def api_appointments():
     full_notes = f"Proje: {project_name} (ID: {project_id}) | Tercih: {preferred_dt} | Danışman: {agent} | Not: {notes}".strip()
     try:
         import sqlite3
-        with sqlite3.connect(str(NEXA_DB_PATH), timeout=15.0) as conn:
+        conn = sqlite3.connect(str(NEXA_DB_PATH), timeout=15.0)
+        try:
             conn.execute("PRAGMA journal_mode=WAL;")
             conn.execute("PRAGMA busy_timeout=30000;")
             cur = conn.cursor()
@@ -645,12 +649,14 @@ def api_appointments():
             """, (str(project_id) if project_id else None, name, phone, email or None, full_notes, agent))
             conn.commit()
             lead_id = cur.lastrowid
+        finally:
+            conn.close()
 
         telemetry({
             "event": "appointment_created",
             "lead_id": lead_id,
-            "name": name,
-            "phone": phone,
+            "name": name[:2] + "***" if name else "",
+            "phone": phone[:3] + "***" + phone[-2:] if len(phone) > 5 else "***",
             "project": project_name,
             "agent": agent
         })
@@ -698,19 +704,21 @@ def api_nexa_documents():
         import sqlite3
         db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
         conn = sqlite3.connect(db_uri, uri=True)
-        conn.row_factory = sqlite3.Row
-        if project_id:
-            rows = conn.execute(
-                "SELECT id, project_id, doc_type, title, file_url, category FROM documents WHERE project_id = ? ORDER BY id",
-                (project_id,)).fetchall()
-        elif folder:
-            rows = conn.execute(
-                "SELECT id, project_id, doc_type, title, file_url, category FROM documents WHERE (doc_type='doc' OR doc_type='html') AND file_url LIKE '/static/documents/%' AND category LIKE ? ORDER BY project_id, id",
-                (f"%{folder}%",)).fetchall()
-        else:
-            rows = conn.execute(
-                "SELECT id, project_id, doc_type, title, file_url, category FROM documents ORDER BY project_id, id").fetchall()
-        conn.close()
+        try:
+            conn.row_factory = sqlite3.Row
+            if project_id:
+                rows = conn.execute(
+                    "SELECT id, project_id, doc_type, title, file_url, category FROM documents WHERE project_id = ? ORDER BY id",
+                    (project_id,)).fetchall()
+            elif folder:
+                rows = conn.execute(
+                    "SELECT id, project_id, doc_type, title, file_url, category FROM documents WHERE (doc_type='doc' OR doc_type='html') AND file_url LIKE '/static/documents/%' AND category LIKE ? ORDER BY project_id, id",
+                    (f"%{folder}%",)).fetchall()
+            else:
+                rows = conn.execute(
+                    "SELECT id, project_id, doc_type, title, file_url, category FROM documents ORDER BY project_id, id").fetchall()
+        finally:
+            conn.close()
         out = []
         for r in rows:
             d = dict(r)
@@ -748,13 +756,15 @@ def api_nexa_regions():
         import sqlite3
         db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
         conn = sqlite3.connect(db_uri, uri=True)
-        conn.row_factory = sqlite3.Row
-        rows = conn.execute("""
-            SELECT id, name, il, ilce, mahalle, location, description, ada_no, parsel_no,
-                   price_display, room_info, tkgm_verified
-            FROM projects WHERE COALESCE(is_portfolio,0) = 0 ORDER BY name
-        """).fetchall()
-        conn.close()
+        try:
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute("""
+                SELECT id, name, il, ilce, mahalle, location, description, ada_no, parsel_no,
+                       price_display, room_info, tkgm_verified
+                FROM projects WHERE COALESCE(is_portfolio,0) = 0 ORDER BY name
+            """).fetchall()
+        finally:
+            conn.close()
         out = []
         for r in rows:
             p = dict(r)

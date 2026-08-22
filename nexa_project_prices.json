@@ -30,7 +30,7 @@
     "description": "Konut yapı kooperatifi güvencesi, 30 ay sabit taksit, tramvay durağı 3 dk."
   },
   "ANGİM BEYTEPE": {
-    "price_display": "₺6.350.000 - ₺22.890.000",
+    "price_display": "6.350.000 - 22.890.000 TL",
     "price_min": 6350000,
     "price_max": 22890000,
     "price_numeric": 6350000,
@@ -439,7 +439,7 @@
     "description": "İncekin kalbinde, geniş teras ve müstakil bahçe kullanımına sahip lüks daireler."
   },
   "NATURA GOLF": {
-    "price_display": "₺6.050.000 - ₺6.550.000",
+    "price_display": "6.050.000 - 6.550.000 TL",
     "price_min": 6050000,
     "price_max": 6550000,
     "price_numeric": 6050000,

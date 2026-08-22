@@ -58,7 +58,8 @@
     "delivery_months": 24,
     "category": "Markalı Konut Projesi",
     "sales_highlights": "Garantili öğrenci/akademisyen kiralama talebi, yerden ısıtma, 3lü ankastre.",
-    "delivery_display": "24 Ay Teslim"
+    "delivery_display": "24 Ay Teslim",
+    "price": "1.350.000 TL"
   },
   {
     "id": "cbvip-prj-31",
@@ -184,7 +185,8 @@
     "category": "Öğrenci & Kampüs Rezidansı",
     "sales_highlights": "Yıldırım Beyazıt Üniversitesi yerleşkesine komşu, 18 ayda teslim garantisi.",
     "delivery_display": "18 Ay Teslim",
-    "description": "Yıldırım Beyazıt Üniversitesi yerleşkesine komşu, 18 ayda teslim garantisi."
+    "description": "Yıldırım Beyazıt Üniversitesi yerleşkesine komşu, 18 ayda teslim garantisi.",
+    "price": "1.950.000 - 2.800.000 TL"
   },
   {
     "id": "cbvip-prj-11",
@@ -242,7 +244,8 @@
     "category": "Protokol Yolu Projesi",
     "sales_highlights": "Tek blokta 149 seçkin daire, peşinatsız 18 ay taksit veya %50 peşinat seçeneği.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Tek blokta 149 seçkin daire, peşinatsız 18 ay taksit veya %50 peşinat seçeneği."
+    "description": "Tek blokta 149 seçkin daire, peşinatsız 18 ay taksit veya %50 peşinat seçeneği.",
+    "price": "1.990.000 - 4.000.000 TL"
   },
   {
     "id": "cbvip-prj-25",
@@ -423,7 +426,8 @@
     "category": "Markalı Konut Projesi",
     "sales_highlights": "208 Dairelik butik konsept, 15 ay faizsiz ödeme kolaylığı, merkezi konum.",
     "delivery_display": "15 Ay Teslim",
-    "description": "208 Dairelik butik konsept, 15 ay faizsiz ödeme kolaylığı, merkezi konum."
+    "description": "208 Dairelik butik konsept, 15 ay faizsiz ödeme kolaylığı, merkezi konum.",
+    "price": "2.100.000 - 3.200.000 TL"
   },
   {
     "id": "cbvip-prj-17",
@@ -481,11 +485,12 @@
     "category": "Markalı Konut Projesi",
     "sales_highlights": "1232 Konutluk yaşam vadisi, 8-14. kat arası avantajlı daire seçenekleri.",
     "delivery_display": "30 Ay Teslim",
-    "description": "1232 Konutluk yaşam vadisi, 8-14. kat arası avantajlı daire seçenekleri."
+    "description": "1232 Konutluk yaşam vadisi, 8-14. kat arası avantajlı daire seçenekleri.",
+    "price": "3.200.000 - 4.600.000 TL"
   },
   {
     "id": "cbvip-prj-27",
-    "db_id": null,
+    "db_id": 6,
     "title": "VIP YAŞAMKENT - GÖKDEMİR STAR",
     "folder_name": "VIP YAŞAMKENT - GÖKDEMİR STAR",
     "folder_path": "projeler/VIP YAŞAMKENT - GÖKDEMİR STAR",
@@ -694,7 +699,8 @@
     "category": "Markalı Konut Projesi",
     "sales_highlights": "Batıkent metrosuna yakın, modern iç donanım, ferah peyzaj.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Batıkent metrosuna yakın, modern iç donanım, ferah peyzaj."
+    "description": "Batıkent metrosuna yakın, modern iç donanım, ferah peyzaj.",
+    "price": "2.450.000 - 3.850.000 TL"
   },
   {
     "id": "cbvip-prj-28",
@@ -808,7 +814,8 @@
     "category": "Yatırım & Öğrenci Konsepti",
     "sales_highlights": "Çankaya Üniversitesine yürüme mesafesinde, %10 nakit peşin indirimi, tapu devir güvencesi.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Çankaya Üniversitesine yürüme mesafesinde, %10 nakit peşin indirimi, tapu devir güvencesi."
+    "description": "Çankaya Üniversitesine yürüme mesafesinde, %10 nakit peşin indirimi, tapu devir güvencesi.",
+    "price": "2.650.000 - 3.750.000 TL"
   },
   {
     "id": "cbvip-prj-7",
@@ -860,7 +867,8 @@
       "region": "Yenimahalle, Ankara"
     },
     "location_full": "Ankara / Yenimahalle / Çakırlar",
-    "youtube_video_preview": "https://www.youtube.com/embed/K_AKC7GZWrM"
+    "youtube_video_preview": "https://www.youtube.com/embed/K_AKC7GZWrM",
+    "price": "2.800.000 - 3.900.000 TL"
   },
   {
     "id": "cbvip-prj-23",
@@ -986,7 +994,8 @@
     "category": "Markalı Konut Projesi",
     "sales_highlights": "Havalimanına 5 dakika mesafede, yüksek kira getirili yatırım projesi.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Havalimanına 5 dakika mesafede, yüksek kira getirili yatırım projesi."
+    "description": "Havalimanına 5 dakika mesafede, yüksek kira getirili yatırım projesi.",
+    "price": "2.850.000 - 4.100.000 TL"
   },
   {
     "id": "cbvip-prj-12",
@@ -1044,7 +1053,8 @@
     "category": "Karma Konut & Ticari Proje",
     "sales_highlights": "A Blok 15 kat, B ve C Blok 14 kat, 36 ay uzun vadeli taksit, cadde dükkanları.",
     "delivery_display": "24 Ay Teslim",
-    "description": "A Blok 15 kat, B ve C Blok 14 kat, 36 ay uzun vadeli taksit, cadde dükkanları."
+    "description": "A Blok 15 kat, B ve C Blok 14 kat, 36 ay uzun vadeli taksit, cadde dükkanları.",
+    "price": "2.950.000 - 4.200.000 TL"
   },
   {
     "id": "cbvip-prj-4",
@@ -1102,7 +1112,8 @@
     "category": "Markalı Konut Projesi",
     "sales_highlights": "5 Blok mega proje, takas ve kaparo seçenekleri, geniş peyzaj alanları.",
     "delivery_display": "42 Ay Teslim",
-    "description": "5 Blok mega proje, takas ve kaparo seçenekleri, geniş peyzaj alanları."
+    "description": "5 Blok mega proje, takas ve kaparo seçenekleri, geniş peyzaj alanları.",
+    "price": "3.000.000 - 4.000.000 TL"
   },
   {
     "id": "cbvip-prj-2",
@@ -1160,7 +1171,8 @@
     "category": "Karma Yaşam Projesi",
     "sales_highlights": "1050 Konut, 150 Ofis, 70.000 m² AVM ve Cadde Mağazaları, sosyal tesisler.",
     "delivery_display": "24 Ay Teslim",
-    "description": "1050 Konut, 150 Ofis, 70.000 m² AVM ve Cadde Mağazaları, sosyal tesisler."
+    "description": "1050 Konut, 150 Ofis, 70.000 m² AVM ve Cadde Mağazaları, sosyal tesisler.",
+    "price": "3.040.000 - 8.350.000 TL"
   },
   {
     "id": "cbvip-prj-9",
@@ -1218,7 +1230,8 @@
     "category": "GES Entegreli Akıllı Konutlar",
     "sales_highlights": "Güneş enerjisi (GES) ile sıfır aidat hedefi, kapalı yüzme havuzu, fitness.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Güneş enerjisi (GES) ile sıfır aidat hedefi, kapalı yüzme havuzu, fitness."
+    "description": "Güneş enerjisi (GES) ile sıfır aidat hedefi, kapalı yüzme havuzu, fitness.",
+    "price": "3.400.000 - 4.330.000 TL"
   },
   {
     "id": "cbvip-prj-29",
@@ -1332,7 +1345,8 @@
     "category": "İkiz Kule Rezidans",
     "sales_highlights": "Pursaklar Saray kavşağında ikiz kule mimarisi, panoramik Ankara manzarası.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Pursaklar Saray kavşağında ikiz kule mimarisi, panoramik Ankara manzarası."
+    "description": "Pursaklar Saray kavşağında ikiz kule mimarisi, panoramik Ankara manzarası.",
+    "price": "3.600.000 - 5.200.000 TL"
   },
   {
     "id": "cbvip-prj-5",
@@ -1390,7 +1404,8 @@
     "category": "Lüks Rezidans Kuleleri",
     "sales_highlights": "6 Blok 25 katlı kuleler, A dan F ye blok bazlı bağımsız fiyatlandırma, 20 ay taksit.",
     "delivery_display": "36 Ay Teslim",
-    "description": "6 Blok 25 katlı kuleler, A dan F ye blok bazlı bağımsız fiyatlandırma, 20 ay taksit."
+    "description": "6 Blok 25 katlı kuleler, A dan F ye blok bazlı bağımsız fiyatlandırma, 20 ay taksit.",
+    "price": "3.900.000 - 8.000.000 TL"
   },
   {
     "id": "cbvip-prj-26",
@@ -1520,7 +1535,8 @@
     "category": "Protokol Caddesi Kuleleri",
     "sales_highlights": "Protokol yolu cepheli, ticari dükkanlar ve yüksek standartlı konutlar.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Protokol yolu cepheli, ticari dükkanlar ve yüksek standartlı konutlar."
+    "description": "Protokol yolu cepheli, ticari dükkanlar ve yüksek standartlı konutlar.",
+    "price": "4.200.000 - 6.800.000 TL"
   },
   {
     "id": "cbvip-prj-10",
@@ -1578,7 +1594,8 @@
     "category": "Şehir Merkezi Rezidans",
     "sales_highlights": "Metro ve Onkoloji Hastanesi yanında, yüksek kira çarpanlı premium kule.",
     "delivery_display": "18 Ay Teslim",
-    "description": "Metro ve Onkoloji Hastanesi yanında, yüksek kira çarpanlı premium kule."
+    "description": "Metro ve Onkoloji Hastanesi yanında, yüksek kira çarpanlı premium kule.",
+    "price": "2.200.000 - 3.400.000 TL"
   },
   {
     "id": "cbvip-prj-13",
@@ -1631,7 +1648,8 @@
     "category": "Villa & Butik Yaşam",
     "sales_highlights": "İncekin kalbinde, geniş teras ve müstakil bahçe kullanımına sahip lüks daireler.",
     "delivery_display": "24 Ay Teslim",
-    "description": "İncekin kalbinde, geniş teras ve müstakil bahçe kullanımına sahip lüks daireler."
+    "description": "İncekin kalbinde, geniş teras ve müstakil bahçe kullanımına sahip lüks daireler.",
+    "price": "5.500.000 - 9.800.000 TL"
   },
   {
     "id": "cbvip-prj-15",
@@ -1690,7 +1708,8 @@
     "category": "Vadi Manzaralı Prestij Konutları",
     "sales_highlights": "Dikmen Vadisine bakan eşsiz manzara, akıllı ev otomasyonu, lüks lobi.",
     "delivery_display": "24 Ay Teslim",
-    "description": "Dikmen Vadisine bakan eşsiz manzara, akıllı ev otomasyonu, lüks lobi."
+    "description": "Dikmen Vadisine bakan eşsiz manzara, akıllı ev otomasyonu, lüks lobi.",
+    "price": "6.200.000 - 12.500.000 TL"
   },
   {
     "id": "cbvip-prj-1",
@@ -1722,7 +1741,7 @@
     "drive_pdf_id": "",
     "price_min": 6350000,
     "price_numeric": 6350000,
-    "price_display": "₺6.350.000 - ₺22.890.000",
+    "price_display": "6.350.000 - 22.890.000 TL",
     "media_mode": "cloud_preview",
     "name": "ANGİM BEYTEPE",
     "price_max": 22890000,
@@ -1749,7 +1768,8 @@
     "category": "Lüks Konut Projesi",
     "sales_highlights": "12 Blok, 84.000 m² yeşil alan, her daireye 2 kapalı otopark, lüks rezidans.",
     "delivery_display": "48 Ay Teslim",
-    "description": "12 Blok, 84.000 m² yeşil alan, her daireye 2 kapalı otopark, lüks rezidans."
+    "description": "12 Blok, 84.000 m² yeşil alan, her daireye 2 kapalı otopark, lüks rezidans.",
+    "price": "4.500.000 - 22.890.000 TL"
   },
   {
     "id": "cbvip-prj-16",
@@ -1808,7 +1828,8 @@
     "category": "Ultra Lüks Rezidans",
     "sales_highlights": "Beytepe bulvarı üzerinde, geniş balkonlar, yerden ısıtma ve kapalı otopark.",
     "delivery_display": "30 Ay Teslim",
-    "description": "Beytepe bulvarı üzerinde, geniş balkonlar, yerden ısıtma ve kapalı otopark."
+    "description": "Beytepe bulvarı üzerinde, geniş balkonlar, yerden ısıtma ve kapalı otopark.",
+    "price": "7.500.000 - 16.000.000 TL"
   },
   {
     "id": "cbvip-prj-3",
@@ -1866,6 +1887,7 @@
     "category": "Yazlık / Villa / Lüks Sahil",
     "sales_highlights": "Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar.",
     "delivery_display": "12 Ay Teslim",
-    "description": "Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar."
+    "description": "Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar.",
+    "price": "14.500.000 TL"
   }
 ]

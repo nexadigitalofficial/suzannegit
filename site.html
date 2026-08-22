@@ -129,7 +129,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000;
+            z-index: 100001;
             padding: 1.1rem 5%;
             padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
             background: var(--glass);
@@ -1956,7 +1956,7 @@
                 gap: 0.4rem;
                 border-bottom: 1px solid var(--border);
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-                z-index: 999;
+                z-index: 100002;
             }
             
             .hero-giant-title { font-size: 42px; }
@@ -1980,7 +1980,7 @@
             .hero-about-grid { display: grid; }
             .hero-banner-section { padding-top: calc(6.5rem + env(safe-area-inset-top, 0px)); }
             .results-grid { grid-template-columns: 1fr !important; }
-            .card.project-card { flex: 0 0 calc(100vw - 40px); min-width: 0 !important; max-width: none !important; }
+            .card.project-card { flex: 0 0 calc(100% - 16px); min-width: 0 !important; max-width: none !important; }
             .card-actions { flex-wrap: wrap !important; }
             .card-actions .btn { white-space: normal !important; flex: 1 1 auto; min-height: 40px; padding: 8px 10px !important; font-size: 12px !important; }
             .card-footer .btn { min-height: 40px; }
@@ -2711,7 +2711,7 @@
             .hero-banner-title { font-size: 21px !important; }
             .budget-btn { padding: 6px 10px !important; font-size: 11.5px !important; min-height: 40px; }
             .card-actions { gap: 4px !important; }
-            .card.project-card { width: calc(100vw - 24px) !important; flex: 0 0 calc(100vw - 24px) !important; }
+            .card.project-card { width: calc(100% - 16px) !important; flex: 0 0 calc(100% - 16px) !important; }
             .card-title { font-size: 15px !important; }
             .segmented-control { width: 100% !important; height: 46px !important; }
             .segment-btn { font-size: 13px !important; }
@@ -5622,28 +5622,51 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             if(!track) return;
             let isDown = false;
             let isDragging = false;
-            let startX;
-            let scrollLeft;
+            let startX = 0;
+            let scrollLeft = 0;
 
-            track.addEventListener('mousedown', (e) => {
+            const startDrag = (e) => {
                 isDown = true;
                 isDragging = false;
-                startX = e.pageX - track.offsetLeft;
+                const pageX = e.pageX !== undefined ? e.pageX : (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
+                startX = pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
-            });
-            track.addEventListener('mouseleave', () => { isDown = false; isDragging = false; track.style.cursor = 'grab'; });
-            track.addEventListener('mouseup', () => { isDown = false; setTimeout(() => { isDragging = false; }, 50); track.style.cursor = 'grab'; });
-            track.addEventListener('mousemove', (e) => {
+            };
+
+            const endDrag = () => {
+                isDown = false;
+                setTimeout(() => { isDragging = false; }, 80);
+                track.style.cursor = 'grab';
+            };
+
+            const onDrag = (e) => {
                 if (!isDown) return;
-                const x = e.pageX - track.offsetLeft;
+                const pageX = e.pageX !== undefined ? e.pageX : (e.touches && e.touches[0] ? e.touches[0].pageX : 0);
+                const x = pageX - track.offsetLeft;
                 const walk = (x - startX) * 1.5;
                 if (Math.abs(x - startX) > 8) {
                     isDragging = true;
                     track.style.cursor = 'grabbing';
-                    e.preventDefault();
+                    if (e.cancelable && e.type === 'touchmove') e.preventDefault();
                     track.scrollLeft = scrollLeft - walk;
                 }
-            });
+            };
+
+            track.addEventListener('mousedown', startDrag);
+            track.addEventListener('touchstart', startDrag, { passive: true });
+            track.addEventListener('mouseleave', endDrag);
+            track.addEventListener('mouseup', endDrag);
+            track.addEventListener('touchend', endDrag);
+            track.addEventListener('mousemove', onDrag);
+            track.addEventListener('touchmove', onDrag, { passive: false });
+
+            // Suppress accidental card clicks when user is dragging/swiping
+            track.addEventListener('click', (e) => {
+                if (isDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
         }
 
         // Filter Logic
@@ -6362,9 +6385,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                                         <a class="btn btn-primary btn-sm" style="font-size:10px; padding:4px 8px; text-decoration:none; display:inline-flex; align-items:center; gap:4px;" target="_blank" href="https://wa.me/905354895656?text=${encodeURIComponent('Merhaba Suzanne Hanım, ' + p.title + ' ilanı hakkında bilgi almak istiyorum.')}"><i class="fa-brands fa-whatsapp"></i> Bilgi Al</a>
                                     ` : `
                                         <button class="btn btn-primary btn-sm" style="font-size:10px; padding:4px 8px;" onclick="event.stopPropagation(); openVideoModal('${p.id}')"><i class="fa-solid fa-play"></i> Tanıtım</button>
-                                        <button class="btn btn-outline btn-sm" style="font-size:10px; padding:4px 8px; background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.3);" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${p.id}')"><i class="fa-solid fa-images"></i> Slayt</button>
+                                        <button class="btn btn-outline btn-sm" style="font-size:10px; padding:4px 8px; background:rgba(0,113,227,0.08); color:var(--accent);" onclick="event.stopPropagation(); openProjectReport('${p.id}')"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>
                                         <button class="btn btn-outline btn-sm" style="font-size:10px; padding:4px 8px;" onclick="event.stopPropagation(); openPdfPreview('${p.id}')"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-                                        <button class="btn btn-outline btn-sm" style="font-size:10px; padding:4px 8px; background:rgba(0,113,227,0.08); color:var(--accent);" onclick="event.stopPropagation(); openProjectReport('${p.id}')"><i class="fa-solid fa-brain"></i> Detay</button>
                                     `}
                                 </div>
                             </div>
@@ -7346,7 +7368,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
     
     <!-- ONLINE RANDEVU MODALI (WHATSAPP ENTEGRASYONLU) -->
-    <div class="modal-overlay" id="appointmentModal" onclick="if(event.target===this)closeModal('appointmentModal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1rem;">
+    <div class="modal-overlay" id="appointmentModal" onclick="if(event.target===this)closeModal('appointmentModal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:560px; max-height:90dvh; max-height:90vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.15rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.06), rgba(94,92,230,0.06)); flex-shrink:0;">
                 <h3 style="margin:0; font-size:17px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> Proje & Danışmanlık Randevusu</h3>
@@ -7397,7 +7419,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
     </div>
 
     <!-- DETAYLI HAKKIMDA MODALI -->
-    <div class="modal-overlay" id="aboutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
+    <div class="modal-overlay" id="aboutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:800px; max-height:85vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:#f8f9fa;">
                 <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);">Suzanne Tenekecioğlu — Özgeçmiş &amp; Vizyon</h3>
@@ -7419,7 +7441,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
 
     <!-- VIDEO MODAL (GOOGLE DRIVE PREVIEW & STREAM PLAYER) -->
-    <div class="modal-overlay" id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(12px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
+    <div class="modal-overlay" id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#1c1c1e; color:#fff; width:100%; max-width:940px; border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,0.15); box-shadow:0 25px 60px rgba(0,0,0,0.6); display:flex; flex-direction:column;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); background:#242426;">
                 <div style="display:flex; align-items:center; gap:10px;">
@@ -7443,7 +7465,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
     </div>
 
     <!-- PDF SUNUM MODAL -->
-    <div class="modal-overlay" id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
+    <div class="modal-overlay" id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:1000px; height:90vh; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.4);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:#f8f9fa;">
                 <h3 id="pdfModalTitle" style="margin:0; font-size:17px; font-weight:700; color:var(--text-primary);">Proje Sunum Dosyası</h3>
@@ -7458,7 +7480,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
     </div>
 
     <!-- ZEKA RAPORU MODAL -->
-    <div class="modal-overlay" id="reportModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
+    <div class="modal-overlay" id="reportModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:850px; max-height:85vh; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.3);">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.05), rgba(94,92,230,0.05));">
                 <h3 id="reportProjectTitle" style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-brain" style="color:var(--accent);"></i> Nexa AI Zeka Raporu</h3>
