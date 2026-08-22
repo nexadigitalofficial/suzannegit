@@ -822,6 +822,20 @@ def site():
     resp.headers['Cache-Control'] = 'public, max-age=3600, must-revalidate'
     return resp
 
+@app.route("/favicon.ico")
+def favicon():
+    fav = STATIC_DIR / "img" / "suzanne_icon_circle_32.png"
+    if not fav.exists():
+        fav = STATIC_DIR / "favicon.ico"
+    return send_file(fav, mimetype="image/png")
+
+@app.route("/apple-touch-icon.png")
+def apple_touch_icon():
+    icon = STATIC_DIR / "img" / "suzanne_icon_circle_180.png"
+    if not icon.exists():
+        icon = STATIC_DIR / "apple-touch-icon.png"
+    return send_file(icon, mimetype="image/png")
+
 @app.route("/static/<path:filename>")
 def static_files(filename):
     resp = send_from_directory(STATIC_DIR, filename)
