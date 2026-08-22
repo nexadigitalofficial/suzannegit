@@ -133,7 +133,7 @@ def pull_once():
             if it["kind"] != "file":
                 continue
             name = it["name"]
-            if not name.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv")):
+            if not name.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".txt", ".md")):
                 continue
             key = f"{top['name']}/{name}"
             if state.get(key) == it["id"]:

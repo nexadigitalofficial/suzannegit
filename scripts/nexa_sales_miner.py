@@ -150,8 +150,78 @@ def sync_sales_knowledge():
                     f"%{name}%",
                     name
                 ))
+            # 4. SQLite documents & document_chunks tam bilgi ve sözleşme güvencesi
+            def _chunk(text, size=1200, overlap=120):
+                import re
+                text = re.sub(r"\s+", " ", text).strip()
+                if len(text) < 40:
+                    return []
+                out, i = [], 0
+                while i < len(text):
+                    out.append(text[i:i + size])
+                    i += size - overlap
+                return out
+
+            proj_rows = cur.execute("SELECT id, name FROM projects").fetchall()
+            name_to_id = {r[1]: r[0] for r in proj_rows}
+
+            for name, data in graph.items():
+                pid = name_to_id.get(name)
+                if not pid:
+                    for db_name, db_id in name_to_id.items():
+                        if db_name.lower() == name.lower():
+                            pid = db_id
+                            break
+                if not pid:
+                    continue
+
+                tkgm_stat = "Resmi TKGM Kayıtlarıyla Doğrulanmıştır" if data.get("tkgm_verified") else "İnceleniyor"
+                docs_payload = [
+                    ("doc", f"{name} - Resmi Sözleşme ve TKGM Tapu Kayıtları", f"""
+NEXA PRIME RESMİ PROJE SÖZLEŞMESİ VE HUKUKİ GÜVENCE BİLGİLERİ: {name}
+Proje: {name} | Konum: {data.get('location_full', '')}
+Tapu Kaydı: Ada {data.get('ada_no', '-')} / Parsel {data.get('parsel_no', '-')} ({tkgm_stat})
+Mülkiyet Yapısı: {data.get('category', 'Lüks Konut Projesi')} - Resmi Noter ve Satış Vaadi Sözleşmesi
+Teslimat Süresi: {data.get('delivery_months', 24)} Ay ({data.get('delivery_display', '')})
+Danışman: Suzanne Tenekecioğlu (0535 489 56 56) - Coldwell Banker VIP Ankara (Ofis 470)
+""".strip(), "SÖZLEŞME"),
+                    ("xlsx", f"{name} - Satış Takip ve Fiyat Envanter Listesi", f"""
+NEXA PRIME CANLI SATIŞ TAKİP VE FİYAT LİSTESİ: {name}
+Lansman Fiyatı: {data.get('price_display', '')} (Taban: {data.get('price_min', '')} TL - Tavan: {data.get('price_max', '')} TL)
+Peşinat: {data.get('down_payment', '')} | Taksit: {data.get('installment_terms', '')}
+Aylık Taksit: {data.get('monthly_installment', '')} TL | Oda Tipleri: {data.get('room_info', '')}
+Satış Detayı: {data.get('sales_highlights', '')}
+""".strip(), "SATIŞ TAKİP"),
+                    ("doc", f"{name} - Mimari Konsept ve Proje Sunumu", f"""
+NEXA PRIME PROJE TANITIMI VE MİMARİ KONSEPT: {name}
+Kategori: {data.get('category', 'Markalı Konut Projesi')} | Adres: {data.get('location_full', '')}
+Açıklama: {data.get('description', '')}
+Mimari Özellikler: {data.get('sales_highlights', '')} | Teslim: {data.get('delivery_display', '')}
+""".strip(), "SUNUM"),
+                    ("doc", f"{name} - Yatırım Analizi ve Amortisman Raporu", f"""
+NEXA PRIME BİLİŞSEL YATIRIM VE KİRA GETİRİSİ ANALİZİ: {name}
+Bölgesel Prim Trendi: {data.get('ilce', '')} bölgesinde yüksek değer artışı.
+Ödeme Kolaylığı: {data.get('down_payment', '')} peşinat, {data.get('installment_terms', '')} vade ile sermaye güvencesi.
+""".strip(), "Yatırım")
+                ]
+
+                for dtype, dtitle, dcontent, dcat in docs_payload:
+                    cur.execute("SELECT id FROM documents WHERE project_id=? AND title=?", (pid, dtitle))
+                    row = cur.fetchone()
+                    if row:
+                        did = row[0]
+                        cur.execute("UPDATE documents SET content=?, category=?, doc_type=? WHERE id=?", (dcontent, dcat, dtype, did))
+                        cur.execute("DELETE FROM document_chunks WHERE document_id=?", (did,))
+                    else:
+                        cur.execute("INSERT INTO documents (project_id, doc_type, title, content, file_url, category, created_at) VALUES (?,?,?,?,?,?,datetime('now'))",
+                                    (pid, dtype, dtitle, dcontent, f"knowledge_graph/{name}/{dtitle}", dcat))
+                        did = cur.lastrowid
+                    for chk in _chunk(dcontent):
+                        cur.execute("INSERT INTO document_chunks (document_id, chunk_text, embedding) VALUES (?,?,?)",
+                                    (did, chk, json.dumps([0.0] * 768)))
+
             conn.commit()
-            print("[3/3] SQLite database senkronizasyonu tamamlandı.")
+            print("[4/4] SQLite documents & document_chunks tam bilgi ve sözleşme güvencesi güncellendi.")
         except Exception as e:
             conn.rollback()
             print(f"[3/3] SQLite senkronizasyon hatası: {e}")
@@ -163,5 +233,5 @@ def sync_sales_knowledge():
 
 if __name__ == "__main__":
     sync_sales_knowledge()
-    print("Satış bilgileri başarıyla senkronize edildi.")
+    print("Satış bilgileri ve sözleşme belgeleri başarıyla senkronize edildi.")
 

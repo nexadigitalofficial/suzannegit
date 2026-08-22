@@ -51,26 +51,74 @@ NEW_PROJECTS = ['CONCEPT BULVAR', 'BORDO YAŞAM', 'EXCELANCE VADİ', 'EXCELANCE 
                 'JOVEN PORT', 'JOVEN KAMPÜS', 'NEST İNCEK', 'NATURA GOLF', 'SMD TWIN', 'SMD PROTOKOL']
 
 
-def _extract_pdf(path):
+def _extract_text(path):
+    """Universal text extractor: PDF, XLSX, XLS, CSV, DOCX, TXT, MD."""
+    ext = path.suffix.lower()
+    text_content = []
     try:
-        import contextlib
-        import io
-        with contextlib.redirect_stderr(io.StringIO()):
-            r = PyPDF2.PdfReader(str(path))
-            return "\n".join((pg.extract_text() or "") for pg in r.pages[:20])
-    except Exception:
+        if ext == '.pdf':
+            import contextlib
+            import io
+            with contextlib.redirect_stderr(io.StringIO()):
+                r = PyPDF2.PdfReader(str(path))
+                text_content = [(pg.extract_text() or "") for pg in r.pages]
+        elif ext in ('.xlsx', '.xls'):
+            try:
+                import openpyxl
+                wb = openpyxl.load_workbook(str(path), read_only=True, data_only=True)
+                for sheet in wb.sheetnames:
+                    ws = wb[sheet]
+                    text_content.append(f"--- Sayfa / Tablo: {sheet} ---")
+                    for row in ws.iter_rows(values_only=True):
+                        row_data = [str(cell).strip() for cell in row if cell is not None and str(cell).strip()]
+                        if row_data:
+                            text_content.append(" | ".join(row_data))
+                wb.close()
+            except Exception as xe:
+                logger.debug("xlsx extraction fallback: %s", xe)
+        elif ext == '.csv':
+            import csv
+            with open(path, newline='', encoding='utf-8', errors='replace') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if row:
+                        text_content.append(" | ".join(c.strip() for c in row if c.strip()))
+        elif ext in ('.docx', '.doc'):
+            try:
+                import docx
+                doc = docx.Document(str(path))
+                text_content = [p.text for p in doc.paragraphs if p.text.strip()]
+            except Exception:
+                try:
+                    import zipfile
+                    import xml.etree.ElementTree as ET
+                    with zipfile.ZipFile(str(path)) as z:
+                        xml_content = z.read('word/document.xml')
+                        tree = ET.fromstring(xml_content)
+                        text_content = [node.text for node in tree.iter() if node.text and node.text.strip()]
+                except Exception:
+                    pass
+        elif ext in ('.txt', '.md', '.json'):
+            text_content.append(path.read_text(encoding='utf-8', errors='replace'))
+    except Exception as e:
+        logger.warning("Metin çıkarma hatası %s: %s", path.name, e)
         return ""
+    return "\n".join(text_content)
 
 
 def _cat_for(title):
     t = title.upper()
-    if any(k in t for k in ('FİYAT', 'FIYAT', 'ÖDEME', 'ODEME', 'TABLO')):
-        return 'price'
-    if 'SUNUM' in t:
-        return 'sunum'
-    if any(k in t for k in ('KAT', 'PLAN', 'VAZİYET', 'VAZIYET', 'BLOK', 'KROKİ')):
-        return 'plan'
-    return 'doc'
+    if any(k in t for k in ('SÖZLEŞME', 'SOZLESME', 'ŞARTNAME', 'SARTNAME', 'PROTOKOL', 'HUKUK', 'TAPU')):
+        return 'SÖZLEŞME'
+    if any(k in t for k in ('SATIŞ TAKİP', 'SATIS TAKIP', 'SATIŞ', 'SATIS', 'LİSTE', 'STOK', 'BLOK')):
+        return 'SATIŞ TAKİP'
+    if any(k in t for k in ('FİYAT', 'FIYAT', 'ÖDEME', 'ODEME', 'TABLO', 'TAKSİT', 'PEŞİNAT')):
+        return 'FİYAT TABLOSU'
+    if any(k in t for k in ('SUNUM', 'KATALOG', 'BROŞÜR', 'BROSUR', 'LANSMAN')):
+        return 'SUNUM'
+    if any(k in t for k in ('KAT', 'PLAN', 'VAZİYET', 'VAZIYET', 'KROKİ', 'MİMARİ', 'MIMARI')):
+        return 'KAT PLANI'
+    return 'GENEL'
 
 
 def _chunk_text(text, size=1800, overlap=150):
@@ -166,7 +214,8 @@ def ingest_changed(only_ingest=False):
     new_cards = False
     for key in changed:
         path = Path(key)
-        if path.suffix.lower() != '.pdf':
+        ext = path.suffix.lower()
+        if ext not in ('.pdf', '.xlsx', '.xls', '.csv', '.docx', '.doc', '.txt', '.md', '.json'):
             continue
         folder_name = path.parent.name
         pid = name_to_id.get(FOLDER_TO_DB.get(folder_name, ''))
@@ -177,20 +226,22 @@ def ingest_changed(only_ingest=False):
             new_cards = True
         if pid is None:
             continue
-        text = _extract_pdf(path)
-        if len(text) < 90:
+        text = _extract_text(path)
+        if len(text) < 40:
             continue
         title = path.stem
-        cur.execute("SELECT id FROM documents WHERE project_id=? AND title=? AND doc_type='pdf'", (pid, title))
+        doc_type = ext.replace('.', '')
+        category = _cat_for(title)
+        cur.execute("SELECT id FROM documents WHERE project_id=? AND title=? AND doc_type=?", (pid, title, doc_type))
         row = cur.fetchone()
         if row:
             cur.execute("DELETE FROM document_chunks WHERE document_id=?", (row[0],))
-            cur.execute("UPDATE documents SET content=?, file_url=? WHERE id=?",
-                        (text, str(path), row[0]))
+            cur.execute("UPDATE documents SET content=?, file_url=?, category=? WHERE id=?",
+                        (text, str(path), category, row[0]))
             did = row[0]
         else:
             cur.execute("INSERT INTO documents (project_id, doc_type, title, content, file_url, category, created_at) VALUES (?,?,?,?,?,?,datetime('now'))",
-                        (pid, 'pdf', title, text, str(path), _cat_for(title)))
+                        (pid, doc_type, title, text, str(path), category))
             did = cur.lastrowid
             added_docs += 1
         for c in _chunk_text(text):
