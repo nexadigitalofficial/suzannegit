@@ -828,6 +828,16 @@ def static_files(filename):
     resp.headers["Cache-Control"] = "public, max-age=86400"
     return resp
 
+@app.route("/1.mp4")
+@app.route("/video/1.mp4")
+def serve_brand_video():
+    vpath = BASE_DIR / "1.mp4"
+    if not vpath.exists():
+        vpath = STATIC_DIR / "1.mp4"
+    if vpath.exists():
+        return stream_file_response(vpath, "video/mp4")
+    return "Video bulunamadı", 404
+
 # ─── P15: güvenlik başlıkları (tüm yanıtlara) ───
 @app.after_request
 def _add_security_headers(resp):
