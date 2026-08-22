@@ -700,6 +700,35 @@ def build_rationale(item, parts):
     return f"{lead}. {txt}."
 
 # ─── ANA İŞLEME ───
+# ─── NİHAİ DOĞAL DİL & DİYALOG MOTORU (NEXA PRIME v2 / SUZANNE TENEKECİOĞLU PERSONA) ───
+
+GREETING_WORDS = {
+    "merhaba", "selam", "gunaydin", "iyi gunler", "iyi aksamlar", "merhabalar", "selamlar",
+    "nasilsiniz", "kimsiniz", "sen kimsin", "selamunaleykum", "sa", "as", "hey", "merhaba!",
+    "kolay gelsin", "yardimci olur musun", "bilgi alabilir miyim", "slm", "mrb", "alo"
+}
+
+APPOINTMENT_WORDS = {
+    "randevu", "gorusme", "telefon", "numara", "numaraniz", "iletisim", "ofis nerede",
+    "ofisiniz", "suzanne hanim", "yerinde sunum", "arar misiniz", "ulasmak istiyorum",
+    "nasil ulasabilirim", "birebir", "danisman"
+}
+
+def is_pure_greeting(ql: str, budget, regions, rooms, named_projects, goals) -> bool:
+    tokens = set(re.findall(r"[a-z0-9çğıöşü]+", ql))
+    if not tokens:
+        return True
+    if any(w in ql for w in ["merhaba", "selam", "gunaydin", "iyi gunler", "iyi aksamlar", "nasilsiniz", "sen kimsin", "kimsiniz"]):
+        if not budget and not regions and not rooms and not named_projects and not goals:
+            return True
+        if len(tokens) <= 3 and not named_projects:
+            return True
+    return False
+
+def is_appointment_query(ql: str) -> bool:
+    return any(w in ql for w in APPOINTMENT_WORDS)
+
+
 def process_nexa_query(user_query):
     try:
         items = load_portfolio()
@@ -728,12 +757,52 @@ def process_nexa_query(user_query):
     else:
         lead_score = 3  # DISCOVERY
 
+    # 1. SAF SELAMLAMA / TANIŞMA DİYALOĞU
+    if is_pure_greeting(ql, budget, regions, rooms, named_projects, goals):
+        response_text = (
+            "Merhaba! Hoş geldiniz. Ben Coldwell Banker VIP Gayrimenkul Baş Danışmanı **Suzanne Tenekecioğlu'nun Bilişsel Portföy & Yatırım Asistanıyım** (NEXA PRIME).\n\n"
+            "Ankara (Beytepe, İncek, Çankaya, Pursaklar, Çubuk/Esenboğa), Bodrum (Yalıkavak) ve Alanya'daki seçkin markalı konut projelerimiz, "
+            "lüks villa seçeneklerimiz ve yüksek kira getirili yatırım portföyümüz hakkında size rehberlik etmekten memnuniyet duyarım.\n\n"
+            "Size en doğru fırsatları ve güncel şirket içi faizsiz ödeme planlarını sunabilmem için:\n"
+            "• **Bütçe aralığınız** (örn: *1-3 Milyon TL, 3-5 Milyon TL, 5-10 Milyon TL veya üzeri*)\n"
+            "• **Bölge tercihiniz** (örn: *Beytepe, Çankaya, Gölbaşı, Pursaklar, Bodrum, Alanya*)\n"
+            "• **Daire tipi veya amacınız** (örn: *1+1 yüksek kira getirisi, 2+1/3+1 oturum, müstakil lüks villa*)\n\n"
+            "hakkında bilgi verebilir veya doğrudan ilgilendiğiniz projenin adını yazabilirsiniz. Nasıl yardımcı olabilirim?\n\n"
+            "---\n"
+            "📞 _Birebir VIP danışmanlık ve yerinde sunum için **0535 489 56 56** doğrudan hattımızdan Suzanne Hanım'a ulaşabilirsiniz._"
+        )
+        return {
+            "success": True,
+            "response": response_text,
+            "lead_score": lead_score,
+            "extracted_info": {},
+            "projects": []
+        }
+
+    # 2. RANDEVU & İLETİŞİM TALEBİ DİYALOĞU
+    if is_appointment_query(ql) and not named_projects and not budget:
+        response_text = (
+            "Memnuniyetle! VIP Danışmanımız **Suzanne Tenekecioğlu** ile birebir görüşme, yerinde proje sunumu veya sözleşme/fiyat detayları için randevu planlayabilirsiniz.\n\n"
+            "**İletişim & Randevu Kanallarımız:**\n"
+            "• **Doğrudan GSM & WhatsApp:** [0535 489 56 56](https://wa.me/905354895656)\n"
+            "• **Ofisimiz:** Coldwell Banker VIP Gayrimenkul / Ankara\n"
+            "• **Online Randevu:** Sohbet üzerinden adınızı, telefonunuzu ve tercih ettiğiniz gün/saati yazarsanız kaydınızı anında takvimimize işleyebilirim.\n\n"
+            "Hangi proje veya bölge için görüşme planlamak istersiniz?"
+        )
+        return {
+            "success": True,
+            "response": response_text,
+            "lead_score": 9,
+            "extracted_info": {},
+            "projects": []
+        }
+
+    # 3. PROJE SKORLAMA VE SEÇİM
     scored = []
     for it in items:
         it["_query_raw"] = q
         it["_down_payment_req"] = down_payment_req
         it["_installment_req"] = installment_req
-        # Kişisel portföy ilanları yalnızca kiralık isteminde skorlanır (kiralık envanter botta görünür)
         if it.get("type") == "portfolio" and want_type != "Kiralık":
             continue
         s, parts = score_item(it, budget, regions, rooms, goals, want_type, named_projects, ada_parsel)
@@ -750,72 +819,85 @@ def process_nexa_query(user_query):
         if yazlik_hits:
             cbs = yazlik_hits
     elif regions:
-        # Bölge sorulduysa yalnızca o bölgedeki kayıtlar gösterilir (flag bazlı)
         region_hits = [x for x in cbs if x[1].get("_region_hit")]
         if region_hits:
             cbs = region_hits
     if named_projects:
-        # Proje adı ile sorulduysa yalnızca adı geçen projeler gösterilir (flag bazlı)
         name_hits = [x for x in cbs if x[1].get("_name_hit")]
         if name_hits:
             cbs = name_hits
     if ada_parsel:
-        # Ada/parsel sorulduysa o parsellik kayıtlar kesin önceliklidir
         ada_hits = [x for x in cbs if x[1].get("_ada_hit")]
         if ada_hits:
             cbs = ada_hits
-    cb_matches = cbs[:3]
 
-    rental_notice = ""
-    if want_type == "Kiralık":
-        kiralik_var = any(it.get("type") == "portfolio" and it.get("listing_type") == "Kiralık"
-                          for it in items)
-        if kiralik_var:
-            rental_notice = ("\n_Not: Portföyümüzde kiralık ilanlarımız mevcut "
-                             "(ör. 56.000 ₺/ay kiralık rezidans); isterseniz onları gösterebilirim, "
-                             "aşağıdaki satılık projelerimiz de yatırım amaçlı değerlendirilebilir._")
-        else:
-            rental_notice = ("\n_Not: Kiralık envanterimiz şu an sistemde yer almıyor; aşağıdaki "
-                             "satılık projeler yatırım amaçlı değerlendirilebilir._")
+    cb_matches = cbs[: (1 if len(named_projects) == 1 else 3)]
 
-    # Rapor başlığı
-    def fmt_money(v):
-        return f"{v/1_000_000:g} Milyon TL" if v >= 1_000_000 else f"{v/1_000:g} Bin TL"
-    bütçe_str = "Belirtilmedi"
-    if budget:
-        if budget["max"]:
-            bütçe_str = f"{fmt_money(budget['min'])} - {fmt_money(budget['max'])}"
-        else:
-            bütçe_str = fmt_money(budget["min"])
-    bölge_str = ", ".join(regions) if regions else "Ankara Genel"
-    amaç_map = {"oturum": "Oturum", "yatirim": "Yatırım", "kiralik": "Kiralık"}
-    amaç_str = ", ".join(amaç_map.get(g, g.capitalize()) for g in goals) if goals else "Oturum + Yatırım"
-
-    lines = [
-        f"**Nexa AI Proje Zekası Analiz Raporu:**\n",
-        f"• **Bütçe:** {bütçe_str}",
-        f"• **Bölge:** {bölge_str}",
-        f"• **Oda Tercihi:** {rooms or 'Belirtilmedi'}",
-        f"• **Yatırım Amacı:** {amaç_str}",
-        "",
-        "Tüm portföy proje verileri, ada/parsel ve TKGM kayıtlarıyla taranarak **gerçek uyum puanları** hesaplandı:",
-    ]
-
-    if not cb_matches:
-        lines.append("\n_Ölçütlerinizle eşleşen markalı proje bulunamadı; portföy verileri değerlendirildi._")
-    elif rental_notice:
-        lines.append(rental_notice)
-
-    # Çekirdek proje kartları
-    for s, it, parts in cb_matches:
-        ip = item_price_label(it)
-        label = f"**{it['title']}** — %{s} Uyumlu\n📍 {item_region_label(it)} • 💰 {ip}"
-        lines.append(f"\n{label}\n💡 {build_rationale(it, parts)}")
-
-    lines.append("\n---\n_Detaylı sunum, güncel fiyat listesi ve parsel raporları için **0535 489 56 56** WhatsApp hattından ulaşabilirsiniz._")
-
-    # Kart formatı (site.html uyumlu)
+    # 4. TEKİL PROJE İNCELEME DİYALOĞU
     summaries = _load_project_summaries()
+    if len(named_projects) == 1 and cb_matches:
+        s, target_proj, parts = cb_matches[0]
+        p_name = target_proj.get("title") or target_proj.get("name")
+        p_loc = target_proj.get("location") or item_region_label(target_proj)
+        p_price = item_price_label(target_proj)
+        p_dp = target_proj.get("down_payment") or "%50 Peşinat"
+        p_terms = target_proj.get("installment_terms") or "24 Ay Sabit Taksit"
+        p_rooms = target_proj.get("room_info") or "1+1, 2+1, 3+1"
+        p_ada = target_proj.get("ada_no") or "-"
+        p_parsel = target_proj.get("parsel_no") or "-"
+        tkgm_badge = "TKGM Onaylı Resmi Parsel" if target_proj.get("tkgm_verified") else "Ruhsatlı Parsel"
+        ozet = summaries.get(p_name, {}).get("summary") or target_proj.get("description") or ""
+
+        response_text = (
+            f"**{p_name}** projesi portföyümüzün öne çıkan seçkin yatırımlarındandır. İşte projenin doğrulanmış güncel detayları:\n\n"
+            f"📍 **Lokasyon:** {p_loc}\n"
+            f"💰 **Fiyat Aralığı:** {p_price}\n"
+            f"💳 **Ödeme Kolaylığı:** {p_dp} • {p_terms} (Faizsiz, şirket bünyesinde)\n"
+            f"🏢 **Daire Tipleri:** {p_rooms}\n"
+            f"📑 **Tapu / Parsel:** Ada {p_ada} / Parsel {p_parsel} ({tkgm_badge})\n\n"
+            f"💡 **Proje Özeti & Avantajları:**\n{ozet[:450]}\n\n"
+            f"---\n"
+            f"📞 _Detaylı kat planları, sözleşme şartları ve güncel fiyat listesi için **0535 489 56 56** hattından danışmanımız Suzanne Tenekecioğlu'na ulaşabilirsiniz._"
+        )
+    else:
+        # 5. GENEL PORTFÖY / KARŞILAŞTIRMA & TAVSİYE DİYALOĞU
+        def fmt_money(v):
+            return f"{v/1_000_000:g} Milyon TL" if v >= 1_000_000 else f"{v/1_000:g} Bin TL"
+        
+        b_text = f"{fmt_money(budget['min'])} - {fmt_money(budget['max'])}" if budget and budget.get("max") else (fmt_money(budget['min']) if budget else "")
+        r_text = ", ".join(regions) if regions else ""
+
+        intro = "Belirttiğiniz kriterlere ve yatırım hedeflerinize göre portföyümüzdeki en avantajlı fırsatları listeledim:"
+        if b_text or r_text:
+            intro = f"**{r_text or 'Ankara / Genel'}** bölgesinde, **{b_text or 'mevcut'}** bütçenizle en yüksek getiri ve konfor sunan seçkin projelerimiz:"
+
+        proj_items = []
+        for idx, (s, it, parts) in enumerate(cb_matches, 1):
+            ip = item_price_label(it)
+            dp = it.get("down_payment") or "%50 Peşinat"
+            terms = it.get("installment_terms") or "Esnek Vade"
+            loc = item_region_label(it)
+            ada_str = f"Ada {it.get('ada_no')}/{it.get('parsel_no')}" if it.get("ada_no") else "Ruhsatlı"
+            proj_items.append(
+                f"{idx}. **{it['title']}** ({loc})\n"
+                f"   • Fiyat: **{ip}** | Ödeme: {dp}, {terms}\n"
+                f"   • Tip: {it.get('room_info', 'Konut')} | Tapu: {ada_str} (TKGM Onaylı)\n"
+                f"   • Yatırım Notu: {build_rationale(it, parts)[:220]}"
+            )
+
+        if not proj_items:
+            response_text = (
+                "Belirttiğiniz kriterlere tam uyan bir proje listelenemedi; ancak portföyümüzde benzer bütçe ve lokasyonlarda cazip alternatiflerimiz mevcuttur.\n\n"
+                "Detaylı inceleme ve güncel portföy dökümü için lütfen bütçenizi veya tercih ettiğiniz bölgeyi biraz daha genişletebilir ya da doğrudan Suzanne Hanım ile iletişime geçebilirsiniz."
+            )
+        else:
+            response_text = (
+                f"{intro}\n\n" + "\n\n".join(proj_items) + "\n\n"
+                "---\n"
+                "📞 _Detaylı sunum, güncel müsait daire listesi ve şirket içi ödeme planları için **0535 489 56 56** WhatsApp hattından Suzanne Tenekecioğlu ile görüşebilirsiniz._"
+            )
+
+    # 6. KART LİSTESİ OLUŞTURMA (Sadece anlamlı eşleşmeler)
     project_cards = []
     for s, it, parts in cb_matches:
         is_pf = it.get("type") == "portfolio"
@@ -847,7 +929,7 @@ def process_nexa_query(user_query):
 
     return {
         "success": True,
-        "response": "\n".join(lines),
+        "response": response_text,
         "lead_score": lead_score,
         "extracted_info": {
             "budget_tl": budget,

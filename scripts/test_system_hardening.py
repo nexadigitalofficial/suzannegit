@@ -161,6 +161,29 @@ class TestNexaSystemHardening(unittest.TestCase):
             data = resp.get_json()
             self.assertIn(data.get("status"), ("ok", "healthy"))
 
+    def test_12_chat_greeting_and_persona(self):
+        """Verify chat endpoint returns warm natural greeting without intrusive cards for 'merhaba'."""
+        resp = self.client.post("/api/nexa-ai-chat", json={"message": "merhaba"})
+        self.assertEqual(resp.status_code, 200)
+        data = resp.get_json()
+        self.assertTrue(data.get("success"))
+        response_text = data.get("response", "")
+        self.assertIn("Suzanne Tenekecioğlu", response_text)
+        self.assertNotIn("Analiz Raporu", response_text)
+        self.assertEqual(len(data.get("projects", [])), 0, "Greetings should not return unsolicited project cards")
+
+    def test_13_chat_specific_project_inquiry(self):
+        """Verify chat endpoint returns dedicated project info when project is asked."""
+        resp = self.client.post("/api/nexa-ai-chat", json={"message": "ANGİM BEYTEPE hakkında bilgi verir misiniz?"})
+        self.assertEqual(resp.status_code, 200)
+        data = resp.get_json()
+        self.assertTrue(data.get("success"))
+        response_text = data.get("response", "")
+        self.assertIn("ANGİM BEYTEPE", response_text)
+        projects = data.get("projects", [])
+        self.assertEqual(len(projects), 1)
+        self.assertEqual(projects[0]["title"], "ANGİM BEYTEPE")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

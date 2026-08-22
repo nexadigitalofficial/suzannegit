@@ -157,28 +157,40 @@ FALLBACK_MODELS = [
     "gemini-1.5-pro",
 ]
 
-_dead_models = set()  # 404 veren (artık erişilemeyen) modeller
-
 CONTACT_LINE = "Detaylı sunum, güncel fiyat listesi ve parsel raporları için **0535 489 56 56** WhatsApp hattından ulaşabilirsiniz."
 
 
 def _read_api_keys():
     keys = []
-    env_keys = os.getenv("GEMINI_API_KEYS", "")
-    if env_keys:
-        keys += [k.strip() for k in env_keys.split(",") if k.strip()]
+    for var_name in ["GEMINI_API_KEYS", "GEMINI_API_KEY", "GOOGLE_API_KEY"]:
+        env_val = os.getenv(var_name, "")
+        if env_val:
+            keys += [k.strip() for k in env_val.split(",") if k.strip()]
     env_file = NEXA_ROOT / ".env"
     if env_file.exists():
         for line in env_file.read_text(encoding="utf-8", errors="ignore").splitlines():
             line = line.strip()
-            if line.startswith("GEMINI_API_KEYS="):
-                keys += [k.strip() for k in line.split("=", 1)[1].split(",") if k.strip()]
+            for prefix in ["GEMINI_API_KEYS=", "GEMINI_API_KEY=", "GOOGLE_API_KEY="]:
+                if line.startswith(prefix):
+                    keys += [k.strip() for k in line.split("=", 1)[1].split(",") if k.strip()]
+    cfg_file = NEXA_ROOT / "config.json"
+    if cfg_file.exists():
+        try:
+            cfg = json.loads(cfg_file.read_text(encoding="utf-8"))
+            for key_field in ["gemini_api_keys", "gemini_api_key", "api_key"]:
+                val = cfg.get(key_field)
+                if isinstance(val, list):
+                    keys += [str(k).strip() for k in val if str(k).strip()]
+                elif isinstance(val, str) and val.strip():
+                    keys += [k.strip() for k in val.split(",") if k.strip()]
+        except Exception:
+            pass
     if not keys:
         try:
             from app.core.config import settings
+            keys += settings.api_keys_list
         except Exception:
-            return []
-        keys = settings.api_keys_list
+            pass
     seen, out = set(), []
     for k in keys:
         if k and k not in seen and "YENI_API_KEY" not in k and len(k) >= 10:
@@ -687,24 +699,21 @@ def _is_quota_error(msg):
 def _ollama_fallback(prompt):
     try:
         import httpx
-        # P9: Ping — Ollama kapalıysa 2 sn içinde vazgeç
         try:
-            ping = httpx.get("http://localhost:11434/api/tags", timeout=2.0)
+            ping = httpx.get("http://localhost:11434/api/tags", timeout=1.5)
             if ping.status_code != 200:
+                return None
+            tags = ping.json().get("models") or []
+            if not tags:
+                return None
+            model = tags[0].get("name")
+            if not model:
                 return None
         except Exception:
             return None
-        # D8: kurulu modellerden birini seç (llama3 yoksa varsayılan yanlış 15 sn bekleme)
-        model = "llama3"
-        try:
-            tags = ping.json().get("models") or []
-            if tags:
-                model = tags[0].get("name") or model
-        except Exception:
-            pass
         resp = httpx.post("http://localhost:11434/api/generate",
                           json={"model": model, "prompt": prompt, "stream": False},
-                          timeout=15.0)
+                          timeout=6.0)
         if resp.status_code == 200:
             return (resp.json().get("response") or "")[:2000]
     except Exception:
@@ -964,8 +973,8 @@ Cevabı 450 kelimeyi aşmadan Türkçe yaz.
         pf_block = "\n".join(pf_lines) if pf_lines else "(portföy ilanı yok)"
         canonical_matrix = _build_canonical_matrix()
         system = f"""
-Sen Nexa — Bilişkin Gayrimenkul Ekosistemi'nin Baş Portföy & Yatırım Stratejisti AI Danışmanısın (NEXA PRIME v2).
-Tüm portföydeki MARKALI PROJELERİ çapraz analiz eden kıdemli danışmansın.
+Sen Coldwell Banker VIP Gayrimenkul Baş Danışmanı **Suzanne Tenekecioğlu'nun Kıdemli Bilişsel Portföy & Yatırım Danışmanısın** (NEXA PRIME v2).
+Tüm portföydeki MARKALI PROJELERİ ve VIP gayrimenkulleri analiz eden lüks yatırım danışmanısın.
 
 {history_block}
 CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ (BU VERİLERİ KESİNLİKLE BİREBİR KULLAN, ASLA DEĞİŞTİRME VEYA UYDURMA):
@@ -984,6 +993,10 @@ KİŞİSEL PORTFÖY İLANLARI (satılık/kiralık ilan envanteri — soru ilan a
 </KULLANICI_SORUSU>
 
 Kurallar:
+0. SELAMLAMA & TANIŞMA ("merhaba", "selam", "günaydın", "iyi günler", "kimsiniz" vb.):
+   - Kendini **Suzanne Tenekecioğlu'nun Bilişsel Portföy & Yatırım Danışmanı** olarak tanıt.
+   - Ankara (Beytepe, Çankaya, İncek, Pursaklar, Çubuk), Bodrum (Yalıkavak) ve Alanya'daki portföyümüzü özetle.
+   - Müşteriden bütçe aralığı, hedef lokasyon veya aradığı daire tipini sor. Selamlamada rastgele proje listesi dökme!
 1. YATIRIM & TAVSİYE SORULARI ("Ne alayım?", "Yatırım yapmak istiyorum", "Kira getirisi / prim potansiyeli"): 
    - Kullanıcı açıkça "kiralık daire/ofis arıyorum" demedikçe, yatırım sorularında SATILIK MARKALI PROJELERİ öner.
    - Bütçeye göre en yüksek prim ve kira getirisi sunan projeleri (Öğrenci/kampüs kira talebi: VIP ÜNİVERSİTE, JOVEN KAMPÜS, WM - PRIME; Prestij/rezidans: ANGİM BEYTEPE, GÖKDEMİR İMZA, ANKAPORT SARAY; Sahil/lüks: EVART YALIKAVAK, VIP MARIN) yatırım gerekçeleriyle (taksit imkanı, peşin alım indirimi, tapu/ada-parsel güvencesi, kiralama hızı) açıkla.
