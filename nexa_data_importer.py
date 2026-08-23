@@ -274,17 +274,36 @@ def main():
             best = max(desc_cand, key=len)
             desc = re.sub(r"\s+", " ", best).strip()[:320]
 
+        # Preserve canonical knowledge graph fields (down_payment, installment_terms, delivery_months)
+        kg_path = BASE_DIR / "nexa_sales_knowledge_graph.json"
+        kg_item = {}
+        if kg_path.exists():
+            try:
+                kg_data = json.loads(kg_path.read_text(encoding="utf-8"))
+                kg_item = kg_data.get(name) or kg_data.get(p["name"]) or {}
+            except Exception:
+                pass
+
+        down_payment = kg_item.get("down_payment") or (f"{int(price_min*0.5):,} TL (%50)".replace(",", ".") if price_min else "Peşin / Görüşülür")
+        installment_terms = kg_item.get("installment_terms") or "24-36 Ay Vade"
+        delivery_months = kg_item.get("delivery_months") or teslim_ay or 24
+
         result[name] = {
-            "price_display": price_display,
-            "price_min": price_min,
-            "price_max": price_max,
-            "rooms": room_list,
-            "teslim_ay": teslim_ay,
-            "description": desc,
+            "title": name,
+            "price_display": price_display or kg_item.get("price_display") or "Fiyat Sorunuz",
+            "price_min": price_min or kg_item.get("price_min"),
+            "price_max": price_max or kg_item.get("price_max"),
+            "down_payment": down_payment,
+            "installment_terms": installment_terms,
+            "delivery_months": delivery_months,
+            "teslim_ay": delivery_months,
+            "rooms": room_list or kg_item.get("rooms") or ["1+1"],
+            "room_types": room_list or kg_item.get("rooms") or ["1+1"],
+            "description": desc or kg_item.get("description") or "",
             "chunk_count": len(chunks),
         }
         result_by_id[pid] = result[name]
-        print(f"[{pid}] {name}: {price_display or 'fiyat yok'} | odalar: {', '.join(room_list) or '-'} | teslim: {teslim_ay or '-'} ay | chunk: {len(chunks)}")
+        print(f"[{pid}] {name}: {price_display or 'fiyat yok'} | odalar: {', '.join(room_list) or '-'} | teslim: {delivery_months or '-'} ay | chunk: {len(chunks)}")
 
     PRICES_OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
 
