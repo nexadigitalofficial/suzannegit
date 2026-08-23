@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-23T00:06:15.956231",
+  "timestamp": "2026-08-23T16:57:29.708505",
   "status": "OPTIMAL",
   "health_score": 100.0,
   "state": {
@@ -9,7 +9,7 @@
     "total_chunks": 1954,
     "error_rate": 0.0,
     "health_score": 100.0,
-    "timestamp": "2026-08-23T00:06:15.949762"
+    "timestamp": "2026-08-23T16:57:29.692530"
   },
   "anomalies": [],
   "predictions": {
@@ -38,7 +38,7 @@
     "optimizations": [
       "SQLite PRAGMA optimize yürütüldü."
     ],
-    "timestamp": "2026-08-23T00:06:15.956231"
+    "timestamp": "2026-08-23T16:57:29.708505"
   },
   "learning": {
     "lessons_learned_count": 3,

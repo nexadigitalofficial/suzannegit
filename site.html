@@ -20,10 +20,13 @@
     <!-- SEO, Favicon & PWA Manifest -->
     <link rel="canonical" href="/site">
     <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/img/suzanne_icon_circle_16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/suzanne_icon_circle_32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/static/img/suzanne_icon_circle_64.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/static/img/suzanne_icon_circle_192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/img/suzanne_favicon_512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/suzanne_icon_circle_180.png">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <meta name="theme-color" content="#040408">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,16 +35,18 @@
     <meta name="msapplication-TileImage" content="/static/img/suzanne_icon_circle_192.png">
     <meta name="robots" content="index, follow">
     
-    <!-- Google Fonts & FontAwesome -->
+    <!-- Google Fonts, Preload & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="/static/img/suzanne_hero.jpeg" fetchpriority="high">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     
-    <!-- GSAP Animations & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- GSAP Animations & ScrollTrigger (Deferred for optimal FCP/LCP) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
     <style>
         :root {
@@ -54,23 +59,57 @@
             --app-height: 100vh;
             --app-dvh: 100dvh;
 
+            /* Fluid Typography & Container Tokens */
+            --container-padding: clamp(16px, 4.5vw, 5%);
+            --font-hero-title: clamp(24px, 5.2vw + 6px, 44px);
+            --font-section-title: clamp(22px, 4.2vw + 6px, 38px);
+            --font-section-subtitle: clamp(13.5px, 2vw + 4px, 17px);
+            --font-card-title: clamp(16px, 2.2vw, 19px);
+            --font-price-prominent: clamp(18px, 3.2vw + 4px, 23px);
+
+            /* WCAG 2.2 AAA Contrast Colors */
             --white: #FFFFFF;
             --bg: #F5F5F7;
-            --text-primary: #1D1D1F;
-            --text-secondary: #6E6E73;
+            --text-primary: #111113;
+            --text-secondary: #525257;
+            --text-muted: #59595E;
             --accent: #0071E3;
             --accent-hover: #0A84FF;
+            --focus-ring: #0071E3;
             --card-bg: #FFFFFF;
             --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
             --card-shadow-hover: 0 20px 48px rgba(0, 0, 0, 0.08);
             --border: rgba(0, 0, 0, 0.06);
-            --glass: rgba(255, 255, 255, 0.78);
+            --glass: rgba(255, 255, 255, 0.88);
             --glass-border: rgba(255, 255, 255, 0.6);
             --radius: 24px;
             --radius-sm: 14px;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Skip-to-content accessibility link */
+        .skip-to-content {
+            position: fixed;
+            top: -100px;
+            left: 20px;
+            z-index: 9999999;
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+        .skip-to-content:focus {
+            top: 20px;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--focus-ring) !important;
+            outline-offset: 3px !important;
         }
 
         * {
@@ -213,8 +252,8 @@
         }
 
         .nav-social-btn {
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -638,6 +677,7 @@
             margin: 0 -5%;
             padding: 1rem 5% 2rem;
             overflow: hidden;
+            max-width: 100vw;
         }
 
         .carousel-track {
@@ -1309,6 +1349,7 @@
             width: 560px;
             max-width: calc(100vw - 24px);
             height: min(760px, calc(100vh - 110px));
+            height: min(760px, calc(100dvh - 110px));
             background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(249,250,255,0.94));
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
@@ -1799,7 +1840,7 @@
             background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            z-index: 2000;
+            z-index: 100005;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3078,192 +3119,202 @@
             border: 1px solid var(--border);
             margin: 4rem auto 2rem;
         }
-        @media (max-width: 768px) {
-            .hero-banner-title { font-size: 30px; letter-spacing: -0.5px; }
-            .hero-banner-subtitle { font-size: 15px; }
-            .hero-banner-section { padding: 5.5rem 0 1.5rem; }
-            .about-compact-card { padding: 1.5rem; }
-            .quick-budget-bar { gap: 8px; }
-            .budget-btn { font-size: 12px; padding: 8px 14px; }
+        /* ═══════════════════════════════════════════════════════════════════════════
+           UNIFIED MASTER RESPONSIVE & FLUID DESIGN SYSTEM (0px OVERFLOW TOLERANCE)
+           ═══════════════════════════════════════════════════════════════════════════ */
+
+        .section-title {
+            font-size: var(--font-section-title) !important;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            line-height: 1.25;
         }
 
-        /* ─── ULTRA MOBİL ORANLAMA (son katman — kazanan kurallar) ─── */
+        .section-subtitle {
+            font-size: var(--font-section-subtitle) !important;
+            line-height: 1.6;
+        }
+
+        .hero-banner-title {
+            font-size: var(--font-hero-title) !important;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.18;
+        }
+
+        .hero-giant-title {
+            font-size: clamp(28px, 6vw + 8px, 64px) !important;
+            line-height: 1.1;
+        }
+
+        .card-title, .project-card .card-title {
+            font-size: var(--font-card-title) !important;
+            line-height: 1.35;
+        }
+
+        .card-price-prominent {
+            font-size: var(--font-price-prominent) !important;
+        }
+
+        /* Unified Card & Pill Design System */
+        .budget-btn, .chip {
+            min-height: 44px !important;
+            border-radius: 980px !important;
+            padding: 0.65rem 1.3rem !important;
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .budget-btn:hover, .chip:hover {
+            transform: translateY(-1px);
+        }
+
+        .budget-btn.active, .chip.active {
+            background: var(--accent) !important;
+            color: #FFFFFF !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3) !important;
+        }
+
+        .card-actions .btn, 
+        .card-footer .btn,
+        .carousel-btn,
+        .chat-send,
+        .chat-lead-btn {
+            min-height: 44px !important;
+        }
+
+        .carousel-btn {
+            width: 44px !important;
+            height: 44px !important;
+        }
+
+        /* Aspect Ratio & Skeleton Parity for 0.00 CLS */
+        .card-img-wrapper,
+        .skeleton-img {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #1C1C1E;
+            border-radius: var(--radius) var(--radius) 0 0;
+            contain: layout paint;
+        }
+
+        .project-card-img,
+        .portfolio-card-img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Container & Edge Bleed Synchronization */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--container-padding) !important;
+        }
+
+        .carousel-container {
+            position: relative;
+            margin: 0 calc(-1 * var(--container-padding)) !important;
+            padding: 0.5rem var(--container-padding) 1.5rem !important;
+            overflow: hidden;
+        }
+
+        /* Android & iOS Scroll Containment */
+        .modal-overlay,
+        .chat-messages,
+        .carousel-track,
+        #appointmentForm,
+        #reportModalBody {
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Master Tablet & Mobile Rules (<= 768px) */
         @media (max-width: 768px) {
-            .container { padding: 0 1.25rem; }
-            .section-title { font-size: 26px !important; margin-bottom: 0.6rem; }
-            .section-subtitle { font-size: 15px !important; margin-bottom: 1.5rem; }
-            .section-badge { font-size: 11px !important; letter-spacing: 2px; }
-            .hero-banner-title { font-size: 28px !important; }
-            .hero-banner-subtitle { font-size: 14px !important; line-height: 1.55; margin-bottom: 1.2rem; }
-            .hero-banner-section { padding: 5rem 0 1.25rem !important; }
-            .hero-profile-card { padding: 1.25rem !important; }
-            .hero-portrait-frame-sm { width: 110px !important; height: 110px !important; margin-bottom: 0.75rem; }
-            .hero-profile-card h3 { font-size: 18px !important; }
-            .hero-profile-card p { font-size: 12px !important; }
-            .hero-giant-title { font-size: 30px !important; line-height: 1.2; }
-            .quick-budget-bar { gap: 6px !important; margin: 1.25rem auto 1.5rem; }
-            .budget-btn { font-size: 12px !important; padding: 8px 12px !important; border-radius: 24px; }
-            .card-price-prominent { font-size: 20px !important; }
-            .about-compact-card { padding: 1.25rem !important; margin: 2rem auto 1.5rem !important; }
-            .why-me-grid { gap: 1rem !important; }
-            .why-me-grid > div, .about-compact-card > div { padding: 1.25rem !important; }
-            .filter-box { padding: 1.25rem 1rem !important; }
-            .step-card, .mindmap-panel { padding: 1.25rem !important; }
-            .filter-step-card { padding: 1.1rem !important; margin-bottom: 1.25rem !important; }
-            .filter-label { font-size: 14px !important; }
-            .contact-container { padding: 1.5rem 1rem !important; gap: 1.5rem !important; }
-            .contact-info-card, .contact-form-card { padding: 1.25rem !important; }
-            .chat-window { border-radius: 20px; }
-            .chat-messages { padding: 1rem !important; }
-            .chat-header { padding: 0.85rem 1rem !important; }
-            .card-content { padding: 1rem !important; }
-            .card-title { font-size: 16px !important; }
-            .project-card .card-title { font-size: 16px !important; }
-            .modal-container { padding: 1.25rem !important; }
-            .modal-content { border-radius: 20px !important; }
-            .segmented-control { width: min(100%, 300px) !important; }
-            .segmented-control-wrapper { margin-top: 1.2rem !important; }
-            .chip { padding: 0.55rem 1rem !important; font-size: 13px !important; }
-            .carousel-nav-header { flex-wrap: wrap; gap: 0.5rem !important; }
-            .carousel-count-text { font-size: 13px !important; }
-            .carousel-btn { width: 40px !important; height: 40px !important; }
-            .filter-chips { gap: 8px !important; }
-            .section-badge { padding: 5px 12px !important; }
+            .navbar {
+                padding-top: calc(0.85rem + var(--sat)) !important;
+                padding-bottom: 0.85rem !important;
+                padding-left: max(14px, calc(0.85rem + var(--sal))) !important;
+                padding-right: max(14px, calc(0.85rem + var(--sar))) !important;
+            }
+            .logo span {
+                font-size: clamp(12.5px, 3.8vw, 16px) !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .nav-logo-media { width: 38px !important; height: 26px !important; }
+            .mobile-menu-btn { width: 44px !important; height: 44px !important; }
 
-            /* Chatbot Widget & Orb — Ergonomik Mobil Thumb-Zone */
-            .chatbot-widget {
-                position: fixed !important;
-                left: 0 !important;
-                right: 0 !important;
-                bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                transform: none !important;
-                pointer-events: none !important;
-                display: flex !important;
+            .hero-grid-2col, .hero-about-grid, .about-hero-grid, .contact-container {
+                grid-template-columns: 1fr !important;
+                gap: 1.75rem !important;
+            }
+            .hero-banner-section {
+                padding-top: calc(5.8rem + var(--sat)) !important;
+                padding-bottom: 1.5rem !important;
+            }
+            .hero-left-content { text-align: center; }
+            .hero-banner-actions {
                 flex-direction: column !important;
-                align-items: center !important;
-                justify-content: flex-end !important;
-                z-index: 99999 !important;
-            }
-            .chatbot-widget.scroll-revealed {
-                transform: none !important;
-                bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-            }
-            .chat-toggle, .chat-toggle-orb {
-                pointer-events: auto !important;
-                width: 60px !important;
-                height: 60px !important;
-                margin: 0 auto !important;
-                font-size: 24px !important;
-                box-shadow: 0 8px 30px rgba(94,92,230,0.5) !important;
-            }
-            .toggle-tip { display: none !important; }
-
-            /* Modern Geniş Mobil Chat Ekranı (Asla İnce Kalmaz) */
-            .chat-window {
-                position: fixed !important;
-                left: 8px !important;
-                right: 8px !important;
-                width: calc(100vw - 16px) !important;
-                max-width: 480px !important;
-                margin: 0 auto !important;
-                bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
-                height: calc(100dvh - 96px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
-                max-height: 680px !important;
-                border-radius: 22px !important;
-                border: 1px solid rgba(94, 92, 230, 0.25) !important;
-                box-shadow: 0 20px 60px rgba(7, 11, 30, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15) !important;
-                background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,248,255,0.96)) !important;
-                backdrop-filter: blur(35px) !important;
-                -webkit-backdrop-filter: blur(35px) !important;
-                pointer-events: none !important;
-                opacity: 0 !important;
-                transform: translateY(20px) scale(0.96) !important;
-                transform-origin: bottom center !important;
-                transition: opacity .3s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1) !important;
-                z-index: 100000 !important;
-                display: flex !important;
-                flex-direction: column !important;
-            }
-            .chat-window.open {
-                opacity: 1 !important;
-                pointer-events: auto !important;
-                transform: translateY(0) scale(1) !important;
-            }
-            .chat-header {
-                padding: 0.85rem 1rem !important;
+                align-items: stretch !important;
                 gap: 0.75rem !important;
             }
-            .chat-avatar {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .chat-title h4 {
+            .hero-banner-actions .btn {
+                width: 100% !important;
+                min-height: 48px !important;
                 font-size: 14.5px !important;
             }
-            .chat-title p {
-                font-size: 11.5px !important;
+            .quick-budget-bar {
+                justify-content: center !important;
+                gap: 8px !important;
             }
-            .chat-suggestion-chips {
-                padding: 0.5rem 0.75rem !important;
-                gap: 0.4rem !important;
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-                scrollbar-width: none !important;
+
+            .carousel-track {
+                touch-action: pan-y pinch-zoom !important;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                scroll-snap-type: x mandatory !important;
+                padding: 0.5rem var(--container-padding) 1rem !important;
+                gap: 16px !important;
             }
-            .chat-suggestion-chips::-webkit-scrollbar {
-                display: none !important;
+            .card.project-card, .card.listing-card {
+                width: calc(100% - 16px) !important;
+                max-width: 360px !important;
+                min-width: min(280px, calc(100% - 16px)) !important;
+                flex: 0 0 calc(100% - 16px) !important;
+                scroll-snap-align: center !important;
             }
-            .chat-chip {
-                flex: 0 0 auto !important;
-                font-size: 12px !important;
-                padding: 0.35rem 0.85rem !important;
-                min-height: 34px !important;
-                white-space: nowrap !important;
+            .results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)) !important;
+                gap: 16px !important;
             }
-            .chat-messages {
-                padding: 0.85rem !important;
-                gap: 0.85rem !important;
+            .results-grid .card.project-card,
+            .results-grid .card.listing-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: 1 1 100% !important;
             }
-            .message {
-                max-width: 90% !important;
-                font-size: 13.5px !important;
-                padding: 0.75rem 1rem !important;
-                border-radius: 18px !important;
-            }
-            .chat-lead-row {
-                padding: 0.5rem 0.75rem !important;
-                gap: 0.45rem !important;
-            }
-            .chat-lead-input {
-                font-size: 16px !important;
-                padding: 0.55rem 0.85rem !important;
-            }
-            .chat-lead-btn {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .chat-input-area {
-                padding: 0.7rem 0.85rem !important;
-                gap: 0.55rem !important;
-            }
-            .chat-input {
-                font-size: 16px !important;
-                padding: 0.7rem 1.1rem !important;
-            }
-            .chat-send {
-                width: 42px !important;
-                height: 42px !important;
-            }
+
+            /* Floating Action Buttons */
             .floating-wa-btn {
-                bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-                left: 14px !important;
+                position: fixed !important;
+                left: max(14px, var(--sal)) !important;
+                bottom: calc(14px + var(--sab)) !important;
                 width: 54px !important;
                 height: 54px !important;
                 font-size: 26px !important;
@@ -3271,75 +3322,108 @@
             }
             .wa-tooltip { display: none !important; }
 
-            /* Video modal — tam görünürlük */
-            #videoModal .modal-container { max-width: 96vw !important; max-height: 82vh !important; }
-            #videoModal #videoPlayerContainer { max-height: calc(82vh - 130px) !important; }
-            #videoModal #videoPlayerContainer video,
-            #videoModal #videoPlayerContainer iframe { max-height: 100% !important; object-fit: contain !important; }
+            .chatbot-widget {
+                position: fixed !important;
+                right: max(14px, var(--sar)) !important;
+                left: auto !important;
+                bottom: calc(14px + var(--sab)) !important;
+                width: auto !important;
+                max-width: none !important;
+                transform: none !important;
+                pointer-events: none !important;
+                z-index: 99999 !important;
+            }
+            .chat-toggle {
+                pointer-events: auto !important;
+                width: 56px !important;
+                height: 56px !important;
+                font-size: 24px !important;
+            }
+            .toggle-tip { display: none !important; }
 
-            /* iOS Input Zoom Engeli & Dokunma Alanları */
+            /* Mobile Chat Window */
+            .chat-window {
+                position: fixed !important;
+                left: 8px !important;
+                right: 8px !important;
+                width: auto !important;
+                max-width: 480px !important;
+                margin: 0 auto !important;
+                bottom: calc(78px + var(--sab)) !important;
+                height: calc(100dvh - 90px - var(--sat) - var(--sab)) !important;
+                max-height: 680px !important;
+                border-radius: 22px !important;
+                z-index: 100000 !important;
+            }
+            .chat-chip {
+                min-height: 40px !important;
+                font-size: 12.5px !important;
+                padding: 6px 12px !important;
+            }
+
+            /* Mobile Bottom Sheet Modals */
+            .modal-overlay {
+                align-items: flex-end !important;
+                justify-content: center !important;
+                padding: 0 !important;
+            }
+            .modal-container, .modal-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                max-height: 90dvh !important;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                border-top-left-radius: 24px !important;
+                border-top-right-radius: 24px !important;
+                margin: 0 !important;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            .bottom-sheet-handle-bar { display: flex !important; }
+            .apt-grid-2 { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
+            .apt-btns-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+
+            /* iOS Input Zoom Prevention */
             input, textarea, select, .chat-input, .chat-lead-input, #filter-keyword-input, #aptProjectName, #aptName, #aptPhone, #aptEmail, #aptDateTime, #aptNotes {
                 font-size: 16px !important;
             }
-            .budget-btn, .chip, .segment-btn, .btn {
-                touch-action: manipulation;
-                -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Mobile Landscape (< 520px height) */
+        @media (orientation: landscape) and (max-height: 520px) {
+            .navbar {
+                height: 48px !important;
+                padding: 4px 16px !important;
             }
-            .apt-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-            .apt-btns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0.5rem; }
+            .hero-banner-section {
+                padding-top: 56px !important;
+                padding-bottom: 1rem !important;
+            }
+            .modal-overlay {
+                padding: 8px !important;
+                align-items: flex-start !important;
+            }
+            .modal-container {
+                max-height: 96dvh !important;
+                border-radius: 14px !important;
+                margin: auto 0 !important;
+            }
+            .chat-window {
+                height: calc(100dvh - 20px) !important;
+                bottom: 10px !important;
+                right: 10px !important;
+            }
         }
 
-        @media (max-width: 560px) {
-            .apt-grid-2 { grid-template-columns: 1fr !important; gap: 0.75rem !important; }
-            .apt-btns-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
-            .modal-overlay { padding: 0.75rem !important; }
-            .modal-container { border-radius: 18px !important; max-height: 90dvh !important; }
-            #appointmentForm { padding: 1.25rem 1rem !important; }
-            #aboutModal .modal-container, #reportModal .modal-container { max-height: 88dvh !important; }
-            #reportModalBody { padding: 1.25rem 1rem !important; }
-        }
-
-        @media (max-width: 480px) {
-            .container { padding: 0 1rem; }
-            .section-title { font-size: 24px !important; }
-            .section-subtitle { font-size: 14px !important; }
-            .hero-banner-title { font-size: 24px !important; }
-            .hero-banner-subtitle { font-size: 13.5px !important; }
-            .hero-banner-section { padding-top: calc(5.8rem + env(safe-area-inset-top, 0px)) !important; padding-bottom: 1.5rem !important; }
-            .hero-giant-title { font-size: 26px !important; }
-            .hero-portrait-frame-sm { width: 96px !important; height: 96px !important; }
-            .hero-banner-actions .btn { padding: 12px 16px !important; font-size: 14px !important; width: 100%; text-align: center; }
-            .hero-banner-actions { flex-direction: column !important; align-items: stretch !important; gap: 0.75rem !important; }
-            .budget-btn { font-size: 12px !important; padding: 8px 12px !important; min-height: 42px; }
-            .about-compact-card { margin: 1.5rem auto 1.25rem !important; padding: 1.25rem 1rem !important; }
-            .carousel-track > .card.project-card { min-width: 0 !important; width: calc(100vw - 32px) !important; max-width: 360px !important; flex: 0 0 calc(100vw - 32px) !important; }
-            .results-grid .card.project-card { width: 100% !important; max-width: 100% !important; flex: 1 1 100% !important; }
-            .logo { gap: 0.5rem !important; }
-            .logo span { font-size: 14px !important; }
-            .nav-logo-media { width: 36px !important; height: 24px !important; }
-            .card-price-prominent { font-size: 19px !important; }
-            .card-footer .btn { font-size: 12px !important; padding: 8px !important; min-height: 40px; }
-            .why-me-grid > div { padding: 1rem !important; }
-            .footer-col { padding: 1rem !important; }
-            .contact-form-card input, .contact-form-card textarea { font-size: 16px !important; }
-            .filter-step-card { padding: 1rem !important; }
-            .filter-step-card > div:first-child { flex-wrap: wrap; gap: 0.5rem !important; }
-            .location-auto-badge { margin-left: 0 !important; }
-            .step-num { width: 26px !important; height: 26px !important; font-size: 13px !important; }
-            #videoModal .modal-container { max-height: 82vh !important; border-radius: 18px !important; }
-            #videoModal #videoPlayerContainer { max-height: calc(82vh - 110px) !important; }
-            #videoModal .modal-container > div:first-child { padding: 0.75rem 1rem !important; }
-            #videoModal .modal-container > div:last-child { padding: 0.75rem 1rem !important; }
-        }
-
+        /* Ultra-Compact Displays (<= 360px: Galaxy Fold Outer & iPhone SE 1) */
         @media (max-width: 360px) {
-            .container { padding: 0 0.75rem; }
-            .section-title { font-size: 21px !important; }
-            .hero-banner-title { font-size: 21px !important; }
-            .budget-btn { padding: 6px 10px !important; font-size: 11.5px !important; min-height: 40px; }
+            :root { --container-padding: 10px; }
+            .splash-brand-title { font-size: 18px !important; letter-spacing: 1px !important; }
+            .splash-badge-vip, .splash-badge-ai { font-size: 9.5px !important; padding: 4px 8px !important; }
+            .card-content { padding: 1rem 0.85rem !important; }
             .card-actions { gap: 4px !important; }
-            .card.project-card { width: calc(100% - 16px) !important; flex: 0 0 calc(100% - 16px) !important; }
-            .card-title { font-size: 15px !important; }
+            .card-actions .btn { font-size: 11.5px !important; padding: 6px 8px !important; }
             .segmented-control { width: 100% !important; height: 46px !important; }
             .segment-btn { font-size: 13px !important; }
         }
@@ -3510,17 +3594,23 @@
         <div class="splash-warp-flash" id="splashWarpFlash"></div>
     </div>
 
+    <!-- Skip to Main Content Link (WCAG 2.2 AAA) -->
+    <a href="#main-content" class="skip-to-content">İçeriğe Atla (Skip to Content)</a>
+
     <!-- Fixed Translucent Navbar -->
     <nav class="navbar" id="navbar">
-        <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;" title="Suzanne Tenekecioğlu Video Logo">
-            <div class="nav-logo-media" style="position:relative; width:48px; height:32px; border-radius:8px; overflow:hidden; display:inline-block; flex-shrink:0; box-shadow:0 2px 10px rgba(0,0,0,0.25); background:#000; border:1px solid rgba(255,255,255,0.18);">
+        <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;" title="Suzanne Tenekecioğlu & Coldwell Banker VIP">
+            <div class="nav-logo-media" style="position:relative; width:48px; height:32px; border-radius:8px; overflow:hidden; display:inline-block; flex-shrink:0; box-shadow:0 2px 10px rgba(0,0,0,0.25); background:#000; border:1px solid rgba(255,215,0,0.4);">
                 <video id="navBrandVideo" src="https://files.catbox.moe/mqppih.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; object-fit:cover; pointer-events:none;">
                     <source src="https://files.catbox.moe/mqppih.mp4" type="video/mp4">
                     <source src="/static/1.mp4" type="video/mp4">
                     <source src="/1.mp4" type="video/mp4">
                 </video>
             </div>
-            <span style="font-family:var(--font-display); font-size:17px; font-weight:700; color:var(--text-primary); letter-spacing:-0.4px;">SUZANNE TENEKECİOĞLU</span>
+            <div style="display:flex; flex-direction:column;">
+                <span style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--text-primary); letter-spacing:-0.3px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
+                <span style="font-size:10px; font-weight:700; color:#B8860B; letter-spacing:0.8px; text-transform:uppercase;"><i class="fa-solid fa-crown" style="font-size:9px; color:#FFD700; margin-right:3px;"></i> Coldwell Banker VIP</span>
+            </div>
             <span class="logo-dot"></span>
         </a>
         <div class="nav-links" id="mobileNavLinks">
@@ -3567,6 +3657,9 @@
         <button class="mobile-menu-btn" aria-label="Menü" aria-expanded="false" aria-controls="mobileNavLinks" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
     </nav>
 
+    <!-- MAIN CONTENT LANDMARK -->
+    <main id="main-content" role="main">
+
     <!-- HERO SECTION (2-Column Ultra Luxury Layout: Hero Left, Suzanne Card Right) -->
     <section class="hero-banner-section" id="hero">
         <div class="container">
@@ -3595,8 +3688,8 @@
                         <i class="fa-solid fa-sliders" style="color:var(--accent);"></i> Hızlı Bütçe Filtresi (Kartları Önceliklendirir):
                     </div>
                     <div class="quick-budget-bar" id="quickBudgetBar">
-                        <button class="budget-btn" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
-                        <button class="budget-btn active" data-min="0" data-max="3000000" onclick="setQuickBudget(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
+                        <button class="budget-btn active" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
+                        <button class="budget-btn" data-min="0" data-max="3000000" onclick="setQuickBudget(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
                         <button class="budget-btn" data-min="3000000" data-max="5000000" onclick="setQuickBudget(3000000, 5000000, this)"><i class="fa-solid fa-tag"></i> 3 - 5 Milyon TL</button>
                         <button class="budget-btn" data-min="5000000" data-max="10000000" onclick="setQuickBudget(5000000, 10000000, this)"><i class="fa-solid fa-gem"></i> 5 - 10 Milyon TL</button>
                         <button class="budget-btn" data-min="10000000" data-max="999999999" onclick="setQuickBudget(10000000, 999999999, this)"><i class="fa-solid fa-crown"></i> 10M TL+ Lüks</button>
@@ -3741,10 +3834,11 @@
                         <span class="filter-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin:0;">Fiyat Aralığı</span>
                     </div>
                     <div class="filter-chips" id="price-filters" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <button class="chip active" data-min="0" data-max="3000000" onclick="togglePriceFilter(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3M TL</button>
-                        <button class="chip" data-min="3000000" data-max="6000000" onclick="togglePriceFilter(3000000, 6000000, this)"><i class="fa-solid fa-tag"></i> 3M - 6M TL</button>
-                        <button class="chip" data-min="6000000" data-max="12000000" onclick="togglePriceFilter(6000000, 12000000, this)"><i class="fa-solid fa-tag"></i> 6M - 12M TL</button>
-                        <button class="chip" data-min="12000000" data-max="999999999" onclick="togglePriceFilter(12000000, 999999999, this)"><i class="fa-solid fa-gem"></i> 12M TL Üstü (Lüks)</button>
+                        <button class="chip active" data-min="0" data-max="999999999" onclick="togglePriceFilter(null, null, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
+                        <button class="chip" data-min="0" data-max="3000000" onclick="togglePriceFilter(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
+                        <button class="chip" data-min="3000000" data-max="5000000" onclick="togglePriceFilter(3000000, 5000000, this)"><i class="fa-solid fa-tag"></i> 3 - 5 Milyon TL</button>
+                        <button class="chip" data-min="5000000" data-max="10000000" onclick="togglePriceFilter(5000000, 10000000, this)"><i class="fa-solid fa-tag"></i> 5 - 10 Milyon TL</button>
+                        <button class="chip" data-min="10000000" data-max="999999999" onclick="togglePriceFilter(10000000, 999999999, this)"><i class="fa-solid fa-gem"></i> 10 Milyon TL ve Üzeri (Lüks)</button>
                     </div>
                 </div>
 
@@ -3764,7 +3858,7 @@
                 </div>
 
                 <!-- Sequential Step 4: Nexa AI Intelligence Criteria -->
-                <div class="filter-step-card" style="margin-bottom: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,113,227,0.04) 0%, rgba(94,92,230,0.04) 100%); border-radius: 16px; border: 1px solid rgba(0,113,227,0.15);">
+                <div class="filter-step-card" style="margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,113,227,0.04) 0%, rgba(94,92,230,0.04) 100%); border-radius: 16px; border: 1px solid rgba(0,113,227,0.15);">
                     <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
                         <span class="step-num" style="width: 28px; height: 28px; background: linear-gradient(135deg, #0071E3, #5E5CE6); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">4</span>
                         <span class="filter-label" style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin:0;"><i class="fa-solid fa-brain" style="color:var(--accent);"></i> Nexa AI Zeka Raporu Kriteri</span>
@@ -3774,6 +3868,21 @@
                         <button class="chip" data-ai="high_score" onclick="toggleAiFilter('high_score', this)"><i class="fa-solid fa-star" style="color:#FFD700;"></i> 9.0+ Üstün AI Skorlu</button>
                         <button class="chip" data-ai="ready" onclick="toggleAiFilter('ready', this)"><i class="fa-solid fa-key" style="color:#34C759;"></i> Hemen Teslim / Hazır</button>
                         <button class="chip" data-ai="verified" onclick="toggleAiFilter('verified', this)"><i class="fa-solid fa-circle-check" style="color:#0071E3;"></i> TKGM Parsel Onaylı</button>
+                    </div>
+                </div>
+
+                <!-- Sequential Step 5: Delivery Schedule (Teslimat Süresi & Tarihi) -->
+                <div class="filter-step-card" style="margin-bottom: 2.5rem; padding: 1.5rem; background: rgba(0,0,0,0.02); border-radius: 16px; border: 1px solid rgba(0,0,0,0.04);">
+                    <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+                        <span class="step-num" style="width: 28px; height: 28px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">5</span>
+                        <span class="filter-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin:0;"><i class="fa-solid fa-calendar-check" style="color:var(--accent); margin-right:4px;"></i> Teslimat Süresi & Tarihi</span>
+                    </div>
+                    <div class="filter-chips" id="delivery-filters" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="chip active" data-delivery="all" onclick="toggleDeliveryFilter('all', this)"><i class="fa-solid fa-layer-group"></i> Tüm Teslimatlar</button>
+                        <button class="chip" data-delivery="hemen" onclick="toggleDeliveryFilter('hemen', this)"><i class="fa-solid fa-bolt" style="color:#34C759;"></i> Hemen Teslim / Hazır</button>
+                        <button class="chip" data-delivery="12ay" onclick="toggleDeliveryFilter('12ay', this)"><i class="fa-solid fa-clock" style="color:#0071E3;"></i> 12 Ay İçinde Teslim</button>
+                        <button class="chip" data-delivery="24ay" onclick="toggleDeliveryFilter('24ay', this)"><i class="fa-solid fa-helmet-safety" style="color:#FF9500;"></i> 18 - 24 Ay Teslim</button>
+                        <button class="chip" data-delivery="36ay_plus" onclick="toggleDeliveryFilter('36ay_plus', this)"><i class="fa-solid fa-gem" style="color:#5E5CE6;"></i> 36+ Ay / Lansman Projesi</button>
                     </div>
                 </div>
 
@@ -3906,6 +4015,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -3934,26 +4044,26 @@
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <div class="chat-avatar" style="overflow:hidden; border-radius:50%; border:2px solid var(--accent); width:42px; height:42px; position:relative; flex-shrink:0;">
-                    <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu Asistanı" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu Mira Asistan" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='/static/img/suzanne_icon_circle_64.png'">
                     <span class="status-dot"></span>
                 </div>
                 <div class="chat-title">
-                    <h4>Suzanne Tenekecioğlu</h4>
-                    <p><span class="live-dot"></span> Bilişsel Portföy Asistanı • Çevrimiçi</p>
+                    <h4>Mira • AI Bilişsel Danışman</h4>
+                    <p><span class="live-dot"></span> Suzanne Tenekecioğlu &amp; CB VIP • Çevrimiçi</p>
                 </div>
                 <div class="chat-waves"><span></span><span></span><span></span><span></span><span></span></div>
                 <button class="chat-close" onclick="toggleChatbot()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <!-- Quick Suggestion Chips -->
             <div class="chat-suggestion-chips">
-                <button class="chat-chip" onclick="sendQuickChip('3+1 Projeler')">3+1 Projeler</button>
-                <button class="chat-chip" onclick="sendQuickChip('5-10M Lüks Yatırımlar')">5-10M Yatırım</button>
-                <button class="chat-chip" onclick="sendQuickChip('Çankaya İlanları')">Çankaya İlanları</button>
-                <button class="chat-chip" onclick="sendQuickChip('En Uygun Projeler')">En Uygun Projeler</button>
+                <button class="chat-chip" onclick="sendQuickChip('1 - 3 Milyon TL Fırsat Projeler')">1 - 3M TL Fırsatlar</button>
+                <button class="chat-chip" onclick="sendQuickChip('Hemen Teslim Edilen Projeler')">⚡ Hemen Teslim</button>
+                <button class="chat-chip" onclick="sendQuickChip('3+1 ve 4+1 Aile Konutları')">3+1 &amp; 4+1 Konutlar</button>
+                <button class="chat-chip" onclick="sendQuickChip('5 - 10 Milyon TL Lüks Projeler')">5 - 10M TL Lüks</button>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
-                    Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+                    Merhaba! 👋 Ben <strong>Mira</strong>, Suzanne Tenekecioğlu &amp; Coldwell Banker VIP Bilişsel Portföy Asistanıyım. 31 seçkin lansman projesi, güncel fiyat listeleri, teslimat tarihleri ve ödeme planları hakkında size anlık yardımcı olabilirim. Nasıl bir proje arıyorsunuz?
                 </div>
             </div>
             <!-- E4: Lead mini formu — ad + telefon (WhatsApp'a özel mesaj) -->
@@ -4024,30 +4134,33 @@
         // ═════════════════════════════════════════════════════════════════════
         const ScrollLockManager = {
             _scrollY: 0,
-            _isLocked: false,
+            _lockCount: 0,
 
             lock() {
-                if (this._isLocked) return;
-                this._scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
-                document.body.style.position = 'fixed';
-                document.body.style.top = `-${this._scrollY}px`;
-                document.body.style.left = '0';
-                document.body.style.right = '0';
-                document.body.style.width = '100%';
-                document.body.style.overflow = 'hidden';
-                this._isLocked = true;
+                if (this._lockCount === 0) {
+                    this._scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+                    document.body.style.position = 'fixed';
+                    document.body.style.top = `-${this._scrollY}px`;
+                    document.body.style.left = '0';
+                    document.body.style.right = '0';
+                    document.body.style.width = '100%';
+                    document.body.style.overflow = 'hidden';
+                }
+                this._lockCount++;
             },
 
             unlock() {
-                if (!this._isLocked) return;
-                document.body.style.position = '';
-                document.body.style.top = '';
-                document.body.style.left = '';
-                document.body.style.right = '';
-                document.body.style.width = '';
-                document.body.style.overflow = '';
-                window.scrollTo(0, this._scrollY);
-                this._isLocked = false;
+                if (this._lockCount <= 0) return;
+                this._lockCount--;
+                if (this._lockCount === 0) {
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    document.body.style.left = '';
+                    document.body.style.right = '';
+                    document.body.style.width = '';
+                    document.body.style.overflow = '';
+                    window.scrollTo(0, this._scrollY);
+                }
             }
         };
 
@@ -5990,7 +6103,7 @@
         let nexaRegionByKey = {};
 
         let activeShowcaseTab = 'projects'; // DEFAULT IS PROJELER!
-        let activeFilters = { priceMin: 0, priceMax: 3000000, rooms: null, location: null, ai: 'all' };
+        let activeFilters = { priceMin: null, priceMax: null, rooms: null, location: null, ai: 'all', delivery: null };
 
         // Region index: RAG kaynaklı güncel bölge/fiyat verisi (project adı -> bilgi)
         function regionKey(name) {
@@ -6053,10 +6166,9 @@
             }
         }
 
-        
-                // ─── P0 QUICK BUDGET HELPER & DYNAMIC CAROUSEL RE-ORDERING ───
+        // ─── P0 QUICK BUDGET HELPER & DYNAMIC CAROUSEL RE-ORDERING ───
         let currentBudgetMin = 0;
-        let currentBudgetMax = 3000000;
+        let currentBudgetMax = 999999999;
 
         function setQuickBudget(min, max, btn) {
             currentBudgetMin = min;
@@ -6095,47 +6207,52 @@
             }
         }
 
+        function formatTRPhone(input) {
+            if (!input) return;
+            const oldStart = input.selectionStart;
+            const oldLength = input.value.length;
+            let raw = input.value.replace(/\D/g, '');
+            if (raw.startsWith('90')) raw = raw.slice(2);
+            if (raw.startsWith('0')) raw = raw.slice(1);
+            raw = raw.slice(0, 10);
+            
+            let formatted = '';
+            if (raw.length > 0) formatted = '0' + raw.slice(0, 3);
+            if (raw.length >= 4) formatted += ' ' + raw.slice(3, 6);
+            if (raw.length >= 7) formatted += ' ' + raw.slice(6, 8);
+            if (raw.length >= 9) formatted += ' ' + raw.slice(8, 10);
+            input.value = formatted;
+
+            if (oldStart !== null && oldStart < oldLength) {
+                const diff = formatted.length - oldLength;
+                const newPos = Math.max(0, oldStart + diff);
+                try { input.setSelectionRange(newPos, newPos); } catch (_) {}
+            }
+        }
+
+        function showFormStatus(msg, isError = true) {
+            const msgEl = document.getElementById('aptStatusMsg');
+            if (!msgEl) return;
+            msgEl.style.display = 'block';
+            msgEl.style.background = isError ? 'rgba(255, 59, 48, 0.12)' : 'rgba(52, 199, 89, 0.15)';
+            msgEl.style.color = isError ? '#D70015' : '#248A3D';
+            msgEl.innerHTML = (isError ? '<i class="fa-solid fa-circle-exclamation"></i> ' : '<i class="fa-solid fa-check"></i> ') + msg;
+        }
+
         function openAppointmentModal(projectId, projectName) {
-            const modal = document.getElementById('appointmentModal');
             const idInput = document.getElementById('aptProjectId');
             const nameInput = document.getElementById('aptProjectName');
             const msgEl = document.getElementById('aptStatusMsg');
             if (idInput) idInput.value = projectId || '';
             if (nameInput) nameInput.value = projectName || 'Genel Portföy & VIP Proje';
             if (msgEl) msgEl.style.display = 'none';
-            if (modal) {
-                modal.classList.add('active');
-                modal.style.display = 'flex';
-                modal.style.opacity = '1';
-                modal.style.visibility = 'visible';
-                modal.style.pointerEvents = 'auto';
-                document.body.style.overflow = 'hidden';
-                document.documentElement.style.overflow = 'hidden';
-                if(typeof gsap !== 'undefined') {
-                    const container = modal.querySelector('.modal-container');
-                    if(container) gsap.fromTo(container, { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
-                }
-            }
+            openModal('appointmentModal');
         }
 
         function openAboutModal() {
-            const modal = document.getElementById('aboutModal');
-            if (modal) {
-                modal.classList.add('active');
-                modal.style.display = 'flex';
-                modal.style.opacity = '1';
-                modal.style.visibility = 'visible';
-                modal.style.pointerEvents = 'auto';
-                document.body.style.overflow = 'hidden';
-                document.documentElement.style.overflow = 'hidden';
-                if(typeof gsap !== 'undefined') {
-                    const container = modal.querySelector('.modal-container');
-                    if(container) gsap.fromTo(container, { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
-                }
-            }
+            openModal('aboutModal');
         }
 
-        
         function sendDirectWhatsAppAppointment() {
             const name = document.getElementById('aptName').value.trim();
             const phone = document.getElementById('aptPhone').value.trim();
@@ -6143,14 +6260,22 @@
             const projName = document.getElementById('aptProjectName').value || 'Genel Proje';
             const notes = document.getElementById('aptNotes').value.trim();
 
-            if (!name || !phone) {
-                alert('Lütfen adınızı ve telefon numaranızı girin.');
+            if (!name || name.length < 2) {
+                showFormStatus('Lütfen adınızı ve soyadınızı girin.', true);
+                document.getElementById('aptName').focus();
+                return;
+            }
+            if (!phone || phone.replace(/\D/g, '').length < 10) {
+                showFormStatus('Lütfen 10 haneli geçerli telefon numaranızı girin.', true);
+                document.getElementById('aptPhone').focus();
                 return;
             }
 
-            // Also save to database
             const projId = document.getElementById('aptProjectId').value;
             const email = document.getElementById('aptEmail').value.trim();
+            const urlParams = new URLSearchParams(window.location.search);
+            const agentParam = urlParams.get('agent') || 'Suzanne Tenekecioğlu';
+
             fetch('/api/appointments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -6162,7 +6287,7 @@
                     project_id: projId,
                     project_name: projName,
                     notes: notes,
-                    agent: 'Suzanne Tenekecioğlu'
+                    agent: agentParam
                 })
             }).catch(() => {});
 
@@ -6170,7 +6295,6 @@
             closeModal('appointmentModal');
             window.open(`https://wa.me/905354895656?text=${waText}`, '_blank');
         }
-
 
         async function submitAppointmentForm(e) {
             e.preventDefault();
@@ -6184,15 +6308,20 @@
             const projName = document.getElementById('aptProjectName').value;
             const notes = document.getElementById('aptNotes').value.trim();
 
-            if (!name || !phone) {
-                alert('Lütfen adınızı ve telefon numaranızı girin.');
+            if (!name || name.length < 2) {
+                showFormStatus('Lütfen adınızı ve soyadınızı girin.', true);
+                document.getElementById('aptName').focus();
+                return;
+            }
+            if (!phone || phone.replace(/\D/g, '').length < 10) {
+                showFormStatus('Lütfen 10 haneli geçerli bir telefon numarası girin.', true);
+                document.getElementById('aptPhone').focus();
                 return;
             }
 
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gönderiliyor...';
 
-            // Check URL agent parameter
             const urlParams = new URLSearchParams(window.location.search);
             const agentParam = urlParams.get('agent') || 'Suzanne Tenekecioğlu';
 
@@ -6213,10 +6342,7 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    msgEl.style.display = 'block';
-                    msgEl.style.background = 'rgba(52, 199, 89, 0.15)';
-                    msgEl.style.color = '#248A3D';
-                    msgEl.innerHTML = '<strong>✓ Talebiniz Alındı!</strong> Danışmanımız en kısa sürede sizinle iletişime geçecektir.';
+                    showFormStatus('<strong>✓ Talebiniz Alındı!</strong> Danışmanımız en kısa sürede sizinle iletişime geçecektir.', false);
                     
                     const waText = encodeURIComponent(`Merhaba, ${projName} projesi için randevu talebi oluşturdum.\nAdım: ${name}\nTelefonum: ${phone}\nTercih: ${dt}`);
                     setTimeout(() => {
@@ -6226,18 +6352,12 @@
                         window.open(`https://wa.me/905354895656?text=${waText}`, '_blank');
                     }, 1800);
                 } else {
-                    msgEl.style.display = 'block';
-                    msgEl.style.background = 'rgba(255, 59, 48, 0.15)';
-                    msgEl.style.color = '#D70015';
-                    msgEl.innerText = data.message || 'Kayıt sırasında bir hata oluştu.';
+                    showFormStatus(data.message || 'Kayıt sırasında bir hata oluştu.', true);
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fa-solid fa-check"></i> Randevu Talebini Gönder';
                 }
             } catch (err) {
-                msgEl.style.display = 'block';
-                msgEl.style.background = 'rgba(255, 59, 48, 0.15)';
-                msgEl.style.color = '#D70015';
-                msgEl.innerText = 'Bağlantı hatası oluştu.';
+                showFormStatus('Bağlantı hatası oluştu.', true);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fa-solid fa-check"></i> Randevu Talebini Gönder';
             }
@@ -6529,7 +6649,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             cards.forEach((card, idx) => {
                 const dot = document.createElement('button');
                 dot.className = `carousel-dot ${idx === 0 ? 'active' : ''}`;
-                dot.setAttribute('aria-label', `Slide ${idx + 1}`);
+                dot.setAttribute('aria-label', `Slayt ${idx + 1}`);
                 dot.addEventListener('click', (e) => {
                     e.stopPropagation();
                     card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
@@ -6539,74 +6659,86 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
             const dots = Array.from(dotsContainer.querySelectorAll('.carousel-dot'));
 
-            if ('IntersectionObserver' in window) {
-                if (track._observer) track._observer.disconnect();
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
-                            const activeIndex = cards.indexOf(entry.target);
-                            if (activeIndex !== -1) {
-                                dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
-                            }
-                        }
-                    });
-                }, { root: track, threshold: 0.55 });
+            let syncTicking = false;
+            const updateActiveDot = () => {
+                const scrollLeft = track.scrollLeft;
+                const trackWidth = track.clientWidth;
+                let closestIdx = 0;
+                let minDiff = Infinity;
 
-                cards.forEach(card => observer.observe(card));
-                track._observer = observer;
-            } else {
-                track.addEventListener('scroll', () => {
-                    const scrollLeft = track.scrollLeft;
-                    const cardWidth = cards[0] ? (cards[0].offsetWidth + 18) : 300;
-                    const activeIndex = Math.min(Math.round(scrollLeft / cardWidth), cards.length - 1);
-                    dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
-                }, { passive: true });
-            }
+                cards.forEach((card, i) => {
+                    const cardCenter = card.offsetLeft + card.offsetWidth / 2 - track.offsetLeft;
+                    const trackCenter = scrollLeft + trackWidth / 2;
+                    const diff = Math.abs(cardCenter - trackCenter);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        closestIdx = i;
+                    }
+                });
+
+                dots.forEach((d, i) => d.classList.toggle('active', i === closestIdx));
+                syncTicking = false;
+            };
+
+            if (track._scrollHandler) track.removeEventListener('scroll', track._scrollHandler);
+            track._scrollHandler = () => {
+                if (!syncTicking) {
+                    window.requestAnimationFrame(updateActiveDot);
+                    syncTicking = true;
+                }
+            };
+            track.addEventListener('scroll', track._scrollHandler, { passive: true });
         }
 
         function initTouchSwipe(carouselId) {
             const container = document.getElementById(carouselId);
             if (!container) return;
             const track = container.querySelector('.carousel-track');
-            if (!track) return;
+            if (!track || track._pointerBound) return;
+            track._pointerBound = true;
 
             initCarouselIndicators(carouselId);
 
-            // Desktop pointer-drag only (ignores touch to let native 120Hz CSS scroll-snap glide)
             let isDown = false;
             let startX = 0;
             let scrollLeft = 0;
             let isDragging = false;
+            let activePointerId = null;
 
             track.addEventListener('pointerdown', (e) => {
                 if (e.pointerType === 'touch') return;
                 isDown = true;
                 isDragging = false;
+                activePointerId = e.pointerId;
                 startX = e.pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
                 track.style.cursor = 'grabbing';
+                try { track.setPointerCapture(e.pointerId); } catch (_) {}
             });
 
             track.addEventListener('pointermove', (e) => {
                 if (!isDown || e.pointerType === 'touch') return;
                 const x = e.pageX - track.offsetLeft;
                 const walk = (x - startX);
-                if (Math.abs(walk) > 6) {
+                if (Math.abs(walk) > 4) {
                     isDragging = true;
                     track.scrollLeft = scrollLeft - walk;
                 }
             });
 
             const stopDrag = (e) => {
-                if (e.pointerType === 'touch') return;
+                if (!isDown || e.pointerType === 'touch') return;
                 isDown = false;
-                track.style.cursor = 'default';
-                setTimeout(() => { isDragging = false; }, 50);
+                track.style.cursor = '';
+                if (activePointerId !== null) {
+                    try { track.releasePointerCapture(activePointerId); } catch (_) {}
+                    activePointerId = null;
+                }
+                setTimeout(() => { isDragging = false; }, 60);
             };
 
             track.addEventListener('pointerup', stopDrag);
-            track.addEventListener('pointerleave', stopDrag);
+            track.addEventListener('pointercancel', stopDrag);
 
             track.addEventListener('click', (e) => {
                 if (isDragging) {
@@ -6676,7 +6808,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         container.style.removeProperty('transition');
                     }, 300);
                 } else {
-                    container.style.transform = 'translateY(0)';
+                    container.style.removeProperty('transform');
                 }
             };
 
@@ -6690,63 +6822,53 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         }
 
         // ═════════════════════════════════════════════════════════════════════
-        // C. VISUAL VIEWPORT API & VIRTUAL KEYBOARD MANAGER
+        // C. SINGLE-SOURCE VISUAL VIEWPORT & KEYBOARD COORDINATOR
         // ═════════════════════════════════════════════════════════════════════
         function initVisualViewportManager() {
             const vv = window.visualViewport;
-            if (!vv) return;
+            const root = document.documentElement;
 
-            const floatingWa = document.getElementById('floatingWaBtn');
-            const chatbotWidget = document.getElementById('chatbotWidget');
-            const chatWindow = document.getElementById('chatWindow');
+            function syncViewport() {
+                const height = vv ? vv.height : window.innerHeight;
+                const offsetTop = vv ? (vv.offsetTop || 0) : 0;
+                const keyboardHeight = Math.max(0, window.innerHeight - height - offsetTop);
+                const isKeyboardOpen = keyboardHeight > 60;
 
-            function updateViewportLayout() {
-                const isFormFocused = document.activeElement && 
-                    ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
-                const keyboardHeight = Math.max(0, window.innerHeight - vv.height - (vv.offsetTop || 0));
-                const isKeyboardOpen = keyboardHeight > 80 || isFormFocused;
+                root.style.setProperty('--vv-height', `${height}px`);
+                root.style.setProperty('--keyboard-height', `${keyboardHeight}px`);
 
-                if (isKeyboardOpen) {
-                    if (floatingWa) {
-                        floatingWa.style.opacity = '0';
-                        floatingWa.style.pointerEvents = 'none';
-                        floatingWa.style.transform = 'scale(0.8)';
-                    }
-                    if (chatbotWidget && (!chatWindow || !chatWindow.classList.contains('open'))) {
-                        chatbotWidget.style.opacity = '0';
-                        chatbotWidget.style.pointerEvents = 'none';
-                    }
-                } else {
-                    if (floatingWa) {
-                        floatingWa.style.opacity = '1';
-                        floatingWa.style.pointerEvents = 'auto';
-                        floatingWa.style.transform = 'scale(1)';
-                    }
-                    if (chatbotWidget) {
-                        chatbotWidget.style.opacity = '1';
-                        chatbotWidget.style.pointerEvents = 'none';
-                    }
-                }
+                const chatWin = document.getElementById('chatWindow');
+                const floatingWa = document.getElementById('floatingWaBtn');
+                const chatbotWidget = document.getElementById('chatbotWidget');
 
-                if (chatWindow && chatWindow.classList.contains('open')) {
-                    if (keyboardHeight > 50) {
-                        chatWindow.style.setProperty('bottom', `${keyboardHeight + 10}px`, 'important');
-                        chatWindow.style.setProperty('height', `calc(${vv.height}px - 20px)`, 'important');
-                        chatWindow.style.setProperty('max-height', `calc(${vv.height}px - 20px)`, 'important');
+                if (chatWin && chatWin.classList.contains('open')) {
+                    if (isKeyboardOpen) {
+                        chatWin.style.setProperty('bottom', `${keyboardHeight + 8}px`, 'important');
+                        chatWin.style.setProperty('height', `calc(${height}px - 16px)`, 'important');
+                        chatWin.style.setProperty('max-height', `calc(${height}px - 16px)`, 'important');
                     } else {
-                        chatWindow.style.removeProperty('bottom');
-                        chatWindow.style.removeProperty('height');
-                        chatWindow.style.removeProperty('max-height');
+                        chatWin.style.removeProperty('bottom');
+                        chatWin.style.removeProperty('height');
+                        chatWin.style.removeProperty('max-height');
                     }
                     if (typeof scrollToBottom === 'function') scrollToBottom();
                 }
 
+                if (floatingWa) {
+                    floatingWa.style.opacity = isKeyboardOpen ? '0' : '1';
+                    floatingWa.style.pointerEvents = isKeyboardOpen ? 'none' : 'auto';
+                }
+                if (chatbotWidget && (!chatWin || !chatWin.classList.contains('open'))) {
+                    chatbotWidget.style.opacity = isKeyboardOpen ? '0' : '1';
+                    chatbotWidget.style.pointerEvents = isKeyboardOpen ? 'none' : 'auto';
+                }
+
                 const activeModalContainer = document.querySelector('.modal-overlay.active .modal-container, .modal-overlay.active .modal-content');
                 if (activeModalContainer && isKeyboardOpen) {
-                    activeModalContainer.style.maxHeight = `${vv.height - 16}px`;
+                    activeModalContainer.style.maxHeight = `${height - 16}px`;
                     if (document.activeElement && activeModalContainer.contains(document.activeElement)) {
                         setTimeout(() => {
-                            document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            try { document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {}
                         }, 120);
                     }
                 } else if (activeModalContainer) {
@@ -6754,9 +6876,24 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 }
             }
 
-            vv.addEventListener('resize', updateViewportLayout);
-            vv.addEventListener('scroll', updateViewportLayout);
-            window.addEventListener('orientationchange', () => setTimeout(updateViewportLayout, 200));
+            let vvTicking = false;
+            function rafSync() {
+                if (!vvTicking) {
+                    window.requestAnimationFrame(() => {
+                        syncViewport();
+                        vvTicking = false;
+                    });
+                    vvTicking = true;
+                }
+            }
+
+            if (vv) {
+                vv.addEventListener('resize', rafSync, { passive: true });
+                vv.addEventListener('scroll', rafSync, { passive: true });
+            }
+            window.addEventListener('resize', rafSync, { passive: true });
+            window.addEventListener('orientationchange', () => setTimeout(rafSync, 150), { passive: true });
+            syncViewport();
         }
 
         // Filter Logic
@@ -6870,12 +7007,31 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             applyFilters();
         }
 
+        function toggleDeliveryFilter(deliveryType, btn) {
+            if(btn && btn.classList.contains('active') && deliveryType !== 'all') {
+                btn.classList.remove('active');
+                activeFilters.delivery = null;
+                const allBtn = document.querySelector('#delivery-filters .chip[data-delivery="all"]');
+                if(allBtn) allBtn.classList.add('active');
+            } else {
+                clearActiveChips('delivery-filters');
+                if(btn) btn.classList.add('active');
+                activeFilters.delivery = (deliveryType === 'all') ? null : deliveryType;
+            }
+            applyFilters();
+        }
+
         function clearAllFilters() {
             document.querySelectorAll('.filter-chips .chip').forEach(c => c.classList.remove('active'));
             const allAiBtn = document.querySelector('#ai-filters .chip[data-ai="all"]');
             if(allAiBtn) allAiBtn.classList.add('active');
+            const allDeliveryBtn = document.querySelector('#delivery-filters .chip[data-delivery="all"]');
+            if(allDeliveryBtn) allDeliveryBtn.classList.add('active');
+            const allPriceBtn = document.querySelector('#price-filters .chip[data-min="0"][data-max="999999999"]');
+            if(allPriceBtn) allPriceBtn.classList.add('active');
 
-            if(document.getElementById('filter-keyword-input')) document.getElementById('filter-keyword-input').value = ''; activeFilters = { priceMin: null, priceMax: null, rooms: null, location: null, ai: 'all' };
+            if(document.getElementById('filter-keyword-input')) document.getElementById('filter-keyword-input').value = ''; 
+            activeFilters = { priceMin: null, priceMax: null, rooms: null, location: null, ai: 'all', delivery: null };
             applyFilters();
         }
 
@@ -6896,6 +7052,10 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 labels.push(`<span style="background:rgba(52,199,89,0.12); color:#1E8E3E; padding:3px 10px; border-radius:14px; font-size:12px; font-weight:700;"><i class="fa-solid fa-tag"></i> Fiyat: ${label}</span>`);
             }
             if(activeFilters.rooms) labels.push(`<span style="background:rgba(255,149,0,0.14); color:#C77700; padding:3px 10px; border-radius:14px; font-size:12px; font-weight:700;"><i class="fa-solid fa-door-open"></i> ${escapeHtml(activeFilters.rooms)}</span>`);
+            if(activeFilters.delivery) {
+                const dLabels = { 'hemen': '⚡ Hemen Teslim / Hazır', '12ay': '📅 12 Ay Teslim', '24ay': '🏗️ 18-24 Ay Teslim', '36ay_plus': '🌟 36+ Ay / Lansman' };
+                labels.push(`<span style="background:rgba(255,45,85,0.12); color:#FF2D55; padding:3px 10px; border-radius:14px; font-size:12px; font-weight:700;"><i class="fa-solid fa-calendar-check"></i> ${dLabels[activeFilters.delivery] || activeFilters.delivery}</span>`);
+            }
             if(activeFilters.ai !== 'all') {
                 const aiLabels = { 'high_score': 'AI Skoru 9.0+', 'ready': 'Hemen Teslim / Hazır', 'verified': 'TKGM Parsel Onaylı' };
                 labels.push(`<span style="background:rgba(94,92,230,0.12); color:#5E5CE6; padding:3px 10px; border-radius:14px; font-size:12px; font-weight:700;"><i class="fa-solid fa-brain"></i> ${aiLabels[activeFilters.ai] || activeFilters.ai}</span>`);
@@ -7076,6 +7236,22 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         }
                         if(activeFilters.ai === 'verified' && !p.tkgm_verified) match = false;
                     }
+                    if(activeFilters.delivery !== null) {
+                        const sumText = foldTR((p.regionSummary || p.description || p.sales_highlights || '') + ' ' + (p.title || p.name || ''));
+                        if(activeFilters.delivery === 'hemen') {
+                            const pos = ['anahtar teslim', 'teslim edil', 'teslim asamasinda', 'hemen teslim', 'iskani alinmis', 'iskan alinmis', 'teslimi yapilmis', 'hazir konut', 'oturuma hazir', 'sifir binada hemen'];
+                            if(!pos.some(w => sumText.includes(w))) match = false;
+                        } else if(activeFilters.delivery === '12ay') {
+                            const pos = ['12 ay', '1 yil', '2024', '2025', '12ay'];
+                            if(!pos.some(w => sumText.includes(w))) match = false;
+                        } else if(activeFilters.delivery === '24ay') {
+                            const pos = ['18 ay', '24 ay', '2 yil', '2026', '18-24 ay', '18ay', '24ay'];
+                            if(!pos.some(w => sumText.includes(w))) match = false;
+                        } else if(activeFilters.delivery === '36ay_plus') {
+                            const pos = ['36 ay', '48 ay', 'lansman', 'proje asamasinda', '3 yil', '4 yil', '36ay', '48ay'];
+                            if(!pos.some(w => sumText.includes(w))) match = false;
+                        }
+                    }
 
                     if(match) {
                         matchedItems.push({ type: 'project', data: p, score: aiScore });
@@ -7107,6 +7283,10 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         if(!pLoc.includes(foldTR(activeFilters.location))) match = false;
                     }
                     if(activeFilters.ai === 'high_score' && parseFloat(aiScore) < 9.0) match = false;
+                    if(activeFilters.delivery !== null) {
+                        // Portfolio listings are ready completed properties (hemen teslim)
+                        if(activeFilters.delivery !== 'hemen') match = false;
+                    }
 
                     if(match) {
                         matchedItems.push({ type: 'portfolio', data: p, score: aiScore });
@@ -7145,7 +7325,8 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 return;
             }
 
-            // Render matching items
+            // Render matching items into a single DOM fragment
+            const renderedCards = [];
             matchedItems.forEach(itemObj => {
                 const item = itemObj.data;
                 const aiScore = itemObj.score;
@@ -7153,28 +7334,24 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 if(itemObj.type === 'project') {
                     const rooms = item.rooms || item.room_types || [];
                     const roomTags = (Array.isArray(rooms) ? rooms : []).map(r => `<span class="tag" style="background:rgba(0,113,227,0.08); color:var(--accent); padding:4px 10px; border-radius:12px; font-size:12px; font-weight:600;">${escapeHtml(r)}</span>`).join(' ');
-                    const imgSrc = item.thumbnail || item.image || '/static/img/pdf_previews/pdf_cover_2.png';
+                    const imgSrc = item.thumbnail || item.image || '/static/img/placeholder.jpg';
                     const safeName = escapeHtml(item.title || item.name || 'Prestij Projesi');
-                    const hasPrice = !!(item.price_display || item.price_min);
                     const priceText = item.price_display ? item.price_display : (item.price_min ? `${formatPrice(item.price_min)} - ${formatPrice(item.price_max)}` : '');
                     const downPayment = item.down_payment || (item.intelligence && item.intelligence.down_payment) || '';
                     const loc = item.location || (item.regionIlce ? item.regionIlce + (item.regionIl ? ', ' + item.regionIl : '') : (item.city || 'Ankara'));
                     const escPrice = escapeHtml(priceText), escLoc = escapeHtml(loc), escDown = escapeHtml(downPayment), escDev = escapeHtml(item.developer || 'Coldwell Banker VIP');
 
-                    const waMsg = `${safeName} hakkında bilgi almak istiyorum.
-📍 ${escLoc}
-💰 ${escPrice || 'Fiyat Bilgisi'}
-Detay: ${window.location.origin}/site#site-card-${item.id}`;
+                    const waMsg = `${safeName} hakkında bilgi almak istiyorum.\n📍 ${escLoc}\n💰 ${escPrice || 'Fiyat Bilgisi'}\nDetay: ${window.location.origin}/site#site-card-${item.id}`;
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
 
-                    const videoBtn = item.has_video ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px;"><i class="fa-solid fa-play"></i> Tanıtım</button>` : '';
-                    const slideshowBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.3);"><i class="fa-solid fa-images"></i> Slayt</button>`;
-                    const reportBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openProjectReport('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(0,113,227,0.08); color:var(--accent);"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
-                    const pdfBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openPdfPreview('${item.id}')" style="font-size:12px; padding:6px 10px;"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
+                    const videoBtn = item.has_video ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px;"><i class="fa-solid fa-play"></i> Tanıtım</button>` : '';
+                    const slideshowBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.3); min-height:44px;"><i class="fa-solid fa-images"></i> Slayt</button>`;
+                    const reportBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openProjectReport('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(0,113,227,0.08); color:var(--accent); min-height:44px;"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
+                    const pdfBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openPdfPreview('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px;"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
 
-                    const cardHtml = `
+                    renderedCards.push(`
                         <div class="card project-card" onclick="openProjectReport('${item.id}')" style="display:flex; flex-direction:column; background:#fff; border-radius:24px; overflow:hidden; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:all 0.3s ease;">
-                            <div class="card-img-wrapper" id="site-card-img-${item.id}" data-preview-id="${item.id}">
+                            <div class="card-img-wrapper" id="site-card-img-${item.id}" data-preview-id="${item.id}" style="height:220px; aspect-ratio:16/9; position:relative; overflow:hidden;">
                                 <img src="${imgSrc}" alt="${safeName}" loading="lazy" class="project-card-img" onerror="this.src='/static/img/placeholder.jpg'">
                                 <span class="badge sale" style="position:absolute; top:12px; left:12px; background:var(--accent); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px;">PROJE</span>
                                 <span style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); color:#FFD700; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;"><i class="fa-solid fa-star"></i> AI Skoru: ${aiScore}</span>
@@ -7196,15 +7373,14 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                                         ${pdfBtn}
                                     </div>
                                     <div style="width:100%; display:grid; grid-template-columns:1fr 1fr 42px; gap:6px;">
-                                        <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" style="display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:12px; background:rgba(37,211,102,0.12); color:#128C7E; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(37,211,102,0.35);"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openAppointmentModal('${item.id}', '${safeName}')" style="font-size:12px; font-weight:700; justify-content:center;"><i class="fa-solid fa-calendar-check"></i> Randevu</button>
-                                        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); shareProject('${item.id}', '${safeName}', '${escPrice}', '${escLoc}')" title="Projeyi Paylaş" style="padding:0; justify-content:center;"><i class="fa-solid fa-share-nodes"></i></button>
+                                        <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" style="display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:12px; background:rgba(37,211,102,0.12); color:#128C7E; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(37,211,102,0.35); min-height:44px;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openAppointmentModal('${item.id}', '${safeName}')" style="font-size:12px; font-weight:700; justify-content:center; min-height:44px;"><i class="fa-solid fa-calendar-check"></i> Randevu</button>
+                                        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); shareProject('${item.id}', '${safeName}', '${escPrice}', '${escLoc}')" title="Projeyi Paylaş" style="padding:0; justify-content:center; min-height:44px;"><i class="fa-solid fa-share-nodes"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    grid.insertAdjacentHTML('beforeend', cardHtml);
+                    `);
                 } else {
                     const p = item;
                     const safeTitle = escapeHtml(p.title || 'Portföy İlanı');
@@ -7216,7 +7392,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     const safeImg = escapeHtml(p.img || p.thumbnail || p.image || '/static/img/placeholder.jpg');
                     const safeLink = typeof p.link === 'string' ? p.link.replace(/[\u0000-\u001f'"\\]/g, '') : '#';
 
-                    const cardHtml = `
+                    renderedCards.push(`
                         <div class="card listing-card" onclick="openListingDetail('${safeLink}')" style="display:flex; flex-direction:column; background:#fff; border-radius:22px; overflow:hidden; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:all 0.3s ease;">
                             <div class="card-img-wrapper" style="position:relative; height:200px; overflow:hidden;">
                                 <img src="${safeImg}" alt="${safeTitle}" loading="lazy" style="width:100%; height:100%; object-fit:cover;" onerror="this.onerror=null; this.src='/static/img/placeholder.jpg';">
@@ -7229,52 +7405,20 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                                 <div style="margin-top:auto; padding-top:12px; border-top:1px solid rgba(0,0,0,0.06);">
                                     <div style="font-size:16px; font-weight:700; color:var(--accent); margin-bottom:10px;">${escPrice}</div>
                                     <div style="display:flex; gap:8px;">
-                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openListingDetail('${safeLink}')" style="font-size:12px; padding:6px 12px; flex:1;"><i class="fa-solid fa-eye"></i> İlan Detayı</button>
-                                        <a href="${waUrl}" target="_blank" class="btn btn-outline btn-sm" onclick="event.stopPropagation()" style="font-size:12px; padding:6px 12px; color:#128C7E; border-color:rgba(37,211,102,0.4);"><i class="fa-brands fa-whatsapp"></i></a>
+                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openListingDetail('${safeLink}')" style="font-size:12px; padding:6px 12px; flex:1; min-height:44px;"><i class="fa-solid fa-eye"></i> İlan Detayı</button>
+                                        <a href="${waUrl}" target="_blank" class="btn btn-outline btn-sm" onclick="event.stopPropagation()" style="font-size:12px; padding:6px 12px; color:#128C7E; border-color:rgba(37,211,102,0.4); min-height:44px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-brands fa-whatsapp"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    grid.insertAdjacentHTML('beforeend', cardHtml);
+                    `);
                 }
             });
+            grid.innerHTML = renderedCards.join('');
             updateMindMap(matchedItems);
         }
 
         // Chatbot Widget Logic
-        
-        // iOS & Android Virtual Keyboard Dynamic Height Fix - Visual Viewport API
-        function handleVisualViewport() {
-            const viewport = window.visualViewport;
-            if (!viewport) return;
-            
-            const chatWindow = document.getElementById('chatWindow');
-            
-            function onViewportChange() {
-                if (chatWindow && chatWindow.classList.contains('open')) {
-                    const keyboardHeight = window.innerHeight - viewport.height;
-                    if (keyboardHeight > 100) {
-                        chatWindow.style.setProperty('bottom', `${keyboardHeight + 10}px`, 'important');
-                        chatWindow.style.setProperty('height', `calc(${viewport.height}px - 24px)`, 'important');
-                        chatWindow.style.setProperty('max-height', `calc(${viewport.height}px - 24px)`, 'important');
-                    } else {
-                        chatWindow.style.removeProperty('bottom');
-                        chatWindow.style.removeProperty('height');
-                        chatWindow.style.removeProperty('max-height');
-                    }
-                    scrollToBottom();
-                }
-            }
-            
-            viewport.addEventListener('resize', onViewportChange);
-            viewport.addEventListener('scroll', onViewportChange);
-        }
-
-        // Initialize viewport handler on load
-        if (window.visualViewport) {
-            handleVisualViewport();
-        }
 
         let isChatOpen = false;
         function toggleChatbot() {
@@ -7293,9 +7437,15 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         {duration:300, easing:'cubic-bezier(.34,1.56,.64,1)'}
                     );
                 }
+                const chatInp = document.getElementById('chatInput');
+                if (chatInp && window.innerWidth <= 768) {
+                    try { chatInp.focus({ preventScroll: true }); } catch (_) {}
+                }
                 setTimeout(() => { 
                     const i = document.getElementById('chatInput'); 
-                    if (i) i.focus({preventScroll:true}); 
+                    if (i) {
+                        try { i.focus({preventScroll:true}); } catch (_) {}
+                    }
                     scrollToBottom();
                 }, 350);
             } else {
@@ -7548,8 +7698,12 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 modal.style.opacity = '1';
                 modal.style.visibility = 'visible';
                 modal.style.pointerEvents = 'auto';
-                document.body.style.overflow = 'hidden';
-                document.documentElement.style.overflow = 'hidden';
+                if (typeof ScrollLockManager !== 'undefined') {
+                    ScrollLockManager.lock();
+                } else {
+                    document.body.style.overflow = 'hidden';
+                    document.documentElement.style.overflow = 'hidden';
+                }
                 if(typeof gsap !== 'undefined') {
                     const container = modal.querySelector('.modal-container');
                     if(container) gsap.fromTo(container, { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
@@ -7571,8 +7725,12 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 modal.style.opacity = '0';
                 modal.style.visibility = 'hidden';
                 modal.style.pointerEvents = 'none';
-                document.body.style.overflow = '';
-                document.documentElement.style.overflow = '';
+                if (typeof ScrollLockManager !== 'undefined') {
+                    ScrollLockManager.unlock();
+                } else {
+                    document.body.style.overflow = '';
+                    document.documentElement.style.overflow = '';
+                }
             }
         }
 
@@ -8944,7 +9102,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     </div>
                     <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Telefon Numaranız *</label>
-                        <input type="tel" id="aptPhone" required placeholder="05XX XXX XX XX" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
+                        <input type="tel" id="aptPhone" required placeholder="05XX XXX XX XX" oninput="formatTRPhone(this)" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                 </div>
                 <div class="apt-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">

@@ -1354,6 +1354,57 @@ def admin_rag_meta():
         "developers": developers
     })
 
+@app.route("/api/admin/customers", methods=["GET", "PUT", "DELETE"])
+def admin_customers_api():
+    ok, err_resp = _check_admin_auth()
+    if not ok:
+        return err_resp
+    
+    import sqlite3
+    conn = sqlite3.connect(str(NEXA_DB_PATH), timeout=10.0)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+
+    if request.method == "GET":
+        search = request.args.get("search", "").strip()
+        stage = request.args.get("stage", "").strip()
+        query = "SELECT * FROM customers WHERE 1=1"
+        params = []
+        if stage:
+            query += " AND stage = ?"
+            params.append(stage)
+        if search:
+            query += " AND (name LIKE ? OR phone LIKE ? OR email LIKE ? OR notes LIKE ?)"
+            term = f"%{search}%"
+            params.extend([term, term, term, term])
+        query += " ORDER BY id DESC LIMIT 200"
+        cur.execute(query, params)
+        rows = [dict(r) for r in cur.fetchall()]
+        conn.close()
+        return jsonify({"success": True, "customers": rows, "count": len(rows)})
+
+    elif request.method == "PUT":
+        data = request.get_json(silent=True) or {}
+        cust_id = data.get("id")
+        new_stage = data.get("stage")
+        if not cust_id or not new_stage:
+            conn.close()
+            return jsonify({"success": False, "message": "id ve stage zorunludur"}), 400
+        cur.execute("UPDATE customers SET stage = ? WHERE id = ?", (new_stage, cust_id))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True, "message": f"Müşteri statüsü '{new_stage}' olarak güncellendi."})
+
+    elif request.method == "DELETE":
+        cust_id = request.args.get("id")
+        if not cust_id:
+            conn.close()
+            return jsonify({"success": False, "message": "id zorunludur"}), 400
+        cur.execute("DELETE FROM customers WHERE id = ?", (cust_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({"success": True, "message": "Müşteri kaydı silindi."})
+
 
 @app.route("/")
 def index():

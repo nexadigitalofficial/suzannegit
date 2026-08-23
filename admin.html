@@ -182,44 +182,171 @@
             font-size: 14px; font-weight: 600; z-index: 9999;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 992px) {
-            header { flex-wrap: wrap; gap: 1rem; padding: 0.75rem 1rem; }
+        :root {
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+            --sal: env(safe-area-inset-left, 0px);
+            --sar: env(safe-area-inset-right, 0px);
+        }
+
+        header {
+            padding-top: calc(1rem + var(--sat));
+            padding-left: max(1rem, var(--sal));
+            padding-right: max(1rem, var(--sar));
+        }
+
+        /* ═════════════════════════════════════════════════════════════════════
+           NEXA ADMIN RESPONSIVE & WCAG AAA TOUCH TARGET ENGINE (320px - 1440px+)
+           ═════════════════════════════════════════════════════════════════════ */
+        .btn, .preset-btn {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn {
+            min-width: 44px;
+            min-height: 44px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.06);
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14px;
+            touch-action: manipulation;
+        }
+
+        .rank-input {
+            width: 60px;
+            min-height: 44px;
+            padding: 6px 8px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Tablet & Intermediate Screens (577px - 1024px) */
+        @media (max-width: 1024px) {
+            header {
+                padding: 0.85rem 1.25rem;
+                gap: 1rem;
+            }
             .brand-text p { display: none; }
-            main { padding: 1rem; }
-            .project-row { grid-template-columns: 40px 60px 1fr auto; gap: 10px; }
-            .row-badge-pill, .row-price { display: none; }
-            .rag-stats { flex-wrap: wrap; gap: 10px; }
-            .search-box { min-width: 100%; }
-            .preset-btn { min-height: 40px; padding: 8px 12px; }
-            .action-btn { width: 40px; height: 40px; }
-            .rank-input { font-size: 16px; }
-            .search-box input { font-size: 16px; }
-            .btn { min-height: 40px; }
-            #toast { max-width: calc(100vw - 32px); right: 16px; bottom: 16px; left: 16px; }
-            .controls-bar { flex-direction: column; align-items: stretch; }
+            main { padding: 1.25rem 1rem; }
+            
+            .controls-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .search-box { width: 100%; min-width: 100%; }
             .header-actions { width: 100%; flex-wrap: wrap; }
             .header-actions .btn { flex: 1 1 auto; justify-content: center; }
-        }
-        @media (max-width: 576px) {
+
+            /* Fixed Tablet Grid: Exactly 5 Active Columns without Wrapping */
             .project-row {
-                grid-template-columns: 36px 56px 1fr;
+                grid-template-columns: 48px 64px 1fr auto auto;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 14px;
+            }
+            .project-row > div:has(.row-badge-pill),
+            .row-badge-pill,
+            .row-price {
+                display: none !important;
+            }
+            .row-actions {
+                gap: 8px;
+            }
+        }
+
+        /* Mobile Screens (320px - 576px) */
+        @media (max-width: 576px) {
+            header { padding: 0.75rem 1rem; }
+            .brand-logo { width: 36px; height: 36px; font-size: 16px; }
+            .brand-text h1 { font-size: clamp(13px, 4vw, 15px); }
+
+            .rag-meta-banner {
+                padding: 1rem;
+                margin-bottom: 1.25rem;
+                gap: 1rem;
+            }
+            .rag-meta-info h2 { font-size: 14.5px; }
+            .rag-meta-info p { display: none; }
+            .rag-stats {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .stat-pill:last-child {
+                grid-column: 1 / -1;
+                justify-content: center;
+            }
+
+            .preset-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                width: 100%;
+            }
+            .preset-buttons span {
+                grid-column: 1 / -1;
+                margin-bottom: 2px;
+            }
+            .preset-btn {
+                width: 100%;
+                justify-content: center;
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
+            /* Clean Mobile Card Grid with Touch Ergonomics */
+            .project-row {
+                grid-template-columns: 44px 56px 1fr;
                 grid-template-areas:
                     "order thumb title"
                     "actions actions actions";
-                gap: 8px 10px;
-                padding: 10px;
+                gap: 10px;
+                padding: 12px;
             }
-            .project-row > :not(.row-order):not(.row-thumb):not(.row-title-box):not(.row-actions) { display: none; }
+            .project-row > :not(.row-order):not(.row-thumb):not(.row-title-box):not(.row-actions) {
+                display: none !important;
+            }
             .row-order { grid-area: order; }
-            .row-thumb { grid-area: thumb; width: 56px; height: 42px; }
+            .row-thumb { grid-area: thumb; width: 56px; height: 44px; border-radius: 8px; }
             .row-title-box { grid-area: title; min-width: 0; }
-            .row-title-box h3 { font-size: 13px; white-space: normal; overflow-wrap: break-word; }
-            .row-actions { grid-area: actions; justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
-            .action-btn { width: 44px; height: 44px; }
-            .rank-input { width: 64px; min-height: 40px; }
-            .rag-meta-banner { padding: 1rem; }
-            .rag-meta-info p { display: none; }
+            .row-title-box h3 { font-size: 14px; line-height: 1.3; overflow-wrap: break-word; }
+            .row-title-box p { font-size: 11.5px; margin-top: 2px; }
+            .row-actions {
+                grid-area: actions;
+                display: grid;
+                grid-template-columns: 44px 44px 44px 44px;
+                justify-content: space-between;
+                width: 100%;
+                padding-top: 8px;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .action-btn { width: 100%; height: 44px; }
+            
+            #toast {
+                max-width: calc(100% - 24px);
+                left: 12px;
+                right: 12px;
+                bottom: calc(12px + var(--sab));
+                font-size: 13px;
+                padding: 10px 14px;
+            }
         }
     </style>
 </head>
@@ -291,16 +418,31 @@
         let allProjects = [];
         let currentOrder = [];
 
+        function getAdminPin() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pin = urlParams.get('pin') || localStorage.getItem('nexa_admin_pin') || '';
+            if (pin) localStorage.setItem('nexa_admin_pin', pin);
+            return pin;
+        }
+
+        function getAuthHeaders(extraHeaders = {}) {
+            const pin = getAdminPin();
+            const headers = { 'Content-Type': 'application/json' };
+            if (pin) headers['X-Admin-Pin'] = pin;
+            return Object.assign(headers, extraHeaders);
+        }
+
         async function loadAdminData() {
             try {
-                const res = await fetch('/api/admin/projects-order');
+                const res = await fetch('/api/admin/projects-order', {
+                    headers: getAuthHeaders()
+                });
                 if (res.ok) {
                     const data = await res.json();
                     allProjects = data.projects || [];
                     document.getElementById('statProjectCount').innerText = allProjects.length;
                     renderProjectRows();
                 } else {
-                    // Fallback to /api/projects
                     const fallbackRes = await fetch('/api/projects');
                     const fbData = await fallbackRes.json();
                     allProjects = Array.isArray(fbData) ? fbData : (fbData.projects || fbData.data || []);
@@ -375,7 +517,6 @@
             const targetIdx = idx + direction;
             if (targetIdx < 0 || targetIdx >= allProjects.length) return;
 
-            // Swap
             const temp = allProjects[idx];
             allProjects[idx] = allProjects[targetIdx];
             allProjects[targetIdx] = temp;
@@ -394,6 +535,10 @@
             const item = allProjects.splice(currentIdx, 1)[0];
             allProjects.splice(targetIdx, 0, item);
             renderProjectRows();
+            
+            const restoredInput = document.querySelector(`#row-${id} .rank-input`);
+            if (restoredInput) restoredInput.focus();
+
             showToast(`"${item.title}" ${newRank}. sıraya taşındı.`);
         }
 
@@ -402,7 +547,6 @@
             if (!p) return;
             p.is_pinned = !p.is_pinned;
             
-            // If pinned, move to top
             if (p.is_pinned) {
                 const idx = allProjects.findIndex(x => String(x.id) === String(id));
                 allProjects.splice(idx, 1);
@@ -439,7 +583,6 @@
                 showToast('Lansman & VIP projeler öne alındı.');
             } else {
                 document.getElementById('btn-preset-rag').classList.add('active');
-                // RAG default scoring
                 loadAdminData();
                 showToast('RAG Yapay Zeka Öncelik Sıralaması yüklendi.');
                 return;
@@ -453,17 +596,23 @@
             return isNaN(num) ? 0 : num;
         }
 
+        let _filterRaf = null;
         function filterRows() {
-            const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
-            const rows = document.querySelectorAll('.project-row');
-            rows.forEach(r => {
-                const title = r.querySelector('.row-title-box h3').innerText.toLowerCase();
-                const loc = r.querySelector('.row-title-box p').innerText.toLowerCase();
-                if (title.includes(query) || loc.includes(query)) {
-                    r.style.display = 'grid';
-                } else {
-                    r.style.display = 'none';
-                }
+            if (_filterRaf) cancelAnimationFrame(_filterRaf);
+            _filterRaf = requestAnimationFrame(() => {
+                const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+                const rows = document.querySelectorAll('.project-row');
+                const visibilityMap = [];
+                rows.forEach(r => {
+                    const titleEl = r.querySelector('.row-title-box h3');
+                    const locEl = r.querySelector('.row-title-box p');
+                    const text = ((titleEl ? titleEl.textContent : '') + ' ' + (locEl ? locEl.textContent : '')).toLowerCase();
+                    visibilityMap.push({ row: r, visible: !query || text.includes(query) });
+                });
+
+                visibilityMap.forEach(item => {
+                    item.row.style.display = item.visible ? 'grid' : 'none';
+                });
             });
         }
 
@@ -482,7 +631,7 @@
             try {
                 const res = await fetch('/api/admin/projects-order', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({ order: orderPayload })
                 });
                 const result = await res.json();
