@@ -11,6 +11,7 @@ Render / gunicorn giriş noktası:
 """
 import logging
 import threading
+import time
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("render.start")
