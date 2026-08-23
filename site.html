@@ -230,16 +230,19 @@
 
         .nav-links {
             display: flex;
-            gap: 2.2rem;
+            align-items: center;
+            gap: 1.4rem;
         }
 
         .nav-link {
             text-decoration: none;
             color: var(--text-primary);
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0.8;
+            font-size: 13.5px;
+            font-weight: 600;
+            opacity: 0.85;
             transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
         }
 
         .nav-link:hover {
@@ -247,15 +250,32 @@
             color: var(--accent);
         }
 
+        .nav-admin-pill {
+            background: rgba(0, 113, 227, 0.08);
+            border: 1px solid rgba(0, 113, 227, 0.22);
+            border-radius: 980px;
+            padding: 5px 13px;
+        }
+
+        .nav-admin-pill:hover {
+            background: var(--accent) !important;
+            color: #fff !important;
+            border-color: var(--accent) !important;
+        }
+
+        .drawer-mobile-footer {
+            display: none !important;
+        }
+
         .nav-social-actions {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .nav-social-btn {
-            width: 44px;
-            height: 44px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -264,11 +284,12 @@
             color: var(--white);
             transition: var(--transition);
             text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
         }
         .nav-social-btn.whatsapp-btn { background: #25D366; }
         .nav-social-btn.instagram-btn { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
         .nav-social-btn.facebook-btn { background: #1877F2; }
-        .nav-social-btn:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .nav-social-btn:hover { transform: scale(1.1); box-shadow: 0 4px 14px rgba(0,0,0,0.2); color: #fff; }
 
         .nav-contact {
             display: flex;
@@ -276,17 +297,19 @@
             gap: 0.5rem;
             text-decoration: none;
             color: var(--text-primary);
-            font-weight: 500;
-            font-size: 14px;
-            padding: 0.5rem 1.1rem;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 0.45rem 1rem;
             border-radius: 980px;
-            background: rgba(0, 0, 0, 0.04);
+            background: rgba(0, 113, 227, 0.07);
+            border: 1px solid rgba(0, 113, 227, 0.18);
             transition: var(--transition);
         }
 
         .nav-contact:hover {
-            background: rgba(0, 113, 227, 0.1);
+            background: rgba(0, 113, 227, 0.14);
             color: var(--accent);
+            border-color: var(--accent);
         }
 
         .mobile-menu-btn {
@@ -2150,8 +2173,8 @@
                 color: var(--accent);
                 transform: scale(0.98);
             }
-            .drawer-mobile-footer {
-                display: flex;
+            .nav-links.active .drawer-mobile-footer {
+                display: flex !important;
                 flex-direction: column;
                 gap: 10px;
                 margin-top: 1rem;
@@ -3602,28 +3625,28 @@
     <!-- Fixed Translucent Navbar -->
     <nav class="navbar" id="navbar">
         <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;" title="Suzanne Tenekecioğlu & Coldwell Banker VIP">
-            <div class="nav-logo-media" style="position:relative; width:48px; height:32px; border-radius:8px; overflow:hidden; display:inline-block; flex-shrink:0; box-shadow:0 2px 10px rgba(0,0,0,0.25); background:#000; border:1px solid rgba(255,215,0,0.4);">
-                <video id="navBrandVideo" src="https://files.catbox.moe/mqppih.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; object-fit:cover; pointer-events:none;">
-                    <source src="https://files.catbox.moe/mqppih.mp4" type="video/mp4">
-                    <source src="/static/1.mp4" type="video/mp4">
-                    <source src="/1.mp4" type="video/mp4">
-                </video>
+            <div class="nav-logo-media" style="position:relative; width:44px; height:44px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 3px 12px rgba(212,175,55,0.35); background:#0c0d12; border:2px solid #D4AF37;">
+                <img src="/static/img/suzanne_icon_circle_64.png?v=3" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png'">
             </div>
-            <div style="display:flex; flex-direction:column;">
-                <span style="font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--text-primary); letter-spacing:-0.3px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
-                <span style="font-size:10px; font-weight:700; color:#B8860B; letter-spacing:0.8px; text-transform:uppercase;"><i class="fa-solid fa-crown" style="font-size:9px; color:#FFD700; margin-right:3px;"></i> Coldwell Banker VIP</span>
+            <div style="display:flex; flex-direction:column; justify-content:center;">
+                <span style="font-family:var(--font-display); font-size:15px; font-weight:800; color:var(--text-primary); letter-spacing:-0.2px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
+                <div style="display:flex; align-items:center; gap:5px; margin-top:2px;">
+                    <span style="font-size:10px; font-weight:700; color:#B8860B; letter-spacing:0.6px; text-transform:uppercase; background:rgba(212,175,55,0.12); padding:1px 6px; border-radius:4px; border:1px solid rgba(212,175,55,0.25); display:inline-flex; align-items:center; gap:3px;">
+                        <i class="fa-solid fa-crown" style="font-size:8px; color:#D4AF37;"></i> COLDWELL BANKER VIP
+                    </span>
+                    <span style="font-size:9px; font-weight:800; color:#0071e3; background:rgba(0,113,227,0.08); padding:1px 5px; border-radius:4px;">OFFICE 470</span>
+                </div>
             </div>
-            <span class="logo-dot"></span>
         </a>
         <div class="nav-links" id="mobileNavLinks">
-            <a href="#about" class="nav-link"><span><i class="fa-solid fa-user-tie" style="color:var(--accent); margin-right:8px;"></i> Hakkımda</span></a>
-            <a href="#showcase" onclick="switchShowcaseTab('projects'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-building" style="color:var(--accent); margin-right:8px;"></i> Projeler</span></a>
-            <a href="#showcase" onclick="switchShowcaseTab('portfolio'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-house" style="color:var(--accent); margin-right:8px;"></i> Portföy</span></a>
-            <a href="#search" class="nav-link"><span><i class="fa-solid fa-magnifying-glass" style="color:var(--accent); margin-right:8px;"></i> Arama</span></a>
-            <a href="#contact" class="nav-link"><span><i class="fa-solid fa-envelope" style="color:var(--accent); margin-right:8px;"></i> İletişim</span></a>
-            <a href="/admin" target="_blank" class="nav-link" style="color:var(--accent); font-weight:700;"><span><i class="fa-solid fa-sliders" style="margin-right:8px;"></i> Yönetim Paneli</span></a>
+            <a href="#about" class="nav-link"><span><i class="fa-solid fa-user-tie" style="color:var(--accent); margin-right:6px;"></i> Hakkımda</span></a>
+            <a href="#showcase" onclick="switchShowcaseTab('projects'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-building" style="color:var(--accent); margin-right:6px;"></i> Projeler</span></a>
+            <a href="#showcase" onclick="switchShowcaseTab('portfolio'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-house" style="color:var(--accent); margin-right:6px;"></i> Portföy</span></a>
+            <a href="#search" class="nav-link"><span><i class="fa-solid fa-magnifying-glass" style="color:var(--accent); margin-right:6px;"></i> Arama</span></a>
+            <a href="#contact" class="nav-link"><span><i class="fa-solid fa-envelope" style="color:var(--accent); margin-right:6px;"></i> İletişim</span></a>
+            <a href="/admin" target="_blank" class="nav-link nav-admin-pill" style="color:var(--accent); font-weight:700;"><span><i class="fa-solid fa-sliders" style="margin-right:6px;"></i> Yönetim Paneli</span></a>
             
-            <!-- Drawer Mobile Quick Action Grid -->
+            <!-- Drawer Mobile Quick Action Grid (Only visible in mobile menu) -->
             <div class="drawer-mobile-footer">
                 <a href="tel:+905354895656" class="drawer-contact-call">
                     <i class="fa-solid fa-phone"></i> 0535 489 56 56 (Hemen Ara)
@@ -3642,17 +3665,17 @@
             </div>
         </div>
         <div class="nav-social-actions">
-            <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20gayrimenkul%20dan%C4%B1%C5%9Fmanl%C4%B1%C4%9F%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="nav-social-btn whatsapp-btn" title="WhatsApp">
+            <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20gayrimenkul%20dan%C4%B1%C5%9Fmanl%C4%B1%C4%9F%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="nav-social-btn whatsapp-btn" title="WhatsApp" aria-label="WhatsApp İletişim">
                 <i class="fa-brands fa-whatsapp"></i>
             </a>
-            <a href="https://instagram.com" target="_blank" class="nav-social-btn instagram-btn" title="Instagram">
+            <a href="https://instagram.com" target="_blank" class="nav-social-btn instagram-btn" title="Instagram" aria-label="Instagram Sayfası">
                 <i class="fa-brands fa-instagram"></i>
             </a>
-            <a href="https://facebook.com" target="_blank" class="nav-social-btn facebook-btn" title="Facebook">
+            <a href="https://facebook.com" target="_blank" class="nav-social-btn facebook-btn" title="Facebook" aria-label="Facebook Sayfası">
                 <i class="fa-brands fa-facebook-f"></i>
             </a>
-            <a href="tel:+905354895656" class="nav-contact">
-                <i class="fa-solid fa-phone"></i>
+            <a href="tel:+905354895656" class="nav-contact" title="Suzanne Tenekecioğlu ile Hemen Görüşün">
+                <i class="fa-solid fa-phone" style="color:var(--accent);"></i>
                 <span>0535 489 56 56</span>
             </a>
         </div>
