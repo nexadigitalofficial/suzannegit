@@ -222,6 +222,49 @@ def heal_canonical_data(map_path: Path = MAP_PATH, pf_path: Path = PORTFOLIO_PAT
                 
             conn.commit()
             conn.close()
+
+        # C. Media & Video İzolasyon ve Kendi Kendini Kontrol (Cross-Project Sanitization)
+        map_dirty = False
+        def _norm_folder(s):
+            return re.sub(r"[^\w]", "", (s or "").lower().replace("ı", "i").replace("ş", "s").replace("ğ", "g").replace("ç", "c").replace("ö", "o").replace("ü", "u"))
+
+        for p in canonical_list:
+            p_title = p.get("title") or p.get("name") or ""
+            p_folder = p.get("folder_name") or ""
+            p_norm = _norm_folder(p_folder or p_title)
+
+            if p.get("videos") and isinstance(p["videos"], list):
+                valid_vids = []
+                for v in p["videos"]:
+                    v_path = v.get("path") or ""
+                    if v_path and "projeler/" in v_path:
+                        v_proj_dir = v_path.split("projeler/")[-1].split("/")[0]
+                        if _norm_folder(v_proj_dir) != p_norm:
+                            fixes.append(f"Çapraz proje video eşleşmesi temizlendi ({p_title}): '{v_path}'")
+                            map_dirty = True
+                            continue
+                    valid_vids.append(v)
+                p["videos"] = valid_vids
+                if not valid_vids and (not p.get("drive_video_preview") or "drive.google.com" not in str(p.get("drive_video_preview"))):
+                    p["has_video"] = False
+                    p["drive_video_preview"] = None
+                    p["drive_vid_id"] = None
+                    p["tanitim_cloud_url"] = None
+                    map_dirty = True
+
+            # MAS LORA thumbnail & video güvencesi
+            if "MAS LORA" in p_title.upper() or "SARITAŞ" in p_title.upper() or p.get("id") == "cbvip-prj-32":
+                if p.get("thumbnail") != "/static/img/video_thumbs/video_thumb_32.jpg":
+                    p["thumbnail"] = "/static/img/video_thumbs/video_thumb_32.jpg"
+                    p["image"] = "/static/img/video_thumbs/video_thumb_32.jpg"
+                    fixes.append("Sarıtaş Mas Lora için özel video_thumb_32.jpg kapağı atandı")
+                    map_dirty = True
+
+        if map_dirty:
+            with open(map_path, "w", encoding="utf-8") as f:
+                json.dump(canonical_list, f, ensure_ascii=False, indent=2)
+            fixes.append("projects_map.json medya ve video izolasyonu sağlandı")
+            logger.info("Self-healing: projects_map.json medya izolasyonu onarıldı")
             
         return {"passed": len(issues) == 0, "fixes": fixes, "issues": issues}
     except Exception as e:
