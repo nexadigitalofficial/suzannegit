@@ -680,5 +680,71 @@
     "tkgm_verified": true,
     "category": "Bulvar Konsepti",
     "sales_highlights": "Bağlıca Bulvarı üzerinde, alışveriş ve ulaşım akslarına sıfır konum."
+  },
+  "SARITAŞ MAS LORA - YAŞAMKENT": {
+    "id": "cbvip-prj-32",
+    "db_id": 32,
+    "title": "SARITAŞ MAS LORA - YAŞAMKENT",
+    "name": "SARITAŞ MAS LORA - YAŞAMKENT",
+    "folder_name": "SARITAŞ MAS LORA - YAŞAMKENT",
+    "folder_path": "projeler/SARITAŞ MAS LORA - YAŞAMKENT",
+    "developer": "Sarıtaş İnşaat & Mas Yapı",
+    "location": "Ankara / Etimesgut / Yapracık - Yaşamkent",
+    "location_full": "Ankara / Etimesgut / Yapracık - Yaşamkent",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Yapracık - Yaşamkent Aksı",
+    "ada_no": "49905",
+    "parsel_no": "2",
+    "tkgm_verified": true,
+    "price_display": "2.650.000 - 3.850.000 TL",
+    "price_numeric": 2650000,
+    "price_min": 2650000,
+    "price_max": 3850000,
+    "down_payment": "1.325.000 TL (%50)",
+    "installment_terms": "24-30 Ay Taksit",
+    "monthly_installment": 55000,
+    "delivery_months": 24,
+    "category": "Modern Yaşam & Rezidans",
+    "room_info": "1+1, 2+1",
+    "rooms": [
+      "1+1",
+      "2+1"
+    ],
+    "room_types": [
+      "1+1",
+      "2+1"
+    ],
+    "status": "Satışta",
+    "sales_highlights": "Çankaya Üniversitesi ve Eskişehir Yolu yönü, açık otopark, Bina Tamamlama Sigortalı ve resmi sözleşme güvenceli.",
+    "description": "Sarıtaş İnşaat ve Mas Yapı ortaklığıyla Yaşamkent-Yapracık aksında yükselen Mas Lora; 49905 ada 2 parsel üzerinde 1+1 ve 2+1 rezidans seçenekleri sunmaktadır.",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_3.jpg",
+    "image": "/static/img/video_thumbs/video_thumb_3.jpg",
+    "has_presentation": true,
+    "has_video": true,
+    "presentations": [
+      {
+        "filename": "KURUMSAL KİMLİK - REFERANSLAR.pdf",
+        "path": "projeler/SARITAŞ MAS LORA - YAŞAMKENT/KURUMSAL KİMLİK - REFERANSLAR.pdf",
+        "size_mb": 112.69
+      }
+    ],
+    "videos": [
+      {
+        "filename": "TANITIM - MAS LORA.mp4",
+        "path": "projeler/SARITAŞ MAS LORA - YAŞAMKENT/TANITIM - MAS LORA.mp4"
+      }
+    ],
+    "drive_video_preview": "https://drive.google.com/file/d/1GkWcux8-V-zBTN5U9xdoFiZM7bXpSXN1/preview",
+    "drive_pdf_preview": "https://drive.google.com/file/d/1Eb6jlo5omBl3tInbsdXNbgCmPqVEws7T/preview",
+    "drive_vid_id": "1GkWcux8-V-zBTN5U9xdoFiZM7bXpSXN1",
+    "drive_pdf_id": "1Eb6jlo5omBl3tInbsdXNbgCmPqVEws7T",
+    "media_mode": "cloud_preview",
+    "intelligence": {
+      "price": 2650000,
+      "price_display": "2.650.000 - 3.850.000 TL",
+      "down_payment": "1.325.000 TL",
+      "region": "Yaşamkent, Ankara"
+    }
   }
 }
