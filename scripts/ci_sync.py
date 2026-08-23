@@ -108,6 +108,67 @@ def main():
     if not ok:
         any_failed = True
 
+    # 6. Frontend Static Hydration (site.html EMBEDDED_PROJECTS & EMBEDDED_LISTINGS güncellemesi)
+    def sync_site_html_embedded():
+        import json
+        import re
+        site_path = os.path.join(BASE_DIR, "site.html")
+        pm_path = os.path.join(BASE_DIR, "projects_map.json")
+        port_path = os.path.join(BASE_DIR, "nexa_portfolio_data.json")
+
+        if not (os.path.exists(site_path) and os.path.exists(pm_path)):
+            return {"updated": 0, "msg": "files missing"}
+
+        with open(pm_path, "r", encoding="utf-8") as f:
+            pm_data = json.load(f)
+        projects = pm_data.get("projects", []) if isinstance(pm_data, dict) else pm_data
+
+        listings = []
+        if os.path.exists(port_path):
+            with open(port_path, "r", encoding="utf-8") as f:
+                port_data = json.load(f)
+            for idx, p in enumerate(port_data, 1):
+                title = p.get("title") or p.get("name")
+                if not title:
+                    continue
+                price_val = p.get("price_numeric") or p.get("price") or 0
+                price_disp = p.get("price_display") or (f"{price_val:,} TL".replace(",", ".") if price_val else "Fiyat Sorunuz")
+                listings.append({
+                    "id": p.get("id") or f"cbvip-port-{idx}",
+                    "title": title,
+                    "type": p.get("type") or ("Kiralık" if "kiralık" in title.lower() else "Satılık"),
+                    "listing_type": p.get("listing_type") or ("Kiralık" if "kiralık" in title.lower() else "Satılık"),
+                    "price_display": str(price_disp).replace("₺", "TL"),
+                    "price": price_val,
+                    "location": p.get("location") or f"{p.get('ilce', 'Çankaya')}, {p.get('il', 'Ankara')}",
+                    "il": p.get("il") or "Ankara",
+                    "ilce": p.get("ilce") or "Çankaya",
+                    "mahalle": p.get("mahalle") or "",
+                    "room_info": p.get("room_info") or p.get("rooms") or "Daire",
+                    "property_category": p.get("property_category") or p.get("category") or "Portföy",
+                    "thumbnail": p.get("thumbnail") or f"/static/img/video_thumbs/video_thumb_{idx}.jpg",
+                    "link": p.get("link") or f"/portfolio/{idx}"
+                })
+
+        with open(site_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        p_json = json.dumps(projects, ensure_ascii=False, indent=2)
+        l_json = json.dumps(listings, ensure_ascii=False, indent=2)
+
+        content = re.sub(r"const EMBEDDED_PROJECTS = \[.*?\];\n", f"const EMBEDDED_PROJECTS = {p_json};\n", content, flags=re.DOTALL)
+        content = re.sub(r"const EMBEDDED_LISTINGS = \[.*?\];\n", f"const EMBEDDED_LISTINGS = {l_json};\n", content, flags=re.DOTALL)
+
+        with open(site_path, "w", encoding="utf-8") as f:
+            f.write(content)
+
+        return {"updated": 1, "projects": len(projects), "listings": len(listings)}
+
+    ok, msg = run_step("Frontend Hydration", sync_site_html_embedded)
+    results.append((ok, msg))
+    if not ok:
+        any_failed = True
+
     # Özet
     log.info("=" * 60)
     log.info("CI SYNC ÖZET")
