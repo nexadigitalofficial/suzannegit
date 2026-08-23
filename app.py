@@ -824,10 +824,25 @@ def site():
 
 @app.route("/favicon.ico")
 def favicon():
-    fav = STATIC_DIR / "img" / "suzanne_icon_circle_32.png"
+    fav = BASE_DIR / "favicon.ico"
     if not fav.exists():
         fav = STATIC_DIR / "favicon.ico"
-    return send_file(fav, mimetype="image/png")
+    if not fav.exists():
+        fav = STATIC_DIR / "img" / "suzanne_icon_circle_32.png"
+    resp = send_file(fav, mimetype="image/x-icon")
+    resp.headers["Cache-Control"] = "public, max-age=86400"
+    return resp
+
+@app.route("/apple-touch-icon.png")
+@app.route("/apple-touch-icon-precomposed.png")
+@app.route("/favicon.png")
+def apple_touch_icon():
+    fav = BASE_DIR / "apple-touch-icon.png"
+    if not fav.exists():
+        fav = STATIC_DIR / "img" / "suzanne_icon_circle_180.png"
+    resp = send_file(fav, mimetype="image/png")
+    resp.headers["Cache-Control"] = "public, max-age=86400"
+    return resp
 
 @app.route("/manifest.json")
 def pwa_manifest():
