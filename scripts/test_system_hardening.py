@@ -94,7 +94,7 @@ class TestNexaSystemHardening(unittest.TestCase):
             "/api/appointments",
             data=json.dumps({
                 "name": "Audit Test User",
-                "phone": "0532 999 88 77",
+                "phone": "0532 888 77 66",
                 "project_id": 1,
                 "preferred_datetime": "Yarın 15:00",
                 "notes": "Automated system test"
@@ -107,7 +107,7 @@ class TestNexaSystemHardening(unittest.TestCase):
 
         conn = sqlite3.connect(str(ROOT_DIR / "nexa_database.db"))
         cur = conn.cursor()
-        cur.execute("SELECT assigned_agent, stage FROM customers WHERE phone LIKE '%999 88 77%' ORDER BY id DESC LIMIT 1;")
+        cur.execute("SELECT assigned_agent, stage FROM customers WHERE phone LIKE '%888 77 66%' ORDER BY id DESC LIMIT 1;")
         row = cur.fetchone()
         self.assertIsNotNone(row, "Customer record must exist")
         self.assertEqual(row[0], "Suzanne Tenekecioğlu", "Default assigned agent must be Suzanne Tenekecioğlu")

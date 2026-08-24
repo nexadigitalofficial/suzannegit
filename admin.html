@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXA | RAG Destekli Kart Sıralama & Yönetim Paneli</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png">
+    <title>NEXA VIP | Suzanne Tenekecioğlu Danışman & Yönetim Paneli</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/suzanne_icon_circle_32.png?v=3">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/suzanne_icon_circle_180.png?v=3">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png">
     <link rel="shortcut icon" href="/favicon.ico?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,31 +27,35 @@
             --radius-lg: 16px;
             --radius-md: 12px;
             --radius-sm: 8px;
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+            --sal: env(safe-area-inset-left, 0px);
+            --sar: env(safe-area-inset-right, 0px);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
         body { background: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
-        input, textarea, select { font-size: 16px !important; }
+        input, textarea, select { font-size: 15px !important; color: #fff; }
 
         /* HEADER */
         header {
-            background: rgba(21, 24, 33, 0.85);
+            background: rgba(21, 24, 33, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+            padding: calc(0.85rem + var(--sat)) max(1.5rem, var(--sar)) 0.85rem max(1.5rem, var(--sal));
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .brand { display: flex; align-items: center; gap: 12px; }
         .brand-logo {
-            width: 40px; height: 40px; border-radius: 10px;
+            width: 42px; height: 42px; border-radius: 12px;
             background: linear-gradient(135deg, var(--accent), #5e5ce6);
             display: flex; align-items: center; justify-content: center;
             font-weight: 800; font-size: 18px; color: #fff;
@@ -62,24 +64,64 @@
         .brand-text h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
         .brand-text p { font-size: 12px; color: var(--text-muted); }
 
-        .header-actions { display: flex; align-items: center; gap: 12px; }
+        /* NAV TABS */
+        .admin-tabs {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+        .admin-tab-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 40px;
+        }
+        .admin-tab-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+        .admin-tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 10px var(--accent-glow);
+        }
+
+        .header-actions { display: flex; align-items: center; gap: 10px; }
         .btn {
             padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600;
             cursor: pointer; border: none; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px;
-            text-decoration: none;
+            text-decoration: none; min-height: 42px;
         }
-        .btn-primary {
-            background: var(--accent); color: #fff;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
+        .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 15px var(--accent-glow); }
         .btn-primary:hover { background: #0077ed; transform: translateY(-1px); }
         .btn-success { background: var(--accent-green); color: #000; font-weight: 700; }
         .btn-success:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--border); }
         .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+        .btn-danger { background: rgba(255,69,58,0.15); color: #ff453a; border: 1px solid rgba(255,69,58,0.3); }
+        .btn-danger:hover { background: rgba(255,69,58,0.25); }
 
         /* MAIN CONTAINER */
-        main { flex: 1; max-width: 1320px; width: 100%; margin: 0 auto; padding: 2rem; }
+        main { flex: 1; max-width: 1360px; width: 100%; margin: 0 auto; padding: 1.75rem; }
+
+        /* TAB PANES */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; animation: fadeIn 0.25s ease forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* RAG BANNER */
         .rag-meta-banner {
@@ -87,16 +129,16 @@
             border: 1px solid rgba(0, 113, 227, 0.25);
             border-radius: var(--radius-lg);
             padding: 1.25rem 1.75rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
         .rag-meta-info h2 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: #fff; }
         .rag-meta-info p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-        .rag-stats { display: flex; gap: 20px; }
+        .rag-stats { display: flex; gap: 12px; flex-wrap: wrap; }
         .stat-pill {
             background: rgba(255,255,255,0.06); border: 1px solid var(--border);
             padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
@@ -107,35 +149,31 @@
         /* CONTROLS BAR */
         .controls-bar {
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-            gap: 1rem; margin-bottom: 1.5rem; background: var(--bg-surface); padding: 1rem 1.5rem;
+            gap: 1rem; margin-bottom: 1.25rem; background: var(--bg-surface); padding: 1rem 1.25rem;
             border-radius: var(--radius-md); border: 1px solid var(--border);
         }
         .preset-buttons { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .preset-btn {
             background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--border);
             padding: 6px 12px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; min-height: 38px;
         }
         .preset-btn:hover { background: rgba(0, 113, 227, 0.2); border-color: var(--accent); }
         .preset-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-        .search-box {
-            position: relative; min-width: 260px;
-        }
+        .search-box { position: relative; min-width: 280px; }
         .search-box input {
-            width: 100%; padding: 8px 12px 8px 34px; background: rgba(255,255,255,0.06);
+            width: 100%; padding: 10px 14px 10px 38px; background: rgba(255,255,255,0.06);
             border: 1px solid var(--border); border-radius: var(--radius-sm); color: #fff; font-size: 13px;
         }
         .search-box input:focus { outline: none; border-color: var(--accent); background: rgba(0,0,0,0.4); }
-        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px; }
+        .search-box i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 13px; }
 
         /* CARD LIST */
-        .card-list {
-            display: flex; flex-direction: column; gap: 10px; list-style: none;
-        }
+        .card-list { display: flex; flex-direction: column; gap: 10px; list-style: none; }
         .project-row {
             background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-md);
-            padding: 12px 18px; display: grid; grid-template-columns: 48px 70px 1fr 140px 140px 180px 120px;
+            padding: 12px 18px; display: grid; grid-template-columns: 48px 70px 1fr 140px 140px 180px 100px;
             align-items: center; gap: 16px; transition: all 0.2s; user-select: none;
         }
         .project-row:hover { background: var(--bg-card-hover); border-color: var(--border-hover); }
@@ -146,10 +184,7 @@
             font-size: 15px; font-weight: 800; color: var(--accent); text-align: center;
             display: flex; align-items: center; justify-content: center; gap: 4px;
         }
-        .row-thumb {
-            width: 64px; height: 48px; border-radius: 8px; object-fit: cover; background: #000;
-            border: 1px solid var(--border);
-        }
+        .row-thumb { width: 64px; height: 48px; border-radius: 8px; object-fit: cover; background: #000; border: 1px solid var(--border); }
         .row-title-box h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
         .row-title-box p { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
         .row-price { font-size: 13px; font-weight: 700; color: var(--accent-green); }
@@ -158,273 +193,263 @@
             padding: 4px 10px; border-radius: 12px; background: rgba(66, 133, 244, 0.15); color: #6BA5FF;
             border: 1px solid rgba(66, 133, 244, 0.3); width: fit-content;
         }
-        .row-badge-pill.portfolio { background: rgba(175, 82, 222, 0.15); color: #d084f7; border-color: rgba(175, 82, 222, 0.3); }
 
         .row-actions { display: flex; align-items: center; gap: 6px; }
         .action-btn {
-            width: 32px; height: 32px; border-radius: var(--radius-sm); border: 1px solid var(--border);
-            background: rgba(255,255,255,0.06); color: var(--text-main); display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: all 0.15s; font-size: 12px;
+            min-width: 40px; min-height: 40px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+            background: rgba(255,255,255,0.06); color: var(--text-main); display: inline-flex; align-items: center;
+            justify-content: center; cursor: pointer; transition: all 0.15s; font-size: 13px;
         }
         .action-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
         .action-btn.pin-btn.active { background: var(--accent-amber); color: #000; border-color: var(--accent-amber); }
         .action-btn.hide-btn.active { background: var(--accent-red); color: #fff; border-color: var(--accent-red); }
 
         .rank-input {
-            width: 54px; padding: 6px; background: rgba(0,0,0,0.5); border: 1px solid var(--border);
-            border-radius: 6px; color: #fff; text-align: center; font-weight: 700; font-size: 13px;
+            width: 50px; min-height: 38px; padding: 4px 6px; background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+            border-radius: 8px; color: #fff; text-align: center; font-weight: 700; font-size: 14px;
         }
-        .rank-input:focus { border-color: var(--accent); outline: none; }
+
+        /* CRM TABLE */
+        .crm-table-container {
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+            overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .crm-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .crm-table th {
+            background: rgba(0,0,0,0.3); padding: 14px 18px; font-size: 12px; font-weight: 700;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border);
+        }
+        .crm-table td {
+            padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13.5px; vertical-align: middle;
+        }
+        .crm-table tr:hover { background: rgba(255,255,255,0.02); }
+        .crm-stage-select {
+            background: #1c202d; border: 1px solid var(--border); color: #fff; padding: 6px 10px;
+            border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; outline: none;
+        }
+        .crm-stage-select:focus { border-color: var(--accent); }
+
+        /* PIN LOGIN MODAL */
+        .pin-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(12, 13, 18, 0.95); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); z-index: 999999;
+            display: none; align-items: center; justify-content: center; padding: 1rem;
+        }
+        .pin-modal-card {
+            background: #1c202d; border: 1px solid rgba(255,255,255,0.15); border-radius: 24px;
+            width: 100%; max-width: 440px; padding: 2.25rem; text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        }
+        .pin-input {
+            width: 100%; padding: 14px; background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+            border-radius: 12px; color: #fff; font-size: 18px; text-align: center; letter-spacing: 4px;
+            font-weight: 700; margin: 1.5rem 0 1rem 0; outline: none;
+        }
+        .pin-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
         /* TOAST NOTIFICATION */
         #toast {
             position: fixed; bottom: 24px; right: 24px; background: #1c202d; color: #fff;
             padding: 12px 20px; border-radius: var(--radius-md); border: 1px solid var(--accent);
             box-shadow: 0 10px 30px rgba(0,0,0,0.6); display: none; align-items: center; gap: 10px;
-            font-size: 14px; font-weight: 600; z-index: 9999;
+            font-size: 14px; font-weight: 600; z-index: 99999;
         }
 
-        :root {
-            --sat: env(safe-area-inset-top, 0px);
-            --sab: env(safe-area-inset-bottom, 0px);
-            --sal: env(safe-area-inset-left, 0px);
-            --sar: env(safe-area-inset-right, 0px);
-        }
-
-        header {
-            padding-top: calc(1rem + var(--sat));
-            padding-left: max(1rem, var(--sal));
-            padding-right: max(1rem, var(--sar));
-        }
-
-        /* ═════════════════════════════════════════════════════════════════════
-           NEXA ADMIN RESPONSIVE & WCAG AAA TOUCH TARGET ENGINE (320px - 1440px+)
-           ═════════════════════════════════════════════════════════════════════ */
-        .btn, .preset-btn {
-            min-height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .action-btn {
-            min-width: 44px;
-            min-height: 44px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.06);
-            color: var(--text-main);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            font-size: 14px;
-            touch-action: manipulation;
-        }
-
-        .rank-input {
-            width: 60px;
-            min-height: 44px;
-            padding: 6px 8px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: #fff;
-            text-align: center;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        /* Tablet & Intermediate Screens (577px - 1024px) */
-        @media (max-width: 1024px) {
-            header {
-                padding: 0.85rem 1.25rem;
-                gap: 1rem;
-            }
-            .brand-text p { display: none; }
-            main { padding: 1.25rem 1rem; }
-            
-            .controls-bar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            .search-box { width: 100%; min-width: 100%; }
-            .header-actions { width: 100%; flex-wrap: wrap; }
-            .header-actions .btn { flex: 1 1 auto; justify-content: center; }
-
-            /* Fixed Tablet Grid: Exactly 5 Active Columns without Wrapping */
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            header { flex-direction: column; align-items: stretch; }
+            .brand { justify-content: space-between; }
+            .admin-tabs { width: 100%; overflow-x: auto; justify-content: space-between; }
             .project-row {
-                grid-template-columns: 48px 64px 1fr auto auto;
-                align-items: center;
-                gap: 12px;
-                padding: 12px 14px;
+                grid-template-columns: 44px 56px 1fr auto;
+                gap: 10px; padding: 12px;
             }
-            .project-row > div:has(.row-badge-pill),
-            .row-badge-pill,
-            .row-price {
-                display: none !important;
-            }
-            .row-actions {
-                gap: 8px;
-            }
-        }
-
-        /* Mobile Screens (320px - 576px) */
-        @media (max-width: 576px) {
-            header { padding: 0.75rem 1rem; }
-            .brand-logo { width: 36px; height: 36px; font-size: 16px; }
-            .brand-text h1 { font-size: clamp(13px, 4vw, 15px); }
-
-            .rag-meta-banner {
-                padding: 1rem;
-                margin-bottom: 1.25rem;
-                gap: 1rem;
-            }
-            .rag-meta-info h2 { font-size: 14.5px; }
-            .rag-meta-info p { display: none; }
-            .rag-stats {
-                width: 100%;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-            .stat-pill:last-child {
-                grid-column: 1 / -1;
-                justify-content: center;
-            }
-
-            .preset-buttons {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-                width: 100%;
-            }
-            .preset-buttons span {
-                grid-column: 1 / -1;
-                margin-bottom: 2px;
-            }
-            .preset-btn {
-                width: 100%;
-                justify-content: center;
-                font-size: 12px;
-                padding: 8px 10px;
-            }
-
-            /* Clean Mobile Card Grid with Touch Ergonomics */
-            .project-row {
-                grid-template-columns: 44px 56px 1fr;
-                grid-template-areas:
-                    "order thumb title"
-                    "actions actions actions";
-                gap: 10px;
-                padding: 12px;
-            }
-            .project-row > :not(.row-order):not(.row-thumb):not(.row-title-box):not(.row-actions) {
-                display: none !important;
-            }
-            .row-order { grid-area: order; }
-            .row-thumb { grid-area: thumb; width: 56px; height: 44px; border-radius: 8px; }
-            .row-title-box { grid-area: title; min-width: 0; }
-            .row-title-box h3 { font-size: 14px; line-height: 1.3; overflow-wrap: break-word; }
-            .row-title-box p { font-size: 11.5px; margin-top: 2px; }
-            .row-actions {
-                grid-area: actions;
-                display: grid;
-                grid-template-columns: 44px 44px 44px 44px;
-                justify-content: space-between;
-                width: 100%;
-                padding-top: 8px;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-            }
-            .action-btn { width: 100%; height: 44px; }
-            
-            #toast {
-                max-width: calc(100% - 24px);
-                left: 12px;
-                right: 12px;
-                bottom: calc(12px + var(--sab));
-                font-size: 13px;
-                padding: 10px 14px;
-            }
+            .project-row > :not(.row-order):not(.row-thumb):not(.row-title-box):not(.row-actions) { display: none !important; }
+            .row-actions { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- PIN LOGIN OVERLAY -->
+    <div class="pin-modal-overlay" id="pinLoginOverlay">
+        <div class="pin-modal-card">
+            <div class="brand-logo" style="margin:0 auto 1.25rem auto; width:52px; height:52px; font-size:22px;">N</div>
+            <h2 style="font-size:19px; font-weight:700; color:#fff;">Danışman Yönetim Girişi</h2>
+            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Suzanne Tenekecioğlu & Coldwell Banker VIP yönetim paneline erişmek için PIN kodunuzu giriniz.</p>
+            
+            <form onsubmit="handlePinLogin(event)">
+                <input type="password" id="pinInput" class="pin-input" placeholder="••••••••" required autofocus>
+                <div id="pinErrorMsg" style="color:var(--accent-red); font-size:12.5px; font-weight:600; display:none; margin-bottom:12px;"></div>
+                <button type="submit" id="pinSubmitBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:12px; font-size:14px; font-weight:700;">
+                    <i class="fa-solid fa-lock-open"></i> Güvenli Giriş Yap
+                </button>
+            </form>
+            <div style="margin-top:1.25rem;">
+                <a href="/site" style="color:var(--text-muted); font-size:12.5px; text-decoration:none;"><i class="fa-solid fa-arrow-left"></i> Web Sitesine Geri Dön</a>
+            </div>
+        </div>
+    </div>
 
     <!-- HEADER -->
     <header>
         <div class="brand">
             <div class="brand-logo">N</div>
             <div class="brand-text">
-                <h1>NEXA VIP — Yönetim & Sıralama Paneli</h1>
-                <p>RAG Yapay Zeka Entegreli Vitrin & Kart Sıralama Merkezi</p>
+                <h1>NEXA VIP — Danışman Yönetim Paneli</h1>
+                <p>Suzanne Tenekecioğlu • Coldwell Banker VIP (Office 470)</p>
             </div>
         </div>
+
+        <nav class="admin-tabs">
+            <button class="admin-tab-btn active" onclick="switchAdminTab('projects')"><i class="fa-solid fa-layer-group"></i> Proje Sıralaması</button>
+            <button class="admin-tab-btn" onclick="switchAdminTab('crm')"><i class="fa-solid fa-users"></i> Müşteri & Randevu CRM <span id="badgeCrmCount" style="background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:10px; font-size:11px;">...</span></button>
+            <button class="admin-tab-btn" onclick="switchAdminTab('health')"><i class="fa-solid fa-heart-pulse"></i> Sistem Sağlığı</button>
+        </nav>
+
         <div class="header-actions">
             <a href="/site" target="_blank" class="btn btn-secondary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Canlı Siteyi Aç</a>
-            <button onclick="saveAndPublishOrder()" class="btn btn-success" id="saveBtn"><i class="fa-solid fa-cloud-arrow-up"></i> Sıralamayı Kaydet & Canlıya Al</button>
+            <button onclick="logoutAdmin()" class="btn btn-danger" title="Oturumu Kapat"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
     </header>
 
     <!-- MAIN -->
     <main>
-        <!-- RAG META BANNER -->
-        <div class="rag-meta-banner">
-            <div class="rag-meta-info">
-                <h2><i class="fa-solid fa-brain" style="color:var(--accent);"></i> RAG Otomatik Çıkarılan Proje Parametreleri</h2>
-                <p id="ragSubtitle">Tüm projeler ve portföy bilgileri vektör RAG veritabanından dinamik olarak senkronize edildi.</p>
+        <!-- ═════════════════════════════════════════════════════════════════
+             TAB 1: PROJECTS ORDER & SHOWCASE MANAGEMENT
+             ═════════════════════════════════════════════════════════════════ -->
+        <div id="tab-projects" class="tab-pane active">
+            <div class="rag-meta-banner">
+                <div class="rag-meta-info">
+                    <h2><i class="fa-solid fa-brain" style="color:var(--accent);"></i> Vitrin Proje Sıralaması & Öncelik Yönetimi</h2>
+                    <p id="ragSubtitle">Projelerin sitedeki görünüm sırasını belirleyin, istediğiniz projeyi en başa sabitleyin veya siteden gizleyin.</p>
+                </div>
+                <div class="rag-stats">
+                    <div class="stat-pill"><i class="fa-solid fa-layer-group"></i> <span id="statProjectCount">32</span> Proje</div>
+                    <div class="stat-pill"><i class="fa-brands fa-google-drive"></i> <span id="statDriveCount">32</span> Bulut Video</div>
+                    <div class="stat-pill"><i class="fa-solid fa-shield-halved" style="color:var(--accent-green);"></i> <span id="statStatus">100% SSOT Doğrulandı</span></div>
+                </div>
             </div>
-            <div class="rag-stats">
-                <div class="stat-pill"><i class="fa-solid fa-layer-group"></i> <span id="statProjectCount">22</span> Proje</div>
-                <div class="stat-pill"><i class="fa-brands fa-google-drive"></i> <span id="statDriveCount">22</span> Bulut Video</div>
-                <div class="stat-pill"><i class="fa-solid fa-shield-halved" style="color:var(--accent-green);"></i> <span id="statStatus">100% SSOT Doğrulandı</span></div>
+
+            <div class="controls-bar">
+                <div class="preset-buttons">
+                    <span style="font-size:12px; font-weight:700; color:var(--text-muted); margin-right:4px;">Akıllı Önayarlar:</span>
+                    <button onclick="applyPreset('rag_ai')" class="preset-btn active" id="btn-preset-rag"><i class="fa-solid fa-wand-magic-sparkles"></i> RAG AI Önceliği</button>
+                    <button onclick="applyPreset('price_asc')" class="preset-btn" id="btn-preset-pasc"><i class="fa-solid fa-arrow-down-1-9"></i> Fiyat: Artan</button>
+                    <button onclick="applyPreset('price_desc')" class="preset-btn" id="btn-preset-pdesc"><i class="fa-solid fa-arrow-up-9-1"></i> Fiyat: Azalan</button>
+                    <button onclick="applyPreset('launch_first')" class="preset-btn" id="btn-preset-launch"><i class="fa-solid fa-rocket"></i> Lansman / Yeni Projeler</button>
+                </div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Proje veya bölge ara..." oninput="filterRows()">
+                    </div>
+                    <button onclick="saveAndPublishOrder()" class="btn btn-success" id="saveBtn"><i class="fa-solid fa-cloud-arrow-up"></i> Sıralamayı Canlıya Kaydet</button>
+                </div>
+            </div>
+
+            <div class="card-list" id="cardListContainer">
+                <div style="text-align:center; padding:3rem; color:var(--text-muted);">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p style="margin-top:1rem;">Projeler getiriliyor...</p>
+                </div>
             </div>
         </div>
 
-        <!-- CONTROLS BAR -->
-        <div class="controls-bar">
-            <div class="preset-buttons">
-                <span style="font-size:12px; font-weight:700; color:var(--text-muted); margin-right:4px;">RAG Akıllı Önayarlar:</span>
-                <button onclick="applyPreset('rag_ai')" class="preset-btn active" id="btn-preset-rag"><i class="fa-solid fa-wand-magic-sparkles"></i> RAG AI Önceliği</button>
-                <button onclick="applyPreset('price_asc')" class="preset-btn" id="btn-preset-pasc"><i class="fa-solid fa-arrow-down-1-9"></i> Fiyat: Artan</button>
-                <button onclick="applyPreset('price_desc')" class="preset-btn" id="btn-preset-pdesc"><i class="fa-solid fa-arrow-up-9-1"></i> Fiyat: Azalan</button>
-                <button onclick="applyPreset('launch_first')" class="preset-btn" id="btn-preset-launch"><i class="fa-solid fa-rocket"></i> Lansman / Yeni Projeler</button>
-                <button onclick="applyPreset('reset')" class="preset-btn" id="btn-preset-reset"><i class="fa-solid fa-rotate-left"></i> Orijinal Sıra</button>
+        <!-- ═════════════════════════════════════════════════════════════════
+             TAB 2: CRM & CLIENT APPOINTMENTS
+             ═════════════════════════════════════════════════════════════════ -->
+        <div id="tab-crm" class="tab-pane">
+            <div class="rag-meta-banner" style="background:linear-gradient(135deg, rgba(48,209,88,0.12), rgba(0,113,227,0.08)); border-color:rgba(48,209,88,0.25);">
+                <div class="rag-meta-info">
+                    <h2><i class="fa-solid fa-users" style="color:var(--accent-green);"></i> Müşteri & Randevu Talepleri (CRM)</h2>
+                    <p>Web sitesi formlarından, online randevu modülünden ve Mira AI asistanından gelen tüm potansiyel müşteri talepleri.</p>
+                </div>
+                <div class="rag-stats">
+                    <button onclick="loadCrmData()" class="btn btn-secondary btn-sm" style="font-size:12px;"><i class="fa-solid fa-arrows-rotate"></i> Yenile</button>
+                </div>
             </div>
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Proje veya bölge ara..." oninput="filterRows()">
+
+            <div class="crm-table-container">
+                <table class="crm-table">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Müşteri Bilgisi</th>
+                            <th>Telefon</th>
+                            <th>İlgilenilen Konu / Bölge</th>
+                            <th>Danışman Notu / Mesaj</th>
+                            <th>Statü</th>
+                            <th>Aksiyonlar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crmTableBody">
+                        <tr>
+                            <td colspan="7" style="text-align:center; padding:3rem; color:var(--text-muted);">
+                                <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                                <p style="margin-top:1rem;">Müşteri talepleri yükleniyor...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- CARDS ORDER LIST -->
-        <div class="card-list" id="cardListContainer">
-            <!-- Dynamic project rows loaded via JS -->
-            <div style="text-align:center; padding:3rem; color:var(--text-muted);">
-                <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
-                <p style="margin-top:1rem;">Projeler RAG sisteminden getiriliyor...</p>
+        <!-- ═════════════════════════════════════════════════════════════════
+             TAB 3: SYSTEM HEALTH & AUTONOMOUS SYNC
+             ═════════════════════════════════════════════════════════════════ -->
+        <div id="tab-health" class="tab-pane">
+            <div class="rag-meta-banner">
+                <div class="rag-meta-info">
+                    <h2><i class="fa-solid fa-heart-pulse" style="color:var(--accent);"></i> NEXA PRIME Sistem & Veritabanı Sağlığı</h2>
+                    <p>Sistem bileşenlerinin, RAG vektör belleğinin ve Coldwell Banker senkronizasyonunun canlı durumu.</p>
+                </div>
+                <div class="rag-stats">
+                    <button onclick="triggerManualSync()" class="btn btn-primary" id="btnManualSync"><i class="fa-solid fa-rotate"></i> CB & Drive Canlı Senkronize Et</button>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;" id="healthMetricsGrid">
+                <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:1.5rem;">
+                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;"><i class="fa-solid fa-database" style="color:var(--accent);"></i> Veritabanı Durumu</div>
+                    <div style="font-size:22px; font-weight:800; color:#fff;" id="healthDbMode">SQLite WAL</div>
+                    <div style="font-size:12px; color:var(--accent-green); margin-top:4px;"><i class="fa-solid fa-circle-check"></i> Concurrency Kilidi Aktif</div>
+                </div>
+
+                <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:1.5rem;">
+                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;"><i class="fa-solid fa-file-pdf" style="color:var(--accent);"></i> RAG Doküman & Vektör Bellek</div>
+                    <div style="font-size:22px; font-weight:800; color:#fff;" id="healthChunks">...</div>
+                    <div style="font-size:12px; color:var(--text-muted); margin-top:4px;" id="healthDocs">Doküman Parçaları İndekslendi</div>
+                </div>
+
+                <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:1.5rem;">
+                    <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;"><i class="fa-solid fa-user-tie" style="color:var(--accent);"></i> Atanan Danışman</div>
+                    <div style="font-size:22px; font-weight:800; color:#fff;" id="healthAgent">Suzanne Tenekecioğlu</div>
+                    <div style="font-size:12px; color:var(--text-muted); margin-top:4px;" id="healthOffice">Coldwell Banker VIP (Office 470)</div>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- TOAST -->
+    <!-- TOAST NOTIFICATION -->
     <div id="toast">
         <i class="fa-solid fa-circle-check" style="color:var(--accent-green);"></i>
-        <span id="toastMsg">Sıralama başarıyla güncellendi!</span>
+        <span id="toastMsg">İşlem başarıyla tamamlandı.</span>
     </div>
 
     <script>
         let allProjects = [];
-        let currentOrder = [];
+        let allCustomers = [];
 
         function getAdminPin() {
             const urlParams = new URLSearchParams(window.location.search);
-            const pin = urlParams.get('pin') || localStorage.getItem('nexa_admin_pin') || '';
-            if (pin) localStorage.setItem('nexa_admin_pin', pin);
-            return pin;
+            const pinFromUrl = urlParams.get('pin');
+            if (pinFromUrl) {
+                localStorage.setItem('nexa_admin_pin', pinFromUrl);
+                return pinFromUrl;
+            }
+            return localStorage.getItem('nexa_admin_pin') || '';
         }
 
         function getAuthHeaders(extraHeaders = {}) {
@@ -432,6 +457,111 @@
             const headers = { 'Content-Type': 'application/json' };
             if (pin) headers['X-Admin-Pin'] = pin;
             return Object.assign(headers, extraHeaders);
+        }
+
+        async function checkAuthAndInit() {
+            const pin = getAdminPin();
+            if (!pin) {
+                showPinLoginOverlay();
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/admin/auth/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Admin-Pin': pin },
+                    body: JSON.stringify({ pin: pin })
+                });
+                if (res.ok) {
+                    hidePinLoginOverlay();
+                    loadAdminData();
+                    loadCrmData();
+                    loadHealthData();
+                } else {
+                    showPinLoginOverlay();
+                }
+            } catch (err) {
+                // If offline or network issue, attempt loading directly
+                loadAdminData();
+            }
+        }
+
+        function showPinLoginOverlay() {
+            const el = document.getElementById('pinLoginOverlay');
+            if (el) el.style.display = 'flex';
+        }
+
+        function hidePinLoginOverlay() {
+            const el = document.getElementById('pinLoginOverlay');
+            if (el) el.style.display = 'none';
+        }
+
+        async function handlePinLogin(e) {
+            if (e) e.preventDefault();
+            const pinInp = document.getElementById('pinInput');
+            const errMsg = document.getElementById('pinErrorMsg');
+            const submitBtn = document.getElementById('pinSubmitBtn');
+            const pin = pinInp ? pinInp.value.trim() : '';
+
+            if (!pin) return;
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Doğrulanıyor...';
+            }
+
+            try {
+                const res = await fetch('/api/admin/auth/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pin: pin })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    localStorage.setItem('nexa_admin_pin', pin);
+                    hidePinLoginOverlay();
+                    showToast('Giriş başarılı! Yönetim paneline hoş geldiniz.');
+                    loadAdminData();
+                    loadCrmData();
+                    loadHealthData();
+                } else {
+                    if (errMsg) {
+                        errMsg.style.display = 'block';
+                        errMsg.innerText = data.message || 'Geçersiz Danışman PIN Kodu.';
+                    }
+                }
+            } catch (err) {
+                if (errMsg) {
+                    errMsg.style.display = 'block';
+                    errMsg.innerText = 'Sunucuya bağlanılamadı. Lütfen tekrar deneyin.';
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Güvenli Giriş Yap';
+                }
+            }
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('nexa_admin_pin');
+            document.cookie = "admin_pin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            showPinLoginOverlay();
+            showToast('Oturum kapatıldı.');
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+            const targetBtn = Array.from(document.querySelectorAll('.admin-tab-btn')).find(b => b.getAttribute('onclick')?.includes(tabName));
+            if (targetBtn) targetBtn.classList.add('active');
+
+            const targetPane = document.getElementById(`tab-${tabName}`);
+            if (targetPane) targetPane.classList.add('active');
+
+            if (tabName === 'crm') loadCrmData();
+            if (tabName === 'health') loadHealthData();
         }
 
         async function loadAdminData() {
@@ -443,12 +573,10 @@
                     const data = await res.json();
                     allProjects = data.projects || [];
                     document.getElementById('statProjectCount').innerText = allProjects.length;
+                    document.getElementById('statDriveCount').innerText = allProjects.length;
                     renderProjectRows();
-                } else {
-                    const fallbackRes = await fetch('/api/projects');
-                    const fbData = await fallbackRes.json();
-                    allProjects = Array.isArray(fbData) ? fbData : (fbData.projects || fbData.data || []);
-                    renderProjectRows();
+                } else if (res.status === 403) {
+                    showPinLoginOverlay();
                 }
             } catch (e) {
                 console.error('Veri yükleme hatası:', e);
@@ -475,14 +603,14 @@
             }
 
             container.innerHTML = allProjects.map((p, idx) => {
-                const thumb = escapeHtml(p.image || (p.images && p.images[0]) || '/static/img/placeholder.jpg');
+                const thumb = escapeHtml(p.image || (p.images && p.images[0]) || p.thumbnail || '/static/img/placeholder.jpg');
                 const isPinned = p.is_pinned === true;
                 const isHidden = p.is_hidden === true;
                 const safeTitle = escapeHtml(p.title || p.name || 'Proje');
                 const safeLoc = escapeHtml(p.location || 'Ankara');
                 const safeDev = escapeHtml(p.developer || 'Coldwell Banker VIP');
                 const priceText = escapeHtml(p.price_display || (p.price ? p.price + ' TL' : 'Danışınız'));
-                const safeVideo = escapeHtml(p.drive_video_preview || '#');
+                const safeVideo = escapeHtml(p.drive_video_preview || p.cloud_direct_url || '#');
                 const safeId = escapeHtml(String(p.id));
 
                 return `
@@ -538,9 +666,6 @@
             allProjects.splice(targetIdx, 0, item);
             renderProjectRows();
             
-            const restoredInput = document.querySelector(`#row-${id} .rank-input`);
-            if (restoredInput) restoredInput.focus();
-
             showToast(`"${item.title}" ${newRank}. sıraya taşındı.`);
         }
 
@@ -598,23 +723,14 @@
             return isNaN(num) ? 0 : num;
         }
 
-        let _filterRaf = null;
         function filterRows() {
-            if (_filterRaf) cancelAnimationFrame(_filterRaf);
-            _filterRaf = requestAnimationFrame(() => {
-                const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
-                const rows = document.querySelectorAll('.project-row');
-                const visibilityMap = [];
-                rows.forEach(r => {
-                    const titleEl = r.querySelector('.row-title-box h3');
-                    const locEl = r.querySelector('.row-title-box p');
-                    const text = ((titleEl ? titleEl.textContent : '') + ' ' + (locEl ? locEl.textContent : '')).toLowerCase();
-                    visibilityMap.push({ row: r, visible: !query || text.includes(query) });
-                });
-
-                visibilityMap.forEach(item => {
-                    item.row.style.display = item.visible ? 'grid' : 'none';
-                });
+            const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('.project-row');
+            rows.forEach(r => {
+                const titleEl = r.querySelector('.row-title-box h3');
+                const locEl = r.querySelector('.row-title-box p');
+                const text = ((titleEl ? titleEl.textContent : '') + ' ' + (locEl ? locEl.textContent : '')).toLowerCase();
+                r.style.display = (!query || text.includes(query)) ? 'grid' : 'none';
             });
         }
 
@@ -645,8 +761,173 @@
             } catch (e) {
                 showToast('Bağlantı hatası oluştu.');
             } finally {
-                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Sıralamayı Kaydet & Canlıya Al`;
+                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Sıralamayı Canlıya Kaydet`;
                 btn.disabled = false;
+            }
+        }
+
+        // ═════════════════════════════════════════════════════════════════
+        // CRM CONTROLLERS
+        // ═════════════════════════════════════════════════════════════════
+        async function loadCrmData() {
+            try {
+                const res = await fetch('/api/admin/customers', {
+                    headers: getAuthHeaders()
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    allCustomers = data.customers || [];
+                    const badge = document.getElementById('badgeCrmCount');
+                    if (badge) badge.innerText = allCustomers.length;
+                    renderCrmRows();
+                }
+            } catch (err) {
+                console.error('CRM load error:', err);
+            }
+        }
+
+        function renderCrmRows() {
+            const tbody = document.getElementById('crmTableBody');
+            if (!tbody) return;
+
+            if (!allCustomers.length) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:3rem; color:var(--text-muted);">Henüz gelen müşteri veya randevu talebi bulunmuyor.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = allCustomers.map(c => {
+                const safeName = escapeHtml(c.name || 'Misafir Müşteri');
+                const safePhone = escapeHtml(c.phone || '');
+                const safeEmail = escapeHtml(c.email || '-');
+                const safeNotes = escapeHtml(c.notes || '-');
+                const safeDate = escapeHtml(c.created_at || '-');
+                const stage = c.stage || 'appointment';
+                const safeId = c.id;
+
+                const cleanPhone = safePhone.replace(/[^0-9]/g, '');
+                const trPhone = cleanPhone.startsWith('90') ? cleanPhone : (cleanPhone.startsWith('0') ? '9' + cleanPhone : '90' + cleanPhone);
+                const waUrl = `https://wa.me/${trPhone}?text=${encodeURIComponent('Merhaba Sayın ' + safeName + ', talebinizle ilgili görüşmek üzere yazıyorum.')}`;
+                const telUrl = `tel:${safePhone}`;
+
+                return `
+                    <tr>
+                        <td style="color:var(--text-muted); font-size:12px; white-space:nowrap;">${safeDate}</td>
+                        <td>
+                            <div style="font-weight:700; color:#fff;">${safeName}</div>
+                            <div style="font-size:12px; color:var(--text-muted);">${safeEmail}</div>
+                        </td>
+                        <td>
+                            <a href="${telUrl}" style="color:var(--accent); font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px;"><i class="fa-solid fa-phone"></i> ${safePhone}</a>
+                        </td>
+                        <td>
+                            <span style="font-weight:600; color:#fff;">${escapeHtml(c.project_id || 'Genel Danışmanlık')}</span>
+                        </td>
+                        <td style="max-width:320px; font-size:12.5px; color:var(--text-muted); line-height:1.4;">
+                            ${safeNotes}
+                        </td>
+                        <td>
+                            <select class="crm-stage-select" onchange="updateCrmStage(${safeId}, this.value)">
+                                <option value="appointment" ${stage === 'appointment' ? 'selected' : ''}>📅 Yeni Randevu</option>
+                                <option value="Görüşüldü" ${stage === 'Görüşüldü' ? 'selected' : ''}>💬 Görüşüldü</option>
+                                <option value="Teklif Verildi" ${stage === 'Teklif Verildi' ? 'selected' : ''}>📄 Teklif Verildi</option>
+                                <option value="Sözleşme Aşaması" ${stage === 'Sözleşme Aşaması' ? 'selected' : ''}>⭐ Sözleşme</option>
+                                <option value="Tamamlandı" ${stage === 'Tamamlandı' ? 'selected' : ''}>✅ Tamamlandı</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div style="display:flex; gap:6px;">
+                                <a href="${waUrl}" target="_blank" class="btn btn-secondary btn-sm" style="background:rgba(37,211,102,0.15); color:#25D366; border-color:rgba(37,211,102,0.3); padding:6px 10px; min-height:34px; font-size:12px;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                                <button onclick="deleteCrmLead(${safeId})" class="btn btn-secondary btn-sm" style="color:var(--accent-red); padding:6px 10px; min-height:34px; font-size:12px;" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function updateCrmStage(id, newStage) {
+            try {
+                const res = await fetch('/api/admin/customers', {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ id: id, stage: newStage })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Müşteri durumu güncellendi.');
+                }
+            } catch (err) {
+                showToast('Güncelleme hatası.');
+            }
+        }
+
+        async function deleteCrmLead(id) {
+            if (!confirm('Bu müşteri kaydını silmek istediğinize emin misiniz?')) return;
+            try {
+                const res = await fetch(`/api/admin/customers?id=${id}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Kayıt silindi.');
+                    loadCrmData();
+                }
+            } catch (err) {
+                showToast('Silme hatası.');
+            }
+        }
+
+        // ═════════════════════════════════════════════════════════════════
+        // SYSTEM HEALTH & MANUAL SYNC
+        // ═════════════════════════════════════════════════════════════════
+        async function loadHealthData() {
+            try {
+                const res = await fetch('/api/admin/system-health', {
+                    headers: getAuthHeaders()
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const h = data.health || {};
+                    const chunkEl = document.getElementById('healthChunks');
+                    if (chunkEl) chunkEl.innerText = `${h.total_chunks || 0} Vektör Parçası`;
+                    const docEl = document.getElementById('healthDocs');
+                    if (docEl) docEl.innerText = `${h.total_docs || 0} Doküman • ${h.total_projects || 0} Proje`;
+                    const agentEl = document.getElementById('healthAgent');
+                    if (agentEl) agentEl.innerText = h.agent_name || 'Suzanne Tenekecioğlu';
+                }
+            } catch (err) {
+                console.error('Health load error:', err);
+            }
+        }
+
+        async function triggerManualSync() {
+            const btn = document.getElementById('btnManualSync');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Senkronize Ediliyor...';
+            }
+
+            try {
+                const res = await fetch('/api/admin/sync-trigger', {
+                    method: 'POST',
+                    headers: getAuthHeaders()
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('🚀 Canlı senkronizasyon başlatıldı!');
+                    setTimeout(() => {
+                        loadAdminData();
+                        loadHealthData();
+                    }, 3500);
+                }
+            } catch (err) {
+                showToast('Senkronizasyon hatası.');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-rotate"></i> CB & Drive Canlı Senkronize Et';
+                }
             }
         }
 
@@ -658,7 +939,7 @@
             window._toastTimeout = setTimeout(() => { toast.style.display = 'none'; }, 3200);
         }
 
-        document.addEventListener('DOMContentLoaded', loadAdminData);
+        document.addEventListener('DOMContentLoaded', checkAuthAndInit);
     </script>
 </body>
 </html>
