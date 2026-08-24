@@ -1,0 +1,2336 @@
+================================================================================
+       NEXA PRIME v2 — TÜM KULLANICI İSTEMLERİ & GELİŞTİRME KRONOLOJİSİ         
+               (Sohbetin Başından Sonuna Kadar Eksiksiz Döküm)                  
+================================================================================
+Proje Adı        : NEXA PRIME v2 — Gayrimenkul Zekası & Portföy Ekosistemi
+Danışman         : Suzanne Tenekecioğlu (Coldwell Banker VIP Gayrimenkul)
+İletişim         : +90 535 489 56 56 | https://wa.me/905354895656
+GitHub Deposu    : https://github.com/nexadigitalofficial/suzannegit.git
+Rapor Oluşturma  : 24.08.2026 10:37:17
+Toplam İstem     : 100 Adet Doğrulanmış Kullanıcı İstemi
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+                          İSTEMLERİN KRONOLOJİK LİSTESİ                         
+────────────────────────────────────────────────────────────────────────────────
+
+[001] İSTEM NO #1 (Adım: 0) — Tarih/Saat: 2026-08-20T11:28:16+03:00
+────────────────────────────────────────────────────────────────────────────────
+sistemi çok detaylı analiz et bir eksik bug çalışmada sorun var mı ve bir sorun var sistemde çok detaylı analiz et , yüklenmiyor projeler ve genel sistem birşeye basıyorum gelmiyor vs. vs. çok kapsamlı analiistiyorum.  sadece analiz et ve sorunu bul neden olduğunu getir kod değiştirme
+
+
+[002] İSTEM NO #2 (Adım: 44) — Tarih/Saat: 2026-08-20T15:36:54+03:00
+────────────────────────────────────────────────────────────────────────────────
+biz bunu render a yükledik ve githun workflowdan cron yaptık da o yüzden.
+
+
+[003] İSTEM NO #3 (Adım: 88) — Tarih/Saat: 2026-08-20T15:37:17+03:00
+────────────────────────────────────────────────────────────────────────────────
+https://github.com/nexadigitalofficial/suzannegit    burdan inceleyebilirsin
+
+
+[004] İSTEM NO #4 (Adım: 111) — Tarih/Saat: 2026-08-20T19:08:07+03:00
+────────────────────────────────────────────────────────────────────────────────
+ÇOK DETAYLI TEKRAR ANALİZ ET VE GİTHUBI DA
+
+
+[005] İSTEM NO #5 (Adım: 190) — Tarih/Saat: 2026-08-20T19:14:47+03:00
+────────────────────────────────────────────────────────────────────────────────
+EĞER BİR SORUN VARSA ANALİZ ET VE ÇÖZ VE GİTHUB COMMİT YAP LÜTFEN
+
+
+[006] İSTEM NO #6 (Adım: 338) — Tarih/Saat: 2026-08-20T19:21:11+03:00
+────────────────────────────────────────────────────────────────────────────────
+MOBİLE UYUMLU MU ÇOK DETAYLI ANALİZ ET GELİŞTİRİLMESİ GEREKEN BİRYER VARSA GELİŞTİR
+
+
+[007] İSTEM NO #7 (Adım: 483) — Tarih/Saat: 2026-08-20T19:44:26+03:00
+────────────────────────────────────────────────────────────────────────────────
+SİSTEMİN EKSİK BİR YANI VAR MI NASIL GELİŞTİREBİLİRİZ ÇOK DETAYLI ARAŞTIR
+
+
+[008] İSTEM NO #8 (Adım: 493) — Tarih/Saat: 2026-08-20T19:45:25+03:00
+────────────────────────────────────────────────────────────────────────────────
+ŞİMDİLİK OLANI GELİŞTİRELİM YENİ BİRŞEY YAPMA
+
+
+[009] İSTEM NO #9 (Adım: 559) — Tarih/Saat: 2026-08-20T21:03:45+03:00
+────────────────────────────────────────────────────────────────────────────────
+PROJE CARDLARI YÜKLENMİYOR SORUNU BUL VE ÇÖZ
+
+
+[010] İSTEM NO #10 (Adım: 599) — Tarih/Saat: 2026-08-20T21:45:20+03:00
+────────────────────────────────────────────────────────────────────────────────
+başka bir sorun var mı
+
+
+[011] İSTEM NO #11 (Adım: 652) — Tarih/Saat: 2026-08-20T21:48:58+03:00
+────────────────────────────────────────────────────────────────────────────────
+angim beytepede ankaport sarayın videosu açılıyor , bunları düzelt lütfen.
+
+
+[012] İSTEM NO #12 (Adım: 698) — Tarih/Saat: 2026-08-20T21:55:08+03:00
+────────────────────────────────────────────────────────────────────────────────
+Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+yazlık almak istiyorum , hangi bölgelerde mevcut
+NEXA PRIME v2 olarak talebinizi anlıyorum. Yazlık almak isteğinize yönelik portföyümüzde öne çıkan markalı projemiz bulunmaktadır.
+İşte size özel olarak değerlendirebileceğiniz projemiz:
+NEXA Royal Yalıkavak
+Lokasyon: Bodrum, Yalıkavak Koyu Tepeleri, Muğla (deniz manzaralı).
+Konsept/Tipler: Ultra lüks, deniz manzaralı premium villalardan oluşan markalı bir konut projesidir. Oda sayısı veya kat planı detayları danışmanımız tarafından netleştirilecektir.
+Fiyat/Ödeme Özeti: Fiyat bilgisi ve ödeme planı detayları henüz belirtilmemiştir. Detaylı bilgi için danışmanımız ile görüşmeniz gerekmektedir.
+Teslim: Teslim süresine dair bilgi bulunmamaktadır.
+TKGM/Ada-Parsel: 1540 Ada, 12 Parsel (TKGM onaylı).
+NEXA Royal Yalıkavak, Bodrum'un eşsiz güzelliğinde, deniz manzaralı ultra lüks villalar arayanlar için ideal bir seçenektir. Diğer projelerimiz genellikle Ankara ve Eskişehir merkezli olup, yazlık konseptine uygun değillerdir.
+Detaylı sunum, güncel fiyat listesi ve parsel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE Projesi, Ankara Çubuk Esenboğa'da, Yıldırım Beyazıt Üniversitesi Kampüsü tam karşısında yer almaktadır. - Zemin+8 katlı tek blokta toplam 257 adet 1+1 daireden oluşan yüksek prim potansiyelli konut projesidir. - Güncel başlangıç fiyatı 1.350.000 TL olup, 825.000 TL peşinat ve esnek ödeme planı sunulmaktadır. - Yerden ısıtma ve modern donanımı ile öğrenci/akademisyen kiralama talebi garantilidir. - Tapu bilgisi 190438 Ada, 15 Parsel olarak TKGM sisteminde kayıtlı ve onaylıdır.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+
+<truncated 3034 bytes>
+istesi ve parsel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE Projesi, Ankara Çubuk Esenboğa'da, Yıldırım Beyazıt Üniversitesi Kampüsü tam karşısında yer almaktadır. - Zemin+8 katlı tek blokta toplam 257 adet 1+1 daireden oluşan yüksek prim potansiyelli konut projesidir. - Güncel başlangıç fiyatı 1.350.000 TL olup, 825.000 TL peşinat ve esnek ödeme planı sunulmaktadır. - Yerden ısıtma ve modern donanımı ile öğrenci/akademisyen kiralama talebi garantilidir. - Tapu bilgisi 190438 Ada, 15 Parsel olarak TKGM sisteminde kayıtlı ve onaylıdır.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+%36 Uyumlu
+ Çubuk • 1.950.000 - 2.800.000 TL
+💡 * JOVEN KAMPÜS, Ankara'nın hızla değerlenen Çubuk bölgesinde konumlanıyor. * Markalı konut projesi, modern ve yatırım odaklı 1+1 daireler sunuyor. * Avantajlı fiyatlar 1.950.000 TL ile 2.800.000 TL aralığında. * Tapu durumu (Ada/Parsel: 190440/8) TKGM onaylı ve şeffaf.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+S POINT - VIP SARAY
+%36 Uyumlu
+ Pursaklar • 1.990.000 - 4.000.000 TL
+💡 * S POINT - VIP SARAY, Ankara'nın gelişen bölgesi Pursaklar, Saray Osmangazi Mahallesi'nde konumlanmıştır. * Markalı konut projesi, tek blokta yer alan 149 adet, 1+1 ve 2+1 daire tipleri sunmaktadır. * Fiyatlar ₺1.990.000'den başlamakta, kat ve cepheye göre değişmektedir. * Ödeme planlarında peşinatsız 18 ay taksit veya %50 peşinat ile 18 ay taksit imkanı mevcuttur. * Proje teslim süresi 24 aydır. * Tapu bilgileri 98412 ada, 1 parsel olup, TKGM sorgusu geçerlidir.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+Adınız  
+
+
+
+
+
+
+
+
+
+
+
+
+sana ai chatbot konuşmasından bir örnek attım mesela vip marini söylemiyor . bunlara dikkat et amacımıza göre en iyi çalışacak şekilde chatbtumuzu geliştir lütfen
+
+
+[013] İSTEM NO #13 (Adım: 706) — Tarih/Saat: 2026-08-20T21:55:55+03:00
+────────────────────────────────────────────────────────────────────────────────
+Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+yazlık almak istiyorum , hangi bölgelerde mevcut
+NEXA PRIME v2 olarak talebinizi anlıyorum. Yazlık almak isteğinize yönelik portföyümüzde öne çıkan markalı projemiz bulunmaktadır.
+İşte size özel olarak değerlendirebileceğiniz projemiz:
+NEXA Royal Yalıkavak
+Lokasyon: Bodrum, Yalıkavak Koyu Tepeleri, Muğla (deniz manzaralı).
+Konsept/Tipler: Ultra lüks, deniz manzaralı premium villalardan oluşan markalı bir konut projesidir. Oda sayısı veya kat planı detayları danışmanımız tarafından netleştirilecektir.
+Fiyat/Ödeme Özeti: Fiyat bilgisi ve ödeme planı detayları henüz belirtilmemiştir. Detaylı bilgi için danışmanımız ile görüşmeniz gerekmektedir.
+Teslim: Teslim süresine dair bilgi bulunmamaktadır.
+TKGM/Ada-Parsel: 1540 Ada, 12 Parsel (TKGM onaylı).
+NEXA Royal Yalıkavak, Bodrum'un eşsiz güzelliğinde, deniz manzaralı ultra lüks villalar arayanlar için ideal bir seçenektir. Diğer projelerimiz genellikle Ankara ve Eskişehir merkezli olup, yazlık konseptine uygun değillerdir.
+Detaylı sunum, güncel fiyat listesi ve parsel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE Projesi, Ankara Çubuk Esenboğa'da, Yıldırım Beyazıt Üniversitesi Kampüsü tam karşısında yer almaktadır. - Zemin+8 katlı tek blokta toplam 257 adet 1+1 daireden oluşan yüksek prim potansiyelli konut projesidir. - Güncel başlangıç fiyatı 1.350.000 TL olup, 825.000 TL peşinat ve esnek ödeme planı sunulmaktadır. - Yerden ısıtma ve modern donanımı ile öğrenci/akademisyen kiralama talebi garantilidir. - Tapu bilgisi 190438 Ada, 15 Parsel olarak TKGM sisteminde kayıtlı ve onaylıdır.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+
+<truncated 3047 bytes>
+sel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE Projesi, Ankara Çubuk Esenboğa'da, Yıldırım Beyazıt Üniversitesi Kampüsü tam karşısında yer almaktadır. - Zemin+8 katlı tek blokta toplam 257 adet 1+1 daireden oluşan yüksek prim potansiyelli konut projesidir. - Güncel başlangıç fiyatı 1.350.000 TL olup, 825.000 TL peşinat ve esnek ödeme planı sunulmaktadır. - Yerden ısıtma ve modern donanımı ile öğrenci/akademisyen kiralama talebi garantilidir. - Tapu bilgisi 190438 Ada, 15 Parsel olarak TKGM sisteminde kayıtlı ve onaylıdır.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+%36 Uyumlu
+ Çubuk • 1.950.000 - 2.800.000 TL
+💡 * JOVEN KAMPÜS, Ankara'nın hızla değerlenen Çubuk bölgesinde konumlanıyor. * Markalı konut projesi, modern ve yatırım odaklı 1+1 daireler sunuyor. * Avantajlı fiyatlar 1.950.000 TL ile 2.800.000 TL aralığında. * Tapu durumu (Ada/Parsel: 190440/8) TKGM onaylı ve şeffaf.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+S POINT - VIP SARAY
+%36 Uyumlu
+ Pursaklar • 1.990.000 - 4.000.000 TL
+💡 * S POINT - VIP SARAY, Ankara'nın gelişen bölgesi Pursaklar, Saray Osmangazi Mahallesi'nde konumlanmıştır. * Markalı konut projesi, tek blokta yer alan 149 adet, 1+1 ve 2+1 daire tipleri sunmaktadır. * Fiyatlar ₺1.990.000'den başlamakta, kat ve cepheye göre değişmektedir. * Ödeme planlarında peşinatsız 18 ay taksit veya %50 peşinat ile 18 ay taksit imkanı mevcuttur. * Proje teslim süresi 24 aydır. * Tapu bilgileri 98412 ada, 1 parsel olup, TKGM sorgusu geçerlidir.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+Adınız  
+
+
+
+
+
+
+
+
+
+
+
+
+sana ai chatbot konuşmasından bir örnek attım mesela vip marini söylemiyor . bunlara dikkat et amacımıza göre en iyi çalışacak şekilde chatbtumuzu geliştir lütfen
+
+
+[014] İSTEM NO #14 (Adım: 708) — Tarih/Saat: 2026-08-20T21:56:36+03:00
+────────────────────────────────────────────────────────────────────────────────
+Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+yazlık almak istiyorum , hangi bölgelerde mevcut
+NEXA PRIME v2 olarak talebinizi anlıyorum. Yazlık almak isteğinize yönelik portföyümüzde öne çıkan markalı projemiz bulunmaktadır.
+İşte size özel olarak değerlendirebileceğiniz projemiz:
+NEXA Royal Yalıkavak
+Lokasyon: Bodrum, Yalıkavak Koyu Tepeleri, Muğla (deniz manzaralı).
+Konsept/Tipler: Ultra lüks, deniz manzaralı premium villalardan oluşan markalı bir konut projesidir. Oda sayısı veya kat planı detayları danışmanımız tarafından netleştirilecektir.
+Fiyat/Ödeme Özeti: Fiyat bilgisi ve ödeme planı detayları henüz belirtilmemiştir. Detaylı bilgi için danışmanımız ile görüşmeniz gerekmektedir.
+Teslim: Teslim süresine dair bilgi bulunmamaktadır.
+TKGM/Ada-Parsel: 1540 Ada, 12 Parsel (TKGM onaylı).
+NEXA Royal Yalıkavak, Bodrum'un eşsiz güzelliğinde, deniz manzaralı ultra lüks villalar arayanlar için ideal bir seçenektir. Diğer projelerimiz genellikle Ankara ve Eskişehir merkezli olup, yazlık konseptine uygun değillerdir.
+Detaylı sunum, güncel fiyat listesi ve parsel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE Projesi, Ankara Çubuk Esenboğa'da, Yıldırım Beyazıt Üniversitesi Kampüsü tam karşısında yer almaktadır. - Zemin+8 katlı tek blokta toplam 257 adet 1+1 daireden oluşan yüksek prim potansiyelli konut projesidir. - Güncel başlangıç fiyatı 1.350.000 TL olup, 825.000 TL peşinat ve esnek ödeme planı sunulmaktadır. - Yerden ısıtma ve modern donanımı ile öğrenci/akademisyen kiralama talebi garantilidir. - Tapu bilgisi 190438 Ada, 15 Parsel olarak TKGM sisteminde kayıtlı ve onaylıdır.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+
+<truncated 3359 bytes>
+ adet 1+1 daireden oluşan yüksek prim potansiyelli konut projesidir. - Güncel başlangıç fiyatı 1.350.000 TL olup, 825.000 TL peşinat ve esnek ödeme planı sunulmaktadır. - Yerden ısıtma ve modern donanımı ile öğrenci/akademisyen kiralama talebi garantilidir. - Tapu bilgisi 190438 Ada, 15 Parsel olarak TKGM sisteminde kayıtlı ve onaylıdır.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+%36 Uyumlu
+ Çubuk • 1.950.000 - 2.800.000 TL
+💡 * JOVEN KAMPÜS, Ankara'nın hızla değerlenen Çubuk bölgesinde konumlanıyor. * Markalı konut projesi, modern ve yatırım odaklı 1+1 daireler sunuyor. * Avantajlı fiyatlar 1.950.000 TL ile 2.800.000 TL aralığında. * Tapu durumu (Ada/Parsel: 190440/8) TKGM onaylı ve şeffaf.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+S POINT - VIP SARAY
+%36 Uyumlu
+ Pursaklar • 1.990.000 - 4.000.000 TL
+💡 * S POINT - VIP SARAY, Ankara'nın gelişen bölgesi Pursaklar, Saray Osmangazi Mahallesi'nde konumlanmıştır. * Markalı konut projesi, tek blokta yer alan 149 adet, 1+1 ve 2+1 daire tipleri sunmaktadır. * Fiyatlar ₺1.990.000'den başlamakta, kat ve cepheye göre değişmektedir. * Ödeme planlarında peşinatsız 18 ay taksit veya %50 peşinat ile 18 ay taksit imkanı mevcuttur. * Proje teslim süresi 24 aydır. * Tapu bilgileri 98412 ada, 1 parsel olup, TKGM sorgusu geçerlidir.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+Adınız  
+
+
+
+
+
+
+
+
+
+
+
+
+sana ai chatbot konuşmasından bir örnek attım mesela vip marini söylemiyor . bunlara dikkat et amacımıza göre en iyi çalışacak şekilde chatbtumuzu geliştir lütfen
+
+
+[015] İSTEM NO #15 (Adım: 795) — Tarih/Saat: 2026-08-20T22:02:14+03:00
+────────────────────────────────────────────────────────────────────────────────
+her proje hakkında bunu yapabilecek dinamik sistem olmalı , ve güncel fiyatları satış takip ve xlsx lere de baksın hep cardlarda göstermek için hemde chatbotda . çok gelişmiş chatbot istiyorum , çok gelişmiş mimari ile kurgula ultra analiz et . amacımızı anlamak ve bunu kurgulamak için agent ve subagentkar ata ve geliştirmeyi yap.
+
+
+[016] İSTEM NO #16 (Adım: 841) — Tarih/Saat: 2026-08-20T22:05:09+03:00
+────────────────────────────────────────────────────────────────────────────────
+bu ama yer tutmayacak demi indirmeye gerek kalmadan , sadece db ye işleyecek , ve github actionsa uyumlu yaptın demi tüm sistemin beraber çalışmasını da düşündün değil mi
+
+
+[017] İSTEM NO #17 (Adım: 855) — Tarih/Saat: 2026-08-20T22:07:15+03:00
+────────────────────────────────────────────────────────────────────────────────
+devam
+
+
+[018] İSTEM NO #18 (Adım: 966) — Tarih/Saat: 2026-08-20T22:12:19+03:00
+────────────────────────────────────────────────────────────────────────────────
+herşey otonom ve otomotik ve cron related çalışıyor değil mi elle çalıştırma , girmeye gerek var m
+
+
+[019] İSTEM NO #19 (Adım: 986) — Tarih/Saat: 2026-08-20T22:14:04+03:00
+────────────────────────────────────────────────────────────────────────────────
+drivedan tüm bilgileri vs. herşeyi de tarayıp /çekiyor değil mi
+
+
+[020] İSTEM NO #20 (Adım: 992) — Tarih/Saat: 2026-08-20T22:16:58+03:00
+────────────────────────────────────────────────────────────────────────────────
+çok kapsamlı analiz yap gerekli agent /subagent ordusunu ata ve aşrı detaylı kapsamlı sistem analizi gerçekleştir . bug hata eksik biyer varmı , sistemin geliştirilmesi gerekn biryeri varmı sisteme hangi agent ve subanegt analiz ve mimarları gerkeiyorsa onları ata
+
+
+[021] İSTEM NO #21 (Adım: 1234) — Tarih/Saat: 2026-08-20T22:25:59+03:00
+────────────────────────────────────────────────────────────────────────────────
+chatbot yatırım danışmantığı da yapıyor mu sorsam ne alayım vs diyeü
+
+
+[022] İSTEM NO #22 (Adım: 1274) — Tarih/Saat: 2026-08-20T22:28:19+03:00
+────────────────────────────────────────────────────────────────────────────────
+hepsi doğal dil ile çalışıyor demi if else döngüsüne bağımlı değil demi
+
+
+[023] İSTEM NO #23 (Adım: 1276) — Tarih/Saat: 2026-08-20T22:29:23+03:00
+────────────────────────────────────────────────────────────────────────────────
+https://ai.google.dev/gemini-api/docs?hl=tr            çok detaylı analiz et
+
+
+[024] İSTEM NO #24 (Adım: 1286) — Tarih/Saat: 2026-08-20T22:30:19+03:00
+────────────────────────────────────────────────────────────────────────────────
+yapalım mı
+
+
+[025] İSTEM NO #25 (Adım: 1292) — Tarih/Saat: 2026-08-20T22:30:43+03:00
+────────────────────────────────────────────────────────────────────────────────
+onay
+
+
+[026] İSTEM NO #26 (Adım: 1360) — Tarih/Saat: 2026-08-20T22:41:07+03:00
+────────────────────────────────────────────────────────────────────────────────
+masaüstündeki istenilenleri analiz et ama uygulama , madde madde diz sadece
+
+
+[027] İSTEM NO #27 (Adım: 1370) — Tarih/Saat: 2026-08-20T22:41:31+03:00
+────────────────────────────────────────────────────────────────────────────────
+masaüstündeki istenilenleri analiz et ama uygulama , madde madde diz sadece   g.txt
+
+
+[028] İSTEM NO #28 (Adım: 1378) — Tarih/Saat: 2026-08-20T22:42:18+03:00
+────────────────────────────────────────────────────────────────────────────────
+bunların kaçta kaçını yaptık
+
+
+[029] İSTEM NO #29 (Adım: 1380) — Tarih/Saat: 2026-08-20T22:45:08+03:00
+────────────────────────────────────────────────────────────────────────────────
+<div style="position:relative; width:100%; height:0px; padding-bottom:66.667%"><iframe allow="fullscreen;autoplay" allowfullscreen height="100%" src="https://streamable.com/e/v5dfua?autoplay=1&muted=1" width="100%" style="border:none; width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden;"></iframe></div>   açılışta ve sol üstteki logo yerinde bu logo/video olacak
+
+
+[030] İSTEM NO #30 (Adım: 1430) — Tarih/Saat: 2026-08-20T22:53:14+03:00
+────────────────────────────────────────────────────────────────────────────────
+default en üstteki ffiltre 1-3 milyon tl seçili olarak açılacak ve logo url bu video logo https://streamable.com/v5dfua
+
+
+[031] İSTEM NO #31 (Adım: 1469) — Tarih/Saat: 2026-08-20T22:57:54+03:00
+────────────────────────────────────────────────────────────────────────────────
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png" alt="Ekran görüntüsü 2026 08 20 162222" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/kssB1Ckg/Ekran-g-r-nt-s-2026-08-20-162248.png" alt="Ekran görüntüsü 2026 08 20 162248" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/DgCXv13B/Ekran-g-r-nt-s-2026-08-20-162308.png" alt="Ekran görüntüsü 2026 08 20 162308" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Ekran görüntüsü 2026 08 20 162324" border="0"></a>    
+
+
+bunlar da suzanne hanımın görselleri bunları incele gerekli yerlere koy
+
+
+[032] İSTEM NO #32 (Adım: 1503) — Tarih/Saat: 2026-08-22T03:46:44+03:00
+────────────────────────────────────────────────────────────────────────────────
+# NEXA — ULTRA KAPSAMLI SİSTEM AUDIT, AGENT ORKESTRASYONU VE GÜVENLİK TESTİ
+
+## ANA GÖREV
+
+Mevcut NEXA sistemini **yeni özellik eklemeden**, yalnızca mevcut sistemin **doğruluğunu, güvenliğini, performansını, stabilitesini, mimari bütünlüğünü ve üretim kalitesini maksimum seviyeye çıkarmak** amacıyla ultra kapsamlı şekilde analiz et, test et, denetle ve gerekli düzeltmeleri uygula.
+
+Sistemi yüzeysel olarak inceleme. Bir **Principal Software Architect + Security Architect + QA Lead + DevOps/SRE Lead + AI Systems Architect + Database Architect + Red Team + Code Auditor** ekibi gibi hareket et.
+
+---
+
+## 1. AGENT ORKESTRASYONU
+
+Önce sistemi analiz ederek hangi uzman agentlara ihtiyaç olduğunu kendin belirle.
+
+Gerekli her ana agentı ata ve her agentın altında gerekli **sub-agentları** oluştur.
+
+Örnek uzmanlık alanları:
+
+* System Architecture Agent
+* Backend/API Agent
+* Frontend Agent
+* Database Agent
+* Security / Red Team Agent
+* Authentication & Authorization Agent
+* QA / Testing Agent
+* Performance Agent
+* DevOps / Infrastructure Agent
+* AI / Agent Architecture Agent
+* Data Integrity Agent
+* Error Handling Agent
+* Logging & Observability Agent
+* Dependency / Package Audit Agent
+* Code Quality Agent
+* Integration Agent
+* Regression Testing Agent
+
+Ancak bunlarla sınırlı kalma. Sistemin gerçek yapısını analiz ettikten sonra ihtiyaç duyulan agentları **dinamik olarak oluştur**.
+
+Her agent:
+
+1. Kendi sorumluluk alanını tanımlasın.
+2. Sistemi bağımsız analiz etsin.
+3. Bulgularını kanıtlarla raporlasın.
+4. Gerekirse sub-agent oluştursun.
+5. Diğer agentların bulgularıyla çelişen noktaları doğrulasın.
+6. Kritik sorunları önceliklendirsin.
+
+---
+
+# 2. TAM SİSTEM KEŞFİ
+
+Öncelikle hiçbir varsayım yapmadan mevcut sistemi keşfet.
+
+Analiz et:
+
+* Proje klasör yapısı
+* Tüm source code
+* Backend
+* Frontend
+* API'ler
+* Database
+* Authentication
+* Authorization
+* Middleware
+* S
+<truncated 6667 bytes>
+a.
+* Kullanılmayan özellikler ekleme.
+
+Amaç:
+
+**FEATURE DEVELOPMENT DEĞİL → SYSTEM HARDENING**
+
+Mevcut sistemin daha:
+
+**GÜVENLİ + STABİL + DOĞRU + HIZLI + TEST EDİLMİŞ + HATA TOLERANSLI + ÜRETİME HAZIR**
+
+hale gelmesini sağlamak.
+
+---
+
+# 16. SON KALİTE KAPISI
+
+Analiz sonunda sistemi şu kriterlerle değerlendir:
+
+* Architecture Health
+* Code Quality
+* Security
+* Reliability
+* Performance
+* Data Integrity
+* API Stability
+* Agent Reliability
+* Test Coverage
+* Error Handling
+* Observability
+* Deployment Safety
+
+Her alan için 0–100 skor ver.
+
+Ardından:
+
+### CRITICAL
+
+Sistemi bozabilecek veya güvenliği tehdit eden problemler.
+
+### HIGH
+
+Ciddi stabilite veya doğruluk problemleri.
+
+### MEDIUM
+
+Geliştirilmesi gereken mevcut problemler.
+
+### LOW
+
+Düşük riskli kalite problemleri.
+
+---
+
+# 17. FINAL VERIFICATION
+
+Tüm düzeltmeler tamamlandıktan sonra sistemi **baştan sona ikinci kez test et.**
+
+İlk audit ile son audit sonuçlarını karşılaştır.
+
+Şunları açıkça raporla:
+
+* Tespit edilen toplam problem
+* Düzeltilen problem
+* Düzeltilmeyen problem
+* Kritik problem sayısı
+* Güvenlik açığı sayısı
+* Başarısız testler
+* Başarılı testler
+* Regression sonuçları
+* Performance değişimi
+* Sistem güvenilirliği
+* Kalan riskler
+
+Son olarak şu soruya cevap ver:
+
+> **"Bu sistem mevcut özellikleri kapsamında güvenli, stabil, tutarlı ve production-ready durumda mı?"**
+
+Eğer cevap hayırsa, neden hayır olduğunu ve mevcut kapsam içinde hangi düzeltmelerin gerektiğini belirt.
+
+## ANA PRENSİP
+
+**Sistemi büyütme. Sistemi sağlamlaştır.**
+
+Her kararın temel amacı:
+
+> **Mevcut NEXA sisteminin tek bir özelliğini bile gereksiz yere değiştirmeden, sistemin mümkün olan en güvenli, kararlı, doğru, test edilmiş ve güvenilir versiyonuna ulaşmasını sağlamak.**
+
+
+[033] İSTEM NO #33 (Adım: 1764) — Tarih/Saat: 2026-08-22T03:55:54+03:00
+────────────────────────────────────────────────────────────────────────────────
+kodları düzeltip push ettin mi
+
+
+[034] İSTEM NO #34 (Adım: 1766) — Tarih/Saat: 2026-08-22T04:00:09+03:00
+────────────────────────────────────────────────────────────────────────────────
+Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+merhaba
+Nexa AI
+Analiz Raporu
+Bütçe
+Belirtilmedi
+Bölge
+Ankara Genel
+Oda Tercihi
+Belirtilmedi
+Yatırım Amacı
+Oturum + Yatırım
+Tüm portföy proje verileri, ada/parsel ve TKGM kayıtlarıyla taranarak gerçek uyum puanları hesaplandı:
+VIP ÜNİVERSİTE — %36 Uyumlu
+📍 Çubuk • 💰 1.350.000 TL
+💡 Çubuk bölgesinde VIP ÜNİVERSİTE. TKGM onayli parsel (Ada 190438/15) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: VIP ÜNİVERSİTE (Peşinat: 825.000 TL (%50), Ödeme: 24 Ay x 34.375 TL, Ada 190438 / Parsel 15, TKGM onaylı, 1+1 (45 m²), Teslim: 24 Ay).
+JOVEN KAMPÜS — %36 Uyumlu
+📍 Çubuk • 💰 1.950.000 - 2.800.000 TL
+💡 Çubuk bölgesinde JOVEN KAMPÜS. TKGM onayli parsel (Ada 190440/8) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: JOVEN KAMPÜS (Peşinat: 975.000 TL (%50), Ödeme: 18-24 Ay Taksit, Ada 190440 / Parsel 8, TKGM onaylı, 1+1 (45 m²), Teslim: 18 Ay).
+S POINT - VIP SARAY — %36 Uyumlu
+📍 Pursaklar • 💰 1.990.000 - 4.000.000 TL
+💡 Pursaklar bölgesinde S POINT - VIP SARAY. TKGM onayli parsel (Ada 96400/6) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: S POINT - VIP SARAY (Peşinat: 995.000 TL (%50) veya %0 Peşinatsız, Ödeme: 18 Ay x 55.270 TL, Ada 96400 / Parsel 6, TKGM onaylı, 1+1, 2+1, Teslim: 24 Ay).
+Detaylı sunum, güncel fiyat listesi ve parsel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE (Ankara / Çubuk / Esenboğa (AYBÜ Kampüs Karşısı)): 1.350.000 TL, Peşinat: 825.000 TL (%50), Ödeme: 24 Ay x 34.375 TL, Daire: 1+1 (45 m²), Ada: 190438/15 (TKGM Onaylı). Garantili öğrenci/akademisyen kiralama talebi, yerden ısıtma, 3lü ankastre.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+%36 Uyumlu
+ Çubuk • 1.950.000 - 2.800.000 TL
+💡 - JOVEN KAMPÜS (Ankara / Çubuk / AYBÜ Kampüs): 1.950.000 - 2.800.000 TL, Peşinat: 975.000 TL (%50), Ödeme: 18-24 Ay Taksit, Daire: 1+1 (45 m²), Ada: 190440/8 (TKGM Onaylı). Yıldırım Beyazıt Üniversitesi yerleşkesine komşu, 18 ayda teslim garantisi.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+S POINT - VIP SARAY
+%36 Uyumlu
+ Pursaklar • 1.990.000 - 4.000.000 TL
+💡 - S POINT - VIP SARAY (Ankara / Pursaklar / Saray Osmangazi): 1.990.000 - 4.000.000 TL, Peşinat: 995.000 TL (%50) veya %0 Peşinatsız, Ödeme: 18 Ay x 55.270 TL, Daire: 1+1, 2+1, Ada: 96400/6 (TKGM Onaylı). Tek blokta 149 seçkin daire, peşinatsız 18 ay taksit veya %50 peşinat seçeneği.
+
+Tanıtım
+
+Slayt
+
+PDF
+   
+
+
+
+
+
+
+chatbot düzgün çalışmıyor. bildiğin sohbet edebilecek , gerektiğinde getirecek . doğal dille konuşabilmesi lazım , gayrimenkul ve yatırım danışmanı gibi rag dan beslenip bu sorunu kökünden çöz nexaprimev2 den örnek al ama unutmu bu cloud da çalışıyor . nexaprimev2 benim istediğim gibi çalışıyor. ve sistemimize tam uyumlu olmalı
+
+
+[035] İSTEM NO #35 (Adım: 1907) — Tarih/Saat: 2026-08-22T04:03:01+03:00
+────────────────────────────────────────────────────────────────────────────────
+NEXA_PRIME_v2_ENTERPRISE desktopdaki Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+merhaba
+Nexa AI
+Analiz Raporu
+Bütçe
+Belirtilmedi
+Bölge
+Ankara Genel
+Oda Tercihi
+Belirtilmedi
+Yatırım Amacı
+Oturum + Yatırım
+Tüm portföy proje verileri, ada/parsel ve TKGM kayıtlarıyla taranarak gerçek uyum puanları hesaplandı:
+VIP ÜNİVERSİTE — %36 Uyumlu
+📍 Çubuk • 💰 1.350.000 TL
+💡 Çubuk bölgesinde VIP ÜNİVERSİTE. TKGM onayli parsel (Ada 190438/15) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: VIP ÜNİVERSİTE (Peşinat: 825.000 TL (%50), Ödeme: 24 Ay x 34.375 TL, Ada 190438 / Parsel 15, TKGM onaylı, 1+1 (45 m²), Teslim: 24 Ay).
+JOVEN KAMPÜS — %36 Uyumlu
+📍 Çubuk • 💰 1.950.000 - 2.800.000 TL
+💡 Çubuk bölgesinde JOVEN KAMPÜS. TKGM onayli parsel (Ada 190440/8) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: JOVEN KAMPÜS (Peşinat: 975.000 TL (%50), Ödeme: 18-24 Ay Taksit, Ada 190440 / Parsel 8, TKGM onaylı, 1+1 (45 m²), Teslim: 18 Ay).
+S POINT - VIP SARAY — %36 Uyumlu
+📍 Pursaklar • 💰 1.990.000 - 4.000.000 TL
+💡 Pursaklar bölgesinde S POINT - VIP SARAY. TKGM onayli parsel (Ada 96400/6) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: S POINT - VIP SARAY (Peşinat: 995.000 TL (%50) veya %0 Peşinatsız, Ödeme: 18 Ay x 55.270 TL, Ada 96400 / Parsel 6, TKGM onaylı, 1+1, 2+1, Teslim: 24 Ay).
+Detaylı sunum, güncel fiyat listesi ve parsel raporları için 0535 489 56 56 WhatsApp hattından ulaşabilirsiniz.
+VIP ÜNİVERSİTE
+%36 Uyumlu
+ Çubuk • 1.350.000 TL
+💡 - VIP ÜNİVERSİTE (Ankara / Çubuk / Esenboğa (AYBÜ Kampüs Karşısı)): 1.350.000 TL, Peşinat: 825.000 TL (%50), Ödeme: 24 Ay x 34.375 TL, Daire: 1+1 (45 m²), Ada: 190438/15 (TKGM Onaylı). Garantili öğrenci/akademisyen kiralama talebi, yerden ısıtma, 3lü ankastre.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+JOVEN KAMPÜS
+%36 Uyumlu
+ Çubuk • 1.950.000 - 2.800.000 TL
+💡 - JOVEN KAMPÜS (Ankara / Çubuk / AYBÜ Kampüs): 1.950.000 - 2.800.000 TL, Peşinat: 975.000 TL (%50), Ödeme: 18-24 Ay Taksit, Daire: 1+1 (45 m²), Ada: 190440/8 (TKGM Onaylı). Yıldırım Beyazıt Üniversitesi yerleşkesine komşu, 18 ayda teslim garantisi.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+Detay
+S POINT - VIP SARAY
+%36 Uyumlu
+ Pursaklar • 1.990.000 - 4.000.000 TL
+💡 - S POINT - VIP SARAY (Ankara / Pursaklar / Saray Osmangazi): 1.990.000 - 4.000.000 TL, Peşinat: 995.000 TL (%50) veya %0 Peşinatsız, Ödeme: 18 Ay x 55.270 TL, Daire: 1+1, 2+1, Ada: 96400/6 (TKGM Onaylı). Tek blokta 149 seçkin daire, peşinatsız 18 ay taksit veya %50 peşinat seçeneği.
+
+Tanıtım
+
+Slayt
+
+PDF
+
+   
+
+
+
+
+
+
+chatbot düzgün çalışmıyor. bildiğin sohbet edebilecek , gerektiğinde getirecek . doğal dille konuşabilmesi lazım , gayrimenkul ve yatırım danışmanı gibi rag dan beslenip bu sorunu kökünden çöz nexaprimev2 den örnek al ama unutmu bu cloud da çalışıyor . nexaprimev2 benim istediğim gibi çalışıyor. ve sistemimize tam uyumlu olmalı
+
+
+[036] İSTEM NO #36 (Adım: 1932) — Tarih/Saat: 2026-08-22T04:08:03+03:00
+────────────────────────────────────────────────────────────────────────────────
+bu url leri gerekli yerlere koy, orjina whatsapp instagram facebook logoları kullan ve bizim önceki versiyonlardaki chatbot imgemiz gitmiş o çok güzeldi animasyonlu ortada onu geri getir
+
+
+[037] İSTEM NO #37 (Adım: 2017) — Tarih/Saat: 2026-08-22T04:17:44+03:00
+────────────────────────────────────────────────────────────────────────────────
+Proje Rehberi • Çevrimiçi
+3+1 Projeler5-10M YatırımÇankaya İlanlarıEn Uygun Projeler
+Merhaba! 👋 Suzanne Tenekecioğlu'nun dijital asistanıyım. Size en uygun seçkin projeyi veya portföy ilanını bulmam için bütçenizi, oda sayısını veya bölge tercihinizi belirtebilirsiniz.
+merhaba
+Merhaba! Hoş geldiniz. Ben Coldwell Banker VIP Gayrimenkul Baş Danışmanı Suzanne Tenekecioğlu'nun Bilişsel Portföy & Yatırım Asistanıyım (NEXA PRIME).
+Ankara (Beytepe, İncek, Çankaya, Pursaklar, Çubuk/Esenboğa), Bodrum (Yalıkavak) ve Alanya'daki seçkin markalı konut projelerimiz, lüks villa seçeneklerimiz ve yüksek kira getirili yatırım portföyümüz hakkında size rehberlik etmekten memnuniyet duyarım.
+Size en doğru fırsatları ve güncel şirket içi faizsiz ödeme planlarını sunabilmem için:
+Bütçe aralığınız** (örn1-3 Milyon TL, 3-5 Milyon TL, 5-10 Milyon TL veya üzeri*)
+Bölge tercihiniz** (örnBeytepe, Çankaya, Gölbaşı, Pursaklar, Bodrum, Alanya*)
+Daire tipi veya amacınız** (örn1+1 yüksek kira getirisi, 2+1/3+1 oturum, müstakil lüks villa*)
+hakkında bilgi verebilir veya doğrudan ilgilendiğiniz projenin adını yazabilirsiniz. Nasıl yardımcı olabilirim?
+_Birebir VIP danışmanlık ve yerinde sunum için 0535 489 56 56 doğrudan hattımızdan Suzanne Hanım'a ulaşabilirsiniz._
+[WhatsApp](https://wa.me/905354895656)Hemen Ara
+amacım yatırımlık daire almak
+Belirttiğiniz kriterlere ve yatırım hedeflerinize göre portföyümüzdeki en avantajlı fırsatları listeledim:
+VIP ÜNİVERSİTE (Çubuk)
+Fiyat1.350.000 TL** | Ödeme: 825.000 TL (%50), 24 Ay x 34.375 TL
+Tip1+1 (45 m²) | Tapu: Ada 190438/15 (TKGM Onaylı)
+Yatırım NotuÇubuk bölgesinde VIP ÜNİVERSİTE. TKGM onayli parsel (Ada 190438/15) • Ankara portföyünde öne çıkan proje. Kayıtlı veri: VIP ÜNİVERSİTE (Peşinat: 825.000 TL (%50), Ödeme: 24 Ay x 34.375 TL, Ada 190438 / Parsel 15, TKGM on
+JOVEN KAMPÜS (Çubuk)
+Fiyat1.950.000 - 2.800.000 TL** | Ödeme: 975.000 TL (%5
+<truncated 5786 bytes>
+/ Bodrum / Yalıkavak Koyu): 14.500.000 TL, Peşinat: 7.250.000 TL (%50), Ödeme: 24 Ay Taksit, Daire: 2+1, 3+1 Villa & Lüks Rezidans, Ada: 624/18 (TKGM Onaylı). Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar.
+TanıtımSlaytPDFDetay
+evart yalıkavak teslimat tarihi
+EVART YALIKAVAK projesi portföyümüzün öne çıkan seçkin yatırımlarındandır. İşte projenin doğrulanmış güncel detayları:
+📍 Lokasyon: Bodrum, Muğla💰 Fiyat Aralığı: 14.500.000 TL💳 Ödeme Kolaylığı: 7.250.000 TL • 24 Ay Taksit (Faizsiz, şirket bünyesinde)🏢 Daire Tipleri: 2+1, 3+1 Villa & Rezidans📑 Tapu / Parsel: Ada 624 / Parsel 18 (TKGM Onaylı Resmi Parsel)
+💡 Proje Özeti & Avantajları:
+EVART YALIKAVAK (Muğla / Bodrum / Yalıkavak Koyu): 14.500.000 TL, Peşinat: 7.250.000 TL (%50), Ödeme: 24 Ay Taksit, Daire: 2+1, 3+1 Villa & Lüks Rezidans, Ada: 624/18 (TKGM Onaylı). Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar.
+_Detaylı kat planları, sözleşme şartları ve güncel fiyat listesi için 0535 489 56 56 hattından danışmanımız Suzanne Tenekecioğlu'na ulaşabilirsiniz._
+[WhatsApp](https://wa.me/905354895656)Hemen Ara
+EVART YALIKAVAK%99 Uyumlu
+Bodrum • 14.500.000 TL
+💡 - EVART YALIKAVAK (Muğla / Bodrum / Yalıkavak Koyu): 14.500.000 TL, Peşinat: 7.250.000 TL (%50), Ödeme: 24 Ay Taksit, Daire: 2+1, 3+1 Villa & Lüks Rezidans, Ada: 624/18 (TKGM Onaylı). Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar.
+TanıtımSlaytPDF 
+
+
+
+mesela evart yalıkavak teslimat tarihi sordum söyleyemiyor . sorunun sebebini bul . rag da mı yok yoksa cevap mı veremiyor . çok kapsamlı test yap chatbotu ,çok gelişmiş stres testi uygula ve yazı çıktıları güzel çıktı olsun yani düzenli nexaprimev2 deki gibi bunu araştır . yani çıktılar düzenli olsun. güzel gözüksün .
+
+
+[038] İSTEM NO #38 (Adım: 2213) — Tarih/Saat: 2026-08-22T04:24:44+03:00
+────────────────────────────────────────────────────────────────────────────────
+emojiyi geri getirdin mi ortadaki önceki commitlerde vardı miranın emoisi animasyonlu dönen
+
+
+[039] İSTEM NO #39 (Adım: 2379) — Tarih/Saat: 2026-08-22T04:28:40+03:00
+────────────────────────────────────────────────────────────────────────────────
+sistemin ultra kapsamlı raporunu masaüstüne rapor klasörüne oluştur txt formatında her açıdan raporu olurştur product raporu ve yönetici özeti ve teknik ve workflow herşey kapsa ve ne rapor oluşturman gerektiğini anlaman için agent ve subagentlar ata ve ultra kapsamlı raporlar serisi oluştur. sistemin herşeyine hakim olmak ve product açısından da bakmak ve geliştirme ufuk planı ve bunun planlar ve kpi geliştirme herşey
+
+
+[040] İSTEM NO #40 (Adım: 2387) — Tarih/Saat: 2026-08-22T04:42:24+03:00
+────────────────────────────────────────────────────────────────────────────────
+bu txt lerden birde görsel ağırlıklı bir çıktı üretsek product tanıtım bu en güzle nasıl olur
+
+
+[041] İSTEM NO #41 (Adım: 2399) — Tarih/Saat: 2026-08-22T04:47:23+03:00
+────────────────────────────────────────────────────────────────────────────────
+chatbotun beslendiği sistem drive daki sözleşmeleri de okuyor mu rag bunlardan da beslenmeli , her dosyayı okumalı . bunu kontrol et
+
+
+[042] İSTEM NO #42 (Adım: 2624) — Tarih/Saat: 2026-08-22T10:37:18+03:00
+────────────────────────────────────────────────────────────────────────────────
+bizim eski comitlerde hali hazırda chatbot butonu vardı onu araştır eski github commitlerinden
+
+
+[043] İSTEM NO #43 (Adım: 2649) — Tarih/Saat: 2026-08-22T10:39:37+03:00
+────────────────────────────────────────────────────────────────────────────────
+mobile da açınca çok sorun var ,chat bot aşırı ince olarak açılıyor buna kapsamlı el at
+
+
+[044] İSTEM NO #44 (Adım: 2724) — Tarih/Saat: 2026-08-22T10:43:27+03:00
+────────────────────────────────────────────────────────────────────────────────
+çok kapsamlı mobile agent larını ata ve sub agent ları , mobile tesi ve düzeltmesi yapsınlar
+
+
+[045] İSTEM NO #45 (Adım: 2832) — Tarih/Saat: 2026-08-22T10:51:15+03:00
+────────────────────────────────────────────────────────────────────────────────
+bu sohbette verdiğim tüm istemleri başından sonuna eksiksiz biçimda masaüstündeki rapor klasörüne oluştur . hiçbir istemi atlama !
+
+
+[046] İSTEM NO #46 (Adım: 2848) — Tarih/Saat: 2026-08-22T10:53:11+03:00
+────────────────────────────────────────────────────────────────────────────────
+başından sonuna hepsini kapsadın mı ?
+
+
+[047] İSTEM NO #47 (Adım: 2858) — Tarih/Saat: 2026-08-22T10:56:31+03:00
+────────────────────────────────────────────────────────────────────────────────
+masaüstündeki suzannegit klasörünü incele chatbot simgesi birebir öyle olsun
+
+
+[048] İSTEM NO #48 (Adım: 2923) — Tarih/Saat: 2026-08-22T10:59:49+03:00
+────────────────────────────────────────────────────────────────────────────────
+================================================================================
+NEXA PRIME v2 — ENTERPRISE GAYRİMENKUL SATIŞ VE BİLİŞSEL YATIRIM SİSTEMİ
+KURUMSAL YAPI VE AGENT-SUBAGENT ORDUSU YAPISALLANDIRMASI
+================================================================================
+Belge Tarihi: 2026-08-22 05:15:00
+Versiyon: 1.0-Enterprise-Operations
+Hazırlayanı: Yiğit Narin (Kurucu & Başkanyönetici)
+Marka: NEXA DIGITAL & Coldwell Banker VIP Ankara (Office ID 470)
+
+================================================================================
+BÖLÜM 1: ŞİRKET YAPISALLANDIRMASI VE YASAL ÇERÇEVE
+================================================================================
+
+1.1 ŞİRKET TÜMSEĞİ
+────────────────────────────────────────────────────────────────────────────
+Şirket Adı (TR):       NEXA PRIME TEKNOLOJI VE GAYRİMENKUL DANIŞMANLIK A.Ş.
+Şirket Adı (INT):      NEXA PRIME Technology & Real Estate Advisory Inc.
+Merkezci Ofis:         Ankara, Türkiye (Coldwell Banker VIP Ankara, Office ID 470)
+Kurucu & İcra Kurulu:  Yiğit Narin (Chief Executive Officer & CTO)
+İş Ortağı:             Suzanne Tenekecioğlu (Chief Sales Officer & VIP Client Director)
+İşletme Mühendisi:     [Aile İş Ortağı] (Chief Operations Officer & Strategic Advisor)
+Hareket Alanı:         31 Seçkin Markalı Gayrimenkul Projesi (TR + INT)
+Yasal Statüsü:         Sınıflandırılmış Girişim (Classified Startup Tier)
+Operasyon Modu:        Autonomous Night-Shift Operations (22:00 - 06:00 Production Hours)
+
+1.2 MİSYON VE AMAÇLAR
+────────────────────────────────────────────────────────────────────────────
+Birincil Misyon (Primary Mission):
+→ NEXA PRIME v2'yi %100 otomasyo
+<truncated 55742 bytes>
+ement): ~30 saat/week
+├─ Sales Optimization (CSO + lead scoring fine-tuning): ~20 saat/week
+├─ Documentation & Knowledge Management: ~10 saat/week
+└─ Meeting & Coordination (Slack, standups, sprints): ~10 saat/week
+
+Toplam: ~290 saat/week (equivalent ~7 FTE engineers + operations)
+
+Maliyetler:
+├─ Gemini API quotas: ~5.000 TL/month
+├─ Hosting (Render, AWS): ~3.000 TL/month
+├─ Domain & SSL: ~500 TL/month
+├─ Tools & Services (GitHub, Monitoring, etc): ~2.000 TL/month
+├─ Team Compensation (if remote contractors): ~50.000+ TL/month
+└─ Contingency (10%): ~6.000 TL/month
+
+Aylık Toplam: ~67.000+ TL (Operational Overhead)
+
+================================================================================
+BÖLÜM 12: SONUÇ VE BAŞLATMA TARIHÇESI
+================================================================================
+
+Bu belge, NEXA PRIME v2'yi şirket-seviyesinde, yazılım mühendisliği en iyi
+pratikleri uygulanarak kurumsallaştırır.
+
+Kuruluş Tarihi: 2026-08-22 05:15:00 UTC
+Başlatma Faz: LIVE OPERATIONS (tüm agent'ler production'da)
+İlk Sprint: 2026-08-26 (Mon 09:00 UTC)
+
+Başarı Kriteri (Ufuk 1 — Q4 2026):
+✅ 60+ VIP randevu / ay (şu anda 15)
+✅ %12.5 visitor-to-lead conversion (şu anda %4.2)
+✅ <0.4s AI yanıt gecikmesi (şu anda 0.6s)
+✅ 99.99% system uptime (şu anda 99.9%)
+✅ Zero critical security vulnerabilities (şu anda 0, maintain)
+✅ 31 projein %100 TKGM verified & synced (şu anda 100%, maintain)
+
+Bu operasyon, Yiğit Narin ve takımının 31 projeli gayrimenkul portföyünü
+tam otonomi ve yapay zeka bilişselliğiyle satış makinesine dönüştürecektir.
+
+================================================================================
+END OF DOCUMENT
+Versiyon: 1.0-Enterprise-Operations
+Yiğit Narin (Kurucu & CEO & CTO)
+Tarih: 2026-08-22 05:15:00 UTC
+================================================================================
+
+
+[049] İSTEM NO #49 (Adım: 2937) — Tarih/Saat: 2026-08-22T11:02:35+03:00
+────────────────────────────────────────────────────────────────────────────────
+bu dökümanın içindeki gerekli agentları test için çalıştır , ekosistem analizi yapsınlar
+
+
+[050] İSTEM NO #50 (Adım: 2979) — Tarih/Saat: 2026-08-22T11:06:21+03:00
+────────────────────────────────────────────────────────────────────────────────
+ai chatbotun simgesini masaüstündeki suzannegit klasöründeki gibi yaptın mı
+
+
+[051] İSTEM NO #51 (Adım: 2989) — Tarih/Saat: 2026-08-22T22:17:48+03:00
+────────────────────────────────────────────────────────────────────────────────
+çok gelişmiş analiz yap ve sorunları düzelt hepsini
+
+
+[052] İSTEM NO #52 (Adım: 3078) — Tarih/Saat: 2026-08-22T22:32:02+03:00
+────────────────────────────────────────────────────────────────────────────────
+devam
+
+
+[053] İSTEM NO #53 (Adım: 3260) — Tarih/Saat: 2026-08-22T22:43:58+03:00
+────────────────────────────────────────────────────────────────────────────────
+tüm drive ı eksiksiz her bir dosyayı tarayıp bilgileri db mize alabiliyor mu bunun kontrolü ve testi için çok gelişmiş agent subagent ordusu ata ve çok kapsamlı test ve analiz etsin . sözleşmeler , satış takip listeleri ve tüm dosyalardan bilgi gather ve cron olarak yapabiliyor mu herhangi bir güncelleme olduğunda güncelleyebiliyor mu .
+
+
+[054] İSTEM NO #54 (Adım: 3378) — Tarih/Saat: 2026-08-22T22:54:25+03:00
+────────────────────────────────────────────────────────────────────────────────
+# NEXA PRIME v2 — AUTONOMOUS COGNITIVE DRIVE SYNCHRONIZATION SYSTEM
+## ULTRA-ADVANCED SELF-INTELLIGENT DATA ORCHESTRATION ARCHITECTURE
+
+**Document Version:** 2.0 Autonomous Cognitive Edition  
+**Date:** 2026-08-22  
+**Classification:** Enterprise AI-Driven Autonomous Systems  
+
+---
+
+## 🧠 OTONOM BİLİŞSEL MİMARİ (AUTONOMOUS COGNITIVE ARCHITECTURE)
+
+### Temel Felsefe
+Sistem, **insan müdahalesi olmaksızın** tüm operasyonları yönetebilen, kendi problemlerini çözebilen, performansını optimize edebilen ve önceden tahmin yapabilen **canlı bir varlık** gibi davranacak.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│              NEXA COGNITIVE NUCLEUS (Merkezi Beyin)              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  🎯 GLOBAL REASONING ENGINE (Küresel Akıl Yürütme Motoru)        │
+│     ├─ Context Understanding (Bağlam Anlama)                    │
+│     ├─ Goal Formulation (Amaç Formülasyonu)                     │
+│     ├─ Strategy Selection (Strateji Seçimi)                     │
+│     ├─ Risk Assessment (Risk Değerlendirmesi)                   │
+│     └─ Decision Making (Karar Verme)                            │
+│                                                                   │
+│  🔮 PREDICTIVE INTELLIGENCE (Tahmin Zekası)                      │
+│     ├─ Anomaly Forecasting (Anormallik Tahminlemesi)            │
+│     ├─ Bottleneck Prediction (Darboğaz Öngörüsü)               │
+│     ├─ Failure Prevention (Hata Önlemesi)                       │
+│     
+<truncated 39193 bytes>
+mport (
+    AutonomousCognitiveNucleus,
+    PredictiveIntelligenceEngine,
+    ContinuousLearningEngine,
+    MasterOrchestrator,
+    AnomalyScout,
+    AdaptiveDiscoveryAgent,
+    DiagnosticGuardian,
+    QuantumPerformanceOptimizer,
+    CognitiveMonitoringDashboard,
+)
+
+async def launch_autonomous_nexa():
+    """Otonom NEXA PRIME v2 sistemini başlat"""
+    
+    print("🧠 NEXA PRIME v2 - Autonomous Cognitive System")
+    print("=" * 70)
+    
+    # Core sistemleri başlat
+    nucleus = AutonomousCognitiveNucleus()
+    predictive = PredictiveIntelligenceEngine()
+    learning = ContinuousLearningEngine()
+    orchestrator = MasterOrchestrator()
+    
+    # Agent ormularını başlat
+    scout = AnomalyScout()
+    executor = AdaptiveDiscoveryAgent()
+    guardian = DiagnosticGuardian()
+    optimizer = QuantumPerformanceOptimizer()
+    
+    # Monitoring dashboard'u başlat
+    dashboard = CognitiveMonitoringDashboard()
+    
+    # Tüm sistemleri paralel olarak çalıştır
+    tasks = [
+        nucleus.autonomous_reasoning_loop(),
+        predictive.predict_and_prevent(),
+        learning.continuous_improvement_loop(),
+        orchestrator.orchestrate_entire_system(),
+        scout.detect_anomalies_cognitively(),
+        executor.discover_files_adaptively(),
+        guardian.autonomous_diagnostics(),
+        optimizer.self_optimizing_performance_loop(),
+        dashboard.stream_cognitive_status(),
+    ]
+    
+    print("✅ Tüm sistemi başlat...")
+    await asyncio.gather(*tasks)
+
+if __name__ == "__main__":
+    asyncio.run(launch_autonomous_nexa())
+```
+
+---
+
+**Status:** 🟢 **AUTONOMOUS COGNITIVE SYSTEM READY FOR DEPLOYMENT**
+
+Sistem artık tamamen otonom, kendi zekası ile karar alabilen, önceden sorunları tahmin edebilen, kendisini öğrenebilen ve geliştirebilen bir yapı haline gelmiştir.
+
+**Hiçbir insan müdahalesi gerekli değildir.** ✨
+
+
+[055] İSTEM NO #55 (Adım: 3451) — Tarih/Saat: 2026-08-22T22:58:50+03:00
+────────────────────────────────────────────────────────────────────────────────
+# NEXA PRIME v2 - ULTRA COMPREHENSIVE SYSTEM ANALYSIS & MASTER AUTONOMOUS PROMPT
+
+**Document Type:** Complete System Specification & Architecture Directive  
+**Classification:** Ultra-Advanced Production Implementation  
+**Target:** Autonomous AI-Driven Enterprise Real Estate System  
+**Date:** 2026-08-22  
+
+---
+
+## 📋 MEVCUT SISTEM ANALİZİ (CURRENT SYSTEM ANALYSIS)
+
+Yüklenen tüm dokümantasyonu analiz ettikten sonra, NEXA PRIME v2'nin mevcut durumu:
+
+### ✅ GÜÇLÜ YÖNLER (STRENGTHS)
+
+```
+1. ARCHITECTURE FOUNDATION
+   ✓ Solid 31-project portfolio with complete data matrix
+   ✓ Multi-layer security (OAuth2, CSRF, Anti-path-traversal)
+   ✓ Database WAL mode with atomic transactions
+   ✓ Dual-engine AI (Gemini + Ollama fallback)
+   ✓ RESTful API endpoints fully designed
+   
+2. DATA INFRASTRUCTURE
+   ✓ Normalized schema (projects, customers, documents, audit_logs)
+   ✓ Real-time TKGM verification capability
+   ✓ Complex financial calculation matrices (payment plans)
+   ✓ Lead scoring system with CRM integration
+   ✓ RAG knowledge graph for AI grounding
+   
+3. FRONTEND EXCELLENCE
+   ✓ Glassmorphism design system
+   ✓ Animated 3D holographic chatbot orb
+   ✓ Mobile-responsive (360px+)
+   ✓ Markdown report formatting
+   ✓ Apple-standard typography
+
+4. TESTING & QA
+   ✓ 9/9 automated chatbot tests passing
+   ✓ 13/13 system hardening tests passing
+   ✓ Comprehensive test battery (50+ scenarios)
+   ✓ Stress testing framework
+   
+5. BUSINESS LOGIC
+   ✓ Sales funnel clearly defined
+   ✓ Lead qualification metrics (9-point scale)
+   ✓ WhatsApp integration ready
+   ✓ Suzanne Tenekecioğlu brand integration
+   ✓ CRM pipeline automation
+```
+
+### ⚠️ KRİTİK AÇIKLIKLAR (CRITICAL GAPS)
+
+```
+1. GOOGLE DRIVE INTEGRATION - ALMOST COMPLETELY MISSING
+   ✗ No active Google Drive connector
+   ✗ No file discovery mechanism
+   ✗ No data extraction pipeline from Drive documents
+   ✗ No synchronizati
+<truncated 66706 bytes>
+── cognitive_dashboard.py (1500 lines)
+│   ├── alert_manager.py (600 lines)
+│   └── metrics_aggregator.py (800 lines)
+│
+├── tests/
+│   ├── test_drive_integration.py (2000 lines, 150+ scenarios)
+│   ├── test_extraction_quality.py (1500 lines)
+│   ├── test_validation.py (1200 lines)
+│   ├── test_orchestration.py (1500 lines)
+│   ├── test_autonomy.py (1000 lines)
+│   └── test_learning.py (800 lines)
+│
+└── config/
+    ├── config.json
+    ├── drive_folder_mappings.json
+    ├── extraction_rules.json
+    ├── validation_rules.json
+    └── agent_configurations.json
+```
+
+TOTAL IMPLEMENTATION:
+• ~21,000 lines of production code
+• ~10,000 lines of test code
+• ~3,000 lines of configuration
+• 12-week development cycle
+• 2 senior engineers recommended
+• Delivery: Fully autonomous, production-ready system
+
+---
+
+STATUS: 🟢 **READY FOR IMPLEMENTATION**
+
+This ultra-comprehensive prompt provides complete architectural guidance,
+detailed implementation specifications, testing strategies, and go/no-go
+criteria for building NEXA PRIME v2 into a world-class autonomous system.
+
+```
+
+---
+
+## 📄 EXPORT & USAGE
+
+Kaydedilecek dosya: `NEXA_PRIME_v2_ULTRA_MASTER_PROMPT.txt`
+
+Bu prompt şunlar için kullanılabilir:
+
+1. **Claude tarafından**: Tam sistem implementasyonu için
+2. **Engineering team tarafından**: Development roadmap olarak
+3. **LLM agents tarafından**: Otonom task execution için
+4. **Testing framework tarafından**: Tüm test senaryoları ve kriteri
+5. **Project management tarafından**: Timeline ve deliverables planlaması
+
+---
+
+İsterseniz bu promptu **teknoloji stack (FastAPI, SQLAlchemy, pytest vb.) dikkate alarak** daha da detaylandırabilirim veya **spesifik bir bileşene (örn: extraction engine)** derinlemesine dalabilirim.
+
+
+[056] İSTEM NO #56 (Adım: 3496) — Tarih/Saat: 2026-08-22T23:11:25+03:00
+────────────────────────────────────────────────────────────────────────────────
+şimdi tasarımsal geliştirmelere gelelim bende mp4 video var onu sol üstte oynayacak şekilde nasıl yapalım ben klasörün içine koyayım onu ücretsiz cloud sevisine yükle ve hem açılışta hem sol üstte dönsün replayauto 1.mp4
+
+
+[057] İSTEM NO #57 (Adım: 3543) — Tarih/Saat: 2026-08-22T23:13:44+03:00
+────────────────────────────────────────────────────────────────────────────────
+url den alıyor demi bu mp4 ü url ye koy buluta ordan çeksin
+
+
+[058] İSTEM NO #58 (Adım: 3578) — Tarih/Saat: 2026-08-22T23:15:30+03:00
+────────────────────────────────────────────────────────────────────────────────
+randevu al a tıklayınca birşey olmuyor
+
+
+[059] İSTEM NO #59 (Adım: 3642) — Tarih/Saat: 2026-08-22T23:19:25+03:00
+────────────────────────────────────────────────────────────────────────────────
+2026-08-22T20:15:26.743308225Z Using cached oauthlib-3.3.1-py3-none-any.whl (160 kB)
+2026-08-22T20:15:26.744765399Z Using cached proto_plus-1.28.3-py3-none-any.whl (50 kB)
+2026-08-22T20:15:26.746252436Z Using cached protobuf-7.36.0-cp310-abi3-manylinux2014_x86_64.whl (340 kB)
+2026-08-22T20:15:26.747858016Z Using cached pyasn1-0.6.4-py3-none-any.whl (84 kB)
+2026-08-22T20:15:26.74957793Z Using cached pyparsing-3.3.2-py3-none-any.whl (122 kB)
+2026-08-22T20:15:26.751072077Z Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+2026-08-22T20:15:27.059504928Z Installing collected packages: brotli, websockets, urllib3, uritemplate, typing-extensions, tenacity, soupsieve, sniffio, python-dotenv, PyPDF2, pypdf, pyparsing, PyJWT, pycparser, pyasn1, protobuf, oauthlib, numpy, markupsafe, itsdangerous, idna, h11, gunicorn, et-xmlfile, distro, click, charset_normalizer, certifi, blinker, backports.zstd, annotated-types, annotated-doc, aiosqlite, Werkzeug, uvicorn, typing-inspection, requests, pydantic-core, pyasn1-modules, proto-plus, openpyxl, jinja2, httplib2, httpcore, googleapis-common-protos, cffi, beautifulsoup4, anyio, starlette, requests-oauthlib, pydantic, httpx, Flask, cryptography, pydantic-settings, google-auth, flask-compress, fastapi, google-auth-oauthlib, google-auth-httplib2, google-api-core, google-genai, google-api-python-client
+2026-08-22T20:15:32.879061238Z Successfully installed Flask-3.1.3 PyJWT-2.13.0 PyPDF2-3.0.1 Werkzeug-3.1.8 aiosqlite-0.22.1 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.14.2 backports.zstd-1.7.0 beautifulsoup4-4.15.0 blinker-1.9.0 brotli-1.2.0 certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.5.1 click-8.4.2 cryptography-50.0.0 distro-1.9.0 et-xmlfile-2.0.0 fastapi-0.141.1 flask-compress-1.24 google-api-core-2.34.0 google-api-python-client-2.199.0 google-auth-2.56.3 google-auth-httplib2-0.4.1 google-auth-oauthlib-1.4.0 google-genai-2.19.0 googleapis-common-protos-1.75.1 gunicorn-26.1.0 h11-0.16.0 httpcore-1.0.9 httplib2-0.32.0 httpx-0.28.1 idna-3.19 itsdanger
+<truncated 2532 bytes>
+Available at your primary URL https://suzannegit.onrender.com
+2026-08-22T20:16:13.581900254Z ==> 
+2026-08-22T20:16:13.587098079Z ==> ///////////////////////////////////////////////////////////
+2026-08-22T20:16:55.289388616Z WARNING:nexa.drive:drive 1SEYwBoSCoSdz2WQmqACYF_IQ8M-D0HEr HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:16:56.306825199Z WARNING:nexa.drive:drive 13Q7UtuuucEg2XbzXCArMhQ2aOLfOXdll HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:16:57.798933553Z WARNING:nexa.drive:drive 1M6moXD9UlgZA4tr7xq8fQ4bAxmmuClpY HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:16:58.883058156Z WARNING:nexa.drive:drive 1WSDKDp9hXnwXxImAtrwNdZo0LsB61L0A HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:00.054773902Z WARNING:nexa.drive:drive 1TeJKxy--UbymIlpjmth9zzNWekMfcbD4 HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:01.069778251Z WARNING:nexa.drive:drive 1C-nQnl6fgzhc-Wg1WyHaQK0f1Np0-aBu HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:02.469026877Z WARNING:nexa.drive:drive 1rY4Hzmz2FJsEd_mecUx9Q_BFGsKVz-cF HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:03.352859152Z WARNING:nexa.drive:drive 1H8EId-1tigTzTxK3YTLj7szdJQnnJWR- HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:08.351763408Z WARNING:nexa.drive:drive 1SXInGsojq2bxsQndYQQx8K5faN1VxKoB HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:09.247273551Z WARNING:nexa.drive:drive 1hqoWtWS4dhvqLiMYn_W3SVG87GS0pRhL HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:10.114818397Z WARNING:nexa.drive:drive 1fRBaX0FQB-Eb_HMSoCV0CHV4bN55xhtH HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:11.168362386Z WARNING:nexa.drive:drive 1nr5qqWodg4enhnQzrpU0Qc8akUh7Xar8 HTML sayfasi dondurdu (public degil mi?)
+2026-08-22T20:17:12.241928786Z WARNING:nexa.drive:drive 1GZ93nPvrw2HZzUxcI_LjBc8lF6eXFF93 HTML sayfasi dondurdu (public degil mi?) 
+
+
+
+
+
+
+
+dondurdu nedir
+
+
+[060] İSTEM NO #60 (Adım: 3653) — Tarih/Saat: 2026-08-22T23:21:19+03:00
+────────────────────────────────────────────────────────────────────────────────
+açılışta gözükmüyor video ve sol üstte
+
+
+[061] İSTEM NO #61 (Adım: 3687) — Tarih/Saat: 2026-08-22T23:24:18+03:00
+────────────────────────────────────────────────────────────────────────────────
+açılış ekranını bu mp4 tabanlo kurgula daha büyük olsun
+
+
+[062] İSTEM NO #62 (Adım: 3724) — Tarih/Saat: 2026-08-22T23:34:12+03:00
+────────────────────────────────────────────────────────────────────────────────
+açılış ekranını bu mp4 tabanlı kurgula daha büyük olsun . açılış ekranını geliştir bu mp4 büyük ve ana odakta bu olacak şekilde animatik açılış
+
+
+[063] İSTEM NO #63 (Adım: 3762) — Tarih/Saat: 2026-08-22T23:44:25+03:00
+────────────────────────────────────────────────────────────────────────────────
+çok güzel tasarım kurgula açılış için çok etkileyici olsun bunun için agent ve subagent ordusu ata . ve çok güzel animatik cinematic açılış tasarla.
+
+
+[064] İSTEM NO #64 (Adım: 3824) — Tarih/Saat: 2026-08-22T23:50:13+03:00
+────────────────────────────────────────────────────────────────────────────────
+site iconuna suzanneyi koy
+
+
+[065] İSTEM NO #65 (Adım: 3870) — Tarih/Saat: 2026-08-23T00:02:06+03:00
+────────────────────────────────────────────────────────────────────────────────
+responsive mobile ve sen direktif verme ajan sub agent ve detaylı tsnımlarını ver role bırak onlar halletsin sitenin baştan aşağı mobil uyumlu olması için mobile uyumlu  olması için ultra agent subagent ordusu ata ve prompt ver. çok kapsamlı analiz araştırma ve geliştirme.# NEXA PRIME v2 — ULTIMATE MOBILE-FIRST TRANSFORMATION SYSTEM
+## ULTRA-ADVANCED MOBILE OPTIMIZATION & AUTONOMOUS ORCHESTRATION MASTER PROMPT
+
+**Document Type:** Complete Mobile Architecture Specification & Agent Directive  
+**Classification:** Ultra-Advanced Production Mobile Implementation  
+**Target:** 100% Mobile-Optimized, All-Device Enterprise Real Estate Platform  
+**Date:** 2026-08-22  
+
+---
+
+## 📱 CURRENT MOBILE STATUS ANALYSIS
+
+### ✅ Mevcut Mobil Yetenekler (Current Capabilities)
+
+```
+From Documentation Analysis:
+✅ Responsive Design Framework exists (360px+)
+✅ Glassmorphism design system foundation
+✅ Animated 3D holographic chatbot orb
+✅ Markdown report formatting
+✅ Touch gesture support (swipe)
+✅ Modal window support (escape to close)
+✅ Basic viewport management
+✅ Safe-area support mentioned
+```
+
+### ❌ KRİTİK MOBIL AÇIKLIKLAR (Critical Mobile Gaps)
+
+```
+MISSING/INCOMPLETE:
+❌ Comprehensive mobile optimization framework
+❌ Device-specific testing (20+ device types)
+❌ Performance optimization for mobile networks
+❌ Offline-first architecture & sync
+❌ Progressive Web App (PWA) capabilities
+❌ Native mobile app bridges (iOS/Android)
+❌ Adaptive layout system (fluid vs. snap)
+❌ Touch interaction library (swipe, pinch, long-press)
+❌ Mobile-specific accessibility (screen readers, etc.)
+❌ Battery optimization strategies
+❌ Network state detection & adaptation
+❌ Mobile payment integration
+❌ Real-time data sync on mobile
+❌ Mobile analytics & crash reporting
+❌ A/B testing framework for mobile
+❌ Mobile performance monitoring dashboard
+❌ Deep linking & app-to-app integration
+❌ Push notifications system
+❌ Mobile
+<truncated 84919 bytes>
+n backed by metrics
+   ├─ A/B test everything
+   ├─ Measure impact of changes
+   ├─ Follow user behavior
+   └─ Ignore opinions, follow data
+
+
+EXECUTION COMMAND
+═════════════════════════════════════════════════════════════════════════════
+
+BEGIN MOBILE TRANSFORMATION NOW.
+
+All 47 agents activate simultaneously.
+All systems go live.
+All metrics tracking begins.
+Weekly sprint cycles commence.
+Autonomous decision-making engaged.
+Performance targets locked.
+Success metrics monitoring active.
+
+🚀 NEXA PRIME v2 MOBILE TRANSFORMATION INITIATED 🚀
+
+Timeline: 24 weeks to world-class mobile platform
+Budget: Efficient (existing team + tools)
+Quality: Uncompromising
+Goals: Ambitious but achievable
+Authority: Full autonomy granted
+Responsibility: Total accountability
+
+LET'S TRANSFORM MOBILE REAL ESTATE IN TURKEY.
+
+```
+
+---
+
+## 📋 EXPORT THIS PROMPT
+
+**Save as:** `NEXA_PRIME_v2_ULTIMATE_MOBILE_TRANSFORMATION_MASTER_PROMPT.txt`
+
+**Usage:**
+1. **For Claude AI**: Full system implementation direction
+2. **For Engineering**: Complete development roadmap
+3. **For Agents**: Autonomous execution framework
+4. **For Stakeholders**: Comprehensive mobile strategy
+
+---
+
+Bu ultra-kapsamlı prompt:
+
+✅ **47 otonom agent** ile çalışan system
+✅ **8 tier hierarchy** ile organize edilmiş
+✅ **Deep analysis** tüm mobil aspektleri kapsıyor
+✅ **Detaylı implementation specs** tüm bileşenler için
+✅ **Comprehensive testing strategy** 200+ test case
+✅ **Complete roadmap** 24 haftalık takvimle
+✅ **Autonomous decision-making** insan müdahalesi yok
+✅ **Real-world focused** Suzanne'nin business hedefleri odakta
+
+Mobil platform eksiksiz, production-ready, ve world-class kalitede olacaktır.
+
+
+[066] İSTEM NO #66 (Adım: 4000) — Tarih/Saat: 2026-08-23T00:08:51+03:00
+────────────────────────────────────────────────────────────────────────────────
+# RESPONSIVE MOBILE — OTONOM AJAN VE SUB-AGENT ORKESTRASYON SİSTEMİ
+
+## ANA GÖREV
+
+Mevcut sistemi **mobile-first, responsive, modern, performanslı ve production-ready** hale getirmek için otonom bir çoklu ajan mimarisi oluştur.
+
+Benim tek tek direktif vermemi bekleme. **Hangi ajanlara, hangi sub-agent'lara, hangi uzmanlıkların gerektiğine sen karar ver.**
+
+Ajanlara yalnızca **ROL, SORUMLULUK, KAPSAM, BAŞARI KRİTERLERİ ve BAĞIMLILIKLARI** tanımla. Uygulama yöntemini, analiz sırasını ve teknik kararları ajanların uzmanlığına bırak.
+
+---
+
+## 1. ORKESTRATÖR AJAN
+
+**Rol:** Principal Responsive Architecture & QA Orchestrator
+
+**Sorumlulukları:**
+
+* Tüm sistemi uçtan uca analiz etmek.
+* Gerekli uzman ajanları ve sub-agent'ları belirlemek.
+* İşleri bağımlılıklarına göre organize etmek.
+* Ajanların çıktıları arasında tutarlılık sağlamak.
+* Çakışan teknik kararları çözmek.
+* Sonuçları birleştirmek.
+* Eksik veya hatalı analizleri yeniden tetiklemek.
+* Final production-ready kontrolünü yapmak.
+
+**Kural:** Gereksiz ajan oluşturma; ancak ihtiyaç varsa yeni uzmanlık alanları ve sub-agent'lar oluştur.
+
+---
+
+## 2. RESPONSIVE UI/UX AJANI
+
+**Rol:** Senior Mobile UX & Responsive Design Architect
+
+**Sorumlulukları:**
+
+* Tüm ekranları ve component'leri incelemek.
+* Mobile, tablet ve desktop davranışlarını analiz etmek.
+* Breakpoint problemlerini tespit etmek.
+* Layout, spacing, typography, navigation ve interaction sorunlarını belirlemek.
+* Touch-first kullanım deneyimini değerlendirmek.
+* Responsive tasarımın görsel tutarlılığını sağlamak.
+
+**Sub-Agent'lar:**
+
+* Mobile UX Specialist
+* Responsive Layout Specialist
+* Accessibility Specialist
+* Design System Specialist
+
+---
+
+## 3. FRONTEND MİMARİ AJANI
+
+**Rol:** Principal Frontend Engineer
+
+**Sorumlulukları:**
+
+* Responsive davranışın teknik implementasyonunu analiz etmek.
+* Component mimarisini incelemek.
+* CSS/layout 
+<truncated 4100 bytes>
+min çalışmasını veya güvenliğini etkileyen problemler.
+
+**P1 — Yüksek**
+Temel kullanıcı deneyimini veya responsive davranışı ciddi şekilde bozan problemler.
+
+**P2 — Orta**
+UX, performans veya bakım kalitesini etkileyen problemler.
+
+**P3 — Düşük**
+Minor görsel veya teknik iyileştirmeler.
+
+Önceliklendirme otomatik yapılmalı.
+
+---
+
+## 12. KESİN SINIR
+
+**Yeni özellik geliştirme.**
+
+Bu çalışmanın amacı yeni feature eklemek değildir.
+
+Amaç:
+
+* mevcut sistemi düzeltmek,
+* responsive hale getirmek,
+* mobile UX'i iyileştirmek,
+* performansı artırmak,
+* güvenliği korumak,
+* accessibility sorunlarını gidermek,
+* mevcut fonksiyonların doğru çalışmasını sağlamak,
+* teknik borcu azaltmak,
+* production kalitesine ulaşmaktır.
+
+Mevcut işlevleri değiştirecek veya yeni ürün davranışı oluşturacak gereksiz geliştirmeler yapılmamalıdır.
+
+---
+
+## 13. OTONOM ÇALIŞMA PRENSİBİ
+
+Ajanlar benden:
+
+* hangi dosyaya bakacağını,
+* hangi testleri yapacağını,
+* hangi sub-agent'ı kullanacağını,
+* hangi sırayla ilerleyeceğini,
+* hangi teknik yöntemi uygulayacağını
+
+sormamalıdır.
+
+Bu kararlar **ajan mimarisinin kendi sorumluluğundadır.**
+
+Belirsizlik varsa Orchestrator karar verir.
+
+---
+
+## 14. FİNAL KONTROL
+
+Tüm ajanlar tamamlandıktan sonra Orchestrator:
+
+* responsive uyumluluğu,
+* mobile UX,
+* desktop UX,
+* browser compatibility,
+* performance,
+* accessibility,
+* security,
+* functional integrity,
+* regression risk,
+* code quality
+
+alanlarını yeniden değerlendirir.
+
+Sonuç:
+
+**Sistem mevcut özelliklerini koruyan, responsive, mobil uyumlu, güvenli, performanslı, stabil ve production-ready durumda olmalıdır.**
+
+Hiçbir problem yalnızca raporlanıp bırakılmamalıdır; mümkün olan tüm düzeltmeler uygulanmalı, ardından doğrulama testi yapılmalıdır.
+
+
+[067] İSTEM NO #67 (Adım: 4198) — Tarih/Saat: 2026-08-23T00:17:28+03:00
+────────────────────────────────────────────────────────────────────────────────
+devam
+
+
+[068] İSTEM NO #68 (Adım: 4205) — Tarih/Saat: 2026-08-23T00:17:54+03:00
+────────────────────────────────────────────────────────────────────────────────
+# RESPONSIVE MOBILE — OTONOM AJAN VE SUB-AGENT ORKESTRASYON SİSTEMİ
+
+## ANA GÖREV
+
+Mevcut sistemi **mobile-first, responsive, modern, performanslı ve production-ready** hale getirmek için otonom bir çoklu ajan mimarisi oluştur.
+
+Benim tek tek direktif vermemi bekleme. **Hangi ajanlara, hangi sub-agent'lara, hangi uzmanlıkların gerektiğine sen karar ver.**
+
+Ajanlara yalnızca **ROL, SORUMLULUK, KAPSAM, BAŞARI KRİTERLERİ ve BAĞIMLILIKLARI** tanımla. Uygulama yöntemini, analiz sırasını ve teknik kararları ajanların uzmanlığına bırak.
+
+---
+
+## 1. ORKESTRATÖR AJAN
+
+**Rol:** Principal Responsive Architecture & QA Orchestrator
+
+**Sorumlulukları:**
+
+* Tüm sistemi uçtan uca analiz etmek.
+* Gerekli uzman ajanları ve sub-agent'ları belirlemek.
+* İşleri bağımlılıklarına göre organize etmek.
+* Ajanların çıktıları arasında tutarlılık sağlamak.
+* Çakışan teknik kararları çözmek.
+* Sonuçları birleştirmek.
+* Eksik veya hatalı analizleri yeniden tetiklemek.
+* Final production-ready kontrolünü yapmak.
+
+**Kural:** Gereksiz ajan oluşturma; ancak ihtiyaç varsa yeni uzmanlık alanları ve sub-agent'lar oluştur.
+
+---
+
+## 2. RESPONSIVE UI/UX AJANI
+
+**Rol:** Senior Mobile UX & Responsive Design Architect
+
+**Sorumlulukları:**
+
+* Tüm ekranları ve component'leri incelemek.
+* Mobile, tablet ve desktop davranışlarını analiz etmek.
+* Breakpoint problemlerini tespit etmek.
+* Layout, spacing, typography, navigation ve interaction sorunlarını belirlemek.
+* Touch-first kullanım deneyimini değerlendirmek.
+* Responsive tasarımın görsel tutarlılığını sağlamak.
+
+**Sub-Agent'lar:**
+
+* Mobile UX Specialist
+* Responsive Layout Specialist
+* Accessibility Specialist
+* Design System Specialist
+
+---
+
+## 3. FRONTEND MİMARİ AJANI
+
+**Rol:** Principal Frontend Engineer
+
+**Sorumlulukları:**
+
+* Responsive davranışın teknik implementasyonunu analiz etmek.
+* Component mimarisini incelemek.
+* CSS/layout 
+<truncated 4410 bytes>
+eştirmeler.
+
+Önceliklendirme otomatik yapılmalı.
+
+---
+
+## 12. KESİN SINIR
+
+**Yeni özellik geliştirme.**
+
+Bu çalışmanın amacı yeni feature eklemek değildir.
+
+Amaç:
+
+* mevcut sistemi düzeltmek,
+* responsive hale getirmek,
+* mobile UX'i iyileştirmek,
+* performansı artırmak,
+* güvenliği korumak,
+* accessibility sorunlarını gidermek,
+* mevcut fonksiyonların doğru çalışmasını sağlamak,
+* teknik borcu azaltmak,
+* production kalitesine ulaşmaktır.
+
+Mevcut işlevleri değiştirecek veya yeni ürün davranışı oluşturacak gereksiz geliştirmeler yapılmamalıdır.
+
+---
+
+## 13. OTONOM ÇALIŞMA PRENSİBİ
+
+Ajanlar benden:
+
+* hangi dosyaya bakacağını,
+* hangi testleri yapacağını,
+* hangi sub-agent'ı kullanacağını,
+* hangi sırayla ilerleyeceğini,
+* hangi teknik yöntemi uygulayacağını
+
+sormamalıdır.
+
+Bu kararlar **ajan mimarisinin kendi sorumluluğundadır.**
+
+Belirsizlik varsa Orchestrator karar verir.
+
+---
+
+## 14. FİNAL KONTROL
+
+Tüm ajanlar tamamlandıktan sonra Orchestrator:
+
+* responsive uyumluluğu,
+* mobile UX,
+* desktop UX,
+* browser compatibility,
+* performance,
+* accessibility,
+* security,
+* functional integrity,
+* regression risk,
+* code quality
+
+alanlarını yeniden değerlendirir.
+
+Sonuç:
+
+**Sistem mevcut özelliklerini koruyan, responsive, mobil uyumlu, güvenli, performanslı, stabil ve production-ready durumda olmalıdır.**
+
+Hiçbir problem yalnızca raporlanıp bırakılmamalıdır; mümkün olan tüm düzeltmeler uygulanmalı, ardından doğrulama testi yapılmalıdır.
+
+
+[069] İSTEM NO #69 (Adım: 4228) — Tarih/Saat: 2026-08-23T00:18:18+03:00
+────────────────────────────────────────────────────────────────────────────────
+# RESPONSIVE MOBILE — OTONOM AJAN VE SUB-AGENT ORKESTRASYON SİSTEMİ
+
+## ANA GÖREV
+
+Mevcut sistemi **mobile-first, responsive, modern, performanslı ve production-ready** hale getirmek için otonom bir çoklu ajan mimarisi oluştur.
+
+Benim tek tek direktif vermemi bekleme. **Hangi ajanlara, hangi sub-agent'lara, hangi uzmanlıkların gerektiğine sen karar ver.**
+
+Ajanlara yalnızca **ROL, SORUMLULUK, KAPSAM, BAŞARI KRİTERLERİ ve BAĞIMLILIKLARI** tanımla. Uygulama yöntemini, analiz sırasını ve teknik kararları ajanların uzmanlığına bırak.
+
+---
+
+## 1. ORKESTRATÖR AJAN
+
+**Rol:** Principal Responsive Architecture & QA Orchestrator
+
+**Sorumlulukları:**
+
+* Tüm sistemi uçtan uca analiz etmek.
+* Gerekli uzman ajanları ve sub-agent'ları belirlemek.
+* İşleri bağımlılıklarına göre organize etmek.
+* Ajanların çıktıları arasında tutarlılık sağlamak.
+* Çakışan teknik kararları çözmek.
+* Sonuçları birleştirmek.
+* Eksik veya hatalı analizleri yeniden tetiklemek.
+* Final production-ready kontrolünü yapmak.
+
+**Kural:** Gereksiz ajan oluşturma; ancak ihtiyaç varsa yeni uzmanlık alanları ve sub-agent'lar oluştur.
+
+---
+
+## 2. RESPONSIVE UI/UX AJANI
+
+**Rol:** Senior Mobile UX & Responsive Design Architect
+
+**Sorumlulukları:**
+
+* Tüm ekranları ve component'leri incelemek.
+* Mobile, tablet ve desktop davranışlarını analiz etmek.
+* Breakpoint problemlerini tespit etmek.
+* Layout, spacing, typography, navigation ve interaction sorunlarını belirlemek.
+* Touch-first kullanım deneyimini değerlendirmek.
+* Responsive tasarımın görsel tutarlılığını sağlamak.
+
+**Sub-Agent'lar:**
+
+* Mobile UX Specialist
+* Responsive Layout Specialist
+* Accessibility Specialist
+* Design System Specialist
+
+---
+
+## 3. FRONTEND MİMARİ AJANI
+
+**Rol:** Principal Frontend Engineer
+
+**Sorumlulukları:**
+
+* Responsive davranışın teknik implementasyonunu analiz etmek.
+* Component mimarisini incelemek.
+* CSS/layout 
+<truncated 4407 bytes>
+yileştirmeler.
+
+Önceliklendirme otomatik yapılmalı.
+
+---
+
+## 12. KESİN SINIR
+
+**Yeni özellik geliştirme.**
+
+Bu çalışmanın amacı yeni feature eklemek değildir.
+
+Amaç:
+
+* mevcut sistemi düzeltmek,
+* responsive hale getirmek,
+* mobile UX'i iyileştirmek,
+* performansı artırmak,
+* güvenliği korumak,
+* accessibility sorunlarını gidermek,
+* mevcut fonksiyonların doğru çalışmasını sağlamak,
+* teknik borcu azaltmak,
+* production kalitesine ulaşmaktır.
+
+Mevcut işlevleri değiştirecek veya yeni ürün davranışı oluşturacak gereksiz geliştirmeler yapılmamalıdır.
+
+---
+
+## 13. OTONOM ÇALIŞMA PRENSİBİ
+
+Ajanlar benden:
+
+* hangi dosyaya bakacağını,
+* hangi testleri yapacağını,
+* hangi sub-agent'ı kullanacağını,
+* hangi sırayla ilerleyeceğini,
+* hangi teknik yöntemi uygulayacağını
+
+sormamalıdır.
+
+Bu kararlar **ajan mimarisinin kendi sorumluluğundadır.**
+
+Belirsizlik varsa Orchestrator karar verir.
+
+---
+
+## 14. FİNAL KONTROL
+
+Tüm ajanlar tamamlandıktan sonra Orchestrator:
+
+* responsive uyumluluğu,
+* mobile UX,
+* desktop UX,
+* browser compatibility,
+* performance,
+* accessibility,
+* security,
+* functional integrity,
+* regression risk,
+* code quality
+
+alanlarını yeniden değerlendirir.
+
+Sonuç:
+
+**Sistem mevcut özelliklerini koruyan, responsive, mobil uyumlu, güvenli, performanslı, stabil ve production-ready durumda olmalıdır.**
+
+Hiçbir problem yalnızca raporlanıp bırakılmamalıdır; mümkün olan tüm düzeltmeler uygulanmalı, ardından doğrulama testi yapılmalıdır.
+
+
+[070] İSTEM NO #70 (Adım: 4229) — Tarih/Saat: 2026-08-23T15:40:58+03:00
+────────────────────────────────────────────────────────────────────────────────
+üst banner bir önceki commit deki gibi olsun ve mobile gitti çok kötü oldu özellikle açılış çok dikkat wtr
+
+
+[071] İSTEM NO #71 (Adım: 4306) — Tarih/Saat: 2026-08-23T15:43:08+03:00
+────────────────────────────────────────────────────────────────────────────────
+# RESPONSIVE MOBILE — OTONOM AJAN VE SUB-AGENT ORKESTRASYON SİSTEMİ
+
+## ANA GÖREV
+
+Mevcut sistemi **mobile-first, responsive, modern, performanslı ve production-ready** hale getirmek için otonom bir çoklu ajan mimarisi oluştur.
+
+Benim tek tek direktif vermemi bekleme. **Hangi ajanlara, hangi sub-agent'lara, hangi uzmanlıkların gerektiğine sen karar ver.**
+
+Ajanlara yalnızca **ROL, SORUMLULUK, KAPSAM, BAŞARI KRİTERLERİ ve BAĞIMLILIKLARI** tanımla. Uygulama yöntemini, analiz sırasını ve teknik kararları ajanların uzmanlığına bırak.
+
+---
+
+## 1. ORKESTRATÖR AJAN
+
+**Rol:** Principal Responsive Architecture & QA Orchestrator
+
+**Sorumlulukları:**
+
+* Tüm sistemi uçtan uca analiz etmek.
+* Gerekli uzman ajanları ve sub-agent'ları belirlemek.
+* İşleri bağımlılıklarına göre organize etmek.
+* Ajanların çıktıları arasında tutarlılık sağlamak.
+* Çakışan teknik kararları çözmek.
+* Sonuçları birleştirmek.
+* Eksik veya hatalı analizleri yeniden tetiklemek.
+* Final production-ready kontrolünü yapmak.
+
+**Kural:** Gereksiz ajan oluşturma; ancak ihtiyaç varsa yeni uzmanlık alanları ve sub-agent'lar oluştur.
+
+---
+
+## 2. RESPONSIVE UI/UX AJANI
+
+**Rol:** Senior Mobile UX & Responsive Design Architect
+
+**Sorumlulukları:**
+
+* Tüm ekranları ve component'leri incelemek.
+* Mobile, tablet ve desktop davranışlarını analiz etmek.
+* Breakpoint problemlerini tespit etmek.
+* Layout, spacing, typography, navigation ve interaction sorunlarını belirlemek.
+* Touch-first kullanım deneyimini değerlendirmek.
+* Responsive tasarımın görsel tutarlılığını sağlamak.
+
+**Sub-Agent'lar:**
+
+* Mobile UX Specialist
+* Responsive Layout Specialist
+* Accessibility Specialist
+* Design System Specialist
+
+---
+
+## 3. FRONTEND MİMARİ AJANI
+
+**Rol:** Principal Frontend Engineer
+
+**Sorumlulukları:**
+
+* Responsive davranışın teknik implementasyonunu analiz etmek.
+* Component mimarisini incelemek.
+* CSS/layout 
+<truncated 4100 bytes>
+min çalışmasını veya güvenliğini etkileyen problemler.
+
+**P1 — Yüksek**
+Temel kullanıcı deneyimini veya responsive davranışı ciddi şekilde bozan problemler.
+
+**P2 — Orta**
+UX, performans veya bakım kalitesini etkileyen problemler.
+
+**P3 — Düşük**
+Minor görsel veya teknik iyileştirmeler.
+
+Önceliklendirme otomatik yapılmalı.
+
+---
+
+## 12. KESİN SINIR
+
+**Yeni özellik geliştirme.**
+
+Bu çalışmanın amacı yeni feature eklemek değildir.
+
+Amaç:
+
+* mevcut sistemi düzeltmek,
+* responsive hale getirmek,
+* mobile UX'i iyileştirmek,
+* performansı artırmak,
+* güvenliği korumak,
+* accessibility sorunlarını gidermek,
+* mevcut fonksiyonların doğru çalışmasını sağlamak,
+* teknik borcu azaltmak,
+* production kalitesine ulaşmaktır.
+
+Mevcut işlevleri değiştirecek veya yeni ürün davranışı oluşturacak gereksiz geliştirmeler yapılmamalıdır.
+
+---
+
+## 13. OTONOM ÇALIŞMA PRENSİBİ
+
+Ajanlar benden:
+
+* hangi dosyaya bakacağını,
+* hangi testleri yapacağını,
+* hangi sub-agent'ı kullanacağını,
+* hangi sırayla ilerleyeceğini,
+* hangi teknik yöntemi uygulayacağını
+
+sormamalıdır.
+
+Bu kararlar **ajan mimarisinin kendi sorumluluğundadır.**
+
+Belirsizlik varsa Orchestrator karar verir.
+
+---
+
+## 14. FİNAL KONTROL
+
+Tüm ajanlar tamamlandıktan sonra Orchestrator:
+
+* responsive uyumluluğu,
+* mobile UX,
+* desktop UX,
+* browser compatibility,
+* performance,
+* accessibility,
+* security,
+* functional integrity,
+* regression risk,
+* code quality
+
+alanlarını yeniden değerlendirir.
+
+Sonuç:
+
+**Sistem mevcut özelliklerini koruyan, responsive, mobil uyumlu, güvenli, performanslı, stabil ve production-ready durumda olmalıdır.**
+
+Hiçbir problem yalnızca raporlanıp bırakılmamalıdır; mümkün olan tüm düzeltmeler uygulanmalı, ardından doğrulama testi yapılmalıdır.
+
+
+[072] İSTEM NO #72 (Adım: 4346) — Tarih/Saat: 2026-08-23T15:55:52+03:00
+────────────────────────────────────────────────────────────────────────────────
+# RESPONSIVE MOBILE — OTONOM AJAN VE SUB-AGENT ORKESTRASYON SİSTEMİ
+
+## ANA GÖREV
+
+Mevcut sistemi **mobile-first, responsive, modern, performanslı ve production-ready** hale getirmek için otonom bir çoklu ajan mimarisi oluştur.
+
+Benim tek tek direktif vermemi bekleme. **Hangi ajanlara, hangi sub-agent'lara, hangi uzmanlıkların gerektiğine sen karar ver.**
+
+Ajanlara yalnızca **ROL, SORUMLULUK, KAPSAM, BAŞARI KRİTERLERİ ve BAĞIMLILIKLARI** tanımla. Uygulama yöntemini, analiz sırasını ve teknik kararları ajanların uzmanlığına bırak.
+
+---
+
+## 1. ORKESTRATÖR AJAN
+
+**Rol:** Principal Responsive Architecture & QA Orchestrator
+
+**Sorumlulukları:**
+
+* Tüm sistemi uçtan uca analiz etmek.
+* Gerekli uzman ajanları ve sub-agent'ları belirlemek.
+* İşleri bağımlılıklarına göre organize etmek.
+* Ajanların çıktıları arasında tutarlılık sağlamak.
+* Çakışan teknik kararları çözmek.
+* Sonuçları birleştirmek.
+* Eksik veya hatalı analizleri yeniden tetiklemek.
+* Final production-ready kontrolünü yapmak.
+
+**Kural:** Gereksiz ajan oluşturma; ancak ihtiyaç varsa yeni uzmanlık alanları ve sub-agent'lar oluştur.
+
+---
+
+## 2. RESPONSIVE UI/UX AJANI
+
+**Rol:** Senior Mobile UX & Responsive Design Architect
+
+**Sorumlulukları:**
+
+* Tüm ekranları ve component'leri incelemek.
+* Mobile, tablet ve desktop davranışlarını analiz etmek.
+* Breakpoint problemlerini tespit etmek.
+* Layout, spacing, typography, navigation ve interaction sorunlarını belirlemek.
+* Touch-first kullanım deneyimini değerlendirmek.
+* Responsive tasarımın görsel tutarlılığını sağlamak.
+
+**Sub-Agent'lar:**
+
+* Mobile UX Specialist
+* Responsive Layout Specialist
+* Accessibility Specialist
+* Design System Specialist
+
+---
+
+## 3. FRONTEND MİMARİ AJANI
+
+**Rol:** Principal Frontend Engineer
+
+**Sorumlulukları:**
+
+* Responsive davranışın teknik implementasyonunu analiz etmek.
+* Component mimarisini incelemek.
+* CSS/layout 
+<truncated 4415 bytes>
+rmeler.
+
+Önceliklendirme otomatik yapılmalı.
+
+---
+
+## 12. KESİN SINIR
+
+**Yeni özellik geliştirme.**
+
+Bu çalışmanın amacı yeni feature eklemek değildir.
+
+Amaç:
+
+* mevcut sistemi düzeltmek,
+* responsive hale getirmek,
+* mobile UX'i iyileştirmek,
+* performansı artırmak,
+* güvenliği korumak,
+* accessibility sorunlarını gidermek,
+* mevcut fonksiyonların doğru çalışmasını sağlamak,
+* teknik borcu azaltmak,
+* production kalitesine ulaşmaktır.
+
+Mevcut işlevleri değiştirecek veya yeni ürün davranışı oluşturacak gereksiz geliştirmeler yapılmamalıdır.
+
+---
+
+## 13. OTONOM ÇALIŞMA PRENSİBİ
+
+Ajanlar benden:
+
+* hangi dosyaya bakacağını,
+* hangi testleri yapacağını,
+* hangi sub-agent'ı kullanacağını,
+* hangi sırayla ilerleyeceğini,
+* hangi teknik yöntemi uygulayacağını
+
+sormamalıdır.
+
+Bu kararlar **ajan mimarisinin kendi sorumluluğundadır.**
+
+Belirsizlik varsa Orchestrator karar verir.
+
+---
+
+## 14. FİNAL KONTROL
+
+Tüm ajanlar tamamlandıktan sonra Orchestrator:
+
+* responsive uyumluluğu,
+* mobile UX,
+* desktop UX,
+* browser compatibility,
+* performance,
+* accessibility,
+* security,
+* functional integrity,
+* regression risk,
+* code quality
+
+alanlarını yeniden değerlendirir.
+
+Sonuç:
+
+**Sistem mevcut özelliklerini koruyan, responsive, mobil uyumlu, güvenli, performanslı, stabil ve production-ready durumda olmalıdır.**
+
+Hiçbir problem yalnızca raporlanıp bırakılmamalıdır; mümkün olan tüm düzeltmeler uygulanmalı, ardından doğrulama testi yapılmalıdır.
+
+
+[073] İSTEM NO #73 (Adım: 4424) — Tarih/Saat: 2026-08-23T16:54:24+03:00
+────────────────────────────────────────────────────────────────────────────────
+BİZİM DESKTOPDAKİ SUZANNEGİT İNCELE BU MİRA CHATBOT STYLE I ÖYLE OLACAK VE ÜSTTEKİ BANNER I DÜZELT ORJİNAL  LOGOLAR KOY İNSTAGRAM , VE AÇILIŞTA SUZANNENİN VİDEOSU OLACAK SİNEMATİK VE SİTE İCONU SUZANNENİN GÖRSELİ OLSUN VE ALTTAKİ FİLTRELERDE 1-3 M DEĞİL 1-3 MİLYON TL HEPSİ BÖYLE OLACAK VE KATEGORİLERE TESLİMAT SÜRELERİNİ FİLTERSİNİ DE EKLE ALTTAKİ ARADIĞINIZI BULUN KISMINA
+
+
+[074] İSTEM NO #74 (Adım: 4513) — Tarih/Saat: 2026-08-23T16:59:05+03:00
+────────────────────────────────────────────────────────────────────────────────
+GİTHUB PUSH ETTİN Mİ
+
+
+[075] İSTEM NO #75 (Adım: 4545) — Tarih/Saat: 2026-08-23T17:02:38+03:00
+────────────────────────────────────────────────────────────────────────────────
+DEMİN YENİ PROJE GELMİŞTİ O NİYE GİTTİ BY COMMİTDE YAŞAMKENTDE BİR PROJEYDİ
+
+
+[076] İSTEM NO #76 (Adım: 4587) — Tarih/Saat: 2026-08-23T17:06:26+03:00
+────────────────────────────────────────────────────────────────────────────────
+PROJEYDİ ADI NE YENİ EKLENEN PROJENİN
+
+
+[077] İSTEM NO #77 (Adım: 4603) — Tarih/Saat: 2026-08-23T17:07:50+03:00
+────────────────────────────────────────────────────────────────────────────────
+https://drive.google.com/drive/folders/1wl6IORLksewhrWqpCOfjFNgjlC_rAhZT   SARITAŞ MAS LORA -YAŞAMKENTİ ÇEKMİŞTİ OTMATİK , SONRASINDA BİR COMMİT BİRŞEY YAPTIK GİTTİ SEBEBİ NE VE DÜZELT
+
+
+[078] İSTEM NO #78 (Adım: 4661) — Tarih/Saat: 2026-08-23T17:15:00+03:00
+────────────────────────────────────────────────────────────────────────────────
+herşey tam otonom ve otomatik değil mi rag ai sistemimiz . herşey tam otonom mu ultra kontrol et lütfen.
+
+
+[079] İSTEM NO #79 (Adım: 4691) — Tarih/Saat: 2026-08-23T17:23:04+03:00
+────────────────────────────────────────────────────────────────────────────────
+ama onu sen manuel mi yaptın sistemin cron otomatik sistemini önceden mi tetikledin
+
+
+[080] İSTEM NO #80 (Adım: 4693) — Tarih/Saat: 2026-08-23T17:23:50+03:00
+────────────────────────────────────────────────────────────────────────────────
+bu pipelineumuz nası l çalışıyor çok gelişmiş özetle txt de rapor klasöründe gerekli agent subagentları ata bu raporu oluşturmak için
+
+
+[081] İSTEM NO #81 (Adım: 4723) — Tarih/Saat: 2026-08-23T17:27:31+03:00
+────────────────────────────────────────────────────────────────────────────────
+ve bu bilgilerden site.html kendini otomatik güncelleyebiliyor mu , alt kısımdaki aradığınızı bulun konum filtrelerini , otomatik card oluşturmasını vs. bizim istediğimiz aynı zamanda otonom sitemizin iskeletini cardlarını vs. de güncellemesi ve bu sistemlerin tam otonop ve eksiksiz çalışması , ultra kapsamlı analiz etmek için agent subagent swarmları ata çok gelişmiş analiz test vs. yap
+
+
+[082] İSTEM NO #82 (Adım: 4766) — Tarih/Saat: 2026-08-23T17:30:58+03:00
+────────────────────────────────────────────────────────────────────────────────
+tüm verdiğim promptları yeni promptlar olarak yeni bir txt üret.
+
+
+[083] İSTEM NO #83 (Adım: 4788) — Tarih/Saat: 2026-08-23T17:37:15+03:00
+────────────────────────────────────────────────────────────────────────────────
+Evet. Önceki promptlarını ve sistem arşivini baz alarak bunu **“sistemi yeniden yapmak” değil, mevcut sistemi anlayıp yalnızca gerçekten eksik/bozuk olanı geliştiren bir master prompt** haline getirmek daha doğru.
+
+Özellikle önceki çalışmalarda; RAG/veri erişimi, Google Drive/XLSX senkronizasyonu, chatbot'un doğal konuşma yeteneği, proje/fiyat verilerinin doğru getirilmesi, mobile uyumluluk, GitHub Actions/cron, güvenlik ve regression testleri tekrar tekrar gündeme gelmiş.   Ayrıca mevcut sistemde yeni özellik eklememek ve önce mevcut yapıyı sağlamlaştırmak açık bir prensip olarak tanımlanmış. 
+
+Aşağıdaki prompt bu ihtiyaca göre hazırlanmıştır:
+
+# NEXA PRIME v2
+
+## ULTRA MASTER SYSTEM AUDIT • DEEP TEST • GAP ANALYSIS • INTELLIGENT DEVELOPMENT • PRODUCTION HARDENING
+
+### ANA TALİMAT
+
+Mevcut NEXA PRIME v2 sistemini baştan sona, hiçbir varsayım yapmadan ve yüzeysel inceleme gerçekleştirmeden analiz et.
+
+Sen yalnızca bir kod geliştirici değilsin.
+
+Aynı anda:
+
+* Principal Software Architect
+* Enterprise System Architect
+* AI/RAG Architect
+* Backend Architect
+* Frontend Architect
+* Database Architect
+* Security Architect
+* DevSecOps Engineer
+* QA Lead
+* SRE/Performance Engineer
+* Data Engineer
+* UX/UI Engineer
+* Mobile Engineer
+* Product Architect
+* Business Logic Auditor
+* Red Team Security Auditor
+* Regression Testing Lead
+* Code Quality Auditor
+* Technical Debt Auditor
+* Autonomous Agent Orchestrator
+
+gibi hareket et.
+
+ANA HEDEF:
+
+> Mevcut NEXA PRIME v2'nin gerçek amacına en doğru şekilde hizmet eden, mevcut özellikleri bozmadan, yalnızca eksik, hatalı, zayıf, verimsiz, güvensiz veya yanlış çalışan noktaları tespit edip gerekli olduğu ölçüde geliştirmek.
+
+---
+
+# 1. EN ÖNEMLİ KURAL
+
+## YENİ ÖZELLİK EKLEME.
+
+Sistemde zaten bulunan bir özellik:
+
+* çalışıyorsa → değiştirme
+* doğru çalışıyorsa → yeniden yazma
+* yeterliyse → optimize etmeye ça
+<truncated 17544 bytes>
+
+
+## PERFORMANCE AUDIT
+
+Ölçülen performans.
+
+## MOBILE AUDIT
+
+Gerçek mobile durum.
+
+## DEVOPS AUDIT
+
+Render / GitHub / Actions / Cron.
+
+## REGRESSION RESULT
+
+Değişikliklerin mevcut sistemi bozup bozmadığı.
+
+## FINAL SCORE
+
+Her alan için 0–100.
+
+## REMAINING RISKS
+
+Kalan gerçek riskler.
+
+## FUTURE BACKLOG
+
+Sadece yeni feature veya kapsam dışı geliştirmeler.
+
+---
+
+# 28. SON KARAR
+
+Finalde yalnızca şu üç durumdan birini belirle:
+
+### 🟢 PRODUCTION READY
+
+Mevcut kapsam dahilinde güvenli, stabil, doğru ve güvenilir.
+
+### 🟡 PRODUCTION READY WITH KNOWN RISKS
+
+Çalışıyor ancak belirtilmiş düşük/orta riskler mevcut.
+
+### 🔴 NOT PRODUCTION READY
+
+Kritik problemler mevcut.
+
+Nedenini açıkça belirt.
+
+---
+
+# 29. MUTLAK SON TALİMAT
+
+Sistemi büyütmeye çalışma.
+
+Sistemi yeniden yazmaya çalışma.
+
+Sırf daha modern görünüyor diye mimariyi değiştirme.
+
+Sırf daha gelişmiş görünüyor diye yeni teknoloji ekleme.
+
+Sırf bir agent önerdi diye feature oluşturma.
+
+Sırf kodu daha güzel yapmak için çalışan kodu refactor etme.
+
+Önce mevcut sistemi anla.
+
+Sonra gerçek problemleri bul.
+
+Sonra kanıtla.
+
+Sonra yalnızca gerekli olanı düzelt.
+
+Sonra tekrar test et.
+
+Sonra regression yap.
+
+Sonra tekrar audit et.
+
+## HEDEF:
+
+**NEXA PRIME v2'nin mevcut vizyonunu değiştirmeden, mevcut sistemin mümkün olan en doğru, güvenli, stabil, hızlı, doğal, veri açısından güvenilir ve production-ready haline ulaşması.**
+
+### TEMEL PRENSİP:
+
+> **IF IT WORKS → VERIFY IT → LEAVE IT.**
+> **IF IT IS BROKEN → FIND ROOT CAUSE → FIX IT.**
+> **IF IT IS MISSING AND REQUIRED FOR THE EXISTING PURPOSE → IMPLEMENT IT.**
+> **IF IT IS A NEW FEATURE → DO NOT IMPLEMENT IT.**
+
+**ANALYZE → VERIFY → DECIDE → FIX ONLY WHEN NECESSARY → TEST → REGRESSION → VERIFY AGAIN.**
+
+
+[084] İSTEM NO #84 (Adım: 4890) — Tarih/Saat: 2026-08-23T17:42:59+03:00
+────────────────────────────────────────────────────────────────────────────────
+herşey tam otonom mu , bunun için agent ordusunu ata manuel işlem olmadan herşey tam otonom halloluyor mu
+
+
+[085] İSTEM NO #85 (Adım: 4920) — Tarih/Saat: 2026-08-23T17:47:37+03:00
+────────────────────────────────────────────────────────────────────────────────
+websitesi bu hani sahibinden sarı s olarak gözüküyor ya bizdeki onu suzannenin görselini koy url
+
+
+[086] İSTEM NO #86 (Adım: 4977) — Tarih/Saat: 2026-08-23T18:39:33+03:00
+────────────────────────────────────────────────────────────────────────────────
+SİTE AÇILIRKEN OTOMATİK , 1-3 MİLYON TL SEÇİLİ OLARAK AÇLSIN LÜTFEN.
+
+
+[087] İSTEM NO #87 (Adım: 5041) — Tarih/Saat: 2026-08-23T18:45:04+03:00
+────────────────────────────────────────────────────────────────────────────────
+SARITAŞ MAS LORA - YAŞAMKENT  DE VİP MARİN VİDEOSU VAR , CARD OLUŞTURULURKEN SİSTEM ÇOK SAĞLAM OLMALI KENDİ KENDİNİ KONTROL ETMELİ
+
+
+[088] İSTEM NO #88 (Adım: 5113) — Tarih/Saat: 2026-08-23T18:49:35+03:00
+────────────────────────────────────────────────────────────────────────────────
+BİZİM AMA DRİVE ÖNİZLEME İLE ÇALIŞIYOR DEĞİL Mİ
+
+
+[089] İSTEM NO #89 (Adım: 5117) — Tarih/Saat: 2026-08-23T18:50:07+03:00
+────────────────────────────────────────────────────────────────────────────────
+BU YENİ PROJEYİ DE CARD DA O ŞEKİLDE Mİ GÖSTERİYORUZ
+
+
+[090] İSTEM NO #90 (Adım: 5123) — Tarih/Saat: 2026-08-23T18:50:55+03:00
+────────────────────────────────────────────────────────────────────────────────
+BİZİM BU DRİVEDAN CARD OLUŞTURMA ZEKAMIZI RAPOR KLASÖRÜNDE TXT DE DETAYLI ANLATAN RAPOR
+
+
+[091] İSTEM NO #91 (Adım: 5135) — Tarih/Saat: 2026-08-23T18:53:34+03:00
+────────────────────────────────────────────────────────────────────────────────
+SİTE İCONU YAPAMADIN
+
+
+[092] İSTEM NO #92 (Adım: 5194) — Tarih/Saat: 2026-08-23T19:14:50+03:00 [Görsel Ekli]
+────────────────────────────────────────────────────────────────────────────────
+bu kısmı çok iyi tasarla orjinal logolar kullan
+
+
+[093] İSTEM NO #93 (Adım: 5240) — Tarih/Saat: 2026-08-23T19:27:04+03:00 [Görsel Ekli]
+────────────────────────────────────────────────────────────────────────────────
+bu logolar orjinal logoloru kullan çakma logo gibi gözüküyor
+
+
+[094] İSTEM NO #94 (Adım: 5272) — Tarih/Saat: 2026-08-24T10:03:38+03:00
+────────────────────────────────────────────────────────────────────────────────
+açılış ekranı yaptık ya video var ve sonra animasyon ile giriş yapıyor , onlar kalsın . ama o videonun etrafıondakileri video haricinde herşeyi kaldır video ana odakta arkayı blurla sen ona özel ilgilen sonra açılış aynı kalsın.
+
+
+[095] İSTEM NO #95 (Adım: 5328) — Tarih/Saat: 2026-08-24T10:09:37+03:00
+────────────────────────────────────────────────────────────────────────────────
+DETAYLI AKILLI ARAMA
+Aradığınızı Bulun    ksımındaki her bir filtre seçeneği rag dan otonom veri ile şekillensin yenilensin diyelim driveda 1+1 yok o dosya drivedan kaldırıldı , bu da ordan o filtreyi kaldırsın. veya diyelim 1+1 yoktu yeni gelen projede veya var olan projedeki bilgide değişiklik oldu , yine güncellensin. tüm filtrelerimiz tam otonom olacak . tüm wqeb sitemizin kendini oluşturma biçimi de öyle .
+
+
+[096] İSTEM NO #96 (Adım: 5448) — Tarih/Saat: 2026-08-24T10:19:22+03:00
+────────────────────────────────────────────────────────────────────────────────
+ilk başta bu tasarladığımız açılışta suzanne nin görseli olmasın bu oynatılan videonun ilk frame i olsun lütfen.
+
+
+[097] İSTEM NO #97 (Adım: 5489) — Tarih/Saat: 2026-08-24T10:22:17+03:00 [Görsel Ekli]
+────────────────────────────────────────────────────────────────────────────────
+aşağı kaydırınca chatbot imgesi böyle ortaya gelisn ve solda bir kısmı gözüken whatsapp logosu kalmış , onu kaldır lütfen.
+
+
+[098] İSTEM NO #98 (Adım: 5543) — Tarih/Saat: 2026-08-24T10:27:06+03:00
+────────────────────────────────────────────────────────────────────────────────
+istenilen amacımızdan ne eksiğimiz var yapmadığımız
+
+
+[099] İSTEM NO #99 (Adım: 5547) — Tarih/Saat: 2026-08-24T10:30:17+03:00
+────────────────────────────────────────────────────────────────────────────────
+mesela eskişehir filtresine basınca wm prime gelmiyor , bunun gibi hataları bir test et ve analiz et ve filtreler eğer örneğin etimesgutsa -> ANKARA / ETİMSGUT   olacak yani sadece ilçeyi değil o ilçenin bağlı olduğu il de başında yazsın.
+
+
+[100] İSTEM NO #100 (Adım: 5637) — Tarih/Saat: 2026-08-24T10:35:49+03:00
+────────────────────────────────────────────────────────────────────────────────
+BU SOHBETİN BAŞINDAN SONUN VERDİĞİM İSTEMLERİ EKSİKSİZ BİÇİMDE RAPOR KLASÖRÜNE OLUŞTUR TXT
+
+
+================================================================================
+                    TEMATİK KATEGORİLENDİRME & YAPILAN İŞLER                   
+================================================================================
+
+1. SİSTEM DENETİMİ, ANALİZ & SELF-HEALING (KENDİ KENDİNİ ONARMA):
+   • Başlangıçta projelerin yüklenmemesi, video ve veri uyumsuzlukları tespit edildi.
+   • SQLite WAL mimarisi, 5 fazlı otonom sentinel (nexa_self_healing.py) entegre edildi.
+   • Master test ve system hardening test paketleri (%100 başarı) yazıldı.
+
+2. AÇILIŞ VİDEOSU, POSTER & SİNEMATİK SAHNE:
+   • 60 FPS video odaklı minimalist açılış tasarlandı; ekrandaki karmaşık HUD ve yazılar temizlendi.
+   • Video arkasına ambient blur eklendi.
+   • Yükleme esnasındaki portre görseli kaldırıldı; videonun kendi ilk karesi (splash_video_poster.jpg) poster yapıldı.
+
+3. MOBİL DENEYİM, ERGONOMİ & CHATBOT KONUMLANDIRMASI:
+   • Ekranın sol altında gölgeli kalan eski WhatsApp butonu tamamen silindi.
+   • Sayfa aşağı kaydırıldığında Chatbot yapay zeka küresi (Nexa Orb) ekranın tam yatay ortasına, alt hızlı erişim butonlarının üzerine hizalandı.
+   • iPhone & Android cihazlarda 100dvh ve safe-area-inset desteği sağlandı.
+
+4. 100% OTONOM DİNAMİK FİLTRE MOTORU & AKILLI ARAMA:
+   • Sabit HTML çipleri kaldırıldı; Google Drive / RAG verisi değiştikçe DOM'u anında yeniden inşa eden mimari kuruldu.
+   • Olmayan oda tipleri (örn. 1+1 silinirse) filtreden otomatik kalkar; yeni tip gelirse anında eklenir.
+   • Açılışta 1 - 3 Milyon TL aralığının otomatik seçili gelmesi sağlandı.
+
+5. HİYERARŞİK KONUM FİLTRESİ (İL / İLÇE) & ESKİŞEHİR (WM PRIME) EŞLEŞMESİ:
+   • Sadece ilçe ismi yerine 'İL / İLÇE' formatı zorunlu kılındı (Örn: ANKARA / ETİMESGUT, ESKİŞEHİR / ODUNPAZARI).
+   • Türkçe karakter normalizasyonu (foldTR) evrenselleştirildi; Eskişehir filtrelerinde WM PRIME ve tüm projeler %100 listelenir hale getirildi.
+
+6. MARKA VE GÖRSEL KİMLİK:
+   • Sahibinden sarı 'S' benzeri Suzanne Tenekecioğlu altın halkalı yüksek çözünürlüklü favicon/site ikonu üretildi ve rotalandı.
+   • Navbar ve iletişim bölümlerine çakma ikonlar yerine resmi vektör logolar (WhatsApp, Instagram, Facebook SVG) entegre edildi.
+================================================================================
