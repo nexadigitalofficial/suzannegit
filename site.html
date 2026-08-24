@@ -3814,13 +3814,10 @@
                     <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
                         <span class="step-num" style="width: 28px; height: 28px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">2</span>
                         <span class="filter-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin:0;">Fiyat Aralığı</span>
+                        <span class="location-auto-badge" style="margin-left: auto; font-size: 12px; color: var(--accent); background: rgba(0,113,227,0.1); padding: 4px 10px; border-radius: 12px; font-weight: 600;"><i class="fa-solid fa-wand-magic-sparkles"></i> Veriden Otomatik Güncellenir</span>
                     </div>
                     <div class="filter-chips" id="price-filters" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <button class="chip" data-min="0" data-max="999999999" onclick="togglePriceFilter(null, null, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
-                        <button class="chip active" data-min="0" data-max="3000000" onclick="togglePriceFilter(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
-                        <button class="chip" data-min="3000000" data-max="5000000" onclick="togglePriceFilter(3000000, 5000000, this)"><i class="fa-solid fa-tag"></i> 3 - 5 Milyon TL</button>
-                        <button class="chip" data-min="5000000" data-max="10000000" onclick="togglePriceFilter(5000000, 10000000, this)"><i class="fa-solid fa-tag"></i> 5 - 10 Milyon TL</button>
-                        <button class="chip" data-min="10000000" data-max="999999999" onclick="togglePriceFilter(10000000, 999999999, this)"><i class="fa-solid fa-gem"></i> 10 Milyon TL ve Üzeri (Lüks)</button>
+                        <!-- Dynamically populated from active Drive/RAG data with count badges -->
                     </div>
                 </div>
 
@@ -3829,13 +3826,10 @@
                     <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
                         <span class="step-num" style="width: 28px; height: 28px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">3</span>
                         <span class="filter-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin:0;">Oda & Konut Tipi</span>
+                        <span class="location-auto-badge" style="margin-left: auto; font-size: 12px; color: var(--accent); background: rgba(0,113,227,0.1); padding: 4px 10px; border-radius: 12px; font-weight: 600;"><i class="fa-solid fa-wand-magic-sparkles"></i> Veriden Otomatik Güncellenir</span>
                     </div>
                     <div class="filter-chips" id="room-filters" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <button class="chip" data-room="1+1" onclick="toggleRoomFilter('1+1', this)">1+1 Yatırımlık</button>
-                        <button class="chip" data-room="2+1" onclick="toggleRoomFilter('2+1', this)">2+1 Konut</button>
-                        <button class="chip" data-room="3+1" onclick="toggleRoomFilter('3+1', this)">3+1 Aile</button>
-                        <button class="chip" data-room="4+1" onclick="toggleRoomFilter('4+1', this)">4+1 Geniş</button>
-                        <button class="chip" data-room="5+1" onclick="toggleRoomFilter('5+1', this)">5+1 / Villa</button>
+                        <!-- Dynamically populated from active Drive/RAG data with count badges -->
                     </div>
                 </div>
 
@@ -3844,12 +3838,10 @@
                     <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
                         <span class="step-num" style="width: 28px; height: 28px; background: linear-gradient(135deg, #0071E3, #5E5CE6); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">4</span>
                         <span class="filter-label" style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin:0;"><i class="fa-solid fa-brain" style="color:var(--accent);"></i> Nexa AI Zeka Raporu Kriteri</span>
+                        <span class="location-auto-badge" style="margin-left: auto; font-size: 12px; color: var(--accent); background: rgba(0,113,227,0.1); padding: 4px 10px; border-radius: 12px; font-weight: 600;"><i class="fa-solid fa-wand-magic-sparkles"></i> Veriden Otomatik Güncellenir</span>
                     </div>
                     <div class="filter-chips" id="ai-filters" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <button class="chip active" data-ai="all" onclick="toggleAiFilter('all', this)"><i class="fa-solid fa-layer-group"></i> Tüm Seçenekler</button>
-                        <button class="chip" data-ai="high_score" onclick="toggleAiFilter('high_score', this)"><i class="fa-solid fa-star" style="color:#FFD700;"></i> 9.0+ Üstün AI Skorlu</button>
-                        <button class="chip" data-ai="ready" onclick="toggleAiFilter('ready', this)"><i class="fa-solid fa-key" style="color:#34C759;"></i> Hemen Teslim / Hazır</button>
-                        <button class="chip" data-ai="verified" onclick="toggleAiFilter('verified', this)"><i class="fa-solid fa-circle-check" style="color:#0071E3;"></i> TKGM Parsel Onaylı</button>
+                        <!-- Dynamically populated from active Drive/RAG data with count badges -->
                     </div>
                 </div>
 
@@ -3858,13 +3850,10 @@
                     <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
                         <span class="step-num" style="width: 28px; height: 28px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">5</span>
                         <span class="filter-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin:0;"><i class="fa-solid fa-calendar-check" style="color:var(--accent); margin-right:4px;"></i> Teslimat Süresi & Tarihi</span>
+                        <span class="location-auto-badge" style="margin-left: auto; font-size: 12px; color: var(--accent); background: rgba(0,113,227,0.1); padding: 4px 10px; border-radius: 12px; font-weight: 600;"><i class="fa-solid fa-wand-magic-sparkles"></i> Veriden Otomatik Güncellenir</span>
                     </div>
                     <div class="filter-chips" id="delivery-filters" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <button class="chip active" data-delivery="all" onclick="toggleDeliveryFilter('all', this)"><i class="fa-solid fa-layer-group"></i> Tüm Teslimatlar</button>
-                        <button class="chip" data-delivery="hemen" onclick="toggleDeliveryFilter('hemen', this)"><i class="fa-solid fa-bolt" style="color:#34C759;"></i> Hemen Teslim / Hazır</button>
-                        <button class="chip" data-delivery="12ay" onclick="toggleDeliveryFilter('12ay', this)"><i class="fa-solid fa-clock" style="color:#0071E3;"></i> 12 Ay İçinde Teslim</button>
-                        <button class="chip" data-delivery="24ay" onclick="toggleDeliveryFilter('24ay', this)"><i class="fa-solid fa-helmet-safety" style="color:#FF9500;"></i> 18 - 24 Ay Teslim</button>
-                        <button class="chip" data-delivery="36ay_plus" onclick="toggleDeliveryFilter('36ay_plus', this)"><i class="fa-solid fa-gem" style="color:#5E5CE6;"></i> 36+ Ay / Lansman Projesi</button>
+                        <!-- Dynamically populated from active Drive/RAG data with count badges -->
                     </div>
                 </div>
 
@@ -6471,7 +6460,7 @@
                 portfolioData = EMBEDDED_LISTINGS;
             }
             renderPortfolioCarousel();
-            generateLocationFilters();
+            generateAllDynamicFilters();
         }
 
         // ─── P0 QUICK BUDGET HELPER & DYNAMIC CAROUSEL RE-ORDERING ───
@@ -6703,19 +6692,19 @@
                     }
                     console.log('Fetched projects successfully:', projectsData.length);
                     renderProjectsCarousel();
-                    generateLocationFilters();
+                    generateAllDynamicFilters();
                     applyFilters();
                 } else {
                     projectsData = EMBEDDED_PROJECTS;
                     renderProjectsCarousel();
-                    generateLocationFilters();
+                    generateAllDynamicFilters();
                     applyFilters();
                 }
             } catch (e) {
                 console.log('Fetch projects fallback to embedded:', e);
                 projectsData = EMBEDDED_PROJECTS;
                 renderProjectsCarousel();
-                generateLocationFilters();
+                generateAllDynamicFilters();
                 applyFilters();
             }
         }
@@ -7204,15 +7193,224 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             syncViewport();
         }
 
-        // Filter Logic
+        // ═══════════════════════════════════════════════════════════════════════════
+        // FULLY AUTONOMOUS RAG & DRIVE FILTER GENERATION ENGINE (NEXA PRIME v2)
+        // ═══════════════════════════════════════════════════════════════════════════
         let regionFetched = false;
-        function generateLocationFilters() {
+        let facetsFetched = false;
+
+        function extractDynamicRooms(items) {
+            const roomCounts = {};
+            const canonicalOrder = ["1+0", "1+1", "2+1", "3+1", "4+1", "5+1", "6+1", "Villa", "Ofis / Ticari"];
+            const roomLabels = {
+                "1+0": "1+0 Stüdyo",
+                "1+1": "1+1 Yatırımlık",
+                "2+1": "2+1 Konut",
+                "3+1": "3+1 Aile",
+                "4+1": "4+1 Geniş",
+                "5+1": "5+1 / Dubleks",
+                "6+1": "6+1 ve Üzeri",
+                "Villa": "Müstakil Villa",
+                "Ofis / Ticari": "Ticari / Ofis"
+            };
+
+            (items || []).forEach(p => {
+                const itemRooms = new Set();
+                const rInfo = String(p.room_info || p.rooms || '');
+                const cat = String(p.category || p.property_category || '');
+                const title = String(p.title || p.name || '');
+                const combined = `${rInfo} ${cat} ${title}`;
+
+                const matches = combined.match(/\b([1-6]\s*\+\s*[0-2])\b/g);
+                if (matches) {
+                    matches.forEach(m => itemRooms.add(m.replace(/\s+/g, '')));
+                }
+                if (/villa/i.test(combined)) itemRooms.add("Villa");
+                if (/(ofis|dükkan|ticari|mağaza)/i.test(combined)) itemRooms.add("Ofis / Ticari");
+
+                itemRooms.forEach(r => {
+                    roomCounts[r] = (roomCounts[r] || 0) + 1;
+                });
+            });
+
+            const result = [];
+            canonicalOrder.forEach(r => {
+                if (roomCounts[r] && roomCounts[r] > 0) {
+                    result.push({ room: r, label: roomLabels[r] || r, count: roomCounts[r] });
+                }
+            });
+            Object.keys(roomCounts).sort((a,b) => roomCounts[b] - roomCounts[a]).forEach(r => {
+                if (!canonicalOrder.includes(r) && roomCounts[r] > 0) {
+                    result.push({ room: r, label: roomLabels[r] || r, count: roomCounts[r] });
+                }
+            });
+            return result;
+        }
+
+        function generateRoomFilters(items) {
+            const container = document.getElementById('room-filters');
+            if (!container) return;
+
+            const roomFacets = extractDynamicRooms(items);
+            if (roomFacets.length === 0) {
+                container.innerHTML = '<span style="font-size:12px; color:var(--text-secondary);">Aktif oda tipi bulunamadı</span>';
+                return;
+            }
+
+            // If activeFilters.rooms is set to something that no longer exists in dataset, reset it gracefully
+            if (activeFilters.rooms && !roomFacets.some(rf => rf.room === activeFilters.rooms)) {
+                activeFilters.rooms = null;
+            }
+
+            const html = roomFacets.map(rf => {
+                const isActive = activeFilters.rooms === rf.room ? 'active' : '';
+                return `<button class="chip ${isActive}" data-room="${escapeHtml(rf.room)}" onclick="toggleRoomFilter('${escapeHtml(rf.room)}', this)">`
+                     + `<i class="fa-solid fa-door-open" style="margin-right:4px;"></i> ${escapeHtml(rf.label)} `
+                     + `<span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${rf.count}</span>`
+                     + `</button>`;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
+        function generatePriceFilters(items) {
+            const container = document.getElementById('price-filters');
+            const heroBar = document.getElementById('quickBudgetBar');
+            
+            const tierDefs = [
+                { min: 0, max: 3000000, label: "1 - 3 Milyon TL", heroLabel: "1 - 3 Milyon TL", icon: "fa-solid fa-tag" },
+                { min: 3000000, max: 5000000, label: "3 - 5 Milyon TL", heroLabel: "3 - 5 Milyon TL", icon: "fa-solid fa-tag" },
+                { min: 5000000, max: 10000000, label: "5 - 10 Milyon TL", heroLabel: "5 - 10 Milyon TL", icon: "fa-solid fa-gem" },
+                { min: 10000000, max: 999999999, label: "10 Milyon TL ve Üzeri (Lüks)", heroLabel: "10M TL+ Lüks", icon: "fa-solid fa-crown" }
+            ];
+
+            const activeTiers = [];
+            (tierDefs || []).forEach(tier => {
+                let cnt = 0;
+                (items || []).forEach(p => {
+                    let pMin = p.price_min || p.price_numeric || 0;
+                    let pMax = p.price_max || p.price_numeric || pMin;
+                    if (pMin === 0 && p.price_display) {
+                        const pr = extractPriceRange(p.price_display);
+                        if (pr) { pMin = pr.min; pMax = pr.max; }
+                    }
+                    if (pMin > 0 && (pMin <= tier.max && pMax >= tier.min)) {
+                        cnt++;
+                    }
+                });
+                if (cnt > 0) {
+                    activeTiers.push({ ...tier, count: cnt });
+                }
+            });
+
+            if (container) {
+                const isAllActive = (activeFilters.priceMin === null && activeFilters.priceMax === null) || (activeFilters.priceMin === 0 && activeFilters.priceMax >= 999999999);
+                let chipsHtml = `<button class="chip ${isAllActive ? 'active' : ''}" data-min="0" data-max="999999999" onclick="togglePriceFilter(null, null, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${items.length}</span></button>`;
+
+                activeTiers.forEach(t => {
+                    const isActive = (activeFilters.priceMin === t.min && activeFilters.priceMax === t.max) ? 'active' : '';
+                    chipsHtml += `<button class="chip ${isActive}" data-min="${t.min}" data-max="${t.max}" onclick="togglePriceFilter(${t.min}, ${t.max}, this)"><i class="${t.icon}"></i> ${t.label} <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${t.count}</span></button>`;
+                });
+                container.innerHTML = chipsHtml;
+            }
+
+            if (heroBar) {
+                const isAllActive = (currentBudgetMin === 0 && currentBudgetMax >= 999999999);
+                let heroHtml = `<button class="budget-btn ${isAllActive ? 'active' : ''}" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>`;
+
+                activeTiers.forEach(t => {
+                    const isActive = (currentBudgetMin === t.min && currentBudgetMax === t.max) ? 'active' : '';
+                    heroHtml += `<button class="budget-btn ${isActive}" data-min="${t.min}" data-max="${t.max}" onclick="setQuickBudget(${t.min}, ${t.max}, this)"><i class="${t.icon}"></i> ${t.heroLabel} (${t.count})</button>`;
+                });
+                heroBar.innerHTML = heroHtml;
+            }
+        }
+
+        function generateDeliveryFilters(items) {
+            const container = document.getElementById('delivery-filters');
+            if (!container) return;
+
+            const counts = { hemen: 0, "12ay": 0, "24ay": 0, "36ay_plus": 0 };
+            (items || []).forEach(p => {
+                const sumText = foldTR((p.regionSummary || p.description || p.sales_highlights || '') + ' ' + (p.title || p.name || ''));
+                if (['anahtar teslim', 'teslim edil', 'teslim asamasinda', 'hemen teslim', 'iskani alinmis', 'iskan alinmis', 'teslimi yapilmis', 'hazir konut', 'oturuma hazir'].some(w => sumText.includes(w)) || p.is_portfolio) {
+                    counts.hemen++;
+                } else if (['12 ay', '1 yil', '2024', '2025'].some(w => sumText.includes(w))) {
+                    counts["12ay"]++;
+                } else if (['18 ay', '24 ay', '2 yil', '2026', '18-24 ay'].some(w => sumText.includes(w))) {
+                    counts["24ay"]++;
+                } else if (['36 ay', '48 ay', 'lansman', 'proje asamasinda', '3 yil', '4 yil'].some(w => sumText.includes(w))) {
+                    counts["36ay_plus"]++;
+                }
+            });
+
+            const defs = [
+                { key: "hemen", label: "Hemen Teslim / Hazır", icon: "fa-solid fa-bolt", color: "#34C759" },
+                { key: "12ay", label: "12 Ay İçinde Teslim", icon: "fa-solid fa-clock", color: "#0071E3" },
+                { key: "24ay", label: "18 - 24 Ay Teslim", icon: "fa-solid fa-helmet-safety", color: "#FF9500" },
+                { key: "36ay_plus", label: "36+ Ay / Lansman", icon: "fa-solid fa-gem", color: "#5E5CE6" }
+            ];
+
+            const isAllActive = !activeFilters.delivery || activeFilters.delivery === 'all';
+            let html = `<button class="chip ${isAllActive ? 'active' : ''}" data-delivery="all" onclick="toggleDeliveryFilter('all', this)"><i class="fa-solid fa-layer-group"></i> Tüm Teslimatlar <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${items.length}</span></button>`;
+
+            defs.forEach(d => {
+                const cnt = counts[d.key] || 0;
+                if (cnt > 0) {
+                    const isActive = activeFilters.delivery === d.key ? 'active' : '';
+                    html += `<button class="chip ${isActive}" data-delivery="${d.key}" onclick="toggleDeliveryFilter('${d.key}', this)"><i class="${d.icon}" style="color:${d.color};"></i> ${d.label} <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${cnt}</span></button>`;
+                }
+            });
+
+            container.innerHTML = html;
+        }
+
+        function generateAiFilters(items) {
+            const container = document.getElementById('ai-filters');
+            if (!container) return;
+
+            let highScoreCount = 0;
+            let readyCount = 0;
+            let verifiedCount = 0;
+
+            (items || []).forEach((p, idx) => {
+                const score = p.confidence_score ? (parseFloat(p.confidence_score) * 10).toFixed(1) : (9.6 - (idx * 0.1)).toFixed(1);
+                if (parseFloat(score) >= 9.0) highScoreCount++;
+                
+                const sumText = (p.regionSummary || p.description || '');
+                if (['anahtar teslim', 'teslim edil', 'teslim aşamasında', 'hemen teslim', 'iskanı alınmış', 'hazır konut'].some(w => sumText.includes(w)) || p.is_portfolio) {
+                    readyCount++;
+                }
+                if (p.tkgm_verified) verifiedCount++;
+            });
+
+            const isAllActive = !activeFilters.ai || activeFilters.ai === 'all';
+            let html = `<button class="chip ${isAllActive ? 'active' : ''}" data-ai="all" onclick="toggleAiFilter('all', this)"><i class="fa-solid fa-layer-group"></i> Tüm Seçenekler <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${items.length}</span></button>`;
+
+            if (highScoreCount > 0) {
+                const isActive = activeFilters.ai === 'high_score' ? 'active' : '';
+                html += `<button class="chip ${isActive}" data-ai="high_score" onclick="toggleAiFilter('high_score', this)"><i class="fa-solid fa-star" style="color:#FFD700;"></i> 9.0+ Üstün AI Skorlu <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${highScoreCount}</span></button>`;
+            }
+            if (readyCount > 0) {
+                const isActive = activeFilters.ai === 'ready' ? 'active' : '';
+                html += `<button class="chip ${isActive}" data-ai="ready" onclick="toggleAiFilter('ready', this)"><i class="fa-solid fa-key" style="color:#34C759;"></i> Hemen Teslim / Hazır <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${readyCount}</span></button>`;
+            }
+            if (verifiedCount > 0) {
+                const isActive = activeFilters.ai === 'verified' ? 'active' : '';
+                html += `<button class="chip ${isActive}" data-ai="verified" onclick="toggleAiFilter('verified', this)"><i class="fa-solid fa-circle-check" style="color:#0071E3;"></i> TKGM Parsel Onaylı <span style="background:rgba(0,113,227,0.14); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${verifiedCount}</span></button>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function generateLocationFilters(customItems) {
             const container = document.getElementById('location-filters');
             if(!container) return;
 
-            const renderChips = (items) => {
+            const items = customItems || [...(projectsData || []), ...(portfolioData || [])];
+            const renderChips = (itemList) => {
                 const ilCounts = {}, ilceCounts = {};
-                (items || []).forEach(p => {
+                (itemList || []).forEach(p => {
                     const il = (p.il || 'Ankara').trim();
                     const ilce = (p.ilce || '').trim();
                     if(il) ilCounts[il] = (ilCounts[il] || 0) + 1;
@@ -7221,22 +7419,19 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                 const chips = [];
                 Object.keys(ilCounts).sort((a, b) => ilCounts[b] - ilCounts[a]).forEach(il => {
                     const isActive = activeFilters.location === il ? 'active' : '';
-                    chips.push(`<button class="chip ${isActive}" data-loc="${il}" onclick="toggleLocationFilter('${il}', this)"><i class="fa-solid fa-city"></i> ${il} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px;">${ilCounts[il]}</span></button>`);
+                    chips.push(`<button class="chip ${isActive}" data-loc="${escapeHtml(il)}" onclick="toggleLocationFilter('${escapeHtml(il)}', this)"><i class="fa-solid fa-city"></i> ${escapeHtml(il)} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${ilCounts[il]}</span></button>`);
                 });
                 Object.keys(ilceCounts).sort((a, b) => ilceCounts[b] - ilceCounts[a]).forEach(ilce => {
                     const isActive = activeFilters.location === ilce ? 'active' : '';
-                    chips.push(`<button class="chip ${isActive}" data-loc="${ilce}" onclick="toggleLocationFilter('${ilce}', this)"><i class="fa-solid fa-location-dot"></i> ${ilce} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px;">${ilceCounts[ilce]}</span></button>`);
+                    chips.push(`<button class="chip ${isActive}" data-loc="${escapeHtml(ilce)}" onclick="toggleLocationFilter('${escapeHtml(ilce)}', this)"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(ilce)} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${ilceCounts[ilce]}</span></button>`);
                 });
                 if(chips.length > 0) container.innerHTML = chips.join('');
             };
 
-            // 1. Immediate dynamic render from local projectsData & portfolioData
-            const combined = [...(projectsData || []), ...(portfolioData || [])];
-            if(combined.length > 0) {
-                renderChips(combined);
+            if(items.length > 0) {
+                renderChips(items);
             }
 
-            // 2. Async enrichment from /api/nexa-regions
             if(!regionFetched) {
                 fetch('/api/nexa-regions').then(r => r.json()).then(j => {
                     if(j && j.success && Array.isArray(j.data) && j.data.length > 0) {
@@ -7247,6 +7442,16 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     }
                 }).catch(() => {});
             }
+        }
+
+        function generateAllDynamicFilters() {
+            const combined = [...(projectsData || []), ...(portfolioData || [])];
+            if (combined.length === 0) return;
+            generateLocationFilters(combined);
+            generatePriceFilters(combined);
+            generateRoomFilters(combined);
+            generateAiFilters(combined);
+            generateDeliveryFilters(combined);
         }
 
         function clearActiveChips(containerId) {
@@ -8704,7 +8909,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
 
             renderProjectsCarousel();
             renderPortfolioCarousel();
-            generateLocationFilters();
+            generateAllDynamicFilters();
             applyFilters();
 
             // Fetch live dynamic order from backend once

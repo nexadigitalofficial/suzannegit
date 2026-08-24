@@ -18,6 +18,7 @@ import os
 import sys
 import json
 import time
+import re
 import sqlite3
 import logging
 from datetime import datetime
@@ -205,6 +206,7 @@ def heal_canonical_data(map_path: Path = MAP_PATH, pf_path: Path = PORTFOLIO_PAT
                 c_price_disp = canonical.get("price_display", "")
                 c_price_num = canonical.get("price_numeric")
                 c_down = canonical.get("down_payment", "")
+                c_room = canonical.get("room_info") or (", ".join(canonical.get("rooms", [])) if isinstance(canonical.get("rooms"), list) else "")
                 c_ada = canonical.get("ada_no")
                 c_parsel = canonical.get("parsel_no")
                 c_tkgm = 1 if canonical.get("tkgm_verified") else 0
@@ -214,11 +216,12 @@ def heal_canonical_data(map_path: Path = MAP_PATH, pf_path: Path = PORTFOLIO_PAT
                     SET price_display = coalesce(nullif(?, ''), price_display),
                         price_numeric = coalesce(?, price_numeric),
                         down_payment = coalesce(nullif(?, ''), down_payment),
+                        room_info = coalesce(nullif(?, ''), room_info),
                         ada_no = coalesce(nullif(?, ''), ada_no),
                         parsel_no = coalesce(nullif(?, ''), parsel_no),
                         tkgm_verified = ?
                     WHERE UPPER(name) = ? OR UPPER(name) = ?
-                """, (c_price_disp, c_price_num, c_down, c_ada, c_parsel, c_tkgm, title_up, (c_title or '').upper()))
+                """, (c_price_disp, c_price_num, c_down, c_room, c_ada, c_parsel, c_tkgm, title_up, (c_title or '').upper()))
                 
             conn.commit()
             conn.close()

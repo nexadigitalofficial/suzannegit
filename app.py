@@ -759,6 +759,186 @@ def api_nexa_summaries():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+@app.route("/api/filter-facets", methods=["GET"])
+def api_filter_facets():
+    """RAG & Drive senkronizasyonundan anlık beslenen otonom arama filtre faceti."""
+    try:
+        import re
+        import sqlite3
+        
+        # 1. Load active projects
+        projects = get_all_projects_ordered(include_hidden=False)
+        
+        # 2. Load active portfolio listings
+        listings = []
+        try:
+            db_uri = f"file:{Path(NEXA_DB_PATH).resolve().as_posix()}?mode=ro"
+            conn = sqlite3.connect(db_uri, uri=True)
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute("SELECT * FROM portfolio_listings ORDER BY id DESC").fetchall()
+            listings = [dict(r) for r in rows]
+            conn.close()
+        except Exception:
+            p_file = BASE_DIR / "nexa_portfolio_data.json"
+            if p_file.exists():
+                try:
+                    listings = json.loads(p_file.read_text(encoding="utf-8"))
+                except Exception:
+                    listings = []
+
+        all_items = projects + listings
+
+        # 3. Dynamic Room Facets
+        room_counts = {}
+        room_canonical_order = ["1+0", "1+1", "2+1", "3+1", "4+1", "5+1", "6+1", "Villa", "Ofis / Ticari"]
+        room_labels = {
+            "1+0": "1+0 Stüdyo",
+            "1+1": "1+1 Yatırımlık",
+            "2+1": "2+1 Konut",
+            "3+1": "3+1 Aile",
+            "4+1": "4+1 Geniş",
+            "5+1": "5+1 / Dubleks",
+            "6+1": "6+1 ve Üzeri",
+            "Villa": "Müstakil Villa",
+            "Ofis / Ticari": "Ticari / Ofis"
+        }
+
+        for item in all_items:
+            item_rooms = set()
+            r_info = str(item.get("room_info") or item.get("rooms") or "")
+            cat = str(item.get("category") or "")
+            title = str(item.get("title") or item.get("name") or "")
+            combined_txt = f"{r_info} {cat} {title}"
+
+            found_patterns = re.findall(r"\b([1-6]\s*\+\s*[0-2])\b", combined_txt)
+            for pat in found_patterns:
+                clean_r = pat.replace(" ", "")
+                item_rooms.add(clean_r)
+
+            if "villa" in combined_txt.lower():
+                item_rooms.add("Villa")
+            if "ofis" in combined_txt.lower() or "dükkan" in combined_txt.lower() or "ticari" in combined_txt.lower():
+                item_rooms.add("Ofis / Ticari")
+
+            for r in item_rooms:
+                room_counts[r] = room_counts.get(r, 0) + 1
+
+        room_facets = []
+        for r_name in room_canonical_order:
+            if room_counts.get(r_name, 0) > 0:
+                room_facets.append({
+                    "room": r_name,
+                    "label": room_labels.get(r_name, r_name),
+                    "count": room_counts[r_name]
+                })
+        for r_name, count in sorted(room_counts.items(), key=lambda x: -x[1]):
+            if r_name not in room_canonical_order and count > 0:
+                room_facets.append({
+                    "room": r_name,
+                    "label": room_labels.get(r_name, r_name),
+                    "count": count
+                })
+
+        # 4. Dynamic Price Tier Facets
+        price_tier_defs = [
+            {"min": 0, "max": 3000000, "label": "1 - 3 Milyon TL", "icon": "fa-solid fa-tag"},
+            {"min": 3000000, "max": 5000000, "label": "3 - 5 Milyon TL", "icon": "fa-solid fa-tag"},
+            {"min": 5000000, "max": 10000000, "label": "5 - 10 Milyon TL", "icon": "fa-solid fa-tag"},
+            {"min": 10000000, "max": 999999999, "label": "10 Milyon TL ve Üzeri (Lüks)", "icon": "fa-solid fa-gem"}
+        ]
+        price_facets = []
+        for tier in price_tier_defs:
+            t_count = 0
+            for item in all_items:
+                p_min = item.get("price_min") or item.get("price_numeric") or 0
+                p_max = item.get("price_max") or item.get("price_numeric") or p_min
+                if p_min > 0 and (p_min <= tier["max"] and p_max >= tier["min"]):
+                    t_count += 1
+            if t_count > 0:
+                price_facets.append({
+                    "min": tier["min"],
+                    "max": tier["max"],
+                    "label": tier["label"],
+                    "icon": tier["icon"],
+                    "count": t_count
+                })
+
+        # 5. Dynamic Location Facets
+        il_counts = {}
+        ilce_counts = {}
+        for item in all_items:
+            il = (item.get("il") or "Ankara").strip()
+            ilce = (item.get("ilce") or "").strip()
+            if il:
+                il_counts[il] = il_counts.get(il, 0) + 1
+            if ilce:
+                ilce_counts[ilce] = ilce_counts.get(ilce, 0) + 1
+
+        location_facets = []
+        for il, count in sorted(il_counts.items(), key=lambda x: -x[1]):
+            location_facets.append({"type": "il", "name": il, "count": count, "icon": "fa-solid fa-city"})
+        for ilce, count in sorted(ilce_counts.items(), key=lambda x: -x[1]):
+            location_facets.append({"type": "ilce", "name": ilce, "count": count, "icon": "fa-solid fa-location-dot"})
+
+        # 6. Dynamic Delivery Facets
+        delivery_counts = {"hemen": 0, "12ay": 0, "24ay": 0, "36ay_plus": 0}
+        for item in all_items:
+            sum_text = f"{item.get('description','')} {item.get('sales_highlights','')} {item.get('title','')} {item.get('name','')}".lower()
+            if any(w in sum_text for w in ['anahtar teslim', 'teslim edil', 'hemen teslim', 'hazır konut', 'iskanı alınmış', 'oturuma hazır']) or item.get("is_portfolio"):
+                delivery_counts["hemen"] += 1
+            elif any(w in sum_text for w in ['12 ay', '1 yıl', '2025']):
+                delivery_counts["12ay"] += 1
+            elif any(w in sum_text for w in ['18 ay', '24 ay', '2 yıl', '2026', '18-24 ay']):
+                delivery_counts["24ay"] += 1
+            elif any(w in sum_text for w in ['36 ay', '48 ay', 'lansman', 'proje aşamasında', '3 yıl', '4 yıl']):
+                delivery_counts["36ay_plus"] += 1
+
+        delivery_defs = [
+            {"key": "hemen", "label": "Hemen Teslim / Hazır", "icon": "fa-solid fa-bolt", "color": "#34C759"},
+            {"key": "12ay", "label": "12 Ay İçinde Teslim", "icon": "fa-solid fa-clock", "color": "#0071E3"},
+            {"key": "24ay", "label": "18 - 24 Ay Teslim", "icon": "fa-solid fa-helmet-safety", "color": "#FF9500"},
+            {"key": "36ay_plus", "label": "36+ Ay / Lansman", "icon": "fa-solid fa-gem", "color": "#5E5CE6"}
+        ]
+        delivery_facets = []
+        for d_def in delivery_defs:
+            cnt = delivery_counts.get(d_def["key"], 0)
+            if cnt > 0:
+                delivery_facets.append({
+                    "key": d_def["key"],
+                    "label": d_def["label"],
+                    "icon": d_def["icon"],
+                    "color": d_def["color"],
+                    "count": cnt
+                })
+
+        # 7. Dynamic AI Criteria Facets
+        ai_high_score_count = len([x for x in all_items if x.get("tkgm_verified") or x.get("is_portfolio") or float(x.get("confidence_score") or 0.9) >= 0.85])
+        ai_ready_count = delivery_counts["hemen"]
+        ai_verified_count = len([x for x in projects if x.get("tkgm_verified")])
+
+        ai_facets = [
+            {"key": "all", "label": "Tüm Seçenekler", "icon": "fa-solid fa-layer-group", "count": len(all_items)},
+            {"key": "high_score", "label": "9.0+ Üstün AI Skorlu", "icon": "fa-solid fa-star", "color": "#FFD700", "count": ai_high_score_count},
+            {"key": "ready", "label": "Hemen Teslim / Hazır", "icon": "fa-solid fa-key", "color": "#34C759", "count": ai_ready_count},
+            {"key": "verified", "label": "TKGM Parsel Onaylı", "icon": "fa-solid fa-circle-check", "color": "#0071E3", "count": ai_verified_count}
+        ]
+
+        resp = jsonify({
+            "success": True,
+            "total_items": len(all_items),
+            "data": {
+                "rooms": room_facets,
+                "price_tiers": price_facets,
+                "locations": location_facets,
+                "deliveries": delivery_facets,
+                "ai": ai_facets
+            }
+        })
+        resp.headers["Cache-Control"] = "public, max-age=180"
+        return resp
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+
 @app.route("/api/nexa-regions", methods=["GET"])
 def api_nexa_regions():
     """Bölge/Konum Seçimi + zihin haritası paneli için RAG kaynaklı güncel proje verisi."""
