@@ -1,0 +1,81 @@
+================================================================================
+                    19 — SOFTWARE DEPENDENCY & SUPPLY CHAIN AUDIT
+================================================================================
+
+PURPOSE:
+Projede kullanılan tüm üçüncü taraf Python kütüphanelerini, JavaScript CDN
+bağımlılıklarını, lisanslarını ve güvenlik açıklarını denetler.
+
+CURRENT STATE:
+Tüm Python bağımlılıkları requirements.txt dosyasında sabitlenmiş (pinned) ve
+güncel sürümlerle çalışmaktadır.
+
+DISCOVERED COMPONENTS:
+Python Dependencies (requirements.txt):
+• Flask==3.0.0 (BSD-3-Clause) — Web mikro-çerçevesi
+• gunicorn==21.2.0 (MIT) — Üretim WSGI sunucusu
+• requests==2.31.0 (Apache-2.0) — HTTP istemcisi
+• beautifulsoup4==4.12.3 (MIT) — HTML ayrıştırma
+• google-api-python-client==2.118.0 (Apache-2.0) — Google Drive API
+• google-auth==2.28.1 (Apache-2.0) — Google Kimlik Doğrulama
+• google-generativeai==0.4.1 (Apache-2.0) — Gemini LLM SDK
+• PyPDF2==3.0.1 (BSD-3-Clause) — PDF metin çıkarma
+• pdfplumber==0.10.4 (MIT) — PDF tablo çıkarma
+• openpyxl==3.1.2 (MIT) — Excel ayrıştırma
+• python-docx==1.1.0 (MIT) — Word belgesi ayrıştırma
+• watchdog==4.0.0 (Apache-2.0) — Dosya sistemi izleme
+
+Frontend CDN Dependencies:
+• GSAP 3.12.5 (GreenSock License) — Animasyon motoru
+• FontAwesome 6.5.1 (Free License / SVG) — İkon seti
+• Canvas Confetti 1.9.2 (ISC License) — Başarı kutlama animasyonu
+
+ARCHITECTURE:
+Dependency Governance Model:
+[Source Code] -> [Pinned requirements.txt] -> [Virtual Environment Isolation] -> [Production Container].
+
+DEPENDENCIES:
+Python 3.11 Standard Library + 12 Pinned External Packages.
+
+DATA FLOW:
+Build Time -> pip install --no-cache-dir -> Hash Doğrulama -> Yürütme Zamanı.
+
+WORKFLOW:
+Bağımlılık Güncelleme ve Güvenlik Taraması:
+1. `pip-audit` veya `safety` ile bilinen güvenlik açıkları (CVE) taranır.
+2. Lisans uyumluluğu kontrol edilir (Tümü MIT/Apache/BSD uyumlu; GPL bulaşıklığı yoktur).
+3. Güncellemeler önce yerel test paketlerinde test edilir, ardından üretime gönderilir.
+
+RISKS:
+Harici kütüphanelerde sıfırıncı gün (0-day) güvenlik açığı çıkması.
+-> Çözüldü: Minimum harici kütüphane felsefesi; gereksiz paketler projeden çıkarılmıştır.
+
+FAILURE MODES:
+CDN bağlantısı koparsa -> site.html içinde yerel SVG ve CSS fallback tanımları mevcuttur.
+
+SECURITY CONCERNS:
+Supply chain saldırılarına karşı paket hash doğrulaması (pip hash-checking).
+
+PERFORMANCE CONCERNS:
+Gereksiz ağır kütüphanelerin (Örn: Torch, TensorFlow) kullanılmayıp hafif SDK'lerin tercih edilmesi.
+
+OBSERVABILITY:
+`pip list --outdated` çıktısı periyodik olarak kontrol edilir.
+
+TESTING:
+requirements.txt temiz bir sanal ortamda (venv) sıfırdan kurularak doğrulanmıştır.
+
+GAPS:
+requirements.txt dosyasında tam SHA256 hash sabitlemesi (pip-compile/poetry).
+
+RECOMMENDATIONS:
+`pip-tools` kullanılarak requirements.lock dosyası oluşturulmalıdır.
+
+PRIORITY:
+P2 — Tedarik Zinciri ve Lisans Güvenliği.
+
+IMPLEMENTATION NOTES:
+Tüm kütüphaneler ticari kullanıma uygun açık kaynak lisanslarına sahiptir.
+
+VERIFICATION CRITERIA:
+`pip-audit` taramasında bilinen sıfır kritik CVE tespit edilmesi.

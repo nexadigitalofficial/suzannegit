@@ -1,0 +1,87 @@
+================================================================================
+                    11 — EXTERNAL INTEGRATION ARCHITECTURE
+================================================================================
+
+PURPOSE:
+NEXA PRIME platformunun Google Drive, Coldwell Banker Portalı, WhatsApp CRM,
+Render Bulut Altyapısı ve GitHub CI/CD entegrasyonlarını modeller.
+
+CURRENT STATE:
+5 temel harici entegrasyon katmanı tam otonom olarak çalışmaktadır.
+
+DISCOVERED COMPONENTS:
+1. Google Drive API v3 Entegrasyonu (drive_integration/gdrive_auth_manager.py):
+   - Yetkilendirme: Hizmet Hesabı (Service Account) & OAuth2 Token Rotasyonu.
+   - Fonksiyon: Suzanne Tenekecioğlu'nun Drive klasöründeki proje sunum ve videolarını senkronize etmek.
+2. Coldwell Banker Web Scraper Entegrasyonu (scripts/nexa_cb_sync.py):
+   - Fonksiyon: Coldwell Banker VIP portalındaki canlı portföy ilanlarını (16 ilan) çekmek ve normalize etmek.
+3. WhatsApp Direct CRM Entegrasyonu (site.html: mindMapToWhatsApp):
+   - Fonksiyon: Müşteri arama kriterlerini, seçilen projeleri ve randevu taleplerini formatlı metin olarak
+     Suzanne Tenekecioğlu'nun (+90 535 489 56 56) WhatsApp hattına yönlendirmek.
+4. GitHub Actions CI/CD Entegrasyonu (.github/workflows/update_db.yml):
+   - Fonksiyon: Her gece 02:00 UTC'de otonom veri madenciliği ve self-healing çalıştırmak.
+5. Render Webhook & Hosting Entegrasyonu (render.yaml, render_start.py):
+   - Fonksiyon: Git push sonrası sıfır kesintili (Zero-Downtime) otomatik dağıtım tetiklemek.
+
+ARCHITECTURE:
+Integration Mesh:
+[Google Drive API] <=====(OAuth2/Poll)=====> [NEXA Drive Puller]
+                                                     |
+[Coldwell Banker VIP] <==(Scrape/Enrich)===> [NEXA CB Sync Engine]
+                                                     |
+                                                     v
+                                          [NEXA PRIME CORE (SQLite)]
+                                                     |
+[GitHub CI/CD Actions] <==(Cron 02:00)====== [CI Sync Pipeline]
+                                                     |
+                                                     v
+[Render Cloud Service] <==(Git Webhook)===== [Production Runtime]
+                                                     |
+                                                     v
+[Kullanıcı Web Portalı] ===(WhatsApp Lead)==> [Suzanne Tenekecioğlu (+90 535 489 56 56)]
+
+DEPENDENCIES:
+google-api-python-client, google-auth-httplib2, google-auth-oauthlib, requests, beautifulsoup4.
+
+DATA FLOW:
+Harici Veri Çekimi -> Yerel Normalizasyon -> Veritabanı Yazımı -> Git Otomasyonu -> Webhook Dağıtımı.
+
+WORKFLOW:
+Harici Hata Toleransı & Yeniden Deneme (Retry Mechanism):
+1. Google Drive API 429 Too Many Requests verirse: Üstel geri çekilme (exponential backoff: 2s, 4s, 8s, 16s).
+2. API Anahtarı tükenirse: gdrive_auth_manager.py otomatik olarak yedek Service Account anahtarına döner.
+3. Coldwell Banker sitesi erişilemezse: Yerel nexa_portfolio_data.json önbelleği bozulmadan korunur.
+
+RISKS:
+Coldwell Banker web sitesinin HTML şablonunu değiştirmesi.
+-> Çözüldü: Esnek Regex ve çoklu CSS seçici (fallback selectors) mimarisi.
+
+FAILURE MODES:
+İnternet kesintisinde platform yerel statik ve gömülü veriyle tam kapasite çalışmayı sürdürür.
+
+SECURITY CONCERNS:
+Google Drive Service Account JSON anahtarlarının ortam değişkenlerinde (ENV) güvenle saklanması.
+
+PERFORMANCE CONCERNS:
+Harici isteklerde timeout=15s kuralı ile iş parçacıklarının kilitlenmesi önlenmiştir.
+
+OBSERVABILITY:
+Her harici çağrı durumu ve HTTP kodu logs/ dizini altına tarihli olarak kaydedilir.
+
+TESTING:
+scripts/test_master_suite.py (Test 01: Drive Auth & Rotation) ile doğrulanmıştır.
+
+GAPS:
+WhatsApp Business API üzerinden otomatik 2 yönlü chatbot yanıtı (webhook).
+
+RECOMMENDATIONS:
+Resmi Meta WhatsApp Cloud API hesabına geçiş yapılarak doğrudan CRM entegrasyonu sağlanmalıdır.
+
+PRIORITY:
+P1 — Harici Veri Sürekliliği.
+
+IMPLEMENTATION NOTES:
+Tüm entegrasyon modülleri bağımsız çalışabilir (decoupled) şekilde tasarlanmıştır.
+
+VERIFICATION CRITERIA:
+Tüm harici servislerin çevrimdışı senaryolarında sistemin çökmeksizin yerel veriyi sunabilmesi.

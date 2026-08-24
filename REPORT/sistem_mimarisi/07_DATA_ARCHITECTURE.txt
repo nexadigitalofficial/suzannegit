@@ -1,0 +1,84 @@
+================================================================================
+                    07 — DATA ARCHITECTURE & STORAGE LIFECYCLE
+================================================================================
+
+PURPOSE:
+Platformun veri modellerini, veritabanı şemasını, kanonik JSON yapısını ve veri
+yaşam döngüsünü (Data Lifecycle) detaylandırır.
+
+CURRENT STATE:
+Platform, yüksek performanslı hibrit bir depolama mimarisine sahiptir:
+1. İlişkisel & Vektör Veritabanı: SQLite3 (WAL Modu, nexa_database.db - 25.8 MB)
+2. Hızlı Erişim Kanonik JSON Dosyaları: projects_map.json, nexa_portfolio_data.json, nexa_sales_knowledge_graph.json
+3. İstemci İçi Gömülü Veri: site.html içinde EMBEDDED_PROJECTS ve EMBEDDED_LISTINGS
+
+DISCOVERED COMPONENTS:
+Veritabanı Tabloları (11 Tablo):
+• projects (46 satır): Proje kimliği, adı, konumu, açıklaması, fiyat aralığı, ada/parsel, TKGM onayı.
+• documents (1076 satır): Projeye ait sözleşmeler, sunumlar, fiyat listeleri, ham metinler.
+• document_chunks (1958 satır): RAG semantik arama için 500-1000 karakterlik parçalar ve vektörler.
+• customers (5 satır): CRM potansiyel müşteri kayıtları, telefon, ilgilendiği projeler.
+• system_health_logs (126 satır): Self-healing ve sistem sağlık denetim geçmişi.
+• audit_logs (Aktif): Sistemdeki kritik veri değişikliklerinin güvenlik ve denetim kayıtları.
+• units, sales, whatsapp_messages, users: Gelecek genişlemeler için hazır ilişkisel şemalar.
+
+ARCHITECTURE:
+Data Storage & Retrieval Pipeline:
+[Google Drive / Web Scraper]
+             | (JSON / PDF / XLSX)
+             v
+[Kanonik JSON Matrisi] (projects_map.json) <---> [SQLite DB (WAL Mode)]
+             |                                          |
+             v                                          v
+[site.html EMBEDDED_DATA] <-------------------- [FTS5 + Vector Embeddings]
+             |                                          |
+             v                                          v
+[İstemci Çevrimdışı Bellek]                    [Mira RAG AI Engine]
+
+DEPENDENCIES:
+SQLite 3.35+, JSON1 extension, FTS5 full-text search engine.
+
+DATA FLOW:
+Kritik Verilerin Yaşam Döngüsü:
+Kaynak (Drive/Coldwell Banker) -> Doğrulama (TKGM/Fiyat Parser) -> Dönüştürme (Kanonik JSON) ->
+Kalıcı Depolama (SQLite WAL) -> İndeksleme (Vektör/FTS5) -> İstemciye İletim (REST API / SPA Embedded).
+
+WORKFLOW:
+Veri Bütünlüğü ve Senkronizasyon Döngüsü:
+1. Veri yazma işlemleri her zaman SQLite transaction blokları içinde yürütülür (commit / rollback).
+2. nexa_self_healing.py periyodik olarak SQLite ile JSON matrislerini karşılaştırır ve eşler.
+3. Fiyat veya teslimat tarihi değiştiğinde tüm chunk vektörleri anında güncellenir.
+
+RISKS:
+Eşzamanlı okuma/yazma sırasında SQLite kilitlenmesi (database is locked) riski.
+-> Çözüldü: PRAGMA journal_mode=WAL; PRAGMA busy_timeout=30000; PRAGMA synchronous=NORMAL;
+
+FAILURE MODES:
+Veritabanı bozulursa (corruption) -> Otomatik yedekten geri yükleme ve JSON matrisinden DB'yi sıfırdan rehidrate etme yeteneği.
+
+SECURITY CONCERNS:
+Müşteri telefon numaraları ve randevu kayıtlarının güvenli saklanması (audit_logs denetimi).
+
+PERFORMANCE CONCERNS:
+FTS5 arama sorgularının < 5ms içinde sonuç dönmesi sağlanmıştır.
+
+OBSERVABILITY:
+Veritabanı boyutu, chunk sayısı ve tablo kayıt sayıları /api/system-status üzerinden raporlanır.
+
+TESTING:
+test_system_hardening.py (Test 01: SQLite WAL Mode and Audit Logs) ile doğrulanmıştır.
+
+GAPS:
+Müşteri verilerinin GDPR/KVKK uyumlu anonimizasyon mekanizmasının güçlendirilmesi.
+
+RECOMMENDATIONS:
+Her gece 03:00'te otomatik SQLite VACUUM ve .backup komutu çalıştırılmalıdır.
+
+PRIORITY:
+P0 — Veri Güvenliği ve Sıfır Veri Kaybı.
+
+IMPLEMENTATION NOTES:
+Tüm metin aramalarında Türkçe karakter katlama (foldTR) kuralları veritabanı sorgularında da uygulanır.
+
+VERIFICATION CRITERIA:
+PRAGMA integrity_check komutunun "ok" dönmesi ve sıfır eksik/tutarsız kayıt olması.

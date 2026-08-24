@@ -1,0 +1,84 @@
+================================================================================
+                    02 — CURRENT PHYSICAL & LOGICAL ARCHITECTURE
+================================================================================
+
+PURPOSE:
+Sistemin mevcut fiziksel dosya hiyerarşisini, mantıksal katmanlarını ve çalışma
+zamanı (runtime) durumunu belgeler.
+
+CURRENT STATE:
+Sistem monolitik çekirdek üzerine inşa edilmiş mikro-servis benzeri otonom arka plan
+iş parçacıklarından (daemon threads) oluşur.
+
+DISCOVERED COMPONENTS:
+• Dosya Sayısı: 329 dosya, 15 alt dizin.
+• Disk Kullanımı: ~520 MB (Veri tabanı, sunum PDF'leri ve yerel tanıtım videoları dahil).
+• Ana Veritabanı: nexa_database.db (25.8 MB, WAL modunda aktif).
+• Vektör Önbelleği: nexa_embedding_cache.json (29.5 MB, 1958 chunk için 768d embeddingler).
+
+ARCHITECTURE:
+Fiziksel Modül Organizasyonu:
+/ (Root Directory)
+├── app.py                     -> Flask Core REST API & Middleware
+├── site.html                  -> High-Performance Single Page Application
+├── admin.html                 -> Executive Admin & CRM Portal
+├── nexa_rag.py                -> Cognitive Agent & Tool Calling Engine
+├── nexa_vector_rag.py         -> Hybrid Vector & FTS5 Search
+├── nexa_self_healing.py       -> Self-Healing Sentinel & Schema Migrator
+├── nexa_drive_puller.py       -> Google Drive API Polling & Downloader
+├── nexa_watchdog.py           -> Local Directory FileWatcher Daemon
+├── render_start.py            -> Production Gunicorn Process Manager
+├── projects_map.json          -> Canonical Real Estate Project Matrix
+├── nexa_portfolio_data.json   -> Coldwell Banker Listing Matrix
+├── /app/                      -> Modularized Blueprints & Services
+├── /cognitive_system/         -> Multi-Agent Swarm Orchestration
+├── /drive_integration/        -> Intelligent Document Parsing Pipeline
+├── /validation_quality/       -> TKGM & Data Deduplication Engines
+├── /monitoring/               -> Metrics Aggregator & Alert Manager
+└── /scripts/                  -> CI/CD & Automated Hardening Test Suites
+
+DEPENDENCIES:
+Python 3.11+, Gunicorn, Flask, SQLite3, Requests, BeautifulSoup4, PyPDF2, OpenPyXL.
+
+DATA FLOW:
+Kullanıcı İsteği -> Gunicorn Master -> Flask Worker -> Router -> Service Layer -> DB/JSON -> Serializer -> Response.
+
+WORKFLOW:
+1. Başlangıç: render_start.py Gunicorn'u başlatır ve paralel 3 arka plan thread'i ayağa kaldırır:
+   - NexaWatchdog (Yerel klasör izleme)
+   - NexaDrivePuller (Google Drive periyodik kontrol)
+   - NexaCognitiveLoop (Kendi kendini onarma ve öğrenme döngüsü)
+2. İstek Karşılama: Gunicorn 2-4 worker ile gelen HTTP isteklerini eşzamanlı işler.
+
+RISKS:
+Arka plan thread'lerinin bellek sızıntısı yapması durumunda sunucu yeniden başlatma ihtiyacı.
+
+FAILURE MODES:
+Thread çökmesi durumunda ana Flask uygulamasının etkilenmemesi için her thread bağımsız try/except döngüsündedir.
+
+SECURITY CONCERNS:
+Geliştirme dosyalarının ve geçici scratch scriptlerinin üretim ortamına sızmaması.
+
+PERFORMANCE CONCERNS:
+Vektör önbelleğinin (29.5 MB) belleğe yüklenme süresi (yaklaşık 120ms).
+
+OBSERVABILITY:
+Thread sağlık durumu /api/system-status uç noktasından JSON olarak izlenir.
+
+TESTING:
+test_stress_chatbot.py ile eşzamanlı 50 kullanıcı isteği simüle edilmiştir.
+
+GAPS:
+Gelecekte veri tabanı büyüdüğünde PostgreSQL + pgvector geçiş hazırlığı.
+
+RECOMMENDATIONS:
+Render ortamında Gunicorn worker_class='gthread' ve threads=4 kullanımı korunmalıdır.
+
+PRIORITY:
+P1 — Çalışma Zamanı Kararlılığı.
+
+IMPLEMENTATION NOTES:
+render_start.py içinde daemon=True bayrağı ile thread'lerin ana süreçle uyumlu kapanması sağlanmıştır.
+
+VERIFICATION CRITERIA:
+Gunicorn sürecinin ve 3 arka plan thread'inin kesintisiz çalışması.

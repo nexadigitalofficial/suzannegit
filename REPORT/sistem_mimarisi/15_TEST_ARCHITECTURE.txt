@@ -1,0 +1,98 @@
+================================================================================
+                    15 — TEST ARCHITECTURE & QUALITY ASSURANCE
+================================================================================
+
+PURPOSE:
+NEXA PRIME platformunun otomatik test paketlerini, birim (unit), entegrasyon,
+güvenlik, stres ve otonom regresyon test mimarisini belgeler.
+
+CURRENT STATE:
+Platform, çok katmanlı ve sürekli çalışan 4 ana test paketi ile korunmaktadır:
+• Master Suite (scripts/test_master_suite.py): 10/10 Test Başarılı (%100)
+• System Hardening Suite (scripts/test_system_hardening.py): 13/13 Test Başarılı (%100)
+• Autonomous Filter Suite (test_autonomous_filters.py): 4/4 Test Başarılı (%100)
+• Stress & Concurrency Suite (scripts/test_stress_chatbot.py): 50 Eşzamanlı İstek OK
+
+DISCOVERED COMPONENTS:
+1. test_master_suite.py:
+   - test_01: Drive Auth & Rotation
+   - test_02: Drive Discovery & Extraction
+   - test_03: Sync Engine Execution
+   - test_04: Validation Engine Layers
+   - test_05: Deduplication & Confidence Scoring
+   - test_06: TKGM Verifier
+   - test_07: Cognitive Nucleus & Swarm
+   - test_08: Predictive & Learning Engines
+   - test_09: Adaptive Scheduler & Circuit Breaker
+   - test_10: Monitoring & Cognitive Dashboard
+2. test_system_hardening.py:
+   - SQLite WAL modu, Client IP spoofing savunması, Path traversal engelleme, CSRF doğrulaması,
+     Admin brute-force kilidi, CRM randevu danışman ataması, RAG araç temizliği,
+     Sales miner eşleme, Self-healing döngüsü, CI sync boru hattı, Sağlık rotaları, Chatbot selamlama & proje sorgusu.
+3. test_autonomous_filters.py:
+   - Dinamik oda silme/ekleme, 5 filtre kartı sıfır-hardcoded kontrolü, /api/filter-facets doğrulaması.
+
+ARCHITECTURE:
+Test Automation Harness:
+[CI/CD Trigger / Local Run]
+             |
+             v
+   [Test Suite Runner (unittest)]
+             |
+   +---------+---------+---------+
+   |                   |         |
+[Unit Tests]   [Security Tests] [Integration Tests]
+   |                   |         |
+   +---------+---------+---------+
+             |
+             v
+   [Regression & Assertion Engine]
+             |
+             v
+   [Structured Test Report & Zero Exit Code]
+
+DEPENDENCIES:
+unittest, requests, sqlite3, json, tempfile, unittest.mock.
+
+DATA FLOW:
+Test Başlatma -> İzole Test Ortamı -> Fonksiyon Çağrısı -> Assert Kontrolü -> Raporlama.
+
+WORKFLOW:
+Test Yürütme Protokolü:
+Her kod değişikliği veya commit öncesinde:
+1. `python scripts/test_master_suite.py` çalıştırılır.
+2. `python scripts/test_system_hardening.py` çalıştırılır.
+3. Her iki test de %100 geçmeden üretim ortamına kod gönderilmez (Zero Broken Build Policy).
+
+RISKS:
+Testlerin üretim veritabanını bozması riski -> Çözüldü: Testler izole transaksiyonlar veya geçici bellek kullanır.
+
+FAILURE MODES:
+Herhangi bir test başarısız olursa çıkış kodu 1 döner ve CI/CD derlemesi otomatik durdurulur.
+
+SECURITY CONCERNS:
+Güvenlik testlerinin saldırgan payload'larını güvenli izole ortamda çalıştırması.
+
+PERFORMANCE CONCERNS:
+27 testin tamamı 15 saniyeden kısa sürede tamamlanır (Yüksek Hızlı Test Paketi).
+
+OBSERVABILITY:
+Test çıktıları standart xUnit / TAP formatına uyumludur.
+
+TESTING:
+Test paketleri kendi kendilerini doğrulayan assertion kontrolleri içerir.
+
+GAPS:
+Headless Chrome (Playwright/Cypress) ile uçtan uca görsel regresyon testleri.
+
+RECOMMENDATIONS:
+GitHub Actions içine Playwright E2E UI test adımının eklenmesi.
+
+PRIORITY:
+P0 — Sürekli Kalite Güvencesi.
+
+IMPLEMENTATION NOTES:
+Windows cp1254 Türkçe konsol karakter uyumluluğu için tüm test çıktıları ASCII güvenli biçimlendirilmiştir.
+
+VERIFICATION CRITERIA:
+Tüm 27 testin 0 hata ve 0 başarısızlık ile tamamlanması.

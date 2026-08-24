@@ -1,0 +1,79 @@
+================================================================================
+                    12 — INFRASTRUCTURE & RUNTIME DEPLOYMENT
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2'nin üretim ortamındaki (Render Cloud Platform) çalışma zamanı, süreç
+yönetimi, sunucu kaynakları ve CI/CD dağıtım altyapısını belgeler.
+
+CURRENT STATE:
+Platform, Render Web Service üzerinde Gunicorn WSGI sunucusu ve render_start.py
+süreç yöneticisi ile 7/24 kesintisiz çalışmaktadır.
+
+DISCOVERED COMPONENTS:
+1. render_start.py: Gunicorn ana sürecini ve arka plan thread'lerini yöneten orchestration betiği.
+2. render.yaml: Render Infrastructure-as-Code (IaC) dağıtım konfigürasyonu.
+3. requirements.txt: Python bağımlılık manifestosu (Flask, Gunicorn, Gemini, Scraper kütüphaneleri).
+4. .github/workflows/update_db.yml: GitHub Actions sanal sunucusunda çalışan gece cron işi.
+5. static/ & projeler/: Statik medya, sunum ve tanıtım dosyaları depolama alanı.
+
+ARCHITECTURE:
+Production Runtime Topolojisi:
+[Render Cloud Linux Container (Python 3.11)]
+    ├── Process Master: render_start.py
+    │     ├── Subprocess: Gunicorn (0.0.0.0:$PORT, workers=2, threads=4, timeout=120)
+    │     │     ├── Worker 1: Flask Application Instance
+    │     │     └── Worker 2: Flask Application Instance
+    │     ├── Daemon Thread 1: NexaWatchdog (Yerel dosya izleme)
+    │     ├── Daemon Thread 2: NexaDrivePuller (Google Drive otonom kontrol)
+    │     └── Daemon Thread 3: NexaCognitiveLoop (Periyodik self-healing & metrik kaydı)
+    └── Ephemeral / Persistent Storage: SQLite WAL + Proje Dokümanları
+
+DEPENDENCIES:
+Linux (Debian/Ubuntu tabanlı), Gunicorn 21.2.0, Python 3.11.8.
+
+DATA FLOW:
+Render HTTP Ingress -> Gunicorn Port Binding -> Flask Dispatcher -> Worker Threads -> Client.
+
+WORKFLOW:
+Continuous Deployment (CD) Döngüsü:
+GitHub repo'suna yeni commit yapıldığında (`git push origin main`):
+1. Render GitHub Webhook'u tetiklenir.
+2. Build Command çalıştırılır (`pip install -r requirements.txt`).
+3. Start Command çalıştırılır (`python render_start.py`).
+4. Health check rotası (`/healthz`) 200 OK verene kadar eski sürüm trafiği karşılar.
+5. Yeni sürüm sağlıklı açılınca trafik kesintisiz yeni sürüme aktarılır (Zero-Downtime Deployment).
+
+RISKS:
+Render ücretsiz/başlangıç katmanında bellek aşımı (OOM Kill) riski.
+-> Çözüldü: Vektör arama ve dosya akışlarında bellek tüketimi < 350 MB seviyesinde optimize edilmiştir.
+
+FAILURE MODES:
+Gunicorn iş parçacığı çökerse master process anında yeni bir iş parçacığı türetir (auto-respawn).
+
+SECURITY CONCERNS:
+Üretim ortamında DEBUG=False kuralı ve ortam değişkenlerinin (ENV) güvenliği.
+
+PERFORMANCE CONCERNS:
+Gunicorn gthread işçi sınıfı ile yüksek eşzamanlı (concurrent) I/O performansı.
+
+OBSERVABILITY:
+Render canlı log konsolu + /api/health ve /api/system-status uç noktaları.
+
+TESTING:
+render_start.py başlatma döngüsü yerel simülasyon ile test edilmiştir.
+
+GAPS:
+Statik medya dosyalarının Amazon S3 veya Cloudflare R2 üzerine taşınması.
+
+RECOMMENDATIONS:
+Trafik arttığında Render ortamında 'Standard' plana geçilerek persistent disk eklenmelidir.
+
+PRIORITY:
+P1 — Üretim Altyapısı Güvenilirliği.
+
+IMPLEMENTATION NOTES:
+PORT ortam değişkeni Render tarafından otomatik atanır; render_start.py dinamik olarak bu porta bağlanır.
+
+VERIFICATION CRITERIA:
+Uygulamanın Render üzerinde 'Live' durumunda olması ve healthcheck'in 200 dönmesi.

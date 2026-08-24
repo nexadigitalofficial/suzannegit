@@ -1,0 +1,76 @@
+================================================================================
+                    06 — SUB-AGENT SPECIALIZATION & DELEGATION
+================================================================================
+
+PURPOSE:
+Bilişsel sürüye destek veren uzmanlaşmış alt ajanların (sub-agents) görevlerini,
+araçlarını, yetkilerini ve hata davranışlarını tanımlar.
+
+CURRENT STATE:
+5 adet bağımsız çalışan alt ajan başarıyla sisteme entegre edilmiştir.
+
+DISCOVERED COMPONENTS:
+1. SubAgent-01: GDrive Discovery Agent (drive_integration/gdrive_file_discovery.py)
+   - Rol: Google Drive klasör ağacını taramak, yeni/değişen dosyaları tespit etmek.
+2. SubAgent-02: Universal Document Parser Agent (drive_integration/intelligent_extraction_engine.py)
+   - Rol: PDF, XLSX, DOCX dosyalarından fiyat, taksit, teslimat ve oda tiplerini madencilikle çıkarmak.
+3. SubAgent-03: TKGM Verifier Agent (validation_quality/tkgm_verifier.py)
+   - Rol: Ada ve Parsel numaralarını doğrulamak, kadastro standartlarına uygunluğunu teyit etmek.
+4. SubAgent-04: Confidence Scorer Agent (validation_quality/confidence_scorer.py)
+   - Rol: Proje verilerinin güvenilirlik ve tamlık skorunu (0.0 - 1.0) hesaplamak.
+5. SubAgent-05: Deduplication & Cleanliness Agent (validation_quality/deduplication_engine.py)
+   - Rol: Mükerrer proje kayıtlarını engellemek, başlık ve konum metinlerini normalize etmek.
+
+ARCHITECTURE:
+Delegation Matrix:
+Parent: Mira Lead Agent / CI Sync Engine
+├── Delegated Task: "Scan Google Drive" -> SubAgent-01
+├── Delegated Task: "Parse Price List" -> SubAgent-02
+├── Delegated Task: "Verify Land Registry" -> SubAgent-03
+├── Delegated Task: "Calculate Data Score" -> SubAgent-04
+└── Delegated Task: "Deduplicate Matrix" -> SubAgent-05
+
+DEPENDENCIES:
+openpyxl, PyPDF2, pdfplumber, re, hashlib, Levenshtein distance mantığı.
+
+DATA FLOW:
+Raw File Stream -> SubAgent-01 -> SubAgent-02 (Extraction) -> SubAgent-05 (Deduplication) ->
+SubAgent-03 (TKGM Verification) -> SubAgent-04 (Scoring) -> Master SQLite Database.
+
+WORKFLOW:
+Sub-Agent İşlem Döngüsü:
+Görev Alınır -> Girdi Şeması Doğrulanır -> Uzmanlık Alanında İşlenir -> Güven Skoru Hesaplanır ->
+Sonuç JSON formatında Ana Ajan'a (Parent) raporlanır.
+
+RISKS:
+Bozuk biçimlendirilmiş bir Excel tablosunda sütun kayması yaşanması.
+
+FAILURE MODES:
+Excel okuyucu başarısız olursa Regex tabanlı metin madenciliği yedek olarak devreye girer.
+
+SECURITY CONCERNS:
+Alt ajanların dosya sistemi üzerinde yalnızca /projeler ve /raporlar klasörlerine yazma yetkisi vardır.
+
+PERFORMANCE CONCERNS:
+Paralel ThreadPoolExecutor ile 32 projenin 3 saniyede taranabilmesi.
+
+OBSERVABILITY:
+Her alt ajanın işlem süresi ve başarı durumu metrics_aggregator.py tarafından kaydedilir.
+
+TESTING:
+scripts/test_master_suite.py (Test 02, 04, 05, 06) ile tüm alt ajanlar doğrulanmıştır.
+
+GAPS:
+Görsel afiş ve kat planlarından OCR ile metin çıkaran görsel alt ajanın eklenmesi.
+
+RECOMMENDATIONS:
+Tesseract / EasyOCR kütüphanesinin konteyner ortamına entegre edilmesi.
+
+PRIORITY:
+P1 — Veri Kalitesi ve Otomasyon Doğruluğu.
+
+IMPLEMENTATION NOTES:
+Tüm alt ajanlar modülerdir; herhangi biri hata verdiğinde diğerlerinin çalışması kesintiye uğramaz.
+
+VERIFICATION CRITERIA:
+Tüm projeler için güven skorunun > 0.85 olması ve sıfır mükerrer kayıt üretilmesi.

@@ -1,0 +1,86 @@
+================================================================================
+                    29 — IDENTIFIED SYSTEM GAPS & OPPORTUNITIES
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunda tespit edilen iyileştirme alanlarını, fonksiyonel ve
+mimari boşlukları (Gaps) ve bunlara yönelik çözüm fırsatlarını belgeler.
+
+CURRENT STATE:
+Sistem tüm temel fonksiyonlarıyla %100 çalışır durumdadır. Tespit edilen boşluklar
+sistemin çalışmasını engellemeyen, geleceğe yönelik kurumsal katma değer fırsatlarıdır.
+
+DISCOVERED GAPS & OPPORTUNITY MATRIX:
+
+1. GAP-01: Harici Webhook Tabanlı Canlı Senkronizasyon (Push vs Poll)
+   - Mevcut Durum: Google Drive API ve Coldwell Banker senkronizasyonu periyodik yoklama (polling / cron) ile çalışır.
+   - Boşluk: Yeni dosya eklendiğinde cron tetiklenene kadar (veya watchdog görene kadar) birkaç dakika gecikme olabilir.
+   - Fırsat: Google Drive Push Notifications (Webhook) mimarisine geçilerek dosya yüklendiği an 0. saniyede içe aktarma sağlanabilir.
+
+2. GAP-02: Çift Yönlü Resmi WhatsApp Business API Entegrasyonu
+   - Mevcut Durum: Müşteri lead'leri `https://wa.me/` linki üzerinden doğrudan Suzanne Tenekecioğlu'nun WhatsApp'ına iletilir.
+   - Boşluk: Chatbot konuşmaları doğrudan WhatsApp arayüzü içinde gerçekleşmez; web sitesindedir.
+   - Fırsat: Meta Cloud API webhook'u bağlanarak Mira AI asistanının doğrudan WhatsApp içinde 7/24 otomatik yanıt vermesi sağlanabilir.
+
+3. GAP-03: Görsel ve Kat Planı OCR & Görsel Analiz (Computer Vision)
+   - Mevcut Durum: PDF metinleri ve tabloları okunmaktadır; ancak taranmış resim formatındaki kat planı afişleri metin içermiyorsa atlanır.
+   - Boşluk: Taranmış mimari çizimlerdeki gömülü yazılar çıkarılamayabilir.
+   - Fırsat: EasyOCR veya Gemini 2.5 Vision API entegre edilerek kat planı görsellerinden m² ve oda bilgisi otomatik çıkarılabilir.
+
+4. GAP-04: Canlı Konut Kredisi Hesaplayıcı & Faiz Oranı API Entegrasyonu
+   - Mevcut Durum: Taksit tutarları ve peşinat oranları inşaat firmalarının sunduğu sabit sözleşme şartlarına göre gösterilir.
+   - Boşluk: Bankaların güncel konut kredisi faiz oranlarına göre dinamik banka kredisi simülasyonu bulunmaz.
+   - Fırsat: Merkez Bankası / Banka API'leri entegre edilerek canlı kredi ödeme planı çıkarılabilir.
+
+5. GAP-05: Gelişmiş Harita & Coğrafi CBS (GIS) Katmanı
+   - Mevcut Durum: Proje kartlarında İl/İlçe/Mahalle hiyerarşisi ve Google Maps yönlendirmesi bulunur.
+   - Boşluk: Web sitesi üzerinde interaktif kümelemeli (clustering) tam ekran Leaflet/Mapbox harita görünümü opsiyoneldir.
+   - Fırsat: Arama ekranına "Haritada Gör" modu eklenerek projeler pinler üzerinde gösterilebilir.
+
+ARCHITECTURE:
+Gap Resolution Strategy:
+Identify Opportunity -> Design Decoupled Micro-Plugin -> Implement Feature Flag ->
+Test with Simulated Data -> Deploy with Zero Disruption.
+
+DEPENDENCIES:
+Webhooks, Meta WhatsApp API, Mapbox GL / Leaflet, Gemini Vision.
+
+DATA FLOW:
+Harici Olay -> Webhook Listener -> Gelişmiş Eklenti -> Ana Veri Tabanı.
+
+WORKFLOW:
+Boşluk İyileştirme Döngüsü:
+Her boşluk için öncelik ve maliyet/fayda analizi yapılır, aşamalı geliştirme planına dahil edilir.
+
+RISKS:
+Yeni harici API entegrasyonlarının ek maliyet veya kota riski getirmesi.
+
+FAILURE MODES:
+Yeni modüller hata verse dahi ana platformun çekirdek fonksiyonları etkilenmeyecek şekilde izole edilmelidir.
+
+SECURITY CONCERNS:
+Webhook uç noktalarının HMAC SHA256 imza doğrulaması ile korunması.
+
+PERFORMANCE CONCERNS:
+Harita ve görsel analiz servislerinin asenkron iş parçacıklarında çalışması.
+
+OBSERVABILITY:
+Her yeni entegrasyonun başarı/hata oranı merkezi telemetriye dahil edilir.
+
+TESTING:
+Mock servisler ile sahte webhook testleri koşturulur.
+
+GAPS:
+Bu dokümanda 5 adet stratejik boşluk tanımlanmıştır.
+
+RECOMMENDATIONS:
+İlk aşamada GAP-02 (Resmi WhatsApp API) ve GAP-05 (İnteraktif Harita) ele alınmalıdır.
+
+PRIORITY:
+P2 — Stratejik Fonksiyonel Geliştirme.
+
+IMPLEMENTATION NOTES:
+Mevcut modüler mimari bu 5 eklentinin sıfır refactor ile sisteme takılmasına uygundur.
+
+VERIFICATION CRITERIA:
+Her yeni modülün ana sistem stabilitesini ve %100 test başarısını koruması.

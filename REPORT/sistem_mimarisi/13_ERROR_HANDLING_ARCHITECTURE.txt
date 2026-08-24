@@ -1,0 +1,76 @@
+================================================================================
+                    13 — ERROR HANDLING & RESILIENCE MATRIX
+================================================================================
+
+PURPOSE:
+Platformun hata yakalama, sınıflandırma, kademeli geri çekilme (backoff),
+kurtarma (recovery) ve circuit breaker (devre kesici) mimarisini açıklar.
+
+CURRENT STATE:
+Her kritik operasyon için "Detect -> Classify -> Log -> Fallback -> Recover"
+prensibi uygulanmaktadır.
+
+DISCOVERED COMPONENTS:
+1. HTTP Exception Handlers (app.py): 400, 403, 404, 429, 500 merkezi hata yakalayıcıları.
+2. Multi-Tier AI Fallback Handler (nexa_rag.py): Cloud Gemini -> Local Ollama -> Rule Matrix.
+3. Drive & API Retry Manager (drive_integration/sync_engine.py): Üstel geri çekilmeli yeniden deneme.
+4. Database Circuit Breaker (automation/intelligent_scheduler.py): Kilitlenme ve bağlantı hatası kesicisi.
+5. Client-Side Graceful Degradation (site.html): API kesintisinde gömülü veriye şeffaf geçiş.
+
+ARCHITECTURE:
+Error Handling & Recovery Flow:
+Operation Attempt
+     |
+     +---> Success -> Return Result
+     |
+     v (Error Trapped)
+[Error Classifier]
+     ├── Type A: Transient Network / Timeout -> [Exponential Backoff Retry (Max 3)]
+     ├── Type B: Rate Limit (429) -> [Circuit Breaker / Key Rotation]
+     ├── Type C: Corrupted Data / Parse Error -> [Safe Skip + Log Warning]
+     └── Type D: Critical System Error -> [Fallback to Offline Cache + Admin Alert]
+
+DEPENDENCIES:
+logging, traceback, time, requests.exceptions, sqlite3.OperationalError.
+
+DATA FLOW:
+Hata Oluşumu -> Log Kaydı (app.log) -> Sınıflandırma -> Geriye Dönük Güvenli Değer Üretimi -> İstemciye İletim.
+
+WORKFLOW:
+Hata Kurtarma Senaryoları:
+1. Video Dosyası Bulunamadı: İstemciye hata fırlatılmaz; proje kartı doğrudan şık bir statik görsel ve YouTube/Drive önizleme butonuna evrilir.
+2. Fiyat Listesi Bozuk: Son bilinen kanonik fiyat projects_map.json üzerinden korunur, fiyat alanı asla boş veya "undefined" görünmez.
+3. Veritabanı kilitli: 30 saniyelik busy_timeout içinde istek tekrar denenir.
+
+RISKS:
+Sonsuz yeniden deneme (infinite retry) döngüleri -> Çözüldü: Her işleme max_retries = 3 sınırı konuldu.
+
+FAILURE MODES:
+Ağır sistem yükü altında "Service Degraded" moduna geçilerek ağır vektör aramaları geçici olarak kapatılır ve FTS5 metin aramasına geçilir.
+
+SECURITY CONCERNS:
+Hata mesajlarında kullanıcıya hassas stack trace veya veritabanı yollarının gösterilmemesi (bilgi sızıntısı engellendi).
+
+PERFORMANCE CONCERNS:
+Hata işleme döngülerinin CPU tüketmemesi için time.sleep yerine asenkron zamanlayıcılar.
+
+OBSERVABILITY:
+Tüm hatalar stack trace ile birlikte logs/ dizininde yapılandırılmış JSON formatında saklanır.
+
+TESTING:
+scripts/test_master_suite.py (Test 09: Adaptive Scheduler Circuit Breaker) ile doğrulanmıştır.
+
+GAPS:
+Hataların anlık olarak Telegram veya Sentry kanalına bildirilmesi (Alert Manager).
+
+RECOMMENDATIONS:
+Sentry SDK entegrasyonu yapılarak canlı hata izleme ve alarmlar aktifleştirilmelidir.
+
+PRIORITY:
+P0 — Hata Toleransı ve Çökme Önleme.
+
+IMPLEMENTATION NOTES:
+İstemci tarafında hiçbir JavaScript hatası konsolda uncaught exception olarak kalmaz; try/catch blokları ile çevrilmiştir.
+
+VERIFICATION CRITERIA:
+Tüm hata senaryolarında sistemin ayakta kalması ve 500 yerine anlamlı JSON yanıtları üretmesi.

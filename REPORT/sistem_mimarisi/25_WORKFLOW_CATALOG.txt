@@ -1,0 +1,118 @@
+================================================================================
+                    25 — COMPLETE WORKFLOW CATALOG & STATE MACHINES
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunda çalışan tüm otomatik ve kullanıcı tetiklemeli iş
+akışlarının (workflows) tam kataloğunu ve durum makinelerini belgeler.
+
+CURRENT STATE:
+Platformda 12 adet uçtan uca iş akışı tanımlıdır ve aktiftir.
+
+DISCOVERED WORKFLOW CATALOG:
+
+1. WF-DRIVE-01: Google Drive Otonom Dosya İndirme & Eşleme
+   - Tetikleyici: 600 sn periyodik daemon veya GitHub Actions cron.
+   - Durumlar: IDLE -> SCANNING -> DETECTED -> DOWNLOADING -> EXTRACTING -> SYNCED.
+   - Hata Durumu: Token rotasyonu yapılır, başarısız dosyalar atlanır.
+
+2. WF-WATCHDOG-02: Yerel Dosya Değişikliği Olay İzleme
+   - Tetikleyici: /projeler klasöründe dosya oluşturma/değiştirme (on_modified).
+   - Durumlar: LISTENING -> EVENT_RECEIVED -> DEBOUNCE (2s) -> PARSING -> REHYDRATING.
+   - Çıktı: projects_map.json ve SQLite anında güncellenir.
+
+3. WF-SEARCH-03: Çok Kademeli Dinamik Akıllı Arama
+   - Tetikleyici: Kullanıcının filtre butonuna tıklaması veya anahtar kelime yazması.
+   - Durumlar: INPUT -> FOLD_TR_NORMALIZATION -> MULTI_FACET_EVAL -> CARD_RENDER -> ANIMATE_COUNT.
+   - Çıktı: Eşleşen proje ve portföy kartlarının 60 FPS ile render edilmesi.
+
+4. WF-CHAT-04: Mira Bilişsel AI Danışmanlık ve Yanıt Üretimi
+   - Tetikleyici: İstemciden POST /api/chat.
+   - Durumlar: RECEIVE -> CLASSIFY_INTENT -> HYBRID_SEARCH -> AUGMENT_PROMPT -> LLM_INFERENCE -> VERIFY_ZERO_HALLUCINATION -> DISPATCH.
+   - Çıktı: Doğrulanmış Türkçe danışmanlık yanıtı ve aksiyon butonları.
+
+5. WF-LEAD-05: CRM Randevu & WhatsApp Yönlendirme
+   - Tetikleyici: Randevu modalı formu veya Zihin Haritası WhatsApp butonu.
+   - Durumlar: FORM_SUBMIT -> VALIDATE_TR_PHONE -> INSERT_CUSTOMERS -> FORMAT_WA_MESSAGE -> OPEN_WHATSAPP_URL.
+   - Çıktı: Suzanne Tenekecioğlu'na (+90 535 489 56 56) detaylı müşteri lead mesajı.
+
+6. WF-HEAL-06: 5 Aşamalı Otonom Self-Healing Denetimi
+   - Tetikleyici: Sunucu başlangıcı, cron veya /api/self-healing/trigger.
+   - Durumlar: PHASE1_SCHEMA -> PHASE2_CANONICAL -> PHASE3_RAG -> PHASE4_MEDIA -> PHASE5_NLP -> SCORE_LOG.
+   - Çıktı: %100 sağlık skoru ve onarılmış sistem.
+
+7. WF-ORDER-07: Proje Vitrin Sıralama Sabitleme (Admin Pinning)
+   - Tetikleyici: Admin panelinde sürükle-bırak / POST /api/admin/projects-order.
+   - Durumlar: RECEIVE_ORDER -> VALIDATE_IDS -> WRITE_DISPLAY_ORDER -> REORDER_CAROUSEL.
+   - Çıktı: Sabitlenen projelerin vitrinde en önde gösterilmesi.
+
+8. WF-STREAM-08: Güvenli Medya & Sunum Akışı
+   - Tetikleyici: İstemciden GET /stream/video/<id> veya /stream/pdf/<id>.
+   - Durumlar: RESOLVE_ID -> CHECK_PATH_TRAVERSAL -> READ_RANGE_HEADER -> STREAM_206_PARTIAL.
+   - Çıktı: Kesintisiz video ve PDF önizleme akışı.
+
+9. WF-FACETS-09: Dinamik Filtre Sayaçları Üretimi
+   - Tetikleyici: GET /api/filter-facets.
+   - Durumlar: QUERY_ALL_ITEMS -> EXTRACT_ROOMS -> EXTRACT_HIERARCHICAL_LOCATIONS -> CALCULATE_PRICE_TIERS -> JSON_RESPONSE (Cache 180s).
+   - Çıktı: Çip isimleri ve canlı proje adetleri.
+
+10. WF-SCRAPE-10: Coldwell Banker VIP Portföy Senkronizasyonu
+    - Tetikleyici: Gece cronu / scripts/nexa_cb_sync.py.
+    - Durumlar: FETCH_HTML -> PARSE_CARDS -> EXTRACT_SPECS -> MERGE_PORTFOLIO -> WRITE_JSON.
+    - Çıktı: 16 adet güncel portföy ilanı.
+
+11. WF-CI-11: Gece Otomasyonu & GitHub Actions Senkronizasyonu
+    - Tetikleyici: 02:00 UTC GitHub Actions Cron.
+    - Durumlar: CHECKOUT -> SETUP_PYTHON -> RUN_CI_SYNC -> CHECK_GIT_DIFF -> COMMIT_PUSH -> RENDER_DEPLOY.
+    - Çıktı: Canlı veritabanı ve kodun güncellenmesi.
+
+12. WF-SECURITY-12: Brute-Force & Güvenlik Kalkanı
+    - Tetikleyici: Başarısız admin PIN girişleri.
+    - Durumlar: ATTEMPT -> INCREMENT_COUNTER -> EVALUATE_THRESHOLD (5) -> LOCKOUT (15 min) -> LOG_AUDIT.
+    - Çıktı: 403 Forbidden yanıtı.
+
+ARCHITECTURE:
+Workflow Orchestration Model:
+Deterministic State Transition Tables with Guard Conditions and Compensation Actions.
+
+DEPENDENCIES:
+app.py, nexa_rag.py, nexa_self_healing.py, scripts/ci_sync.py.
+
+DATA FLOW:
+Tetikleyici Olay -> Durum Geçişleri -> Sonuç Çıktısı -> Loglama.
+
+WORKFLOW:
+Tüm iş akışları bağımsız durum makineleri (State Machines) olarak çalışır.
+
+RISKS:
+İş akışlarının birbirini kilitlemesi -> Çözüldü: Asenkron ayrıştırma ve bağımsız çalışma.
+
+FAILURE MODES:
+Her iş akışında tanımlı geri alma (Compensation / Rollback) adımları mevcuttur.
+
+SECURITY CONCERNS:
+Her iş akışının başında sıkı girdi doğrulama (Input Sanitization).
+
+PERFORMANCE CONCERNS:
+İş akışı yürütme sürelerinin telemetri ile izlenmesi.
+
+OBSERVABILITY:
+Tüm iş akışı geçişleri app.log ve system_health_logs tablolarında izlenir.
+
+TESTING:
+test_master_suite.py ve test_system_hardening.py tüm 12 iş akışını test eder.
+
+GAPS:
+İş akışı durumlarının görselleştirildiği web tabanlı bir admin flowchart paneli.
+
+RECOMMENDATIONS:
+Admin paneline canlı iş akışı izleme sekmesi eklenmelidir.
+
+PRIORITY:
+P1 — Süreç Bütünlüğü.
+
+IMPLEMENTATION NOTES:
+Tüm durum geçişleri atomik ve güvenlidir.
+
+VERIFICATION CRITERIA:
+12 iş akışının tamamının kesintisiz ve hatasız çalışması.

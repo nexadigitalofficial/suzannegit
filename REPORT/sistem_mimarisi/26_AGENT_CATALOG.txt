@@ -1,0 +1,111 @@
+================================================================================
+                    26 — COMPLETE AI AGENT & TOOL CATALOG
+================================================================================
+
+PURPOSE:
+NEXA PRIME bilişsel ekosistemindeki tüm yapay zeka ajanlarının, sistem promptlarının,
+araçlarının (Tools) ve yetki sınırlarının detaylı kataloğudur.
+
+CURRENT STATE:
+1 Ana Ajan (Lead Agent) ve 5 Uzman Alt Ajan tam entegre olarak görev yapmaktadır.
+
+DISCOVERED AGENTS:
+
+1. AGENT-LEAD-01: "Mira" — Baş Bilişsel Gayrimenkul Danışmanı
+   - Model: Gemini 2.5 Flash (Fallback: Ollama Llama 3 / Mistral)
+   - Sistem Rolü: Coldwell Banker VIP bünyesinde çalışan, Suzanne Tenekecioğlu'nun dijital ikizi ve baş bilişsel gayrimenkul danışmanı.
+   - Dil & Ton: Profesyonel, son derece saygılı, satış odaklı, net, şeffaf, Türkçe gayrimenkul terminolojisine tam hakim.
+   - Sorumluluk: Müşteri sorularını yanıtlama, bütçeye uygun proje eşleme, randevu alma, WhatsApp yönlendirme.
+   - Yetkiler: /api/chat uç noktasında çalışır; dosya sistemine doğrudan yazma yetkisi yoktur.
+   - Araçlar (Tools):
+     * tool_get_project_details(project_name) -> Proje fiyat, taksit, teslimat, oda ve ada/parsel bilgisini çeker.
+     * tool_filter_projects(budget_min, budget_max, rooms, location) -> Kriterlere uyan projeleri listeler.
+     * tool_create_appointment(name, phone, project_name, date_time) -> CRM randevusu kaydeder.
+     * tool_verify_tkgm_record(ada, parsel) -> Tapu Kadastro doğrulaması yapar.
+
+2. AGENT-SUB-01: GDrive Discovery Sentinel
+   - Modül: drive_integration/gdrive_file_discovery.py
+   - Görev: Google Drive API üzerinden 32 proje klasörünü izlemek, yeni sunum PDF ve videolarını tespit etmek.
+   - Yetkiler: Google Drive Read-Only, /projeler klasörüne indirme yazma yetkisi.
+
+3. AGENT-SUB-02: Universal Document Parser & Sales Miner
+   - Modül: drive_integration/intelligent_extraction_engine.py & scripts/nexa_sales_miner.py
+   - Görev: PDF, XLSX, DOCX dosyalarını okuyarak fiyat matrisini, peşinat oranlarını ve teslim tarihlerini çıkarmak.
+   - Yetkiler: /projeler okuma, nexa_project_prices.json yazma.
+
+4. AGENT-SUB-03: TKGM Land Registry Verifier
+   - Modül: validation_quality/tkgm_verifier.py
+   - Görev: Ada ve parsel numaralarını kadastro formatına göre doğrulamak, TKGM güvence rozeti üretmek.
+   - Yetkiler: projects_map.json üzerinde tkgm_verified alanını güncelleme.
+
+5. AGENT-SUB-04: Confidence & Data Quality Scorer
+   - Modül: validation_quality/confidence_scorer.py
+   - Görev: Her projenin veri tamlığını (Fiyat, Sunum, Video, Konum, Ada/Parsel) denetleyerek 0.0-1.0 arası güven puanı hesaplamak.
+   - Yetkiler: confidence_score alanını hesaplama ve kaydetme.
+
+6. AGENT-SUB-05: Deduplication & Normalization Agent
+   - Modül: validation_quality/deduplication_engine.py
+   - Görev: Mükerrer proje başlıklarını birleştirmek, Türkçe karakterleri normalize etmek.
+   - Yetkiler: Bellek içi veri temizliği ve SQLite güncellemesi.
+
+ARCHITECTURE:
+Agent Execution & Guardrail Matrix:
+[User Query] -> [Mira Lead Agent]
+                     |
+        (Intent & Tool Classification)
+                     |
+        +------------+------------+
+        |                         |
+[Direct Answer]          [Tool Invocation]
+        |                         |
+        |                  [Execute Python Tool]
+        |                         |
+        v                         v
+[Zero-Hallucination Matrix Validation]
+        |
+        v
+[Formatted Consultant Response]
+
+DEPENDENCIES:
+google-generativeai, sqlite3, json, re.
+
+DATA FLOW:
+Kullanıcı Girdisi -> Mira Değerlendirmesi -> Alt Ajan / Araç -> Güvenlik Doğrulaması -> Müşteriye İletim.
+
+WORKFLOW:
+Halüsinasyon Engelleme Kuralı:
+Eğer bir proje bilgisi (fiyat, ada/parsel, teslimat) kanonik veritabanında yoksa, Mira asla tahmin yürütmez;
+"Bu bilgi projede teyit aşamasındadır, Suzanne Tenekecioğlu ile doğrudan görüşebilirsiniz" yanıtını verir.
+
+RISKS:
+LLM modelinin prompt dışına çıkma eğilimi -> Çözüldü: Katı system_instruction ve JSON kısıtları.
+
+FAILURE MODES:
+Model token limiti aşarsa veya hata dönerse -> Deterministik kural motoru devreye girer.
+
+SECURITY CONCERNS:
+Kullanıcıdan gelen kötü niyetli sistem promptu ezme (Jailbreak) denemelerinin filtrelenmesi.
+
+PERFORMANCE CONCERNS:
+Araç çağrısı yürütme süresinin < 200ms olması.
+
+OBSERVABILITY:
+Her ajan etkileşimi cognitive_state.json dosyasına tam transkript ile yazılır.
+
+TESTING:
+scripts/test_autonomous_cognitive_engine.py ile tüm ajan ve araçlar test edilmiştir.
+
+GAPS:
+Gelecekte kullanıcı sesli mesajlarına doğrudan sesle yanıt veren (TTS) ses ajanı.
+
+RECOMMENDATIONS:
+Ajan yanıt kalitesinin haftalık olarak rastgele örnekleme ile denetlenmesi.
+
+PRIORITY:
+P0 — Danışmanlık Güvenilirliği.
+
+IMPLEMENTATION NOTES:
+Mira'nın iletişim tonu Suzanne Tenekecioğlu'nun gerçek VIP danışmanlık üslubuna birebir uyarlanmıştır.
+
+VERIFICATION CRITERIA:
+Tüm test senaryolarında sıfır halüsinasyon ve %100 doğru araç çağırma başarısı.

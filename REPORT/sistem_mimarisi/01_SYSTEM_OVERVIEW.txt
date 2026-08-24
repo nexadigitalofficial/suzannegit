@@ -1,0 +1,86 @@
+================================================================================
+                     01 — SYSTEM OVERVIEW & ARCHITECTURAL SPECS
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunun tüm modüllerini, mimari katmanlarını ve operasyonel
+prensiplerini detaylı olarak açıklar.
+
+CURRENT STATE:
+Sistem, emlak danışmanlığı süreçlerini otonomlaştıran uçtan uca entegre bir yapay zeka
+ve portföy yönetim ekosistemidir.
+
+DISCOVERED COMPONENTS:
+1. /projeler/: Yerel disk üzerindeki 32 adet inşaat ve proje klasörü.
+2. app.py: 1630 satırlık ana Flask sunucusu ve API ağ geçidi.
+3. site.html: 9600 satırlık istemci uygulaması (HTML, CSS tokenları, GSAP animasyonları, dinamik JS motoru).
+4. admin.html: Yönetici kontrol paneli (CRM müşteri takibi, proje sıralama sabitleme, RAG meta veri yönetimi).
+5. nexa_rag.py: Bilişsel AI çekirdeği, niyet sınıflandırıcı, araç yürütücü, konuşma hafızası.
+6. nexa_vector_rag.py: 768 boyutlu Vektör gömme (embedding) ve semantik arama motoru.
+7. nexa_self_healing.py: 5 aşamalı otonom onarım ve tutarlılık bekçisi.
+8. nexa_drive_puller.py: Google Drive API entegrasyonu ve senkronizasyon servisi.
+9. nexa_watchdog.py: Dosya sistemi olay izleyicisi (FileSystemEventHandler).
+10. scripts/ci_sync.py: CI/CD ortamında 6 aşamalı otonom veri güncelleme boru hattı.
+
+ARCHITECTURE:
+Modüler Çok Katmanlı Mimari (Multi-Tier Layered Architecture):
+[Kullanıcı Tarayıcısı / Mobil]
+           |
+      (HTTPS / WSS)
+           v
+[Nginx / Gunicorn WSGI] (render_start.py)
+           |
+           v
+[Flask Uygulama Ağ Geçidi] (app.py)
+   ├── Güvenlik Katmanı: RateLimiter, OriginValidator, PathGuard
+   ├── Servis Katmanı: RAGService, CBScraper, SelfHealing, MediaStreamer
+   ├── Bilişsel AI Katmanı: Multi-Tier LLM Router, Tool Dispatcher
+   └── Veri Katmanı: SQLite3 (WAL Modu), Kanonik JSON Grafikleri
+
+DEPENDENCIES:
+• Python 3.11 Runtime
+• SQLite 3.35+ (FTS5 & JSON1 desteği)
+• Modern Tarayıcılar (Chrome 90+, Safari 15+, Firefox 90+, Edge 90+)
+
+DATA FLOW:
+İstemci HTTP GET /api/projects -> app.py get_projects() -> SQLite SELECT -> JSON Response ->
+site.html renderProjectsCarousel() -> Dinamik DOM Üretimi -> Canlı Filtre Entegrasyonu.
+
+WORKFLOW:
+Müşteri Web Sayfasına Girer -> 3D Video Splash Ekranı Açılır -> İlk kare gösterilir ->
+Kullanıcı Giriş Yapar -> Otomatik 1-3 Milyon TL filtreli vitrin kartları yüklenir ->
+Kullanıcı Arama / Filtreleme yapar -> Canlı sayaçlar güncellenir -> Chatbot üzerinden soru sorulur ->
+RAG motoru TKGM/Fiyat onaylı yanıt verir -> WhatsApp Randevu linki üretilir.
+
+RISKS:
+Büyük boyutlu sunum PDF'lerinin istemcide yüklenme süresi.
+
+FAILURE MODES:
+İstemci internet bağlantısı kesilirse SPA yerel EMBEDDED_PROJECTS verisiyle çalışmaya devam eder.
+
+SECURITY CONCERNS:
+Kullanıcı girdilerinin (arama kelimeleri, chatbot mesajları) XSS ve SQL Injection'a karşı filtrelenmesi.
+
+PERFORMANCE CONCERNS:
+Görsel varlıkların WebP formatında sıkıştırılması ve statik dosyalar için max-age=86400 önbellekleme.
+
+OBSERVABILITY:
+Her API çağrısı ve RAG sorgusu app.log ve cognitive_state.json dosyalarına kaydedilir.
+
+TESTING:
+scripts/test_master_suite.py ile tüm çekirdek fonksiyonlar test edilir.
+
+GAPS:
+İstemci tarafında çevrimdışı PWA service worker senkronizasyonunun genişletilmesi.
+
+RECOMMENDATIONS:
+Tüm statik varlıkların CDN üzerinden servis edilmesi sürekliliği artıracaktır.
+
+PRIORITY:
+P1 — Yüksek Erişilebilirlik ve Kesintisiz Kullanıcı Deneyimi.
+
+IMPLEMENTATION NOTES:
+Tüm bileşenler PEP 8 ve modern ES6 standartlarına tam uyumludur.
+
+VERIFICATION CRITERIA:
+Uygulamanın sıfır hata ile açılması ve tüm API rotalarının 200 OK dönmesi.

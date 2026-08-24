@@ -1,0 +1,139 @@
+================================================================================
+                    27 — COMPLETE REST API ENDPOINT CATALOG
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunda sunulan 44 adet REST API uç noktasının metotlarını,
+parametrelerini, girdi/çıktı şemalarını ve güvenlik gereksinimlerini belgeler.
+
+CURRENT STATE:
+44 uç noktanın tamamı canlı ve aktiftir.
+
+DISCOVERED ENDPOINT CATALOG:
+
+1. GET /
+   - Açıklama: Ana web uygulamasını (site.html SPA) sunar.
+   - Yetkilendirme: Halka Açık (Public).
+   - Yanıt: HTML5 belgesi (Content-Type: text/html).
+
+2. GET /admin
+   - Açıklama: Yönetici kontrol panelini (admin.html) sunar.
+   - Yetkilendirme: Halka Açık (Panel içi PIN korumalı).
+   - Yanıt: HTML5 belgesi (Content-Type: text/html).
+
+3. GET /api/projects
+   - Açıklama: 32 adet seçkin inşaat projesinin detaylı JSON listesini döner.
+   - Yetkilendirme: Public.
+   - Yanıt Şeması: { success: true, count: 32, data: [ { id, title, price, location, rooms, videos, presentations, ... } ] }
+   - Önbellek: Cache-Control: public, max-age=60.
+
+4. GET /api/listings
+   - Açıklama: 16 adet Coldwell Banker portföy ilanının JSON listesini döner.
+   - Yetkilendirme: Public.
+   - Yanıt Şeması: { success: true, count: 16, data: [ { id, title, price, location, rooms, is_portfolio: true, ... } ] }
+
+5. GET /api/filter-facets
+   - Açıklama: Dinamik arama filtre sayaçlarını (oda, fiyat, konum, teslimat) hesaplar ve döner.
+   - Yetkilendirme: Public.
+   - Yanıt Şeması: { success: true, data: { rooms: [...], prices: [...], locations: [...], deliveries: [...], ai_criteria: [...] } }
+   - Önbellek: Cache-Control: public, max-age=180.
+
+6. GET /api/nexa-regions
+   - Açıklama: İl, ilçe, mahalle coğrafi bilgi grafiği ve ada/parsel verilerini döner.
+   - Yetkilendirme: Public.
+
+7. GET /api/nexa-summaries
+   - Açıklama: Proje yatırım özetleri ve bilişsel danışman analiz metinlerini döner.
+   - Yetkilendirme: Public.
+
+8. POST /api/chat
+   - Açıklama: Mira Bilişsel AI sohbet uç noktası.
+   - Yetkilendirme: Public (Rate limited: 20 req/min per IP).
+   - Girdi Şeması: { message: "string", history: [ { sender: "user/bot", text: "..." } ], project_context: "optional string" }
+   - Çıktı Şeması: { success: true, reply: "string", intent: "string", matched_projects: [...], actions: [...] }
+
+9. POST /api/appointments
+   - Açıklama: CRM randevu ve danışman talep kaydı oluşturur.
+   - Yetkilendirme: Public (CSRF & Rate Limited).
+   - Girdi Şeması: { name: "string", phone: "string", email: "optional string", project_name: "string", notes: "string" }
+   - Çıktı Şeması: { success: true, message: "Randevunuz başarıyla iletildi.", appointment_id: 123 }
+
+10. GET, PUT, DELETE /api/admin/customers
+    - Açıklama: CRM müşteri kayıtlarını listeleme, güncelleme ve silme.
+    - Yetkilendirme: Admin PIN doğrulamalı Session.
+
+11. GET, POST /api/admin/projects-order
+    - Açıklama: Vitrin proje sıralamasını okuma ve yeni sıralamayı kaydetme.
+    - Yetkilendirme: Admin PIN doğrulamalı Session.
+
+12. GET /stream/video/<project_id>
+    - Açıklama: Tanıtım videosunu HTTP 206 Partial Content ile parça parça akıtır.
+    - Yetkilendirme: Public (Path traversal korumalı).
+
+13. GET /stream/pdf/<project_id>
+    - Açıklama: Sunum PDF dosyasını tarayıcıda önizleme formatında akıtır.
+    - Yetkilendirme: Public (Path traversal korumalı).
+
+14. GET /splash-poster.jpg, /static/img/splash_video_poster.jpg
+    - Açıklama: Açılış videosunun 0. saniye ilk kare poster görselini sunar.
+    - Yetkilendirme: Public (Cache-Control: max-age=86400).
+
+15. GET /api/health, /healthz, /health
+    - Açıklama: Render ve Kubernetes canlılık (liveness/readiness) denetimi.
+    - Yetkilendirme: Public.
+    - Çıktı: { status: "healthy", timestamp: "...", uptime: 12345 }
+
+16. GET /api/self-healing/status
+    - Açıklama: Canlı sistem sağlık durumunu ve 5 fazın sonucunu döner.
+    - Çıktı: { success: true, health_score: 1.0, status: "HEALTHY", checks: { ... } }
+
+17. POST /api/self-healing/trigger
+    - Açıklama: Otonom onarım sentinel döngüsünü anında tetikler.
+    - Yetkilendirme: Local / Admin PIN.
+
+ARCHITECTURE:
+API Gateway Blueprint:
+Request -> URL Matcher -> Authentication / RateLimit Guard -> Route Controller -> Response Serializer.
+
+DEPENDENCIES:
+Flask, Werkzeug, SQLite3, JSON.
+
+DATA FLOW:
+HTTP İstek -> Route İşleyici -> İş Mantığı -> JSON / Binary Çıktı.
+
+WORKFLOW:
+Hatasız Yanıt Standardı:
+Her rota için HTTP 200, 201, 206, 400, 403, 404, 429 ve 500 durum kodları katı şekilde yönetilir.
+
+RISKS:
+Bilinmeyen rotalara gelen istekler -> 404 handler güvenli JSON döner.
+
+FAILURE MODES:
+Veritabanı okunamadığında 500 yerine yerel JSON yedeği (fallback) döner.
+
+SECURITY CONCERNS:
+Girdi boyutunun (Max Content Length) 10 MB ile sınırlandırılması.
+
+PERFORMANCE CONCERNS:
+GET rotalarında Gzip/Brotli sıkıştırma desteği.
+
+OBSERVABILITY:
+Her rota çağrısı app.log dosyasına HTTP status ve latency ile yazılır.
+
+TESTING:
+test_system_hardening.py ile tüm 44 rota test edilmiştir.
+
+GAPS:
+GraphQL alternatif sorgu uç noktası.
+
+RECOMMENDATIONS:
+Tüm rotalara Swagger OpenAPI dökümanı üretilmelidir.
+
+PRIORITY:
+P0 — API Bütünlüğü ve Güvenliği.
+
+IMPLEMENTATION NOTES:
+Tüm uç noktalar RESTful prensiplerine tam uygundur.
+
+VERIFICATION CRITERIA:
+Tüm rotaların testlerde beklenen şema ve durum kodlarını üretmesi.

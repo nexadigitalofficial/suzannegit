@@ -1,0 +1,74 @@
+================================================================================
+                    22 — ENTERPRISE RISK REGISTER & MITIGATION
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunun teknik, operasyonel, yasal ve güvenlik risklerini
+öncelik sırasına göre belgeler ve uygulanan/önerilen önlemleri tanımlar.
+
+CURRENT STATE:
+Tanımlanan tüm yüksek öncelikli (P0/P1) riskler için mühendislik önlemleri
+alınmış ve doğrulanmıştır.
+
+DISCOVERED RISK MATRIX:
+
+| Risk ID | Risk Tanımı | Seviye | Olasılık | Etki | Önlem & Çözüm Durumu |
+|---|---|:---:|:---:|:---:|---|
+| RSK-01 | SQLite Çoklu Yazma Kilitlenmesi | P1 | Düşük | Yüksek | WAL modu + 30s busy timeout ile çözüldü. |
+| RSK-02 | Gemini AI Rate Limit / Kota Aşımı | P1 | Orta | Orta | 3 Kademeli Fallback (Ollama/Yerel Sözleşme) ile çözüldü. |
+| RSK-03 | Google Drive Token İptali / Yetki Kaybı | P1 | Düşük | Yüksek | Çoklu Service Account anahtar rotasyonu ile çözüldü. |
+| RSK-04 | Yönetici Paneli Brute-Force Saldırısı | P0 | Orta | Kritik | IP bazlı 5-deneme / 15-dk kilit mekanizması ile çözüldü. |
+| RSK-05 | Medya Akışlarında Path Traversal Açığı | P0 | Düşük | Kritik | Güvenli ID eşleme ve ortak kök dizin denetimi ile çözüldü. |
+| RSK-06 | Coldwell Banker Portal HTML Değişimi | P2 | Orta | Düşük | Esnek regex ve yerel önbellek koruması ile çözüldü. |
+| RSK-07 | Mobil Cihazlarda Video Bellek Tüketimi | P2 | Düşük | Orta | Video stream range ve WebP poster optimizasyonu ile çözüldü. |
+| RSK-08 | Türkçe Karakter Eşleşme Hataları | P1 | Düşük | Orta | Çift aşamalı foldTR normalizasyonu ile çözüldü. |
+| RSK-09 | Müşteri Randevu Verisi Kaybı | P0 | Düşük | Kritik | SQLite ACID transaction + WhatsApp anlık bildirim ile çözüldü. |
+| RSK-10 | Sunucu Disk Dolması (Log Büyümesi) | P2 | Düşük | Orta | 10 MB limitli RotatingFileHandler ile çözüldü. |
+
+ARCHITECTURE:
+Risk Mitigation Governance:
+Risk Identification -> Risk Scoring (Probability x Impact) -> Mitigation Implementation ->
+Automated Verification Testing -> Continuous Monitoring.
+
+DEPENDENCIES:
+Risk takip matrisi, CI/CD güvenlik kontrolleri, Self-Healing telemetrisi.
+
+DATA FLOW:
+Risk Algılama -> Alarm Üretimi -> İyileştirme Eylemi -> Doğrulama Testi.
+
+WORKFLOW:
+Periyodik Risk Değerlendirmesi:
+Her sürüm dağıtımı öncesinde risk kayıtları gözden geçirilir ve yeni bağımlılıklar taranır.
+
+RISKS:
+Önceden öngörülemeyen harici API politika değişiklikleri.
+
+FAILURE MODES:
+Bilinmeyen bir hata durumunda sistem güvenli varsayılan değerlere (safe defaults) döner.
+
+SECURITY CONCERNS:
+KVKK / GDPR mevzuatına uygun müşteri verisi saklama ilkeleri.
+
+PERFORMANCE CONCERNS:
+Güvenlik ve risk önlemlerinin sistem gecikmesini artırmaması.
+
+OBSERVABILITY:
+Tüm risk tetikleyicileri audit_logs tablosundan takip edilir.
+
+TESTING:
+Risk senaryoları test_system_hardening.py içinde kodlanmış testlerle sürekli denetlenir.
+
+GAPS:
+Üçüncü taraf sızma testi (Penetration Test) raporunun alınması.
+
+RECOMMENDATIONS:
+Yılda bir kez bağımsız güvenlik denetimi gerçekleştirilmelidir.
+
+PRIORITY:
+P0 — Kurumsal Risk Yönetimi.
+
+IMPLEMENTATION NOTES:
+Risk matrisi canlı sistem durumuyla %100 uyumludur.
+
+VERIFICATION CRITERIA:
+Tüm P0 ve P1 risklerin hafifletme durumunun "Çözüldü" olması.

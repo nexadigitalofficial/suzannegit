@@ -1,0 +1,85 @@
+================================================================================
+                    04 — WORKFLOW ARCHITECTURE & EVENT LOOPS
+================================================================================
+
+PURPOSE:
+Sistemdeki tüm veri alma, işleme, sorgulama, randevu oluşturma ve kendi kendini onarma
+iş akışlarının (workflows) durum geçişlerini ve yaşam döngüsünü modeller.
+
+CURRENT STATE:
+Sistemde 6 ana uçtan uca iş akışı (workflow) tam otonom olarak çalışmaktadır.
+
+DISCOVERED COMPONENTS:
+WF-01: Google Drive Ingestion & Sync Workflow (nexa_drive_puller.py)
+WF-02: Local Watchdog Real-Time Parsing Workflow (nexa_watchdog.py)
+WF-03: Multi-Faceted Dynamic Filter & Search Workflow (site.html: applyFilters)
+WF-04: Cognitive RAG Conversational Advisory Workflow (nexa_rag.py: nexa_chat_reply)
+WF-05: CRM Appointment & Lead Auto-Routing Workflow (app.py: /api/appointments)
+WF-06: 5-Phase Self-Healing & Health Sentinel Workflow (nexa_self_healing.py)
+
+ARCHITECTURE:
+Workflow Execution Engine:
+Trigger Event -> Input Validation -> Stage Execution -> Error Trapping -> State Transition -> Audit Logging -> Output Dispatch.
+
+DEPENDENCIES:
+SQLite WAL, ThreadPoolExecutor, Requests, Gemini API, PyPDF2, OpenPyXL.
+
+DATA FLOW:
+Detailed Ingestion Flow (WF-01 & WF-02):
+[Drive / Local File] -> (Hash Check) -> [Universal Document Parser] ->
+(Extract: Price, Room, Date, Ada/Parsel) -> [Validation Engine (TKGM Verifier)] ->
+[SQLite DB: documents & chunks] -> [Embedding Engine] -> [Canonical JSON Matrix] ->
+[Frontend Broadcast / HTTP Cache Invalidation].
+
+WORKFLOW DETAYLARI:
+1. WF-01 (Drive Sync):
+   - Trigger: Cron (02:00 UTC) veya Daemon Poll (her 600 sn).
+   - Happy Path: Yeni dosya algılanır -> İndirilir -> Ayrıştırılır -> DB güncellenir -> Git commit & push.
+   - Failure Path: API kota hatası -> Sonraki API anahtarına rotasyon -> Başarısız olursa yerel önbellek kullanılır.
+
+2. WF-04 (Cognitive RAG Chat):
+   - Trigger: Kullanıcıdan gelen mesaj (POST /api/chat).
+   - Happy Path: Niyet tespiti -> FTS5 + Vektör Arama -> Belge getirme -> Prompt zenginleştirme -> LLM yanıtı -> Doğrulama.
+   - Fallback Path: Gemini Rate Limit -> Ollama Yerel LLM -> Deterministik Sözleşme Tablosu.
+
+3. WF-06 (Self-Healing Sentinel):
+   - Trigger: Sunucu başlangıcı, periyodik döngü veya /api/self-healing/trigger.
+   - Fazlar:
+     * Faz 1: DB Tablo & İndeks Şeması Bütünlüğü
+     * Faz 2: Kanonik JSON ve DB Fiyat Senkronizasyonu
+     * Faz 3: RAG Vektör & FTS5 İndeks Tutarlılığı
+     * Faz 4: Medya Dosyaları & Küçük Resim Doğrulaması
+     * Faz 5: NLP Bilişsel Sağlık ve Niyet Testi
+
+RISKS:
+Eşzamanlı iki senkronizasyon sürecinin aynı anda çalışması (Race Condition) -> Çözüldü: Dosya kilitleri ve WAL modu.
+
+FAILURE MODES:
+Bozuk veya şifreli PDF yüklenmesi durumunda ayrıştırıcı güvenli bir şekilde dosyayı atlar ve log kaydeder.
+
+SECURITY CONCERNS:
+Kullanıcı tarafından yüklenen içeriklerin yürütülebilir kod içermemesi için uzantı beyaz listesi (.pdf, .xlsx, .docx, .mp4, .jpg, .webp).
+
+PERFORMANCE CONCERNS:
+Büyük PDF'lerin ayrıştırılmasında bellek kullanımının sınırlandırılması.
+
+OBSERVABILITY:
+Her aşama system_health_logs tablosuna ve konsola yapılandırılmış formatta yazdırılır.
+
+TESTING:
+scripts/test_master_suite.py test_03_sync_engine_execution ile test edilmiştir.
+
+GAPS:
+İş akışlarının görselleştirilmesi için Mermaid diagramlarının dokümantasyona entegre edilmesi.
+
+RECOMMENDATIONS:
+Tüm iş akışlarına benzersiz correlation_id eklenerek uçtan uca izlenebilirlik artırılmalıdır.
+
+PRIORITY:
+P0 — Temel Operasyonel Süreç Bütünlüğü.
+
+IMPLEMENTATION NOTES:
+Tüm iş akışları idempotent (tekrar çalıştırılabilir ve yan etkisiz) olarak tasarlanmıştır.
+
+VERIFICATION CRITERIA:
+Her iş akışının Happy Path ve Failure Path testlerinde başarılı olması.

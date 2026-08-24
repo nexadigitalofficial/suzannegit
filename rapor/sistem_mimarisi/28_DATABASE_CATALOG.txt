@@ -1,0 +1,138 @@
+================================================================================
+                    28 — COMPLETE DATABASE TABLE & ENTITY CATALOG
+================================================================================
+
+PURPOSE:
+SQLite3 (nexa_database.db) veritabanında yer alan 11 tablonun tam şemasını,
+sütun veri tiplerini, birincil/yabancı anahtarlarını, indekslerini ve kayıt sayılarını belgeler.
+
+CURRENT STATE:
+Veritabanı WAL modunda 11 tablo ve ~25.8 MB boyutundadır.
+
+DISCOVERED TABLE CATALOG:
+
+1. TABLO: `projects` (Kayıt Sayısı: 46)
+   - id: INTEGER PRIMARY KEY AUTOINCREMENT
+   - name: TEXT NOT NULL (Proje Adı)
+   - location: TEXT (Şehir / İlçe / Mahalle)
+   - description: TEXT (Detaylı Proje Açıklaması)
+   - cover_image_url: TEXT (Kapak Görseli)
+   - lat: REAL (Enlem)
+   - lng: REAL (Boylam)
+   - ada_no: TEXT (Tapu Kadastro Ada Numarası)
+   - parsel_no: TEXT (Tapu Kadastro Parsel Numarası)
+   - price: TEXT (Görünen Fiyat Dizgesi)
+   - min_price: REAL (Sayısal Minimum Fiyat)
+   - max_price: REAL (Sayısal Maksimum Fiyat)
+   - down_payment: TEXT (Peşinat Bilgisi)
+   - monthly_installment: REAL (Aylık Taksit Tutarı)
+   - installment_terms: TEXT (Taksit Vade Planı)
+   - delivery_months: INTEGER (Teslimat Süresi - Ay)
+   - delivery_display: TEXT (Teslimat Görünen Metin)
+   - room_types: TEXT (Oda Tipleri Dizgesi)
+   - tkgm_verified: INTEGER (TKGM Onay Durumu: 0 veya 1)
+   - confidence_score: REAL (Veri Güvenilirlik Skoru: 0.0 - 1.0)
+   - created_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+2. TABLO: `documents` (Kayıt Sayısı: 1076)
+   - id: INTEGER PRIMARY KEY AUTOINCREMENT
+   - project_id: INTEGER NOT NULL (FK -> projects.id)
+   - doc_type: TEXT (contract, presentation, pricelist, brochure, tkgm)
+   - title: TEXT NOT NULL
+   - content: TEXT (Ham Metin İçeriği)
+   - file_url: TEXT (Yerel Dosya Yolu veya Bulut Linki)
+   - category: TEXT
+   - created_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   - İndeksler: idx_documents_project_id, idx_documents_doc_type
+
+3. TABLO: `document_chunks` (Kayıt Sayısı: 1958)
+   - id: INTEGER PRIMARY KEY AUTOINCREMENT
+   - document_id: INTEGER NOT NULL (FK -> documents.id)
+   - chunk_text: TEXT NOT NULL (Aranabilir Metin Parçası)
+   - embedding: BLOB (768 Boyutlu Vektör Temsili)
+   - İndeksler: idx_chunks_doc_id
+
+4. TABLO: `customers` (Kayıt Sayısı: 5)
+   - id: INTEGER PRIMARY KEY AUTOINCREMENT
+   - project_id: INTEGER (FK -> projects.id)
+   - name: TEXT NOT NULL (Müşteri Ad Soyad)
+   - phone: TEXT NOT NULL (Telefon Numarası)
+   - email: TEXT
+   - interested_units: TEXT (İlgilenilen Projeler ve Oda Tipleri)
+   - notes: TEXT (Müşteri Talebi & Notlar)
+   - status: TEXT DEFAULT 'new' (new, contacted, appointment_set, closed)
+   - assigned_agent: TEXT DEFAULT 'Suzanne Tenekecioğlu'
+   - created_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+5. TABLO: `system_health_logs` (Kayıt Sayısı: 126)
+   - id: INTEGER PRIMARY KEY AUTOINCREMENT
+   - timestamp: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   - health_score: REAL (0.0 - 1.0)
+   - status: TEXT (HEALTHY, DEGRADED, CRITICAL)
+   - total_checks: INTEGER
+   - passed_checks: INTEGER
+   - fixes_json: TEXT (Yapılan Düzeltmelerin JSON Dizisi)
+   - issues_json: TEXT (Tespit Edilen Sorunların JSON Dizisi)
+
+6. TABLO: `audit_logs` (Aktif)
+   - id: INTEGER PRIMARY KEY AUTOINCREMENT
+   - timestamp: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   - event_type: TEXT (LOGIN, APPOINTMENT, PRICE_UPDATE, ORDER_CHANGE, ERROR)
+   - entity_type: TEXT (CUSTOMER, PROJECT, SYSTEM)
+   - entity_id: TEXT
+   - old_value: TEXT
+   - new_value: TEXT
+   - user_or_agent: TEXT
+
+7. TABLOLAR: `units`, `sales`, `whatsapp_messages`, `users`, `sqlite_sequence`
+   - Gelecek kurumsal modüller için tanımlanmış hazır ilişkisel tablolar.
+
+ARCHITECTURE:
+Relational Entity Topology:
+[projects] (1) ───< (N) [documents] (1) ───< (N) [document_chunks]
+     |
+     +────< (N) [customers] (1) ───< (N) [whatsapp_messages]
+
+DEPENDENCIES:
+SQLite 3.35+, Foreign Keys ON, WAL Mode.
+
+DATA FLOW:
+Document Ingestion -> documents -> document_chunks -> Vector Matrix.
+Lead Submission -> customers -> audit_logs.
+
+WORKFLOW:
+ACID Transaction Protokolü:
+Tüm veri güncellemeleri `with conn:` veya `try: ... conn.commit() except: conn.rollback()` ile yürütülür.
+
+RISKS:
+Bozuk kayıt (Orphan records) oluşması -> Çözüldü: ON DELETE CASCADE kısıtlamaları.
+
+FAILURE MODES:
+Veritabanı kilitlenmesi durumunda 30 saniye busy timeout koruması devrededir.
+
+SECURITY CONCERNS:
+Müşteri telefon ve kişisel verilerinin audit_logs ile kayıt altına alınması.
+
+PERFORMANCE CONCERNS:
+FTS5 sanal tablosu ile 1958 chunk üzerinde arama süresi < 3 milisaniyedir.
+
+OBSERVABILITY:
+PRAGMA schema_version ve tablo satır sayıları /api/system-status üzerinden izlenir.
+
+TESTING:
+test_system_hardening.py Test 01 ile veritabanı bütünlüğü test edilmiştir.
+
+GAPS:
+Otomatik günlük SQLite snapshot yedekleme cron'unun eklenmesi.
+
+RECOMMENDATIONS:
+Tablolara `updated_at` sütunları eklenerek son değişiklik zamanı izlenebilirliği artırılmalıdır.
+
+PRIORITY:
+P0 — Veri Modeli Bütünlüğü.
+
+IMPLEMENTATION NOTES:
+Şema tasarımı üçüncü normal forma (3NF) uygundur.
+
+VERIFICATION CRITERIA:
+PRAGMA foreign_key_check çıktısının sıfır ihlal dönmesi.

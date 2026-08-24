@@ -1,0 +1,74 @@
+================================================================================
+                    23 — TECHNICAL DEBT & CODEBASE REFACTORING
+================================================================================
+
+PURPOSE:
+Mevcut kod tabanındaki teknik borçları (Technical Debt), eskiyen kod kalıntılarını,
+çift veri yapılarını ve geleceğe yönelik refactor önerilerini belgeler.
+
+CURRENT STATE:
+Kod tabanı yüksek oranda optimize edilmiş ve temizlenmiştir. Kalan teknik borçlar
+düşük (P2/P3) seviyede olup sistemin çalışmasını engellememektedir.
+
+DISCOVERED COMPONENTS:
+1. TD-01: Tekil Dosya Boyutu (site.html ~9600 satır):
+   - Durum: HTML, CSS ve JS aynı dosyada yüksek performans ve tek parça SPA amacıyla birleştirilmiştir.
+   - Değerlendirme: Yükleme hızını artırsa da geliştirici bakımını zorlaştırabilir.
+   - Hedef Çözüm: Build aşamasında (Vite/Webpack) modüler dosyalardan tek dosya derleyen pipeline.
+2. TD-02: Çift Veri Temsili (SQLite vs projects_map.json):
+   - Durum: Hem SQLite veritabanı hem JSON matrisi aynı anda tutulmaktadır.
+   - Değerlendirme: nexa_self_healing.py sayesinde senkronize edilmektedir; ancak tek birincil kaynak SQLite olmalıdır.
+   - Hedef Çözüm: projects_map.json dosyasının SQLite'tan dinamik türetilen bir view haline getirilmesi.
+3. TD-03: Senkron Dosya Ayrıştırma:
+   - Durum: Büyük PDF'ler içe aktarılırken senkron Python fonksiyonları kullanılır.
+   - Hedef Çözüm: Asenkron worker (Celery/RQ) mimarisine geçiş.
+4. TD-04: Test Çıktılarında Unicode Konsol Uyumluluğu:
+   - Durum: Windows cp1254 terminalinde unicode karakterlerin [OK] formatına dönüştürülmesi sağlandı.
+
+ARCHITECTURE:
+Refactoring Roadmap:
+Current Monolithic SPA -> Build-Time Bundler -> Modular TypeScript/SCSS -> Single Static Dist Artifact.
+
+DEPENDENCIES:
+Node.js, Vite/Webpack, TypeScript, SCSS, ESLint, Black, Flake8.
+
+DATA FLOW:
+Kaynak Modülleri (/src) -> Derleyici (Build Engine) -> Dağıtım Dosyası (dist/site.html).
+
+WORKFLOW:
+Teknik Borç Azaltma Döngüsü:
+1. Her sprintte en az 1 teknik borç maddesi ele alınır.
+2. Kod parçalanır, modülerleştirilir ve test kapsamı korunur.
+
+RISKS:
+Büyük refactor işlemleri sırasında mevcut çalışan özelliklerin bozulması (Regresyon Riski).
+
+FAILURE MODES:
+Refactor sonrası regresyon testlerinin hata vermesi durumunda Git rollback uygulanır.
+
+SECURITY CONCERNS:
+Modülerleştirme sırasında güvenlik middleware'lerinin atlanmaması.
+
+PERFORMANCE CONCERNS:
+Derleme sürecinin CI/CD süresini 1 dakikadan fazla uzatmaması.
+
+OBSERVABILITY:
+Kod karmaşıklığı (Cyclomatic Complexity) ve satır sayıları takip edilir.
+
+TESTING:
+Refactor sonrası 27 testin tamamı çalıştırılarak geriye dönük uyumluluk doğrulanır.
+
+GAPS:
+Otomatik kod biçimlendirici (Black / Prettier) pre-commit hook'larının eklenmesi.
+
+RECOMMENDATIONS:
+site.html dosyasının /src/styles, /src/scripts, /src/templates dizinlerine ayrılıp Vite ile derlenmesi.
+
+PRIORITY:
+P3 — İyileştirme ve Kod Kalitesi.
+
+IMPLEMENTATION NOTES:
+Mevcut sistemde çalışan hiçbir kritik fonksiyon gereksiz estetik kaygılarla bozulmamalıdır.
+
+VERIFICATION CRITERIA:
+Refactor sonrasında tüm master testlerin 0 hata ile çalışması.

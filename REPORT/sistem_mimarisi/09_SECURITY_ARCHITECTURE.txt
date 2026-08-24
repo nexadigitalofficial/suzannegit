@@ -1,0 +1,85 @@
+================================================================================
+                    09 — SECURITY ARCHITECTURE & THREAT MODEL
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunun siber güvenlik katmanlarını, tehdit modelini, yetkilendirme
+kontrollerini ve saldırı yüzeyi savunma mekanizmalarını belgeler.
+
+CURRENT STATE:
+Sistem, OWASP Top 10 standartlarına göre sertleştirilmiş kurumsal savunma kalkanına sahiptir:
+• Brute-Force Koruması: IP tabanlı başarısız giriş sayacı (5 deneme -> 15 dk blok).
+• CSRF / Origin Koruması: Durum değiştiren (POST, PUT, DELETE) isteklerde Origin ve Host eşleşmesi.
+• Path Traversal Koruması: Dosya ve medya akışlarında güvenli ID çözümleme.
+• XSS Koruması: İstemcide escapeHtml fonksiyonu ve güvenli innerHTML kullanımı.
+• SQL Injection Koruması: %100 Parametreli SQLite sorguları (Prepared Statements).
+
+DISCOVERED COMPONENTS:
+1. Security Middleware: app.py içindeki _get_client_ip, is_rate_limited, csrf_protect fonksiyonları.
+2. Safe File Streamer: stream_video ve stream_pdf içindeki os.path.commonpath denetimleri.
+3. Client Sanitizer: site.html içindeki escapeHtml ve textContent korumaları.
+4. Audit Logger: SQLite audit_logs tablosu ve system_health_logs güvenlik denetimleri.
+
+ARCHITECTURE:
+Defense-in-Depth Security Matrix:
+[External Attack Surface]
+         |
+         v (Layer 1: Network & IP Firewall)
+[_get_client_ip + Rate Limiter + Brute-Force Lockout]
+         |
+         v (Layer 2: Transport & Origin Defense)
+[CSRF / Origin Matcher + Strict Security Headers]
+         |
+         v (Layer 3: Application Security)
+[Input Validation + Path Traversal Filter + Parametric SQL]
+         |
+         v (Layer 4: AI & Agent Guard)
+[Prompt Injection Filter + Zero-Hallucination Matrix]
+         |
+         v (Layer 5: Data Storage Isolation)
+[SQLite WAL + Read-Only Directory Permissions]
+
+DEPENDENCIES:
+hashlib, secrets, re, werkzeug.security, sqlite3.
+
+DATA FLOW:
+Saldırgan İsteği -> IP Sayacı -> Eşik Aşıldı -> 429 / 403 Engelleme -> audit_logs Kaydı -> Sonlandırma.
+
+WORKFLOW:
+Yönetici Kimlik Doğrulama Döngüsü:
+Kullanıcı PIN Girer -> Hash Karşılaştırılır -> Doğruysa Session Token üretilir ->
+Yanlışsa Hata Sayacı +1 -> 5 Hata olursa IP 15 dakika kilitlenir.
+
+RISKS:
+X-Forwarded-For başlığının sahtelenmesi (IP Spoofing) riski.
+-> Çözüldü: _get_client_ip fonksiyonu yalnızca güvenilir reverse proxy başlıklarını güvenli sırada okur.
+
+FAILURE MODES:
+Güvenlik katmanı kilitlenirse varsayılan olarak "Fail-Closed" (erişimi reddet) prensibi geçerlidir.
+
+SECURITY CONCERNS:
+API anahtarlarının (.env) kod depolarına sızmaması (.gitignore denetimi yapıldı).
+
+PERFORMANCE CONCERNS:
+Bellek içi IP tablosunun düzenli temizlenmesi (Garbage Collection).
+
+OBSERVABILITY:
+Her güvenlik engellemesi WARNING seviyesinde loglanır ve denetim tablosuna kaydedilir.
+
+TESTING:
+scripts/test_system_hardening.py (Test 02, 03, 04, 05) ile saldırı senaryoları simüle edilmiştir.
+
+GAPS:
+Gelecekte iki faktörlü kimlik doğrulama (2FA / SMS OTP) entegrasyonu.
+
+RECOMMENDATIONS:
+Üretim ortamında HTTPS / HSTS zorunlu kılınmalı ve Cloudflare WAF ön koruma olarak eklenmelidir.
+
+PRIORITY:
+P0 — Kritik Güvenlik Seviyesi.
+
+IMPLEMENTATION NOTES:
+Tüm şifre ve PIN doğrulamalarında timing attack saldırılarına karşı sabit zamanlı hmac.compare_digest kullanılır.
+
+VERIFICATION CRITERIA:
+Tüm yetkisiz erişim, path traversal ve CSRF saldırı testlerinin 403 Forbidden ile engellenmesi.

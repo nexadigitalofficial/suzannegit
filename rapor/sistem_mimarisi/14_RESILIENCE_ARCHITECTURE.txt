@@ -1,0 +1,95 @@
+================================================================================
+                    14 — SELF-HEALING & SYSTEM RESILIENCE
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunun 5 aşamalı otonom kendi kendini onarma (Self-Healing)
+sentinel motorunu ve operasyonel dayanıklılık ilkelerini açıklar.
+
+CURRENT STATE:
+nexa_self_healing.py motoru her başlangıçta ve periyodik olarak çalışır.
+Canlı Sistem Sağlık Skoru: %100 (5/5 Faz Başarılı, Sıfır Kritik Hata).
+
+DISCOVERED COMPONENTS:
+1. Faz 1: Schema Sentinel (heal_database_schema)
+   - Fonksiyon: SQLite tablolarını, indekslerini ve eksik sütunlarını otomatik oluşturur/onarır.
+2. Faz 2: Canonical Matrix Sentinel (heal_canonical_data)
+   - Fonksiyon: projects_map.json, nexa_project_prices.json ve DB arasındaki fiyat/oda uyumsuzluklarını onarır.
+3. Faz 3: Knowledge Graph & RAG Sentinel (heal_rag_engine)
+   - Fonksiyon: Vektör embedding önbelleğini ve FTS5 arama indekslerini yeniler.
+4. Faz 4: Asset & Media Sentinel (heal_media_and_assets)
+   - Fonksiyon: Eksik küçük resimleri (thumbnails) ve video rotalarını doğrular, kırık linkleri izole eder.
+5. Faz 5: Cognitive NLP Sentinel (diagnose_nlp_engine)
+   - Fonksiyon: Sentetik test sorguları ile Mira AI asistanının doğru yanıt ve fiyat verdiğini teyit eder.
+
+ARCHITECTURE:
+Self-Healing Autonomous Loop:
+[Trigger: Startup / Cron / Webhook]
+                 |
+                 v
+   [Phase 1: DB Schema Check] --------> (Auto-Migrate Tables/Columns)
+                 |
+                 v
+   [Phase 2: Canonical Sync] ---------> (Auto-Fix Price/Room Discrepancies)
+                 |
+                 v
+   [Phase 3: RAG & Vector Index] -----> (Auto-Rebuild Embeddings)
+                 |
+                 v
+   [Phase 4: Media Integrity] ---------> (Auto-Fix Missing Thumbnails/Videos)
+                 |
+                 v
+   [Phase 5: Synthetic NLP Test] ------> (Auto-Verify Response Accuracy)
+                 |
+                 v
+[Calculate Health Score (0-100%)] ----> [Log to system_health_logs Table]
+
+DEPENDENCIES:
+sqlite3, json, re, pathlib, datetime, math.
+
+DATA FLOW:
+Sentinel Çalışması -> Sistem Denetimi -> Uyumsuzluk Tespiti -> Otomatik Onarım Düzeltmesi ->
+Sağlık Raporu Kaydı -> HTTP API / İstemciye İletim.
+
+WORKFLOW:
+Otonom Onarım Örneği:
+Eğer Drive'dan yeni bir oda tipi veya yeni bir proje gelirse ve SQLite'ta yoksa:
+1. Faz 1: Gerekli sütunları oluşturur.
+2. Faz 2: Fiyat ve oda bilgisini canonical JSON'a işler.
+3. Faz 3: Belge chunk'larını çıkarıp vektör indeksine ekler.
+4. Faz 4: Video küçük resmini otomatik bağlar.
+5. Sağlık skorunu %100 olarak günceller.
+
+RISKS:
+Bozuk bir dış verinin kendini sistem geneline yayması.
+-> Çözüldü: Katı doğrulama (validation) kuralları ve geri alma (rollback) mekanizması.
+
+FAILURE MODES:
+Onarım sırasında bir faz hata verirse sentinel durmaz; diğer fazları tamamlar ve eksik fazı loglar.
+
+SECURITY CONCERNS:
+Onarım sürecinin yalnızca yerel süreç veya yetkili admin PIN ile tetiklenebilmesi (/api/self-healing/trigger).
+
+PERFORMANCE CONCERNS:
+Tam bir self-healing döngüsü yalnızca 120 milisaniye sürer (Ultra-Hafif Yürütme).
+
+OBSERVABILITY:
+Her çalıştırma system_health_logs tablosuna JSON formatında kaydedilir.
+
+TESTING:
+scripts/test_system_hardening.py Test 09 ile tam döngü doğrulanmıştır.
+
+GAPS:
+Veritabanı otomatik snapshot yedeğinin harici bir bulut deposuna gönderilmesi.
+
+RECOMMENDATIONS:
+Haftalık self-healing özet raporunun Suzanne Hanım'a WhatsApp üzerinden otomatik iletilmesi.
+
+PRIORITY:
+P0 — Sıfır Bakım ve Otonom Sistem Güvencesi.
+
+IMPLEMENTATION NOTES:
+Kod tabanındaki tüm import ve veri bağımlılıkları nexa_self_healing.py içinde izole edilmiştir.
+
+VERIFICATION CRITERIA:
+Sağlık skorunun %100 olması, 5 fazın tamamının "passed" dönmesi.

@@ -1,0 +1,75 @@
+================================================================================
+                    03 — TARGET ENTERPRISE ARCHITECTURE
+================================================================================
+
+PURPOSE:
+NEXA PRIME platformunun 100.000+ kullanıcı ve 10.000+ gayrimenkul projesine
+ölçeklenebilecek hedef kurumsal mimarisini modeller.
+
+CURRENT STATE vs TARGET STATE:
+• Mevcut: Monolitik Flask + SQLite WAL + Yerel Thread Workers.
+• Hedef: Event-Driven Asynchronous Microservices + PostgreSQL (pgvector) + Redis Queue/Cache + Kubernetes/Docker Containers.
+
+DISCOVERED COMPONENTS (HEDEF MİMARİDEKİ EVRİM):
+1. API Gateway: FastAPI / Envoy Reverse Proxy (Asenkron I/O, WebSocket streaming).
+2. Data Storage: PostgreSQL 16 + pgvector (Dağıtık ACID işlemler, HNSW vektör indeksleri).
+3. Queue & Tasks: Celery / Redis (Google Drive ingestion ve video işleme arka plan kuyruğu).
+4. AI Mesh: Dedicated LLM Gateway (Gemini 2.5 Pro / Claude 3.5 Sonnet / Local vLLM Cluster).
+5. Frontend: Next.js 15 Server Components + Tailwind CSS + WebRTC Audio Streaming.
+
+ARCHITECTURE:
+Target Topology:
+[Client Tier: Next.js PWA / Mobile Native]
+                     |
+               [Cloudflare WAF / CDN]
+                     |
+             [FastAPI Async Gateway]
+        /            |            [Auth Service] [RAG Service] [Portfolio Service]
+       |             |              |
+   [Redis]    [pgvector/PG16]   [S3 Media Bucket]
+       \             |              /
+     [Celery Workers (Document Ingestion / OCR)]
+
+DEPENDENCIES:
+FastAPI, AsyncPG, PgVector, Redis, Celery, Docker, Kubernetes, Prometheus, Grafana.
+
+DATA FLOW:
+Drive Webhook -> Ingestion Queue -> OCR Worker -> Text Chunking -> Vector Generation -> PostgreSQL -> Real-time Cache Update.
+
+WORKFLOW:
+Event-Driven Real-Time Sync:
+Drive'a dosya yüklendiğinde Google Drive Push Notification Webhook tetiklenir -> Redis kuyruğuna görev atanır ->
+Worker dosyayı asenkron indirir ve işler -> WebSocket ile bağlı olan tüm web istemcilerine canlı güncelleme bildirimi iletilir.
+
+RISKS:
+Mimari dönüşüm sırasında veri kaybı veya servis kesintisi riski.
+
+FAILURE MODES:
+Veri tabanı replikasyon gecikmesi durumunda okuma/yazma ayrımı (Read Replicas).
+
+SECURITY CONCERNS:
+Mikroservisler arası mTLS (mutual TLS) ve JWT tabanlı servis kimlik doğrulaması.
+
+PERFORMANCE CONCERNS:
+Gecikme süresinin (latency) P99 < 80ms seviyesinde tutulması.
+
+OBSERVABILITY:
+OpenTelemetry, Prometheus metrikleri ve Grafana gösterge panelleri.
+
+TESTING:
+Automated Chaos Engineering (Chaos Mesh) ile rastgele pod çökertme testleri.
+
+GAPS:
+Şu anki tekil sunucu kaynaklarının dağıtık mimariye göre yapılandırılması.
+
+RECOMMENDATIONS:
+Aşama aşama geçiş: Önce SQLite -> PostgreSQL göçü, ardından Celery kuyruk entegrasyonu.
+
+PRIORITY:
+P2 — Stratejik Gelecek Ölçekleme Planı.
+
+IMPLEMENTATION NOTES:
+Mevcut Python kod tabanı FastAPI ve SQLAlchemy 2.0 asenkron yapısına kolayca uyarlanabilir durumdadır.
+
+VERIFICATION CRITERIA:
+Yük testlerinde saniyede 1000+ sorgu altında sıfır veri kaybı ve <100ms yanıt süresi.

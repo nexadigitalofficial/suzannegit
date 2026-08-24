@@ -1,0 +1,76 @@
+================================================================================
+                    16 — OBSERVABILITY & TELEMETRY ARCHITECTURE
+================================================================================
+
+PURPOSE:
+NEXA PRIME platformunun yapılandırılmış loglama (structured logging), canlı metrik
+toplama, denetim izleri (audit trail) ve sağlık telemetri mimarisini belgeler.
+
+CURRENT STATE:
+Platform, hem dosya tabanlı (logs/) hem veritabanı tabanlı (system_health_logs, audit_logs)
+ve HTTP API tabanlı (/api/system-status, /api/cognitive/status) tam gözlemlenebilirlik sağlar.
+
+DISCOVERED COMPONENTS:
+1. Metrics Aggregator (monitoring/metrics_aggregator.py):
+   - Bellek, CPU, aktif thread sayısı, API istek hacmi ve yanıt gecikmelerini toplar.
+2. Cognitive Dashboard (monitoring/cognitive_dashboard.py):
+   - RAG doğruluğu, niyet başarı oranı ve embedding önbellek isabet oranını (hit-rate) izler.
+3. Alert Manager (monitoring/alert_manager.py):
+   - Kritik hata veya sağlık skoru düşüşünde sistem alarmları üretir.
+4. Client-Side Telemetry (site.html: /api/track):
+   - Kullanıcı oturum süreleri, tıklanan projeler, arama terimleri ve filtre kullanım sıklığı.
+
+ARCHITECTURE:
+Observability Topolojisi:
+[Client Interactions] ----(POST /api/track)----+
+                                                |
+[API & Gateway Events] ---(Structured Log)------+---> [Central Log Pipeline (app.log)]
+                                                |
+[Cognitive RAG Queries] -(cognitive_state.json)-+---> [SQLite system_health_logs Table]
+                                                |
+[Self-Healing Checks] ---(Health Metrics)-------+---> [HTTP /api/system-status Endpoint]
+
+DEPENDENCIES:
+logging, logging.handlers, json, datetime, sqlite3.
+
+DATA FLOW:
+Olay -> Log Formatlayıcı -> JSON / Metin Yazımı -> İstatistiksel Toplama -> Gösterge Paneli.
+
+WORKFLOW:
+Telemetri Döngüsü:
+1. Her API isteğinde IP, rota, metot, yanıt süresi (ms) ve HTTP kodu loglanır.
+2. Her AI RAG çağrısında niyet, bulunan chunk sayısı ve token maliyeti cognitive_state.json'a yazılır.
+3. Self-healing her çalıştığında 5 fazın sonuçlarını ve varsa yapılan düzeltmeleri system_health_logs'a kaydeder.
+
+RISKS:
+Log dosyalarının diski doldurması -> Çözüldü: RotatingFileHandler (Max 10MB, 5 yedek dosya).
+
+FAILURE MODES:
+Loglama servisi hata verse dahi ana uygulama akışı try/except ile korunur, işlem kesilmez.
+
+SECURITY CONCERNS:
+Loglara şifre, PIN veya kredi kartı gibi hassas verilerin yazılmaması (PII masking).
+
+PERFORMANCE CONCERNS:
+Asenkron loglama ve düşük G/Ç (I/O) yükü.
+
+OBSERVABILITY:
+Sistem yöneticisi /admin panelinden ve /api/system-status üzerinden anlık CPU, RAM ve DB durumunu görür.
+
+TESTING:
+scripts/test_master_suite.py (Test 10: Monitoring & Dashboard) ile doğrulanmıştır.
+
+GAPS:
+Grafana & Prometheus exporter uç noktası (/metrics).
+
+RECOMMENDATIONS:
+Prometheus uyumlu `/metrics` endpoint'i eklenerek kurumsal APM entegrasyonu tamamlanmalıdır.
+
+PRIORITY:
+P1 — Sistem Görünürlüğü ve Hata Teşhisi.
+
+IMPLEMENTATION NOTES:
+Log seviyeleri ortam değişkeniyle (LOG_LEVEL=INFO/DEBUG) dinamik ayarlanabilir.
+
+VERIFICATION CRITERIA:
+Tüm sistem olaylarının eksiksiz kaydedilmesi ve /api/system-status çıktısının geçerli JSON olması.

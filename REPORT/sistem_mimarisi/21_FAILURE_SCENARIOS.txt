@@ -1,0 +1,94 @@
+================================================================================
+                    21 — FAILURE SCENARIOS & DISASTER RECOVERY
+================================================================================
+
+PURPOSE:
+Sistemin karşılaşabileceği 10 olası arıza/çökme senaryosunu (Failure Scenarios),
+etkilerini, otomatik devreye giren kurtarma adımlarını ve geri alma (rollback)
+planlarını modeller.
+
+CURRENT STATE:
+Platform, tüm kritik arıza modlarına karşı otomatik koruma ve kademeli düşüş
+(graceful degradation) mekanizmalarıyla donatılmıştır.
+
+DISCOVERED SCENARIOS:
+1. Senaryo FS-01: Google Drive API Kesintisi / Kota Aşımı (HTTP 429 / 503)
+   - Etki: Yeni proje dosyaları o an indirilemez.
+   - Kurtarma: gdrive_auth_manager.py yedek Service Account anahtarına döner; yerel /projeler klasörü korunur.
+   - Sonuç: Web sitesi ve RAG motoru kesintisiz çalışmaya devam eder.
+2. Senaryo FS-02: Gemini LLM API Kesintisi / Timeout
+   - Etki: Bilişsel sohbet sorgusu buluta iletilemez.
+   - Kurtarma: nexa_rag.py anında yerel Ollama (Llama 3) modeline veya deterministik sözleşme matrisine geçer.
+   - Sonuç: Kullanıcıya doğrulanmış proje ve fiyat bilgisi gecikmesiz sunulur.
+3. Senaryo FS-03: SQLite Veritabanı Dosya Kilitlenmesi (Busy Timeout)
+   - Etki: Yazma işlemi beklemeye girer.
+   - Kurtarma: PRAGMA busy_timeout = 30000 devrededir; 30 saniye içinde kilit çözülünce işlem tamamlanır.
+4. Senaryo FS-04: Bozuk / Şifreli Sunum PDF Dosyası Yüklenmesi
+   - Etki: PDF okuyucu hata fırlatır.
+   - Kurtarma: intelligent_extraction_engine.py dosyayı güvenle atlar, log kaydeder; sistem çökmez.
+5. Senaryo FS-05: Coldwell Banker Web Sitesinin Kapanması / Engellenmesi
+   - Etki: Yeni portföy ilanları çekilemez.
+   - Kurtarma: nexa_cb_sync.py yerel nexa_portfolio_data.json dosyasını korur; eski ilanlar yayında kalır.
+6. Senaryo FS-06: Sunucu Bellek Aşımı (OOM) Nedeniyle Yeniden Başlatma
+   - Etki: Gunicorn süreci yeniden başlar.
+   - Kurtarma: render_start.py 1.5 saniye içinde süreci ayağa kaldırır; SQLite WAL sıfır veri kaybı sağlar.
+7. Senaryo FS-07: Yanlış / Hatalı Fiyat Girilmesi (Veri Bozulması)
+   - Etki: Fiyat listesi uyumsuzlaşır.
+   - Kurtarma: nexa_self_healing.py Faz 2 kanonik doğrulama ile fiyatı projects_map.json'dan onarır.
+8. Senaryo FS-08: İstemci İnternet Bağlantısının Kopması
+   - Etki: API çağrıları başarısız olur.
+   - Kurtarma: site.html yerel EMBEDDED_PROJECTS belleğinden filtreleme ve vitrin gösterimine devam eder.
+9. Senaryo FS-09: Yönetici Paneline Brute-Force Saldırısı
+   - Etki: Şifre kırma girişimi.
+   - Kurtarma: 5. denemede IP 15 dakika kilitlenir; audit_logs'a alarm yazılır.
+10. Senaryo FS-10: CI/CD Cron İşinin Başarısız Olması
+    - Etki: Gece senkronizasyonu tamamlanamaz.
+    - Kurtarma: GitHub Actions hata bildirimi gönderir; önceki kararlı derleme üretimde çalışmaya devam eder.
+
+ARCHITECTURE:
+Disaster Recovery Protocol:
+Failure Detected -> Trap Exception -> Log Diagnostic Details ->
+Activate Fallback Path -> Maintain User Experience -> Trigger Self-Healing.
+
+DEPENDENCIES:
+try/except blokları, SQLite WAL, Fallback JSON matrix, Multi-Key Rotation.
+
+DATA FLOW:
+Arıza Olayı -> Fallback Seçimi -> Sağlıklı Veri Sunumu -> Arka Planda Kendi Kendini Onarma.
+
+WORKFLOW:
+Otomatik Kurtarma ve Geri Alma (Rollback):
+Herhangi bir veri yazma hatasında SQLite `conn.rollback()` çağrılır; veritabanı asla tutarsız ara durumda kalmaz.
+
+RISKS:
+Aynı anda birden fazla bağımsız servisin çökmesi (Cascading Failure).
+
+FAILURE MODES:
+Tüm harici servisler çökse dahi NEXA PRIME yerel veritabanı ve gömülü verisiyle tamamen fonksiyoneldir.
+
+SECURITY CONCERNS:
+Arıza durumunda hata detaylarının saldırgana bilgi sızdırmaması.
+
+PERFORMANCE CONCERNS:
+Fallback mekanizmalarının yanıt süresini 100ms'den fazla uzatmaması.
+
+OBSERVABILITY:
+Her senaryo tetiklendiğinde system_health_logs tablosuna arıza kaydı düşer.
+
+TESTING:
+test_stress_chatbot.py ve test_system_hardening.py ile arıza senaryoları simüle edilmiştir.
+
+GAPS:
+Harici S3 deposuna günlük otomatik veritabanı yedeği gönderilmesi.
+
+RECOMMENDATIONS:
+Otomatik veritabanı yedekleme betiği CI/CD boru hattına eklenmelidir.
+
+PRIORITY:
+P0 — İş Sürekliliği ve Felaket Kurtarma.
+
+IMPLEMENTATION NOTES:
+Platformun "Graceful Degradation" (Kademeli Düşüş) kabiliyeti üretim seviyesindedir.
+
+VERIFICATION CRITERIA:
+10 senaryonun tamamında sistemin çökmeden hizmet vermeyi sürdürmesi.

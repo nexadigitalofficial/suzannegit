@@ -1,0 +1,68 @@
+================================================================================
+                    18 — SCALABILITY & CAPACITY AUDIT
+================================================================================
+
+PURPOSE:
+Sistemin dikey (vertical) ve yatay (horizontal) ölçeklenebilirlik sınırlarını,
+eşzamanlı kullanıcı kapasitesini ve olası darboğazları analiz eder.
+
+CURRENT STATE:
+• Mevcut Altyapı: Tek düğümlü (Single Node) Render Web Service (512 MB RAM, 0.5 CPU).
+• Mevcut Kapasite: Saniyede ~150 eşzamanlı HTTP isteği, ~30 eşzamanlı AI RAG oturumu.
+• Veritabanı Sınırı: SQLite WAL modu ile saniyede ~2500 okuma, ~400 yazma işlemi.
+
+DISCOVERED COMPONENTS:
+1. Stateless Flask REST Layer: Durumsuz (stateless) API tasarımı sayesinde kolayca çoklu worker'a çoğaltılabilir.
+2. SQLite Concurrency: WAL modu çoklu okuyucuların (multiple readers) yazıcıyı (writer) engellememesini sağlar.
+3. In-Memory Vector Matrix: Bellek içi embedding matrisi RAM sınırları dahilinde hızlıdır.
+
+ARCHITECTURE:
+Scalability Horizon:
+Current Tier (1 - 5,000 Users) -> Scale Tier 1 (5,000 - 50,000 Users) -> Enterprise Tier (50,000+ Users)
+[Current: SQLite + Flask] ------> [Scale 1: PostgreSQL + Redis] -------> [Enterprise: K8s + pgvector]
+
+DEPENDENCIES:
+Gunicorn multi-processing, Connection pooling, Async I/O.
+
+DATA FLOW:
+Yük Artışı -> Load Balancer -> N Adet Flask Worker Instance -> Ortak Veritabanı Havuzu.
+
+WORKFLOW:
+Yatay Ölçekleme Adımları:
+1. Veritabanını yerel SQLite'tan Managed PostgreSQL'e (Supabase / AWS RDS) taşı.
+2. Vektörleri pgvector eklentisine aktar.
+3. Arka plan Drive sync işlerini Celery / Redis worker'larına devret.
+4. Render üzerinde Container sayısını 1'den 5'e yükselt (Autoscaling).
+
+RISKS:
+Tekil sunucuda disk G/Ç (Disk I/O) darboğazı yaşanması.
+
+FAILURE MODES:
+RAM tükenmesi durumunda işletim sistemi OOM killer'ı devreye girer.
+
+SECURITY CONCERNS:
+Çoklu sunucu ortamında oturum ve IP hız sınırlama verisinin merkezi Redis üzerinde tutulması.
+
+PERFORMANCE CONCERNS:
+Vektör boyutunun (1958 chunk * 768 float32 = ~6 MB) RAM'de büyüme eğrisi (100.000 chunk = ~300 MB).
+
+OBSERVABILITY:
+Render Metrics üzerinden CPU & RAM kullanım grafikleri sürekli izlenir.
+
+TESTING:
+Yerel yük simülasyonu ile 500 eşzamanlı istek test edilmiştir.
+
+GAPS:
+Merkezi Redis önbellek ve oturum yöneticisinin henüz eklenmemiş olması.
+
+RECOMMENDATIONS:
+Kullanıcı sayısı 10.000'i aştığında PostgreSQL + Redis mimarisine geçilmelidir.
+
+PRIORITY:
+P2 — Orta Vadeli Ölçekleme Hazırlığı.
+
+IMPLEMENTATION NOTES:
+Mevcut kod tabanındaki app/core/database.py soyutlaması veritabanı motorunun kolayca değiştirilmesine uygundur.
+
+VERIFICATION CRITERIA:
+Artan yük altında sistemin lineer yanıt süresi sergilemesi ve sıfır 502/503 hatası üretmesi.

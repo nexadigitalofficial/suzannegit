@@ -1,0 +1,86 @@
+================================================================================
+                    30 — PHASED ENGINEERING IMPROVEMENT PLAN
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunun operasyonel mükemmelliğe, kurumsal ölçeğe ve sıfır-bakım
+seviyesine ulaşması için 4 aşamalı mühendislik yol haritasını (Roadmap) sunar.
+
+CURRENT STATE:
+Aşama 1 (Temel Sistem, Otonom Filtreler, Self-Healing, Video Splash) %100 TAMAMLANMIŞTIR.
+
+DISCOVERED ROADMAP PHASES:
+
+AŞAMA 1: STABİLİZASYON & OTONOM ÇEKİRDEK [TAMAMLANDI — %100]
+• Master Test Paketi (10/10) ve Hardening Test Paketi (13/13) oluşturuldu.
+• 5 Aşamalı Self-Healing Nöbetçisi (nexa_self_healing.py) entegre edildi.
+• 60 FPS Hollywood açılış videosu ve ilk kare poster optimizasyonu tamamlandı.
+• Detaylı Akıllı Arama sıfır-hardcoded otonom filtre fabrikasına dönüştürüldü.
+• Sol alt WhatsApp butonu temizlendi; Chatbot (Nexa Orb) aşağı kaydırmada kusursuz ortalandı.
+• Eskişehir (WM PRIME) eşleşmesi çözüldü; hiyerarşik `İL / İLÇE` filtreleri üretildi.
+
+AŞAMA 2: KURUMSAL İZLEME & GÜVENLİK DERİNLEŞTİRMESİ [1-2 HAFTA]
+• Günlük otomatik SQLite snapshot yedekleme cron'unun harici bulut deposuna (S3/R2) bağlanması.
+• Prometheus uyumlu `/metrics` telemetri uç noktasının eklenmesi.
+• Sentry SDK entegrasyonu ile canlı üretim hata alarmlarının kurulması.
+• HTTP Content-Security-Policy (CSP) başlıklarının katılaştırılması.
+
+AŞAMA 3: İLERİ ENTEGRASYONLAR & ETKİLEŞİM [2-4 HAFTA]
+• Meta WhatsApp Cloud API üzerinden 2 yönlü resmi WhatsApp Chatbot webhook'u.
+• Taranmış kat planları için Gemini Vision / EasyOCR görsel ayrıştırma alt ajanı.
+• İnteraktif Leaflet / Mapbox coğrafi harita görünümü sekmesi.
+• Canlı konut kredisi faiz hesaplama modülü.
+
+AŞAMA 4: ENTERPRISE ÖLÇEKLEME & MİKROSERVİSLER [1-3 AY]
+• SQLite -> Managed PostgreSQL 16 + pgvector geçişi.
+• Redis & Celery asenkron görev kuyrukları ile anlık Google Drive push webhookları.
+• Docker & Kubernetes container mimarisi ile otomatik yatay ölçekleme (Autoscaling).
+• Çoklu danışman ve çoklu şube desteği için Multi-Tenant mimari.
+
+ARCHITECTURE:
+Engineering Execution Framework:
+Plan -> Specification -> Isolated Branch -> Comprehensive Test -> CI/CD Verification -> Production Deploy -> Post-Audit.
+
+DEPENDENCIES:
+Python 3.11, Docker, PostgreSQL, pgvector, Redis, Meta WhatsApp API.
+
+DATA FLOW:
+Aşama Bazlı Geliştirme -> Regresyon Koruması -> Canlı Üretime Şeffaf Geçiş.
+
+WORKFLOW:
+Dağıtım Güvencesi:
+Her yeni özellik 'Feature Flag' arkasında geliştirilecek; ana platformun kesintisiz çalışması daima birinci öncelik olacaktır.
+
+RISKS:
+Geliştirme süreçlerinin mevcut müşteri deneyimini kesintiye uğratması.
+-> Çözüldü: Zero-Downtime Deployment ve kapsamlı otomatik test kalkanı.
+
+FAILURE MODES:
+Yeni bir aşama başarısız olursa önceki kararlı aşamaya anında tek tıkla geri dönülür.
+
+SECURITY CONCERNS:
+Her yeni aşamada OWASP Top 10 güvenlik denetiminin tekrarlanması.
+
+PERFORMANCE CONCERNS:
+Her yeni eklentinin Core Web Vitals ve P95 < 50ms hedeflerine uyumunun zorunlu tutulması.
+
+OBSERVABILITY:
+Her aşamanın ilerleme durumu bu raporda güncellenir.
+
+TESTING:
+Tüm aşamalarda %100 test başarı şartı aranır.
+
+GAPS:
+Aşama 2-4 geleceğe yönelik stratejik planlardır.
+
+RECOMMENDATIONS:
+Aşama 1'in getirdiği yüksek stabilite korunmalı; Aşama 2 öncelikli olarak başlatılmalıdır.
+
+PRIORITY:
+P1 — Kurumsal Olgunlaşma ve Geleceğe Yatırım.
+
+IMPLEMENTATION NOTES:
+Mevcut kod tabanı bu 4 aşamanın tamamını destekleyecek modüler mimari altyapıya sahiptir.
+
+VERIFICATION CRITERIA:
+Her aşama sonunda sistem sağlık skorunun %100 ve müşteri memnuniyetinin en üst düzeyde kalması.

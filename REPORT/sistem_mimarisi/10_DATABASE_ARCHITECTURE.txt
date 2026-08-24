@@ -1,0 +1,83 @@
+================================================================================
+                    10 — DATABASE SCHEMA & INDEX ARCHITECTURE
+================================================================================
+
+PURPOSE:
+SQLite3 veritabanı şemasını, tablo yapılarını, FTS5 tam metin arama indekslerini,
+vektör depolama mantığını ve veri tutarlılığı kurallarını detaylandırır.
+
+CURRENT STATE:
+nexa_database.db dosyası WAL (Write-Ahead Logging) modunda 11 tablo ile çalışmaktadır.
+Toplam 1076 doküman ve 1958 aranabilir metin parçası (chunk) indekslenmiştir.
+
+DISCOVERED COMPONENTS:
+1. projects (Ana Proje Tablosu):
+   - id (INTEGER PRIMARY KEY), name, location, description, price, min_price, max_price,
+     room_types, delivery_date, ada_no, parsel_no, tkgm_verified, confidence_score.
+2. documents (Proje Belgeleri Tablosu):
+   - id (INTEGER PRIMARY KEY), project_id (FK), doc_type, title, content, file_url, created_at.
+3. document_chunks (Vektör & Semantik Parça Tablosu):
+   - id (INTEGER PRIMARY KEY), document_id (FK), chunk_text, embedding (BLOB/JSON).
+4. customers (CRM & Müşteri Tablosu):
+   - id (INTEGER PRIMARY KEY), name, phone, email, project_id, notes, status, created_at.
+5. system_health_logs (Sağlık ve Denetim Tablosu):
+   - id (INTEGER PRIMARY KEY), timestamp, health_score, total_checks, passed_checks, fixes_json.
+6. audit_logs (Güvenlik & Değişiklik Tablosu):
+   - id (INTEGER PRIMARY KEY), timestamp, event_type, entity_type, old_value, new_value, user_or_agent.
+
+ARCHITECTURE:
+Relational & Search Schema Topology:
+[projects] 1 ────< N [documents] 1 ────< N [document_chunks]
+    ^                      ^                       |
+    |                      |                       v
+[customers]           [audit_logs]         [FTS5 Search Virtual Table]
+    |
+    v
+[whatsapp_messages]
+
+DEPENDENCIES:
+SQLite 3.35+, PRAGMA foreign_keys = ON, PRAGMA journal_mode = WAL.
+
+DATA FLOW:
+Document Ingestion -> Chunking -> Vector Calculation -> SQLite Insert (Transaction) ->
+FTS5 Index Rebuild -> projects_map.json Cross-Sync.
+
+WORKFLOW:
+Database Migration & Self-Healing:
+nexa_self_healing.py çalıştırıldığında:
+1. Eksik tablolar tespit edilirse otomatik DDL ile oluşturulur (CREATE TABLE IF NOT EXISTS).
+2. Eksik sütunlar (Örn: tkgm_verified, confidence_score) ALTER TABLE ile eklenir.
+3. projects_map.json ve SQLite kayıtları çift yönlü eşitlenir.
+
+RISKS:
+Büyük metin parçalarında FTS5 indeksinin şişmesi.
+
+FAILURE MODES:
+İşlem sırasında sunucu kapanırsa WAL günlüğü sayesinde veritabanı sıfır kayıpla kurtarılır.
+
+SECURITY CONCERNS:
+Doğrudan SQL dosyasına dışarıdan erişim engellenmiştir (web kök dizininde yer almaz).
+
+PERFORMANCE CONCERNS:
+Sorgularda project_id, doc_type, status ve created_at sütunlarında B-Tree indeksleri aktiftir.
+
+OBSERVABILITY:
+PRAGMA integrity_check ve PRAGMA page_count düzenli olarak izlenir.
+
+TESTING:
+test_system_hardening.py Test 01 ile WAL modu ve yabancı anahtar kısıtlamaları doğrulanmıştır.
+
+GAPS:
+Geometrik CBS (GIS) sınır sorguları için SpatiaLite eklentisi.
+
+RECOMMENDATIONS:
+Veritabanı bağlantılarının connection pool veya Flask g objesi üzerinden yönetilmesi.
+
+PRIORITY:
+P0 — Veri Bütünlüğü ve Güvenliği.
+
+IMPLEMENTATION NOTES:
+busy_timeout = 30000 ms olarak ayarlanmış olup eşzamanlı kilitlenme sorunları engellenmiştir.
+
+VERIFICATION CRITERIA:
+Tüm yabancı anahtar ilişkilerinin tutarlı olması ve bozuk kayıt bulunmaması.

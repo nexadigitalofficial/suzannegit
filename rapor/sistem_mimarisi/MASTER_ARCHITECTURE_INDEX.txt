@@ -1,0 +1,58 @@
+================================================================================
+          NEXA PRIME v2 — MASTER ARCHITECTURE & WORKFLOW DOCUMENTATION INDEX
+================================================================================
+Platform Adı     : NEXA PRIME v2 — Bilişsel Gayrimenkul Zekası & Portföy Ekosistemi
+Danışman         : Suzanne Tenekecioğlu (Coldwell Banker VIP Gayrimenkul)
+İletişim         : +90 535 489 56 56 | https://wa.me/905354895656
+GitHub Deposu    : https://github.com/nexadigitalofficial/suzannegit.git
+Rapor Klasörü    : rapor/sistem_mimarisi/ & REPORT/sistem_mimarisi/
+Oluşturulma Tarihi: 24.08.2026
+Toplam Doküman   : 31 Adet Teknik Mimari Dosyası + Master İndeks
+================================================================================
+
+AŞAĞIDAKİ TÜM DOKÜMANLAR STANDART KURUMSAL FORMATTA EKSİKSİZ OLUŞTURULMUŞTUR:
+
+[00 - 07] TEMEL MİMARİ & VERİ KATMANI:
+├── 00_EXECUTIVE_SUMMARY.txt             -> Üst Düzey Yönetici Özeti & Sistem Durumu
+├── 01_SYSTEM_OVERVIEW.txt              -> Sistem Genel Görünümü & Modül Haritası
+├── 02_CURRENT_ARCHITECTURE.txt         -> Mevcut Fiziksel & Mantıksal Mimari
+├── 03_TARGET_ARCHITECTURE.txt          -> Hedef Kurumsal Dağıtık Mimari (Enterprise Roadmap)
+├── 04_WORKFLOW_ARCHITECTURE.txt        -> 6 Ana Uçtan Uca İş Akışı & Olay Döngüleri
+├── 05_AGENT_ARCHITECTURE.txt           -> Bilişsel AI Sürü Mimarisi & Mira AI Danışmanı
+├── 06_SUBAGENT_ARCHITECTURE.txt        -> 5 Uzman Alt Ajan & Görev Delegasyon Matrisi
+└── 07_DATA_ARCHITECTURE.txt            -> Veri Depolama, Şemalar & Veri Yaşam Döngüsü
+
+[08 - 15] SERVİS, GÜVENLİK, DAYANIKLILIK & TEST:
+├── 08_API_ARCHITECTURE.txt             -> 44 REST API Uç Noktası & Ağ Geçidi Mimarisi
+├── 09_SECURITY_ARCHITECTURE.txt        -> Siber Savunma Katmanları & Tehdit Modeli
+├── 10_DATABASE_ARCHITECTURE.txt        -> SQLite WAL, FTS5 & Vektör İndeks Mimarisi
+├── 11_INTEGRATION_ARCHITECTURE.txt     -> Google Drive, Coldwell Banker, WhatsApp, GitHub CI
+├── 12_INFRASTRUCTURE_ARCHITECTURE.txt  -> Render Cloud, Gunicorn WSGI & CI/CD Runtime
+├── 13_ERROR_HANDLING_ARCHITECTURE.txt  -> Hata Yakalama, Sınıflandırma & Circuit Breaker
+├── 14_RESILIENCE_ARCHITECTURE.txt      -> 5 Aşamalı Self-Healing Nöbetçisi (Sağlık: %100)
+└── 15_TEST_ARCHITECTURE.txt            -> Otomatik Test Paketleri (Master, Hardening, Filters)
+
+[16 - 23] GÖZLEMLENEBİLİRLİK, DENETİM & RİSKLER:
+├── 16_OBSERVABILITY_ARCHITECTURE.txt   -> Yapılandırılmış Loglama & Canlı Telemetri
+├── 17_PERFORMANCE_AUDIT.txt            -> Core Web Vitals, Gecikme & Önbellek Denetimi
+├── 18_SCALABILITY_AUDIT.txt            -> Kapasite Analizi & Yatay/Dikey Ölçekleme
+├── 19_DEPENDENCY_AUDIT.txt             -> 12 Sabitlenmiş Bağımlılık & Tedarik Zinciri
+├── 20_SECURITY_AUDIT.txt               -> OWASP Top 10 Kapsamlı Güvenlik Denetim Raporu
+├── 21_FAILURE_SCENARIOS.txt            -> 10 Kritik Arıza Senaryosu & Kurtarma Simülasyonu
+├── 22_RISK_REGISTER.txt                -> Önceliklendirilmiş Kurumsal Risk Kayıt Matrisi
+└── 23_TECHNICAL_DEBT.txt               -> Kod Tabanı Teknik Borçları & Refactor Planı
+
+[24 - 30] KARARLAR, KATALOGLAR & GELİŞTİRME PLANI:
+├── 24_ARCHITECTURAL_DECISIONS.txt      -> 8 Stratejik Mimari Karar Kaydı (ADR-01 .. ADR-08)
+├── 25_WORKFLOW_CATALOG.txt             -> 12 İş Akışının Tam Kataloğu & Durum Makineleri
+├── 26_AGENT_CATALOG.txt                -> Tüm AI Ajanları, Promptları, Araçları & Yetkileri
+├── 27_API_CATALOG.txt                  -> 44 API Uç Noktasının Girdi/Çıktı Şemaları
+├── 28_DATABASE_CATALOG.txt             -> 11 Tablonun Sütunları, FK'ları & İndeksleri
+├── 29_SYSTEM_GAPS.txt                  -> Tespit Edilen 5 Stratejik İyileştirme Fırsatı
+└── 30_IMPROVEMENT_PLAN.txt             -> 4 Aşamalı Mühendislik İyileştirme Yol Haritası
+================================================================================
+Tüm belgeler `PURPOSE`, `CURRENT STATE`, `DISCOVERED COMPONENTS`, `ARCHITECTURE`,
+`DEPENDENCIES`, `DATA FLOW`, `WORKFLOW`, `RISKS`, `FAILURE MODES`, `SECURITY CONCERNS`,
+`PERFORMANCE CONCERNS`, `OBSERVABILITY`, `TESTING`, `GAPS`, `RECOMMENDATIONS`, `PRIORITY`,
+`IMPLEMENTATION NOTES` ve `VERIFICATION CRITERIA` standart başlıklarını eksiksiz içerir.
+================================================================================

@@ -1,0 +1,91 @@
+================================================================================
+                    08 — REST API & GATEWAY ARCHITECTURE
+================================================================================
+
+PURPOSE:
+NEXA PRIME v2 platformunun 44 adet REST API uç noktasını, yönlendirme (routing)
+mekanizmalarını, middleware katmanlarını ve ağ geçidi mimarisini belgeler.
+
+CURRENT STATE:
+app.py üzerinde 44 adet optimize edilmiş, JSON/Streaming uç noktası bulunmaktadır.
+Tüm rotalar güvenlik katmanları (RateLimit, CSRF, PathGuard) ile korunmaktadır.
+
+DISCOVERED COMPONENTS:
+1. Genel & İstemci API'leri:
+   - GET  /                             -> Ana web uygulaması (site.html SPA)
+   - GET  /site                         -> SPA doğrudan erişim
+   - GET  /admin                        -> Yönetici portali (admin.html)
+   - GET  /api/projects                 -> 32 proje JSON listesi (Önbellekli, ETags)
+   - GET  /api/listings                 -> 16 Coldwell Banker portföy ilanı
+   - GET  /api/filter-facets            -> Dinamik filtre sayaçları ve çipleri (Cache 180s)
+   - GET  /api/nexa-regions             -> İl / İlçe / Mahalle coğrafi bilgi grafiği
+   - GET  /api/nexa-summaries           -> Proje özet metinleri ve AI analizleri
+   - GET  /api/cognitive/status         -> Bilişsel sistem canlılık ve hafıza durumu
+   - POST /api/chat                     -> Mira Bilişsel AI sohbet ve araç yürütme
+   - POST /api/appointments             -> Suzanne Tenekecioğlu CRM randevu kaydı
+   - POST /api/track                    -> İstemci etkileşim ve analitik takibi
+2. Medya ve Akış (Streaming) API'leri:
+   - GET  /1.mp4, /video/1.mp4          -> 60 FPS Hollywood açılış video akışı
+   - GET  /stream/video/<id>            -> Proje tanıtım videoları (HTTP 206 Partial Content)
+   - GET  /stream/pdf/<id>              -> Proje sunum PDF akışı ve önizleme
+   - GET  /download/pdf/<id>            -> İndirilebilir sunum dosyaları
+   - GET  /splash-poster.jpg            -> Video ilk kare poster görseli
+3. Yönetim & Sistem API'leri:
+   - GET, PUT, DELETE /api/admin/customers -> CRM müşteri yaşam döngüsü
+   - GET, POST /api/admin/projects-order   -> Vitrin proje sıralama sabitleme
+   - GET  /api/health, /healthz, /health   -> Render / K8s canlılık denetimi
+   - GET  /api/self-healing/status         -> Canlı sağlık skoru (%100)
+   - POST /api/self-healing/trigger        -> Otonom onarım tetikleme
+
+ARCHITECTURE:
+API Middleware Stack:
+Incoming Request -> [Client IP Resolver & Brute-Force Check] ->
+[Origin / CSRF Header Validator] -> [Route Dispatcher] ->
+[Input JSON Schema Validator] -> [Business Controller] ->
+[Security Header Injector] -> Outgoing JSON / Binary Stream.
+
+DEPENDENCIES:
+Flask, Werkzeug, SQLite3, mimetypes, os, json.
+
+DATA FLOW:
+İstemci POST /api/chat -> RateLimit Kontrolü -> Input Body Parsing -> nexa_rag.py ->
+FTS5/Vektör Sorgusu -> LLM Çağrısı -> JSON Response -> İstemci Görsel Arayüzü.
+
+WORKFLOW:
+API Yanıt & Hata Protokolü:
+Tüm yanıtlar standart JSON şemasıyla döner:
+{ "success": true/false, "data": [...], "error": null/"mesaj", "timestamp": "..." }
+
+RISKS:
+Büyük boyutlu video dosyalarının aynı anda çok sayıda kullanıcıya doğrudan sunucudan akıtılması.
+-> Çözüldü: HTTP 206 Range istekleri ve Catbox CDN / Google Drive Preview yedekleri.
+
+FAILURE MODES:
+İstemci geçersiz JSON gönderirse -> 400 Bad Request döner, sunucu asla çökmez.
+
+SECURITY CONCERNS:
+/stream/ rotalarında `..` içeren path traversal girişimlerinin önlenmesi (PathGuard devrede).
+
+PERFORMANCE CONCERNS:
+Statik rotalarda Gzip/Brotli sıkıştırma ve Cache-Control başlıkları ile bant genişliği tasarrufu.
+
+OBSERVABILITY:
+Her API isteği süresi, yanıt kodu ve istemci IP'si app.log dosyasına yazılır.
+
+TESTING:
+scripts/test_system_hardening.py ile tüm API güvenlik ve doğrulama rotaları test edilmiştir.
+
+GAPS:
+OpenAPI (Swagger UI) interaktif dokümantasyon arayüzünün canlıya eklenmesi.
+
+RECOMMENDATIONS:
+/api/v1/ sürüm önekinin eklenerek gelecekteki API değişikliklerinde geriye dönük uyumluluk sağlanması.
+
+PRIORITY:
+P0 — API Güvenliği ve Servis Erişilebilirliği.
+
+IMPLEMENTATION NOTES:
+Tüm uç noktalar CORS ve Cross-Origin-Resource-Policy başlıklarına tam uyumludur.
+
+VERIFICATION CRITERIA:
+Tüm 44 rotanın doğru HTTP statü kodları (200, 201, 206, 400, 403, 404) dönmesi.

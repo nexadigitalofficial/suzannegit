@@ -1,0 +1,84 @@
+================================================================================
+                    00 — EXECUTIVE ARCHITECTURAL SUMMARY
+                 NEXA PRIME v2 — ENTERPRISE REAL ESTATE AI
+================================================================================
+
+PURPOSE:
+Bu doküman, Suzanne Tenekecioğlu & Coldwell Banker VIP Gayrimenkul için geliştirilen
+NEXA PRIME v2 Otonom Bilişsel Gayrimenkul Zekası platformunun üst düzey mimari,
+operasyonel ve kurumsal özetini sunar.
+
+CURRENT STATE:
+• Platform: Python 3.11 / Flask WSGI + HTML5/CSS3/ES6 Modern SPA (site.html, admin.html)
+• Veri Tabanı: SQLite3 WAL Modunda (nexa_database.db, 11 tablo, 1076 belge, 1958 chunk)
+• Bilişsel AI / RAG: 768 boyutlu Vektör Arama + SQLite FTS5 Hibrit Retrieval (nexa_rag.py, nexa_vector_rag.py)
+• Otonom Veri Pipeline: Google Drive API v3 Puller + Local Watchdog + Coldwell Banker Scraper + GitHub Actions Cron
+• Kendi Kendini Onarma (Self-Healing): 5 Aşamalı Sentinel (nexa_self_healing.py) — Canlı Sağlık Skoru: %100
+• Test Kapsamı: Master Suite (10/10 OK), System Hardening (13/13 OK), Autonomous Filters (4/4 OK)
+• Dağıtım: Render Cloud Platform (Web Service + Background Daemons) + GitHub Actions Automated Sync (02:00 UTC)
+
+DISCOVERED COMPONENTS:
+1. Client Katmanı: site.html (9600+ satır tekil SPA, 100dvh, safe-area, zero-hardcoded filtreler, 3D video splash)
+2. API & Servis Katmanı: app.py (44 REST uç noktası, rate limiting, brute-force koruması, CSRF doğrulaması)
+3. Bilişsel AI Katmanı: nexa_rag.py, nexa_vector_rag.py, nexa_ai_engine.py (Mira AI Asistanı, Tool Calling)
+4. Veri Senkronizasyon Katmanı: nexa_drive_puller.py, nexa_watchdog.py, scripts/nexa_cb_sync.py, scripts/nexa_sales_miner.py
+5. Otonom Bakım & CI/CD Katmanı: nexa_self_healing.py, scripts/ci_sync.py, .github/workflows/update_db.yml
+
+ARCHITECTURE:
+Sistem 4 temel halkadan oluşur:
+• Çekirdek (Core): SQLite WAL + Kanonik JSON Grafikleri (projects_map.json, nexa_portfolio_data.json)
+• Algılama (Perception): Google Drive & Coldwell Banker Otonom İçe Aktarma Daemon'ları
+• Biliş (Cognition): 3 Kademeli RAG (Gemini 2.5 Flash -> Ollama Yerel LLM -> Deterministik Sözleşme Matrisi)
+• Etkileşim (Interface): 60 FPS GPU Donanım Hızlandırmalı Modern Web Portalı + WhatsApp CRM Yönlendirmesi
+
+DEPENDENCIES:
+• Backend: Flask 3.0.0, requests 2.31.0, google-api-python-client 2.118.0, google-auth 2.28.1, watchdog 4.0.0
+• AI & NLP: google-generativeai 0.4.1, PyPDF2 3.0.1, pdfplumber 0.10.4, openpyxl 3.1.2, python-docx 1.1.0
+• Frontend: GSAP 3.12.5, FontAwesome 6.5.1, Canvas Confetti 1.9.2, Native CSS Tokens
+
+DATA FLOW:
+Google Drive / Web Listing -> Drive Puller / CB Sync -> Watchdog -> Universal Parser ->
+Data Importer / Sales Miner -> SQLite DB (WAL) -> Vector Embeddings -> RAG Engine ->
+Frontend Dynamic Hydration -> Kullanıcı Etkileşimi -> CRM Lead (Suzanne Tenekecioğlu: +90 535 489 56 56)
+
+WORKFLOW:
+1. Veri Değişimi: Drive'a yeni proje klasörü eklendiğinde watchdog tetiklenir.
+2. Ayrıştırma: PDF/XLSX dosyaları taranır, fiyat/oda/teslimat/ada/parsel bilgileri çıkarılır.
+3. Kanonik Güncelleme: SQLite ve projects_map.json otomatik güncellenir.
+4. UI Rehidrasyonu: site.html hiçbir kod değişikliği gerektirmeden yeni kartları ve filtreleri anında üretir.
+
+RISKS:
+• Google Drive API Token kota aşımı veya yetki iptali (Risk: Orta | Etki: Orta) -> Çözüldü: Çoklu anahtar rotasyonu.
+• Düşük bellekli sunucularda eşzamanlı PDF ayrıştırma yükü (Risk: Düşük | Etki: Orta) -> Çözüldü: Akıllı chunking.
+
+FAILURE MODES:
+• Gemini API kesintisi -> Sistem otomatik olarak yerel Ollama veya kural tabanlı deterministik yanıt motoruna geçer.
+• SQLite dosya kilitlenmesi -> WAL modu + timeout 30.0s ile eşzamanlı okuma/yazma çakışmaları sıfırlanmıştır.
+
+SECURITY CONCERNS:
+• Yönetici paneli brute-force saldırıları -> 5 başarısız denemede IP 15 dakika kilitlenir.
+• Medya akışlarında path traversal riski -> Güvenli ID çözümleyici ve base directory doğrulaması aktiftir.
+
+PERFORMANCE CONCERNS:
+• DOM eleman sayısı optimizasyonu: Sanal liste ve dinamik carousel kaydırma ile 60 FPS korunur.
+
+OBSERVABILITY:
+• system_health_logs tablosu + nexa_self_healing.py her çalıştırmada sağlık metriğini kaydeder.
+
+TESTING:
+• 10/10 Master Test Suite + 13/13 Hardening Test Suite + 4/4 Otonom Filtre Testi sürekli çalıştırılmaktadır.
+
+GAPS:
+• Harici Telegram/WhatsApp webhookları için canlı üretim callback URL'lerinin nihai DNS doğrulaması.
+
+RECOMMENDATIONS:
+• Canlı üretim ortamında düzenli weekly snapshot yedeklemesi cron'a bağlanmalıdır.
+
+PRIORITY:
+P1 — Production Resilience & Zero-Maintenance Operational Stability
+
+IMPLEMENTATION NOTES:
+Sistem 0 insan müdahalesi ile çalışmak üzere tasarlanmış olup, Suzanne Tenekecioğlu'nun portföyünü otomatik yönetir.
+
+VERIFICATION CRITERIA:
+Tüm test paketlerinin 0 exit code vermesi, SQLite WAL bütünlüğü ve self-healing sağlık skorunun %100 olması.
