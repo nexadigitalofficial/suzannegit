@@ -7361,19 +7361,35 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             const renderChips = (itemList) => {
                 const ilCounts = {}, ilceCounts = {};
                 (itemList || []).forEach(p => {
-                    const il = (p.il || 'Ankara').trim();
-                    const ilce = (p.ilce || '').trim();
-                    if(il) ilCounts[il] = (ilCounts[il] || 0) + 1;
-                    if(ilce) ilceCounts[ilce] = (ilceCounts[ilce] || 0) + 1;
+                    let il = (p.il || p.city || p.regionIl || '').trim();
+                    let ilce = (p.ilce || p.district || p.regionIlce || '').trim();
+                    const locFull = String(p.location_full || p.location || '');
+                    if (locFull.includes('/')) {
+                        const parts = locFull.split('/').map(s => s.trim()).filter(Boolean);
+                        if (!il && parts.length >= 1) il = parts[0];
+                        if (!ilce && parts.length >= 2) ilce = parts[1];
+                    }
+                    if (!il) il = 'Ankara';
+
+                    const ilUp = il.toUpperCase();
+                    ilCounts[ilUp] = (ilCounts[ilUp] || 0) + 1;
+
+                    if (ilce) {
+                        const ilceUp = `${ilUp} / ${ilce.toUpperCase()}`;
+                        ilceCounts[ilceUp] = (ilceCounts[ilceUp] || 0) + 1;
+                    }
                 });
+
                 const chips = [];
+                // 1. Şehir Tümü (İl)
                 Object.keys(ilCounts).sort((a, b) => ilCounts[b] - ilCounts[a]).forEach(il => {
-                    const isActive = activeFilters.location === il ? 'active' : '';
-                    chips.push(`<button class="chip ${isActive}" data-loc="${escapeHtml(il)}" onclick="toggleLocationFilter('${escapeHtml(il)}', this)"><i class="fa-solid fa-city"></i> ${escapeHtml(il)} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${ilCounts[il]}</span></button>`);
+                    const isActive = (activeFilters.location === il || activeFilters.location === `${il} (Tümü)`) ? 'active' : '';
+                    chips.push(`<button class="chip ${isActive}" data-loc="${escapeHtml(il)}" onclick="toggleLocationFilter('${escapeHtml(il)}', this)"><i class="fa-solid fa-city"></i> ${escapeHtml(il)} <span style="font-size:11px; opacity:0.8;">(Tümü)</span> <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${ilCounts[il]}</span></button>`);
                 });
-                Object.keys(ilceCounts).sort((a, b) => ilceCounts[b] - ilceCounts[a]).forEach(ilce => {
-                    const isActive = activeFilters.location === ilce ? 'active' : '';
-                    chips.push(`<button class="chip ${isActive}" data-loc="${escapeHtml(ilce)}" onclick="toggleLocationFilter('${escapeHtml(ilce)}', this)"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(ilce)} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${ilceCounts[ilce]}</span></button>`);
+                // 2. İl / İlçe Hiyerarşik Çipler (Örn: ANKARA / ETİMESGUT)
+                Object.keys(ilceCounts).sort((a, b) => ilceCounts[b] - ilceCounts[a]).forEach(locHier => {
+                    const isActive = activeFilters.location === locHier ? 'active' : '';
+                    chips.push(`<button class="chip ${isActive}" data-loc="${escapeHtml(locHier)}" onclick="toggleLocationFilter('${escapeHtml(locHier)}', this)"><i class="fa-solid fa-location-dot"></i> ${escapeHtml(locHier)} <span style="background:rgba(0,113,227,0.15); color:var(--accent); padding:2px 7px; border-radius:10px; font-size:11px; margin-left:4px; font-weight:700;">${ilceCounts[locHier]}</span></button>`);
                 });
                 if(chips.length > 0) container.innerHTML = chips.join('');
             };
@@ -7574,14 +7590,26 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         }
 
         function foldTR(s) {
-            return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            if (!s) return '';
+            return String(s)
+                .replace(/İ/g, 'i')
+                .replace(/I/g, 'i')
+                .replace(/ı/g, 'i')
+                .replace(/Ö/g, 'o')
+                .replace(/ö/g, 'o')
+                .replace(/Ü/g, 'u')
+                .replace(/ü/g, 'u')
+                .replace(/Ç/g, 'c')
+                .replace(/ç/g, 'c')
+                .replace(/Ş/g, 's')
+                .replace(/ş/g, 's')
+                .replace(/Ğ/g, 'g')
+                .replace(/ğ/g, 'g')
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                 .toLowerCase()
-                .replace(/[ıi]/g, 'i')
-                .replace(/[öo]/g, 'o')
-                .replace(/[üu]/g, 'u')
-                .replace(/[çc]/g, 'c')
-                .replace(/[şs]/g, 's')
-                .replace(/[ğg]/g, 'g');
+                .replace(/[^\w\s]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
         }
 
         function extractNumericPrice(display) {
@@ -7647,7 +7675,13 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     const pDesc = foldTR(p.description);
                     const pAda = foldTR(p.ada_no);
                     const pParsel = foldTR(p.parsel_no);
-                    const locStr = foldTR((p.city || '') + ' ' + (p.district || '') + ' ' + (p.location || '') + ' ' + (p.regionIl || '') + ' ' + (p.regionIlce || '') + ' ' + (p.regionMah || ''));
+                    const locStr = foldTR([
+                        p.il, p.city, p.regionIl,
+                        p.ilce, p.district, p.regionIlce,
+                        p.mahalle, p.regionMah,
+                        p.location, p.location_full,
+                        p.address, p.title, p.name
+                    ].filter(Boolean).join(' '));
                     const aiScore = (9.8 - (idx * 0.15)).toFixed(1);
 
                     // Fiyat türetme: price_display varsa sayısal aralık üret
@@ -7670,7 +7704,9 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         if(Array.isArray(pRooms) ? !pRooms.includes(activeFilters.rooms) : pRooms !== activeFilters.rooms) match = false;
                     }
                     if(activeFilters.location !== null) {
-                        if(!locStr.includes(foldTR(activeFilters.location))) match = false;
+                        const locTokens = activeFilters.location.split('/').map(t => foldTR(t).replace('tumu', '').trim()).filter(Boolean);
+                        const allTokensMatch = locTokens.every(tok => locStr.includes(tok));
+                        if(!allTokensMatch) match = false;
                     }
                     if(activeFilters.ai !== 'all') {
                         if(activeFilters.ai === 'high_score' && parseFloat(aiScore) < 9.0) match = false;
@@ -7711,7 +7747,13 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     let match = true;
                     const pPrice = p.price_numeric || p.price || 0;
                     const pTitle = foldTR(p.title);
-                    const pLoc = foldTR(p.location || p.loc);
+                    const pLoc = foldTR([
+                        p.il, p.city,
+                        p.ilce, p.district,
+                        p.mahalle,
+                        p.location, p.location_full, p.loc,
+                        p.title
+                    ].filter(Boolean).join(' '));
                     const aiScore = (9.2 - (idx * 0.2)).toFixed(1);
 
                     if(keyword) {
@@ -7726,7 +7768,9 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                         if(!(p.rooms || '').includes(activeFilters.rooms)) match = false;
                     }
                     if(activeFilters.location !== null) {
-                        if(!pLoc.includes(foldTR(activeFilters.location))) match = false;
+                        const locTokens = activeFilters.location.split('/').map(t => foldTR(t).replace('tumu', '').trim()).filter(Boolean);
+                        const allTokensMatch = locTokens.every(tok => pLoc.includes(tok));
+                        if(!allTokensMatch) match = false;
                     }
                     if(activeFilters.ai === 'high_score' && parseFloat(aiScore) < 9.0) match = false;
                     if(activeFilters.delivery !== null) {

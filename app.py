@@ -863,22 +863,33 @@ def api_filter_facets():
                     "count": t_count
                 })
 
-        # 5. Dynamic Location Facets
+        # 5. Dynamic Location Facets (İl / İlçe Hierarchy)
         il_counts = {}
-        ilce_counts = {}
+        il_ilce_counts = {}
         for item in all_items:
-            il = (item.get("il") or "Ankara").strip()
-            ilce = (item.get("ilce") or "").strip()
-            if il:
-                il_counts[il] = il_counts.get(il, 0) + 1
+            il = (item.get("il") or item.get("city") or "").strip()
+            ilce = (item.get("ilce") or item.get("district") or "").strip()
+            loc_full = str(item.get("location_full") or item.get("location") or "")
+            if "/" in loc_full:
+                parts = [pt.strip() for pt in loc_full.split("/") if pt.strip()]
+                if not il and len(parts) >= 1:
+                    il = parts[0]
+                if not ilce and len(parts) >= 2:
+                    ilce = parts[1]
+            if not il:
+                il = "Ankara"
+            
+            il_up = il.upper()
+            il_counts[il_up] = il_counts.get(il_up, 0) + 1
             if ilce:
-                ilce_counts[ilce] = ilce_counts.get(ilce, 0) + 1
+                ilce_up = f"{il_up} / {ilce.upper()}"
+                il_ilce_counts[ilce_up] = il_ilce_counts.get(ilce_up, 0) + 1
 
         location_facets = []
-        for il, count in sorted(il_counts.items(), key=lambda x: -x[1]):
-            location_facets.append({"type": "il", "name": il, "count": count, "icon": "fa-solid fa-city"})
-        for ilce, count in sorted(ilce_counts.items(), key=lambda x: -x[1]):
-            location_facets.append({"type": "ilce", "name": ilce, "count": count, "icon": "fa-solid fa-location-dot"})
+        for il_up, count in sorted(il_counts.items(), key=lambda x: -x[1]):
+            location_facets.append({"type": "il", "name": il_up, "label": f"{il_up} (Tümü)", "count": count, "icon": "fa-solid fa-city"})
+        for loc_hier, count in sorted(il_ilce_counts.items(), key=lambda x: -x[1]):
+            location_facets.append({"type": "ilce", "name": loc_hier, "label": loc_hier, "count": count, "icon": "fa-solid fa-location-dot"})
 
         # 6. Dynamic Delivery Facets
         delivery_counts = {"hemen": 0, "12ay": 0, "24ay": 0, "36ay_plus": 0}
