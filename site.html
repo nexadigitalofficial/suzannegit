@@ -2207,6 +2207,23 @@
                 color: #FFF;
                 text-decoration: none;
             }
+
+            .hero-social-pills-row {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6px !important;
+                max-width: 100% !important;
+                margin: 0.75rem 0 1rem 0 !important;
+            }
+            .hero-social-pill {
+                padding: 10px 4px !important;
+                min-height: 42px !important;
+                border-radius: 12px !important;
+                font-size: 12px !important;
+                gap: 5px !important;
+            }
+            .hero-social-pill i {
+                font-size: 15px !important;
+            }
             
             .hero-giant-title { font-size: 42px; }
             .segmented-control { width: 300px; height: 48px; }
@@ -2909,7 +2926,56 @@
             align-items: center;
             gap: 0.75rem;
             flex-wrap: wrap;
-            margin-bottom: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .hero-social-pills-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 480px;
+            width: 100%;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .hero-social-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 14px;
+            min-height: 46px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF !important;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, filter 0.2s ease;
+        }
+        .hero-social-pill:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+            filter: brightness(1.06);
+        }
+        .hero-social-pill:active {
+            transform: scale(0.97);
+        }
+        .hero-social-pill.whatsapp-pill {
+            background: #25D366;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+        }
+        .hero-social-pill.instagram-pill {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 4px 14px rgba(220, 39, 67, 0.35);
+        }
+        .hero-social-pill.facebook-pill {
+            background: #1877F2;
+            box-shadow: 0 4px 14px rgba(24, 119, 242, 0.35);
+        }
+        .hero-social-pill i {
+            font-size: 17px;
         }
         .quick-budget-bar {
             display: flex;
@@ -3641,6 +3707,22 @@
                         </button>
                     </div>
 
+                    <!-- Direkt Açılışta Görünen Sosyal Medya İletişim Kanalları -->
+                    <div class="hero-social-pills-row">
+                        <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20konut%20projeleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="hero-social-pill whatsapp-pill" title="WhatsApp ile Doğrudan İletişime Geçin">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="hero-social-pill instagram-pill" title="Instagram Sayfamızı İnceleyin">
+                            <i class="fa-brands fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://facebook.com" target="_blank" class="hero-social-pill facebook-pill" title="Facebook Sayfamızı İnceleyin">
+                            <i class="fa-brands fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </a>
+                    </div>
+
                     <!-- Hızlı Bütçe Seçim Butonları (Karuseli Önceliklendirir & Sıralar) -->
                     <div style="font-size:13px; font-weight:700; color:var(--text-secondary); margin-top:1.2rem; display:flex; align-items:center; gap:6px;">
                         <i class="fa-solid fa-sliders" style="color:var(--accent);"></i> Hızlı Bütçe Filtresi (Kartları Önceliklendirir):
@@ -3668,14 +3750,20 @@
                             "Bölgesel analiz ve analitik yaklaşım ile mülkünüzü en doğru değerle pazarlamak ve kazançlı yatırımlar sunmak için buradayım."
                         </p>
 
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; width:100%;">
-                            <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20prestijli%20projeler%20hakk%C4%B1nda%20g%C3%B6r%C3%BC%C5%9Fmek%20istiyorum." target="_blank" class="btn btn-primary" style="background:#25D366; border:none; padding:10px 12px; font-size:13px; font-weight:700; justify-content:center;">
+                        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; width:100%; margin-bottom:8px;">
+                            <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20konut%20projeleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="hero-social-pill whatsapp-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
                                 <i class="fa-brands fa-whatsapp"></i> WhatsApp
                             </a>
-                            <button onclick="openAppointmentModal('', 'Suzanne Tenekecioğlu Danışmanlık Randevusu')" class="btn btn-outline" style="padding:10px 12px; font-size:13px; font-weight:700; justify-content:center;">
-                                <i class="fa-solid fa-calendar-check"></i> Randevu Al
-                            </button>
+                            <a href="https://instagram.com" target="_blank" class="hero-social-pill instagram-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
+                                <i class="fa-brands fa-instagram"></i> Instagram
+                            </a>
+                            <a href="https://facebook.com" target="_blank" class="hero-social-pill facebook-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
+                                <i class="fa-brands fa-facebook-f"></i> Facebook
+                            </a>
                         </div>
+                        <button onclick="openAppointmentModal('', 'Suzanne Tenekecioğlu Danışmanlık Randevusu')" class="btn btn-outline" style="padding:10px 12px; font-size:13px; font-weight:700; width:100%; justify-content:center;">
+                            <i class="fa-solid fa-calendar-check"></i> Danışmanlık Randevusu Al
+                        </button>
                     </div>
                 </div>
 
