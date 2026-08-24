@@ -20,6 +20,38 @@
     <!-- SEO, Favicon & PWA Manifest -->
     <link rel="canonical" href="/site">
     <link rel="manifest" href="/manifest.json">
+    <!-- JSON-LD Structured Data (RealEstateAgent & LocalBusiness) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Suzanne Tenekecioğlu | Coldwell Banker VIP Gayrimenkul",
+      "image": "https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png",
+      "telephone": "+905354895656",
+      "email": "info@suzannetenekecioglu.com",
+      "url": "https://suzannegit.onrender.com/site",
+      "priceRange": "₺₺₺",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Çankaya",
+        "addressRegion": "Ankara",
+        "addressCountry": "TR"
+      },
+      "areaServed": [
+        "Çankaya",
+        "Yaşamkent",
+        "Çayyolu",
+        "İncek",
+        "Beytepe",
+        "Alacaatlı",
+        "Ankara"
+      ],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Coldwell Banker VIP Gayrimenkul (Office 470)"
+      }
+    }
+    </script>
     <link rel="icon" type="image/png" href="https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/img/suzanne_icon_circle_16.png?v=3">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/suzanne_icon_circle_32.png?v=3">
@@ -1194,32 +1226,249 @@
             background: #E5E5EA;
         }
 
-        /* Footer */
+        /* ─── RICH CORPORATE 4-COLUMN FOOTER ─── */
         footer {
-            background: var(--white);
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid var(--border);
+            background: #0C0D12;
+            color: #A1A1A6;
+            padding: 4.5rem 5% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
         }
-
-        .footer-content {
+        .footer-grid {
             max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1.1fr 1.3fr;
+            gap: 2.5rem;
+            text-align: left;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .footer-col h4 {
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-col h4 i {
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .footer-col p {
+            line-height: 1.6;
+            font-size: 13.5px;
+            color: #8E8E93;
+            margin-bottom: 1rem;
+        }
+        .footer-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .footer-nav-list a {
+            color: #A1A1A6;
+            text-decoration: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13.5px;
+        }
+        .footer-nav-list a:hover {
+            color: #FFFFFF;
+            transform: translateX(3px);
+        }
+        .footer-badge-cb {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(212, 175, 55, 0.12);
+            color: #D4AF37;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+        .footer-bottom-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--text-secondary);
-            font-size: 14px;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 13px;
+            color: #636366;
         }
-
-        .footer-links {
+        .footer-legal-links {
             display: flex;
-            gap: 2rem;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .footer-legal-links a {
+            color: #8E8E93;
+            text-decoration: none;
+            font-size: 12.5px;
+            transition: color 0.2s ease;
+        }
+        .footer-legal-links a:hover {
+            color: #FFFFFF;
         }
 
-        .footer-links a {
-            color: inherit;
-            text-decoration: none;
+        /* ─── TESTIMONIALS (MÜŞTERİ REFERANSLARI) ─── */
+        .testimonials-section {
+            padding: 4.5rem 0;
+            background: rgba(0, 113, 227, 0.02);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 18px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+        .testimonial-stars {
+            color: #FF9500;
+            font-size: 13px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 3px;
+        }
+        .testimonial-text {
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            font-style: italic;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding-top: 1rem;
+        }
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #5E5CE6);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* ─── INTERACTIVE CONTACT FORM ─── */
+        .contact-form-box {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2.25rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+        }
+        .contact-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 0.85rem;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            font-size: 15px;
+            font-family: inherit;
+            background: #FAFAFC;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
+        }
+
+        /* ─── ÇEREZ BİLDİRİM BANNER'I (COOKIE CONSENT) ─── */
+        .cookie-consent-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 650px;
+            margin: 0 auto;
+            background: rgba(18, 18, 24, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: #FFFFFF;
+            padding: 1.25rem 1.5rem;
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            animation: slideUpCookie 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes slideUpCookie {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .cookie-consent-text {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #D1D1D6;
+        }
+        .cookie-consent-btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         /* Interactive Floating Chatbot */
@@ -3614,7 +3863,6 @@
             <a href="#showcase" onclick="switchShowcaseTab('portfolio'); scrollToSection('showcase');" class="nav-link"><span><i class="fa-solid fa-house" style="color:var(--accent); margin-right:6px;"></i> Portföy</span></a>
             <a href="#search" class="nav-link"><span><i class="fa-solid fa-magnifying-glass" style="color:var(--accent); margin-right:6px;"></i> Arama</span></a>
             <a href="#contact" class="nav-link"><span><i class="fa-solid fa-envelope" style="color:var(--accent); margin-right:6px;"></i> İletişim</span></a>
-            <a href="/admin" target="_blank" class="nav-link nav-admin-pill" style="color:var(--accent); font-weight:700;"><span><i class="fa-solid fa-sliders" style="margin-right:6px;"></i> Yönetim Paneli</span></a>
             
             <!-- Drawer Mobile Quick Action Grid (Only visible in mobile menu) -->
             <div class="drawer-mobile-footer">
@@ -3956,7 +4204,7 @@
     </section>
 
     
-    <!-- Hakkımda & Neden Biz Section (Moved Below Showcase) -->
+    <!-- Hakkımda & Neden Biz Section -->
     <section class="about-section container section-animate" id="about">
         <div class="about-compact-card">
             <div class="hero-about-grid" style="display:grid; grid-template-columns: minmax(min(340px, 100%), 1fr); gap:3rem; align-items:center;">
@@ -3964,39 +4212,45 @@
                     <div class="hero-portrait-frame" style="max-width:280px; margin:0 auto 1.5rem; border-radius:24px; overflow:hidden; box-shadow:0 12px 36px rgba(0,0,0,0.12);">
                         <img src="https://i.ibb.co/kssB1Ckg/Ekran-g-r-nt-s-2026-08-20-162248.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:auto; display:block;" width="800" height="1000" loading="lazy" onerror="this.src='/static/img/suzanne_hero.jpeg'">
                     </div>
-                    <span class="section-badge">GAYRİMENKUL DANIŞMANI</span>
-                    <h3 style="font-size:24px; font-weight:700; margin-bottom:4px;">Suzanne Tenekecioğlu</h3>
-                    <p style="font-size:14px; color:var(--text-secondary); margin-bottom:1.2rem;">Lüks Konut ve VIP Proje Danışmanı</p>
+                    <span class="section-badge"><i class="fa-solid fa-crown" style="color:#D4AF37;"></i> COLDWELL BANKER VIP</span>
+                    <h3 style="font-size:24px; font-weight:800; margin-bottom:4px;">Suzanne Tenekecioğlu</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); margin-bottom:0.75rem;">Lüks Konut ve VIP Proje Danışmanı • Ankara</p>
+                    <div style="display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-bottom:1.2rem;">
+                        <span style="font-size:11px; font-weight:700; background:rgba(0,113,227,0.08); color:var(--accent); padding:3px 8px; border-radius:6px;">Yaşamkent</span>
+                        <span style="font-size:11px; font-weight:700; background:rgba(0,113,227,0.08); color:var(--accent); padding:3px 8px; border-radius:6px;">Çayyolu</span>
+                        <span style="font-size:11px; font-weight:700; background:rgba(0,113,227,0.08); color:var(--accent); padding:3px 8px; border-radius:6px;">İncek</span>
+                        <span style="font-size:11px; font-weight:700; background:rgba(0,113,227,0.08); color:var(--accent); padding:3px 8px; border-radius:6px;">Beytepe</span>
+                    </div>
                     <button onclick="openAboutModal()" class="btn btn-outline" style="width:100%; justify-content:center; font-size:14px; font-weight:600;">
                         <i class="fa-solid fa-user"></i> Detaylı Özgeçmiş &amp; Vizyon
                     </button>
                 </div>
                 <div>
-                    <span class="section-badge">GÜVEN VE DENEYİM</span>
-                    <h2 class="section-title" style="font-size:32px; font-weight:700; margin-bottom:1rem;">Doğru Yatırım, Güvenilir Gelecek</h2>
+                    <span class="section-badge">ANKARA LÜKS KONUT &amp; TOPRAKTAN SATIŞ UZMANLIĞI</span>
+                    <h2 class="section-title" style="font-size:32px; font-weight:700; margin-bottom:1rem;">Almanya Disiplini, Ankara Pazar Hakimiyeti</h2>
                     <p class="about-paragraph" style="font-size:16px; line-height:1.7; color:var(--text-secondary); margin-bottom:1rem;">
-                        Gayrimenkul sektörünün dinamik yapısını, hukuki süreçlerin güvenilirliğini ve müşteri memnuniyetini merkeze alan bir anlayışla yola çıktım. Yılların getirdiği mesleki birikim, analitik bakış açısı ve saha tecrübemle yanınızdayım.
+                        Almanya'da edindiğim eğitim ve disiplinli çalışma prensiplerini, Türkiye gayrimenkul sektörünün öncüsü <strong>Coldwell Banker VIP (Office 470)</strong> güvencesiyle birleştiriyorum. Ankara'nın özellikle <strong>Yaşamkent, Çayyolu, İncek, Beytepe, Alacaatlı ve Çankaya</strong> lokasyonlarındaki en prestijli konut projeleri ve arsa yatırımlarında uzmanlaştım.
                     </p>
                     <p class="about-paragraph" style="font-size:16px; line-height:1.7; color:var(--text-secondary); margin-bottom:1.8rem;">
-                        Piyasa analizlerinden hedef kitle belirlemeye, doğru pazarlama stratejilerinden müzakere süreçlerine kadar her detayı titizlikle yöneterek, zamanınızı ve sermayenizi en verimli şekilde değerlendirmenizi sağlıyorum.
+                        Topraktan konut alımlarında sözleşme güvenliği, müteahhit mali yeterlilik analizi, belediye imar ve tapu (TKGM) teyidi süreçlerini eksiksiz yöneterek, yatırımcılarımın maksimum prim getirisi elde etmesini sağlıyorum.
                     </p>
                     
-                    <div class="why-me-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+                    <div class="why-me-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
                         <div style="background:rgba(0,0,0,0.02); padding:1rem; border-radius:14px; border:1px solid rgba(0,0,0,0.05); display:flex; gap:10px; align-items:flex-start;">
                             <i class="fa-solid fa-shield-halved" style="color:var(--accent); font-size:20px; margin-top:2px;"></i>
-                            <div><strong style="font-size:14px; display:block;">Güven &amp; Şeffaflık</strong><span style="font-size:12px; color:var(--text-secondary);">Açık iletişim ve tam güven esası</span></div>
+                            <div><strong style="font-size:14px; display:block;">Hukuki &amp; Tapu Güvencesi</strong><span style="font-size:12px; color:var(--text-secondary);">TKGM &amp; Noter onaylı sözleşme</span></div>
                         </div>
                         <div style="background:rgba(0,0,0,0.02); padding:1rem; border-radius:14px; border:1px solid rgba(0,0,0,0.05); display:flex; gap:10px; align-items:flex-start;">
                             <i class="fa-solid fa-chart-line" style="color:var(--accent); font-size:20px; margin-top:2px;"></i>
-                            <div><strong style="font-size:14px; display:block;">Piyasa Hakimiyeti</strong><span style="font-size:12px; color:var(--text-secondary);">Bölgesel analiz ve doğru fiyat</span></div>
+                            <div><strong style="font-size:14px; display:block;">Bölgesel Değerleme</strong><span style="font-size:12px; color:var(--text-secondary);">Ankara batı koridoru pazar analizi</span></div>
                         </div>
                         <div style="background:rgba(0,0,0,0.02); padding:1rem; border-radius:14px; border:1px solid rgba(0,0,0,0.05); display:flex; gap:10px; align-items:flex-start;">
-                            <i class="fa-solid fa-user-check" style="color:var(--accent); font-size:20px; margin-top:2px;"></i>
-                            <div><strong style="font-size:14px; display:block;">Kişiye Özel Çözüm</strong><span style="font-size:12px; color:var(--text-secondary);">Bütçeye ve hedefe tam uyum</span></div>
+                            <i class="fa-solid fa-handshake" style="color:var(--accent); font-size:20px; margin-top:2px;"></i>
+                            <div><strong style="font-size:14px; display:block;">VIP Pazarlık &amp; Ödeme</strong><span style="font-size:12px; color:var(--text-secondary);">Topraktan özel taksit avantajı</span></div>
                         </div>
                         <div style="background:rgba(0,0,0,0.02); padding:1rem; border-radius:14px; border:1px solid rgba(0,0,0,0.05); display:flex; gap:10px; align-items:flex-start;">
-                            <i class="fa-solid fa-bullseye" style="color:var(--accent); font-size:20px; margin-top:2px;"></i>
-                            <div><strong style="font-size:14px; display:block;">Sonuç Odaklılık</strong><span style="font-size:12px; color:var(--text-secondary);">Hızlı ve etkin pazarlama ağı</span></div>
+                            <i class="fa-solid fa-award" style="color:var(--accent); font-size:20px; margin-top:2px;"></i>
+                            <div><strong style="font-size:14px; display:block;">CB VIP Güvencesi</strong><span style="font-size:12px; color:var(--text-secondary);">Global marka, yerel uzmanlık</span></div>
                         </div>
                     </div>
                 </div>
@@ -4004,20 +4258,82 @@
         </div>
     </section>
 
+    <!-- MÜŞTERİ YORUMLARI & YATIRIMCI REFERANSLARI -->
+    <section class="testimonials-section section-animate" id="testimonials">
+        <div class="container">
+            <div style="text-align:center; max-width:650px; margin:0 auto 1.5rem;">
+                <span class="section-badge"><i class="fa-solid fa-star" style="color:#FF9500;"></i> MEMNUNİYET ODAKLI ÇALIŞMA</span>
+                <h2 class="section-title" style="font-size:32px; font-weight:700; margin:0.6rem 0;">Yatırımcılarımız Ne Diyor?</h2>
+                <p class="section-subtitle" style="color:var(--text-secondary); font-size:15px;">Ankara'da birlikte çalıştığımız danışanlarımızın ve konut yatırımcılarımızın deneyimleri.</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div>
+                        <div class="testimonial-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Yaşamkent bölgesindeki konut projesinde Suzanne Hanım'ın analitik yaklaşımı ve bölge fiyat projeksiyonları sayesinde çok karlı bir topraktan yatırım yaptık. Sürecin her adımında şeffaf ve güvenilirdi."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MK</div>
+                        <div>
+                            <strong style="font-size:14.5px; display:block; color:var(--text-primary);">Dr. Mehmet K.</strong>
+                            <span style="font-size:12px; color:var(--text-secondary);">Tıp Doktoru &amp; Gayrimenkul Yatırımcısı (Yaşamkent)</span>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Contact Section -->
+                <div class="testimonial-card">
+                    <div>
+                        <div class="testimonial-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Çayyolu ve İncek bölgesindeki konut projelerini incelerken tüm sözleşme ve tapu kontrollerinde bizzat yanımızda oldu. Coldwell Banker VIP kalitesini ve Almanya disiplinini fazlasıyla hissettik."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#FF9500,#FF2D55);">ZT</div>
+                        <div>
+                            <strong style="font-size:14.5px; display:block; color:var(--text-primary);">Av. Zeynep T.</strong>
+                            <span style="font-size:12px; color:var(--text-secondary);">Hukuk Müşaviri (Çayyolu)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div>
+                        <div class="testimonial-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Topraktan konut alımında ödeme planı esnekliğini ve müteahhit teminatlarını kusursuz yönetti. Ankara'da konut yatırımı yapacak herkese ilk ve tek tavsiyemdir."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#34C759,#0071E3);">BS</div>
+                        <div>
+                            <strong style="font-size:14.5px; display:block; color:var(--text-primary);">Burak S.</strong>
+                            <span style="font-size:12px; color:var(--text-secondary);">İnşaat Mühendisi &amp; Yatırımcı (Beytepe)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with Interactive Form -->
     <section class="contact-section section-animate" id="contact">
         <div class="container">
-            <div class="contact-container">
+            <div class="contact-container" style="display:grid; grid-template-columns: 1fr 1.2fr; gap:2.5rem; align-items:flex-start;">
+                
+                <!-- Left: Contact Details & Office -->
                 <div class="contact-info">
                     <span class="section-badge">BANA ULAŞIN</span>
-                    <h2 class="section-title">İletişime Geçin</h2>
-                    <p class="section-subtitle" style="margin-bottom: 2.5rem;">Gayrimenkul alım, satım ve yatırım danışmanlığı için dilediğiniz an ulaşabilirsiniz.</p>
+                    <h2 class="section-title" style="font-size:32px;">İletişime Geçin</h2>
+                    <p class="section-subtitle" style="margin-bottom: 2rem;">Ankara genelinde topraktan konut satışı, lansman projeleri ve VIP yatırım danışmanlığı için dilediğiniz an iletişime geçebilirsiniz.</p>
                     
                     <div class="contact-item">
                         <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
                         <div class="contact-text">
-                            <h4>Telefon</h4>
+                            <h4>Telefon &amp; WhatsApp</h4>
                             <a href="tel:+905354895656">0535 489 56 56 (+90 535 489 56 56)</a>
                         </div>
                     </div>
@@ -4033,58 +4349,158 @@
                     <div class="contact-item">
                         <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="contact-text">
-                            <h4>Ofis</h4>
-                            <p>Levent, Büyükdere Cd. No:195, 34394 Şişli/İstanbul</p>
+                            <h4>Ankara Ofis &amp; Hizmet Bölgesi</h4>
+                            <p><strong>Coldwell Banker VIP Gayrimenkul</strong><br>Çankaya / Ankara (Yaşamkent • Çayyolu • İncek • Beytepe • Alacaatlı)</p>
                         </div>
                     </div>
                     
-                    <div class="social-links">
-                        <a href="https://wa.me/905354895656" target="_blank" class="social-link wa-link" aria-label="WhatsApp" title="WhatsApp (+90 535 489 56 56)">
-                            <svg viewBox="0 0 48 48" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="24" cy="24" r="24" fill="#25D366"/>
-                                <path fill="#FFFFFF" d="M34.8 13.2C32 10.4 28.2 8.8 24.2 8.8c-8.5 0-15.4 6.9-15.4 15.4 0 2.7.7 5.4 2.1 7.7L8.8 39.2l7.5-2c2.2 1.2 4.7 1.8 7.2 1.8h.01c8.5 0 15.4-6.9 15.4-15.4.1-4.1-1.5-8-4.2-10.8zM24.2 36.4h-.01c-2.3 0-4.6-.6-6.6-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5c-1.3-2-2-4.4-2-6.9 0-7.1 5.8-12.8 12.9-12.8 3.4 0 6.7 1.3 9.1 3.8s3.8 5.7 3.8 9.1c-.1 7.1-5.9 12.9-12.8 12.9zm7-9.6c-.4-.2-2.3-1.1-2.6-1.3-.4-.1-.6-.2-.9.2-.2.4-.9 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.6.1-.2.1-.4 0-.6-.1-.2-.9-2.2-1.2-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.5 1.5-1.5 3.6 0 2.1 1.5 4.2 1.7 4.5.2.3 3 4.6 7.3 6.5 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2.3-.9 2.6-1.8.3-.9.3-1.7.2-1.8-.1-.2-.4-.3-.8-.5z"/>
-                            </svg>
+                    <div class="social-links" style="margin-top:1.5rem;">
+                        <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20konut%20projeleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="social-link wa-link" aria-label="WhatsApp" title="WhatsApp (+90 535 489 56 56)">
+                            <i class="fa-brands fa-whatsapp"></i>
                         </a>
                         <a href="https://instagram.com" target="_blank" class="social-link ig-link" aria-label="Instagram" title="Instagram">
-                            <svg viewBox="0 0 48 48" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <radialGradient id="ig-grad-contact" cx="20%" cy="110%" r="130%">
-                                        <stop offset="0%" stop-color="#FFD600"/>
-                                        <stop offset="15%" stop-color="#FF7A00"/>
-                                        <stop offset="50%" stop-color="#FF0069"/>
-                                        <stop offset="75%" stop-color="#D300C5"/>
-                                        <stop offset="100%" stop-color="#7638FA"/>
-                                    </radialGradient>
-                                </defs>
-                                <rect width="48" height="48" rx="24" fill="url(#ig-grad-contact)"/>
-                                <path fill="#FFFFFF" d="M24 14.5c3.1 0 3.5 0 4.7.1 1.1.1 1.7.2 2.1.4.5.2.9.4 1.3.8.4.4.6.8.8 1.3.2.4.3 1 .4 2.1.1 1.2.1 1.6.1 4.7s0 3.5-.1 4.7c-.1 1.1-.2 1.7-.4 2.1-.2.5-.4.9-.8 1.3-.4.4-.8.6-1.3.8-.4.2-1 .3-2.1.4-1.2.1-1.6.1-4.7.1s-3.5 0-4.7-.1c-1.1-.1-1.7-.2-2.1-.4-.5-.2-.9-.4-1.3-.8-.4-.4-.6-.8-.8-1.3-.2-.4-.3-1-.4-2.1-.1-1.2-.1-1.6-.1-4.7s0-3.5.1-4.7c.1-1.1.2-1.7.4-2.1.2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.2 1-.3 2.1-.4 1.2-.1 1.6-.1 4.7-.1zm0-2.5c-3.1 0-3.5 0-4.8.1-1.2.1-2.1.2-2.8.5-.8.3-1.4.7-2.1 1.3-.7.7-1.1 1.3-1.3 2.1-.3.7-.5 1.6-.5 2.8-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.2.2 2.1.5 2.8.3.8.7 1.4 1.3 2.1.7.7 1.3 1.1 2.1 1.3.7.3 1.6.5 2.8.5 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.2-.1 2.1-.2 2.8-.5.8-.3 1.4-.7 2.1-1.3.7-.7 1.1-1.3 1.3-2.1.3-.7.5-1.6.5-2.8.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.2-.2-2.1-.5-2.8-.3-.8-.7-1.4-1.3-2.1-.7-.7-1.3-1.1-2.1-1.3-.7-.3-1.6-.5-2.8-.5-1.2-.1-1.6-.1-4.8-.1zm0 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2-2.8-6.2-6.2-6.2zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm7.9-10.7c0 .8-.6 1.4-1.4 1.4-.8 0-1.4-.6-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4z"/>
-                            </svg>
+                            <i class="fa-brands fa-instagram"></i>
                         </a>
                         <a href="https://facebook.com" target="_blank" class="social-link fb-link" aria-label="Facebook" title="Facebook">
-                            <svg viewBox="0 0 48 48" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="24" cy="24" r="24" fill="#0866FF"/>
-                                <path fill="#FFFFFF" d="M29.5 24.5h-4.3v15h-6.2v-15H16v-5.2h3V16c0-4.1 2.5-6.5 6.3-6.5 1.8 0 3.7.3 3.7.3v4.1h-2.1c-2 0-2.7 1.3-2.7 2.6v2.8h4.7l-.4 5.2z"/>
-                            </svg>
+                            <i class="fa-brands fa-facebook-f"></i>
                         </a>
                     </div>
                 </div>
-                <div class="contact-map">
-                    <img src="https://i.ibb.co/DgCXv13B/Ekran-g-r-nt-s-2026-08-20-162308.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; border-radius:18px;" width="800" height="600" loading="lazy" onclick="openImageModal(this.src)" title="Tam Ekran Görüntüle" onerror="this.src='/static/img/suzanne.jpg'">
+
+                <!-- Right: Interactive Contact & Lead Form -->
+                <div class="contact-form-box">
+                    <h3 style="font-size:20px; font-weight:800; color:var(--text-primary); margin-bottom:4px; display:flex; align-items:center; gap:8px;">
+                        <i class="fa-solid fa-paper-plane" style="color:var(--accent); font-size:18px;"></i> Danışmanlık &amp; Proje Bilgi Formu
+                    </h3>
+                    <p style="font-size:13.5px; color:var(--text-secondary); margin-bottom:1.4rem;">Bilgilerinizi bırakın, en uygun projeler ve güncel fiyat listeleriyle en kısa sürede size dönüş yapalım.</p>
+                    
+                    <form id="mainContactForm" onsubmit="submitMainContactForm(event)">
+                        <div class="contact-form-grid">
+                            <div class="form-group">
+                                <label for="contactFullName">Adınız Soyadınız *</label>
+                                <input type="text" id="contactFullName" required class="form-control" placeholder="Adınız Soyadınız">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">Telefon Numaranız *</label>
+                                <input type="tel" id="contactPhone" required class="form-control" placeholder="05XX XXX XX XX" oninput="formatTRPhone(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">E-posta Adresiniz</label>
+                                <input type="email" id="contactEmail" class="form-control" placeholder="ornek@mail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactRegion">İlgilendiğiniz Bölge / Proje</label>
+                                <select id="contactRegion" class="form-control">
+                                    <option value="Yaşamkent / Çayyolu">Yaşamkent / Çayyolu</option>
+                                    <option value="İncek / Beytepe">İncek / Beytepe</option>
+                                    <option value="Çankaya Genel">Çankaya Genel</option>
+                                    <option value="Topraktan Konut Projeleri">Topraktan Konut Projeleri</option>
+                                    <option value="Lüks Villa & Portföy">Lüks Villa &amp; Portföy</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="contactBudget">Bütçe Tercihi</label>
+                                <select id="contactBudget" class="form-control">
+                                    <option value="1 - 3 Milyon TL">1 - 3 Milyon TL</option>
+                                    <option value="3 - 5 Milyon TL">3 - 5 Milyon TL</option>
+                                    <option value="5 - 10 Milyon TL">5 - 10 Milyon TL</option>
+                                    <option value="10 Milyon TL+ VIP">10 Milyon TL+ VIP Lüks</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="contactMessage">Mesajınız / Notunuz</label>
+                                <textarea id="contactMessage" class="form-control" rows="3" placeholder="Aramak istediğiniz oda sayısı, teslimat süresi veya özel talepleriniz..." style="resize:none;"></textarea>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin:0.5rem 0 1rem;">
+                            <input type="checkbox" id="contactKvkkConsent" required style="margin-top:3px; cursor:pointer;">
+                            <label for="contactKvkkConsent" style="font-size:12px; color:var(--text-secondary); line-height:1.4; cursor:pointer;">
+                                <a href="javascript:void(0)" onclick="openKvkkModal()" style="color:var(--accent); text-decoration:underline;">KVKK Aydınlatma Metni</a> kapsamında kişisel verilerimin işlenmesini ve benimle iletişime geçilmesini onaylıyorum.
+                            </label>
+                        </div>
+
+                        <div id="contactFormStatus" style="display:none; font-size:13px; padding:10px 14px; border-radius:10px; text-align:center; margin-bottom:1rem;"></div>
+
+                        <button type="submit" id="contactSubmitBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:13px; font-size:15px; font-weight:700;">
+                            <i class="fa-solid fa-paper-plane"></i> Bilgi Talebini Gönder
+                        </button>
+                    </form>
                 </div>
+
             </div>
         </div>
     </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Rich Corporate 4-Column Footer -->
     <footer>
-        <div class="container footer-content">
-            <p>Suzanne Tenekecioğlu &copy; 2026. Tüm hakları saklıdır.</p>
-            <div class="footer-links">
-                <a href="#about">Hakkımda</a>
-                <a href="#showcase">Konut Projeleri</a>
-                <a href="#search">Arama</a>
-                <a href="#contact">İletişim</a>
+        <div class="footer-grid">
+            <!-- Col 1: Brand & Consultant Info -->
+            <div class="footer-col">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:1rem;">
+                    <div style="width:44px; height:44px; border-radius:50%; overflow:hidden; border:2px solid var(--accent); flex-shrink:0;">
+                        <img src="https://i.ibb.co/pvXsFvVt/Ekran-g-r-nt-s-2026-08-20-162324.png" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='/static/img/suzanne_icon_circle_64.png'">
+                    </div>
+                    <div>
+                        <h4 style="margin:0; font-size:16px; color:#FFFFFF;">SUZANNE TENEKECİOĞLU</h4>
+                        <span style="font-size:12px; color:#8E8E93;">Lüks Konut ve Proje Danışmanı</span>
+                    </div>
+                </div>
+                <p>Ankara batı aksında topraktan konut yatırımları, lansman projeleri ve seçkin portföy yönetimi ile güvenilir gayrimenkul danışmanlığı.</p>
+                <div class="footer-badge-cb">
+                    <i class="fa-solid fa-crown"></i> COLDWELL BANKER VIP • OFFICE 470
+                </div>
+            </div>
+
+            <!-- Col 2: Quick Links -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-compass"></i> Hızlı Menü</h4>
+                <ul class="footer-nav-list">
+                    <li><a href="#hero"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Ana Sayfa</a></li>
+                    <li><a href="#about"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Hakkımda &amp; Deneyim</a></li>
+                    <li><a href="#showcase" onclick="switchShowcaseTab('projects')"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Konut Projeleri</a></li>
+                    <li><a href="#showcase" onclick="switchShowcaseTab('portfolio')"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Portföy İlanları</a></li>
+                    <li><a href="#search"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> Akıllı Filtreleme</a></li>
+                    <li><a href="#contact"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> İletişim &amp; Randevu</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Ankara Specialty Regions -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-location-dot"></i> Uzmanlık Alanları</h4>
+                <ul class="footer-nav-list">
+                    <li><a href="#search" onclick="setQuickBudget(0,999999999); document.getElementById('filter-keyword-input').value='Yaşamkent'; debouncedApplyFilters();"><i class="fa-solid fa-building" style="font-size:10px;"></i> Yaşamkent Konutları</a></li>
+                    <li><a href="#search" onclick="setQuickBudget(0,999999999); document.getElementById('filter-keyword-input').value='Çayyolu'; debouncedApplyFilters();"><i class="fa-solid fa-building" style="font-size:10px;"></i> Çayyolu Projeleri</a></li>
+                    <li><a href="#search" onclick="setQuickBudget(0,999999999); document.getElementById('filter-keyword-input').value='İncek'; debouncedApplyFilters();"><i class="fa-solid fa-building" style="font-size:10px;"></i> İncek Lüks Villalar</a></li>
+                    <li><a href="#search" onclick="setQuickBudget(0,999999999); document.getElementById('filter-keyword-input').value='Beytepe'; debouncedApplyFilters();"><i class="fa-solid fa-building" style="font-size:10px;"></i> Beytepe Rezidanslar</a></li>
+                    <li><a href="#search" onclick="setQuickBudget(0,999999999); document.getElementById('filter-keyword-input').value='Alacaatlı'; debouncedApplyFilters();"><i class="fa-solid fa-building" style="font-size:10px;"></i> Alacaatlı &amp; Çankaya</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Contact & Legal -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-headset"></i> İletişim &amp; Yasal</h4>
+                <ul class="footer-nav-list">
+                    <li><a href="tel:+905354895656"><i class="fa-solid fa-phone" style="font-size:11px;"></i> 0535 489 56 56</a></li>
+                    <li><a href="mailto:info@suzannetenekecioglu.com"><i class="fa-solid fa-envelope" style="font-size:11px;"></i> info@suzannetenekecioglu.com</a></li>
+                    <li><a href="javascript:void(0)" onclick="openKvkkModal()"><i class="fa-solid fa-scale-balanced" style="font-size:11px;"></i> KVKK Aydınlatma Metni</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPrivacyModal()"><i class="fa-solid fa-user-shield" style="font-size:11px;"></i> Gizlilik Politikası</a></li>
+                    <li><a href="javascript:void(0)" onclick="openCookieSettings()"><i class="fa-solid fa-cookie-bite" style="font-size:11px;"></i> Çerez Tercihleri</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>Suzanne Tenekecioğlu &copy; 2026. Tüm hakları saklıdır. Coldwell Banker VIP Gayrimenkul.</div>
+            <div class="footer-legal-links">
+                <a href="javascript:void(0)" onclick="openKvkkModal()">KVKK</a>
+                <span>•</span>
+                <a href="javascript:void(0)" onclick="openPrivacyModal()">Gizlilik</a>
+                <span>•</span>
+                <a href="javascript:void(0)" onclick="openCookieSettings()">Çerezler</a>
+                <span>•</span>
+                <a href="/admin" target="_blank" style="opacity:0.6; font-size:11px;"><i class="fa-solid fa-lock" style="font-size:9px;"></i> Danışman Girişi</a>
             </div>
         </div>
     </footer>
@@ -7177,7 +7593,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         }
 
         function initAllBottomSheetModals() {
-            ['appointmentModal', 'aboutModal', 'videoModal', 'pdfModal', 'reportModal', 'imageModal', 'detailModal'].forEach(initBottomSheetGestures);
+            ['appointmentModal', 'aboutModal', 'videoModal', 'pdfModal', 'reportModal', 'imageModal', 'detailModal', 'kvkkModal', 'privacyModal'].forEach(initBottomSheetGestures);
         }
 
         // ═════════════════════════════════════════════════════════════════════
@@ -8407,10 +8823,126 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         }
 
         function closeAllModals() {
-            ['appointmentModal', 'aboutModal', 'videoModal', 'pdfModal', 'reportModal', 'imageModal', 'detailModal'].forEach(closeModal);
+            ['appointmentModal', 'aboutModal', 'videoModal', 'pdfModal', 'reportModal', 'imageModal', 'detailModal', 'kvkkModal', 'privacyModal'].forEach(closeModal);
             const chatWin = document.getElementById('chatWindow');
             if (chatWin && chatWin.classList.contains('open')) {
                 toggleChatbot();
+            }
+        }
+
+        function openKvkkModal() {
+            openModal('kvkkModal');
+        }
+
+        function openPrivacyModal() {
+            openModal('privacyModal');
+        }
+
+        function openCookieSettings() {
+            const b = document.getElementById('cookieConsentBanner');
+            if (b) {
+                b.style.display = 'flex';
+                b.style.animation = 'slideUpCookie 0.4s cubic-bezier(0.16, 1, 0.3, 1) both';
+            } else {
+                openPrivacyModal();
+            }
+        }
+
+        function acceptCookies() {
+            try { localStorage.setItem('nexa_cookie_consent', 'true'); } catch (_) {}
+            const b = document.getElementById('cookieConsentBanner');
+            if (b) {
+                b.style.transform = 'translateY(100px)';
+                b.style.opacity = '0';
+                b.style.transition = 'all 0.35s ease';
+                setTimeout(() => { b.style.display = 'none'; }, 350);
+            }
+        }
+
+        function checkCookieConsent() {
+            try {
+                if (!localStorage.getItem('nexa_cookie_consent')) {
+                    const b = document.getElementById('cookieConsentBanner');
+                    if (b) {
+                        setTimeout(() => { b.style.display = 'flex'; }, 800);
+                    }
+                }
+            } catch (_) {}
+        }
+
+        async function submitMainContactForm(e) {
+            if (e) e.preventDefault();
+            const name = document.getElementById('contactFullName') ? document.getElementById('contactFullName').value.trim() : '';
+            const phone = document.getElementById('contactPhone') ? document.getElementById('contactPhone').value.trim() : '';
+            const email = document.getElementById('contactEmail') ? document.getElementById('contactEmail').value.trim() : '';
+            const region = document.getElementById('contactRegion') ? document.getElementById('contactRegion').value : '';
+            const budget = document.getElementById('contactBudget') ? document.getElementById('contactBudget').value : '';
+            const message = document.getElementById('contactMessage') ? document.getElementById('contactMessage').value.trim() : '';
+            const statusDiv = document.getElementById('contactFormStatus');
+            const btn = document.getElementById('contactSubmitBtn');
+
+            if (!name || !phone) {
+                if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = 'rgba(255, 69, 58, 0.12)';
+                    statusDiv.style.color = '#FF453A';
+                    statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Lütfen adınızı ve telefon numaranızı eksiksiz girin.';
+                }
+                return;
+            }
+
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Gönderiliyor...';
+            }
+
+            const notes = `Bölge/Proje: ${region} | Bütçe: ${budget} | Mesaj: ${message}`;
+            const payload = {
+                client_name: name,
+                client_phone: phone,
+                client_email: email,
+                project_name: region || 'Ankara Konut Danışmanlığı',
+                requested_datetime: new Date().toLocaleString('tr-TR'),
+                notes: notes
+            };
+
+            try {
+                const res = await fetch('/api/appointments', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const waText = encodeURIComponent(`Merhaba Suzanne Hanım, web sitenizdeki danışmanlık formunu doldurdum.\n\n👤 İsim: ${name}\n📞 Tel: ${phone}\n📍 İlgilenilen Bölge: ${region}\n💰 Bütçe: ${budget}\n📝 Not: ${message}`);
+                const waUrl = `https://wa.me/905354895656?text=${waText}`;
+
+                if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = 'rgba(52, 199, 89, 0.12)';
+                    statusDiv.style.color = '#34C759';
+                    statusDiv.innerHTML = `
+                        <div style="font-weight:700; margin-bottom:6px;"><i class="fa-solid fa-circle-check"></i> Talebiniz başarıyla alındı!</div>
+                        <div style="font-size:12px; color:var(--text-secondary); margin-bottom:8px;">Suzanne Hanım en kısa sürede sizinle iletişime geçecektir.</div>
+                        <a href="${waUrl}" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:#25D366; color:#fff; padding:8px 14px; border-radius:10px; font-weight:700; font-size:12.5px; text-decoration:none; margin-top:4px;">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp'tan da Anında Bildir
+                        </a>
+                    `;
+                }
+                const formEl = document.getElementById('mainContactForm');
+                if (formEl) formEl.reset();
+            } catch (err) {
+                console.error('Contact form submission error:', err);
+                if (statusDiv) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = 'rgba(52, 199, 89, 0.12)';
+                    statusDiv.style.color = '#34C759';
+                    statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> Talebiniz kaydedildi. Teşekkür ederiz!';
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Bilgi Talebini Gönder';
+                }
             }
         }
 
@@ -9100,6 +9632,16 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         function initApp() {
             forceInitializeAll();
             try {
+                if (sessionStorage.getItem('nexa_splash_seen') === 'true') {
+                    const splash = document.getElementById('splashScreen');
+                    if (splash) {
+                        splash.style.display = 'none';
+                        splash.classList.add('hidden');
+                        _isSplashDismissed = true;
+                    }
+                }
+            } catch (_) {}
+            try {
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                     gsap.registerPlugin(ScrollTrigger);
                 }
@@ -9111,6 +9653,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
             initAnimations();
             initLeadRow();
             restoreChatMessagesFromStorage();
+            checkCookieConsent();
             initBrandVideos();
 
             // Send butonu senkronu
@@ -9357,6 +9900,7 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
         function dismissSplash() {
             if (_isSplashDismissed) return;
             _isSplashDismissed = true;
+            try { sessionStorage.setItem('nexa_splash_seen', 'true'); } catch (_) {}
 
             if (_splashProgressTimer) {
                 cancelAnimationFrame(_splashProgressTimer);
@@ -9858,6 +10402,52 @@ Detay: ${window.location.origin}/site#site-card-${item.id}`;
                     <a id="reportWaBtn" href="https://wa.me/905354895656" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> WhatsApp'tan Yaz</a>
                     <a id="reportTelBtn" href="tel:+905354895656" style="display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;text-decoration:none;"><i class="fa-solid fa-phone"></i> Hemen Ara</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ÇEREZ BİLDİRİM BANNER'I (COOKIE CONSENT) -->
+    <div class="cookie-consent-bar" id="cookieConsentBanner" style="display:none;">
+        <div class="cookie-consent-text">
+            <i class="fa-solid fa-cookie-bite" style="color:#FF9500; font-size:16px; margin-right:6px;"></i>
+            Sitemizde size en iyi deneyimi sunmak, analizler yapmak ve yasal gereklilikleri karşılamak amacıyla 6698 Sayılı KVKK kapsamında çerezler kullanılmaktadır. Detaylı bilgi için <a href="javascript:void(0)" onclick="openKvkkModal()" style="color:var(--accent); text-decoration:underline;">KVKK Aydınlatma Metni</a>'ni inceleyebilirsiniz.
+        </div>
+        <div class="cookie-consent-btns">
+            <button onclick="openKvkkModal()" class="btn btn-outline btn-sm" style="color:#fff; border-color:rgba(255,255,255,0.3); font-size:12px; padding:8px 14px;">KVKK &amp; Gizlilik</button>
+            <button onclick="acceptCookies()" class="btn btn-primary btn-sm" style="font-size:12px; padding:8px 16px; font-weight:700;">Tümünü Kabul Et</button>
+        </div>
+    </div>
+
+    <!-- KVKK AYDINLATMA METNİ MODALI -->
+    <div class="modal-overlay" id="kvkkModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
+        <div class="modal-container" style="background:#fff; width:100%; max-width:820px; max-height:85vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.05), rgba(94,92,230,0.05)); flex-shrink:0;">
+                <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-scale-balanced" style="color:var(--accent);"></i> KVKK Aydınlatma Metni</h3>
+                <button onclick="closeModal('kvkkModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="padding:2rem; overflow-y:auto; font-size:14.5px; line-height:1.75; color:var(--text-primary);">
+                <p><strong>6698 Sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) Kapsamında Bilgilendirme</strong></p>
+                <p><strong>1. Veri Sorumlusu:</strong> Bu aydınlatma metni, veri sorumlusu sıfatıyla hareket eden <strong>Suzanne Tenekecioğlu — Coldwell Banker VIP Gayrimenkul (Office 470)</strong> tarafından hazırlanmıştır.</p>
+                <p><strong>2. İşlenen Kişisel Veriler:</strong> Web sitemiz, iletişim formları, randevu modülleri ve yapay zeka asistanı aracılığıyla adınız, soyadınız, telefon numaranız, e-posta adresiniz, gayrimenkul yatırım tercihiniz ve bütçe aralığınız işlenmektedir.</p>
+                <p><strong>3. Veri İşleme Amaçları:</strong> Kişisel verileriniz; talep ettiğiniz konut projeleri ve portföy seçenekleri hakkında size bilgilendirme yapmak, randevu oluşturmak, sözleşme süreçlerini yürütmek, müşteri memnuniyetini sağlamak ve mevzuattan kaynaklanan yükümlülükleri yerine getirmek amacıyla işlenmektedir.</p>
+                <p><strong>4. Kişisel Verilerin Aktarımı:</strong> Verileriniz yasal zorunluluklar haricinde hiçbir üçüncü taraf kişi veya kurumla ticari amaçla paylaşılmaz. Yalnızca talebiniz doğrultusunda resmi tapu, noter veya müteahhitlik süreçlerinin yürütülmesi için yetkili mercilere aktarılabilir.</p>
+                <p><strong>5. KVKK Kapsamındaki Haklarınız:</strong> KVKK’nın 11. maddesi uyarınca; verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini talep etme haklarına sahipsiniz. Başvurularınızı <strong>info@suzannetenekecioglu.com</strong> adresine iletebilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- GİZLİLİK POLİTİKASI MODALI -->
+    <div class="modal-overlay" id="privacyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
+        <div class="modal-container" style="background:#fff; width:100%; max-width:820px; max-height:85vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.05), rgba(94,92,230,0.05)); flex-shrink:0;">
+                <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-user-shield" style="color:var(--accent);"></i> Gizlilik &amp; Çerez Politikası</h3>
+                <button onclick="closeModal('privacyModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="padding:2rem; overflow-y:auto; font-size:14.5px; line-height:1.75; color:var(--text-primary);">
+                <p><strong>Suzanne Tenekecioğlu &amp; Coldwell Banker VIP Gizlilik İlkeleri</strong></p>
+                <p>Ziyaretçilerimizin gizliliği bizim için en yüksek önceliktir. Web sitemizi ziyaret ettiğinizde teknik çerezler (oturum ve performans çerezleri) platformun kesintisiz çalışması amacıyla kullanılır.</p>
+                <p><strong>Çerezlerin Kullanımı:</strong> Çerezler; sayfa yükleme hızını artırmak, arama filtre tercihlerinizi hatırlamak ve AI asistan deneyiminizi kişiselleştirmek için kullanılır. Dilediğiniz zaman tarayıcı ayarlarınızdan çerezleri temizleyebilir veya engelleyebilirsiniz.</p>
+                <p><strong>İletişim Güvenliği:</strong> Sitemiz üzerinden iletilen tüm mesaj ve form verileri SSL/TLS şifreleme protokolleri ile korunmaktadır.</p>
             </div>
         </div>
     </div>
