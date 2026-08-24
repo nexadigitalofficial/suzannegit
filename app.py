@@ -1024,6 +1024,18 @@ def apple_touch_icon():
     resp.headers["Cache-Control"] = "public, max-age=86400"
     return resp
 
+@app.route("/splash-poster.jpg")
+@app.route("/splash_video_poster.jpg")
+def splash_poster():
+    poster = STATIC_DIR / "img" / "splash_video_poster.jpg"
+    if not poster.exists():
+        poster = BASE_DIR / "splash_video_poster.jpg"
+    if poster.exists():
+        resp = send_file(poster, mimetype="image/jpeg")
+        resp.headers["Cache-Control"] = "public, max-age=86400"
+        return resp
+    return "Not found", 404
+
 @app.route("/manifest.json")
 def pwa_manifest():
     mfile = STATIC_DIR / "manifest.json"
