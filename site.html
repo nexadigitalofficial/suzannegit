@@ -982,6 +982,99 @@
             white-space: nowrap;
         }
 
+        .card-feature-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        .card-feature-grid .btn {
+            font-size: 11px !important;
+            padding: 6px 2px !important;
+            justify-content: center !important;
+            white-space: nowrap !important;
+            border-radius: 10px !important;
+            min-height: 34px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 3px !important;
+        }
+
+        .card-bottom-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        .card-bottom-row .btn-whatsapp {
+            flex: 1 1 0;
+            min-width: 0;
+            background: rgba(37, 211, 102, 0.12);
+            color: #128C7E;
+            border: 1px solid rgba(37, 211, 102, 0.35);
+            font-weight: 700;
+            font-size: 12px !important;
+            padding: 8px 6px !important;
+            justify-content: center !important;
+            border-radius: 14px !important;
+            text-decoration: none;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            white-space: nowrap !important;
+            min-height: 40px !important;
+            box-sizing: border-box;
+        }
+
+        .card-bottom-row .btn-randevu {
+            flex: 1.15 1 0;
+            min-width: 0;
+            font-size: 12px !important;
+            font-weight: 700;
+            padding: 8px 6px !important;
+            justify-content: center !important;
+            border-radius: 14px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            white-space: nowrap !important;
+            min-height: 40px !important;
+            box-sizing: border-box;
+        }
+
+        .card-bottom-row .btn-share {
+            flex: 0 0 38px !important;
+            width: 38px !important;
+            height: 38px !important;
+            min-height: 38px !important;
+            max-height: 38px !important;
+            min-width: 38px !important;
+            max-width: 38px !important;
+            padding: 0 !important;
+            justify-content: center !important;
+            border-radius: 50% !important;
+            aspect-ratio: 1 / 1 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            border: 1px solid rgba(0, 113, 227, 0.25) !important;
+            color: var(--accent) !important;
+            background: rgba(0, 113, 227, 0.06) !important;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        .card-bottom-row .btn-share:hover {
+            background: rgba(0, 113, 227, 0.15) !important;
+            transform: scale(1.05);
+        }
+
         .btn-text-sm {
             font-size: 13px;
             font-weight: 500;
@@ -2554,9 +2647,7 @@
                 scroll-snap-align: center !important;
                 scroll-snap-stop: always !important;
             }
-            .card-actions { flex-wrap: wrap !important; }
-            .card-actions .btn { white-space: normal !important; flex: 1 1 auto; min-height: 44px; padding: 8px 10px !important; font-size: 12px !important; }
-            .card-footer .btn { min-height: 44px; }
+            .card-footer .btn:not(.btn-share):not(.card-feature-grid button) { min-height: 44px; }
 
             /* Bottom Sheet Modals */
             .modal-overlay {
@@ -3554,11 +3645,23 @@
         }
 
         .card-actions .btn, 
-        .card-footer .btn,
+        .card-footer .btn:not(.btn-share):not(.card-feature-grid button),
         .carousel-btn,
         .chat-send,
         .chat-lead-btn {
             min-height: 44px !important;
+        }
+
+        .card-bottom-row .btn-share {
+            width: 38px !important;
+            height: 38px !important;
+            min-height: 38px !important;
+            max-height: 38px !important;
+            min-width: 38px !important;
+            max-width: 38px !important;
+            flex: 0 0 38px !important;
+            border-radius: 50% !important;
+            aspect-ratio: 1 / 1 !important;
         }
 
         .carousel-btn {
@@ -7167,10 +7270,10 @@
                     const pNum = item.price_numeric || (item.intelligence && item.intelligence.price) || (item.price_min) || 0;
                     const isBudgetMatch = (activeFilters.priceMin !== null && pNum >= activeFilters.priceMin && pNum <= activeFilters.priceMax);
 
-                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
-                    const slideshowBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.35); font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')"><i class="fa-solid fa-images"></i> Slayt</button>`;
-                    const reportBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(0,113,227,0.08); color:var(--accent); border-color:rgba(0,113,227,0.25); font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation(); openProjectReport('${item.id}')"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
-                    const pdfBtn = `<button class="btn btn-outline btn-sm" style="font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation(); openPdfPreview('${item.id}')"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
+                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
+                    const slideshowBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.35);" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')"><i class="fa-solid fa-images"></i> Slayt</button>`;
+                    const reportBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(0,113,227,0.08); color:var(--accent); border-color:rgba(0,113,227,0.25);" onclick="event.stopPropagation(); openProjectReport('${item.id}')"><i class="fa-solid fa-brain"></i> Rapor</button>`;
+                    const pdfBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openPdfPreview('${item.id}')"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
 
                     const waMsg = `${safeName} hakkında bilgi almak ve randevu oluşturmak istiyorum.\n📍 ${escLoc}\n💰 ${escPrice || 'Fiyat Bilgisi'}\nDetay: ${window.location.origin}/site#site-card-${item.id}`;
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
@@ -7188,23 +7291,23 @@
                                 <div class="card-location" style="font-size:13px; color:var(--text-secondary); margin-bottom:8px;"><i class="fa-solid fa-location-dot"></i> ${escLoc}</div>
                                 <div class="card-tags" style="margin-bottom:12px;">${roomTags}</div>
                                 
-                                <div class="card-footer" style="flex-direction:column; align-items:flex-start; gap:0.8rem; margin-top: auto; padding-top:12px; border-top:1px solid rgba(0,0,0,0.06);">
+                                <div class="card-footer" style="flex-direction:column; align-items:flex-start; gap:0.6rem; margin-top: auto; padding-top:12px; border-top:1px solid rgba(0,0,0,0.06); width:100%;">
                                     <div style="width:100%;">
                                         <span class="card-price-prominent">${escPrice || 'Fiyat İçin Danışın'}</span>
                                         ${escDown ? `<div class="card-price-down" style="font-size:12px; font-weight:600; color:#059669; margin-top:2px;"><i class="fa-solid fa-credit-card"></i> Peşinat: ${escDown}</div>` : ''}
                                         ${item.installment_terms ? `<div class="card-price-down" style="font-size:12px; font-weight:600; color:#2563EB; margin-top:2px;"><i class="fa-solid fa-calendar-days"></i> Ödeme: ${escapeHtml(item.installment_terms)}</div>` : ''}
                                         ${item.delivery_months ? `<div class="card-price-down" style="font-size:11px; color:#6B7280; margin-top:2px;"><i class="fa-solid fa-clock"></i> Teslim: ${item.delivery_months} Ay ${item.ada_no ? `• Ada ${item.ada_no}/${item.parsel_no}` : ''}</div>` : ''}
                                     </div>
-                                    <div class="card-actions" style="width:100%; display:flex; flex-wrap:wrap; gap:6px; position:relative; z-index:10;">
+                                    <div class="card-feature-grid">
                                         ${videoBtn}
                                         ${slideshowBtn}
                                         ${reportBtn}
                                         ${pdfBtn}
                                     </div>
-                                    <div style="width:100%; display:grid; grid-template-columns:1fr 1fr 42px; gap:6px; margin-top:4px; position:relative; z-index:10;">
-                                        <a href="${waUrl}" target="_blank" class="btn btn-outline btn-sm" style="background:rgba(37,211,102,0.12); color:#128C7E; border-color:rgba(37,211,102,0.35); font-weight:700; font-size:12px; justify-content:center; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openAppointmentModal('${item.id}')" style="font-size:12px; font-weight:700; justify-content:center; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-calendar-check"></i> Randevu Al</button>
-                                        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Projeyi Paylaş" style="padding:0; justify-content:center; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-share-nodes"></i></button>
+                                    <div class="card-bottom-row">
+                                        <a href="${waUrl}" target="_blank" class="btn-whatsapp" onclick="event.stopPropagation()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                                        <button class="btn btn-primary btn-randevu" onclick="event.stopPropagation(); openAppointmentModal('${item.id}')"><i class="fa-solid fa-calendar-check"></i> Randevu Al</button>
+                                        <button class="btn btn-outline btn-share" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Projeyi Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -8267,10 +8370,10 @@
                     const waMsg = `${safeName} hakkında bilgi almak istiyorum.\n📍 ${escLoc}\n💰 ${escPrice || 'Fiyat Bilgisi'}\nDetay: ${window.location.origin}/site#site-card-${item.id}`;
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
 
-                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px; position:relative; z-index:10; pointer-events:auto;" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
-                    const slideshowBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.3); min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-images"></i> Slayt</button>`;
-                    const reportBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openProjectReport('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(0,113,227,0.08); color:var(--accent); min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
-                    const pdfBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openPdfPreview('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
+                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
+                    const slideshowBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.35);" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')"><i class="fa-solid fa-images"></i> Slayt</button>`;
+                    const reportBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(0,113,227,0.08); color:var(--accent); border-color:rgba(0,113,227,0.25);" onclick="event.stopPropagation(); openProjectReport('${item.id}')"><i class="fa-solid fa-brain"></i> Rapor</button>`;
+                    const pdfBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openPdfPreview('${item.id}')"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
 
                     renderedCards.push(`
                         <div class="card project-card" onclick="openProjectReport('${item.id}')" style="display:flex; flex-direction:column; background:#fff; border-radius:24px; overflow:hidden; border:1px solid rgba(0,0,0,0.06); box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:all 0.3s ease;">
@@ -8286,19 +8389,19 @@
                                 <div style="font-size:13px; color:var(--text-secondary); margin-bottom:8px;"><i class="fa-solid fa-location-dot"></i> ${escLoc}</div>
                                 ${item.ada_no ? `<div style="font-size:11px; color:var(--accent); font-weight:600; margin-bottom:8px;"><i class="fa-solid fa-stamp"></i> Ada ${escapeHtml(item.ada_no)} / Parsel ${escapeHtml(item.parsel_no || '')} (TKGM Onaylı)</div>` : ''}
                                 <div style="margin-bottom:12px;">${roomTags}</div>
-                                <div style="margin-top:auto; padding-top:12px; border-top:1px solid rgba(0,0,0,0.06);">
+                                <div style="margin-top:auto; padding-top:12px; border-top:1px solid rgba(0,0,0,0.06); width:100%;">
                                     <span class="card-price-prominent">${escPrice || 'Fiyat İçin Danışın'}</span>
                                     ${escDown ? `<div class="card-price-down"><i class="fa-solid fa-credit-card"></i> Peşinat: ${escDown}</div>` : ''}
-                                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; position:relative; z-index:10;">
+                                    <div class="card-feature-grid">
                                         ${videoBtn}
                                         ${slideshowBtn}
                                         ${reportBtn}
                                         ${pdfBtn}
                                     </div>
-                                    <div style="width:100%; display:grid; grid-template-columns:1fr 1fr 42px; gap:6px; position:relative; z-index:10;">
-                                        <a href="${waUrl}" target="_blank" onclick="event.stopPropagation()" style="display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 10px; border-radius:12px; background:rgba(37,211,102,0.12); color:#128C7E; font-size:12px; font-weight:700; text-decoration:none; border:1px solid rgba(37,211,102,0.35); min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openAppointmentModal('${item.id}')" style="font-size:12px; font-weight:700; justify-content:center; min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-calendar-check"></i> Randevu</button>
-                                        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Projeyi Paylaş" style="padding:0; justify-content:center; min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-share-nodes"></i></button>
+                                    <div class="card-bottom-row">
+                                        <a href="${waUrl}" target="_blank" class="btn-whatsapp" onclick="event.stopPropagation()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                                        <button class="btn btn-primary btn-randevu" onclick="event.stopPropagation(); openAppointmentModal('${item.id}')"><i class="fa-solid fa-calendar-check"></i> Randevu Al</button>
+                                        <button class="btn btn-outline btn-share" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Projeyi Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
                                     </div>
                                 </div>
                             </div>
