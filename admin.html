@@ -211,16 +211,44 @@
 
         /* CRM TABLE */
         .crm-table-container {
-            background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
-            overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            overflow-y: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
-        .crm-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .crm-table {
+            width: 100%;
+            min-width: 1100px;
+            border-collapse: collapse;
+            text-align: left;
+        }
         .crm-table th {
-            background: rgba(0,0,0,0.3); padding: 14px 18px; font-size: 12px; font-weight: 700;
-            color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border);
+            background: rgba(0,0,0,0.35);
+            padding: 14px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
         }
         .crm-table td {
-            padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13.5px; vertical-align: middle;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+            vertical-align: middle;
+        }
+        .crm-table th:last-child,
+        .crm-table td:last-child {
+            text-align: center;
+            padding-right: 20px;
+            min-width: 165px;
+            width: 165px;
         }
         .crm-table tr:hover { background: rgba(255,255,255,0.02); }
         .crm-stage-select {
@@ -375,13 +403,13 @@
                 <table class="crm-table">
                     <thead>
                         <tr>
-                            <th>Tarih</th>
-                            <th>Müşteri Bilgisi</th>
-                            <th>Telefon</th>
-                            <th>İlgilenilen Konu / Bölge</th>
-                            <th>Danışman Notu / Mesaj</th>
-                            <th>Statü</th>
-                            <th>Aksiyonlar</th>
+                            <th style="width:125px;">Tarih</th>
+                            <th style="width:170px;">Müşteri Bilgisi</th>
+                            <th style="width:135px;">Telefon</th>
+                            <th style="width:145px;">İlgilenilen Konu / Bölge</th>
+                            <th style="max-width:240px;">Danışman Notu / Mesaj</th>
+                            <th style="width:155px; text-align:center;">Statü</th>
+                            <th style="width:165px; text-align:center;">Aksiyonlar</th>
                         </tr>
                     </thead>
                     <tbody id="crmTableBody">
@@ -898,24 +926,24 @@
 
                 return `
                     <tr style="transition:background 0.2s;">
-                        <td style="color:var(--text-muted); font-size:12px; white-space:nowrap;">${safeDate}</td>
-                        <td style="cursor:pointer;" onclick="openCrmDetailModal(${safeId})" title="Detayları İncele">
+                        <td style="color:var(--text-muted); font-size:12px; white-space:nowrap; width:125px;">${safeDate}</td>
+                        <td style="cursor:pointer; width:170px;" onclick="openCrmDetailModal(${safeId})" title="Detayları İncele">
                             <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
                                 <span>${safeName}</span>
                                 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px; color:var(--accent); opacity:0.8;"></i>
                             </div>
                             <div style="font-size:12px; color:var(--text-muted);">${safeEmail}</div>
                         </td>
-                        <td>
+                        <td style="width:135px; white-space:nowrap;">
                             <a href="${telUrl}" style="color:var(--accent); font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px;"><i class="fa-solid fa-phone"></i> ${safePhone}</a>
                         </td>
-                        <td>
+                        <td style="width:145px;">
                             <span style="font-weight:600; color:#fff;">${escapeHtml(c.project_id || 'Genel Danışmanlık')}</span>
                         </td>
-                        <td style="max-width:300px; font-size:12.5px; color:var(--text-muted); line-height:1.4; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer;" onclick="openCrmDetailModal(${safeId})" title="${safeNotes}">
+                        <td style="max-width:240px; width:240px; font-size:12.5px; color:var(--text-muted); line-height:1.4; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer;" onclick="openCrmDetailModal(${safeId})" title="${safeNotes}">
                             ${safeNotes}
                         </td>
-                        <td>
+                        <td style="width:155px; text-align:center;">
                             <select id="crm-stage-select-${safeId}" class="crm-stage-select" onchange="updateCrmStage(${safeId}, this.value)">
                                 <option value="appointment" ${stage === 'appointment' ? 'selected' : ''}>📅 Yeni Randevu</option>
                                 <option value="Görüşüldü" ${stage === 'Görüşüldü' ? 'selected' : ''}>💬 Görüşüldü</option>
@@ -924,11 +952,11 @@
                                 <option value="Tamamlandı" ${stage === 'Tamamlandı' ? 'selected' : ''}>✅ Tamamlandı</option>
                             </select>
                         </td>
-                        <td>
-                            <div style="display:flex; gap:6px; align-items:center;">
-                                <button onclick="openCrmDetailModal(${safeId})" class="btn btn-primary btn-sm" style="padding:6px 12px; min-height:34px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:5px; border-radius:8px;" title="Randevu Detayını İncele"><i class="fa-solid fa-eye"></i> İncele</button>
-                                <a href="${waUrl}" target="_blank" class="btn btn-secondary btn-sm" style="background:rgba(37,211,102,0.15); color:#25D366; border-color:rgba(37,211,102,0.3); padding:6px 10px; min-height:34px; font-size:12px; border-radius:8px;" title="WhatsApp ile Yaz"><i class="fa-brands fa-whatsapp"></i></a>
-                                <button onclick="deleteCrmLead(${safeId})" class="btn btn-secondary btn-sm" style="color:var(--accent-red); padding:6px 10px; min-height:34px; font-size:12px; border-radius:8px;" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                        <td style="width:165px; text-align:center; padding-right:20px; white-space:nowrap;">
+                            <div style="display:inline-flex; gap:6px; align-items:center; justify-content:center;">
+                                <button onclick="openCrmDetailModal(${safeId})" class="btn btn-primary btn-sm" style="padding:6px 10px; min-height:34px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:4px; border-radius:8px; white-space:nowrap;" title="Randevu Detayını İncele"><i class="fa-solid fa-eye"></i> İncele</button>
+                                <a href="${waUrl}" target="_blank" class="btn btn-secondary btn-sm" style="background:rgba(37,211,102,0.15); color:#25D366; border-color:rgba(37,211,102,0.3); padding:6px 9px; min-height:34px; font-size:12px; border-radius:8px;" title="WhatsApp ile Yaz"><i class="fa-brands fa-whatsapp"></i></a>
+                                <button onclick="deleteCrmLead(${safeId})" class="btn btn-secondary btn-sm" style="color:var(--accent-red); border-color:rgba(255,69,58,0.3); padding:6px 9px; min-height:34px; font-size:12px; border-radius:8px;" title="Sil"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
