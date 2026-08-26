@@ -432,6 +432,91 @@
         </div>
     </main>
 
+    <!-- CRM LEAD DETAIL CARD MODAL -->
+    <div class="pin-modal-overlay" id="crmDetailModal" style="display:none; align-items:center; justify-content:center; z-index:99999; padding:1rem;">
+        <div class="pin-modal-card" style="max-width:680px; width:100%; text-align:left; padding:0; overflow:hidden; border-radius:22px; background:#161922; border:1px solid rgba(255,255,255,0.12); box-shadow:0 30px 80px rgba(0,0,0,0.75);">
+            <!-- Modal Header -->
+            <div style="padding:1.25rem 1.5rem; background:linear-gradient(135deg, #1f2433 0%, #161922 100%); border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:space-between;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:46px; height:46px; border-radius:50%; background:rgba(0,113,227,0.15); border:1px solid rgba(0,113,227,0.35); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:18px;">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div>
+                        <h3 id="crmModalName" style="margin:0; font-size:18px; font-weight:800; color:#fff;">Müşteri & Randevu Detayı</h3>
+                        <div style="display:flex; align-items:center; gap:8px; margin-top:3px;">
+                            <span id="crmModalDate" style="font-size:12px; color:var(--text-muted);"><i class="fa-regular fa-calendar"></i> -</span>
+                            <span style="color:rgba(255,255,255,0.2);">•</span>
+                            <span id="crmModalStageBadge" style="font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; background:rgba(0,113,227,0.18); color:#6BA5FF;">Yeni Randevu</span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeCrmDetailModal()" style="background:rgba(255,255,255,0.08); border:none; color:var(--text-muted); width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all 0.2s;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,255,255,0.18)';" onmouseout="this.style.color='var(--text-muted)'; this.style.background='rgba(255,255,255,0.08)';"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div style="padding:1.5rem; max-height:calc(85vh - 160px); overflow-y:auto; display:flex; flex-direction:column; gap:1.2rem;">
+                <!-- Contact Information Grid -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px;"><i class="fa-solid fa-phone" style="color:var(--accent);"></i> Telefon Numarası</div>
+                        <div id="crmModalPhone" style="font-size:15px; font-weight:700; color:#fff; display:flex; align-items:center; justify-content:space-between;">
+                            <span>-</span>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:12px 14px;">
+                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px;"><i class="fa-solid fa-envelope" style="color:var(--accent);"></i> E-Posta Adresi</div>
+                        <div id="crmModalEmail" style="font-size:14px; font-weight:600; color:#fff;">-</div>
+                    </div>
+                </div>
+
+                <!-- Project & Appointment Details -->
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:14px;">
+                    <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;"><i class="fa-solid fa-building" style="color:var(--accent);"></i> İlgilenilen Proje / Konu</div>
+                    <div id="crmModalProject" style="font-size:15px; font-weight:700; color:#fff; margin-bottom:6px;">-</div>
+                    <div id="crmModalPreferredTime" style="font-size:13px; color:var(--text-secondary); display:flex; align-items:center; gap:6px;">
+                        <i class="fa-regular fa-clock" style="color:var(--accent-amber);"></i> <span id="crmModalTimeText">-</span>
+                    </div>
+                </div>
+
+                <!-- Full Notes & Message Details -->
+                <div style="background:rgba(0,0,0,0.25); border:1px solid var(--border); border-radius:14px; padding:14px;">
+                    <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;"><i class="fa-solid fa-clipboard-list" style="color:var(--accent);"></i> Danışman Notu / Talep Detayları / AI Notları</div>
+                    <div id="crmModalNotes" style="font-size:13px; color:#e0e0e0; line-height:1.6; white-space:pre-wrap; background:rgba(255,255,255,0.02); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); max-height:180px; overflow-y:auto;">
+                        -
+                    </div>
+                </div>
+
+                <!-- Status Management Directly inside Card -->
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                    <div>
+                        <div style="font-size:12px; font-weight:700; color:#fff;"><i class="fa-solid fa-bars-progress" style="color:var(--accent);"></i> Süreç Statüsü</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Müşterinin güncel aşamasını buradan değiştirebilirsiniz</div>
+                    </div>
+                    <select id="crmModalStageSelect" class="crm-stage-select" style="font-size:13px; padding:8px 12px; min-width:180px;" onchange="updateCrmStageFromModal(this.value)">
+                        <option value="appointment">📅 Yeni Randevu</option>
+                        <option value="Görüşüldü">💬 Görüşüldü</option>
+                        <option value="Teklif Verildi">📄 Teklif Verildi</option>
+                        <option value="Sözleşme Aşaması">⭐ Sözleşme Aşaması</option>
+                        <option value="Tamamlandı">✅ Tamamlandı</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Modal Footer Actions -->
+            <div style="padding:1rem 1.5rem; background:rgba(0,0,0,0.3); border-top:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <a id="crmModalWaBtn" href="#" target="_blank" class="btn btn-sm" style="background:#25D366; color:#000; font-weight:700; border:none; padding:8px 14px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;"><i class="fa-brands fa-whatsapp" style="font-size:15px;"></i> WhatsApp ile İletişim</a>
+                    <a id="crmModalCallBtn" href="#" class="btn btn-sm btn-secondary" style="font-weight:700; padding:8px 14px; border-radius:10px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;"><i class="fa-solid fa-phone"></i> Hemen Ara</a>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button id="crmModalDeleteBtn" onclick="deleteCrmFromModal()" class="btn btn-sm btn-secondary" style="color:var(--accent-red); border-color:rgba(255,69,58,0.3); padding:8px 12px; border-radius:10px;"><i class="fa-solid fa-trash"></i> Sil</button>
+                    <button onclick="closeCrmDetailModal()" class="btn btn-sm btn-secondary" style="padding:8px 16px; border-radius:10px;">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST NOTIFICATION -->
     <div id="toast">
         <i class="fa-solid fa-circle-check" style="color:var(--accent-green);"></i>
@@ -786,6 +871,8 @@
             }
         }
 
+        let currentDetailLeadId = null;
+
         function renderCrmRows() {
             const tbody = document.getElementById('crmTableBody');
             if (!tbody) return;
@@ -810,10 +897,13 @@
                 const telUrl = `tel:${safePhone}`;
 
                 return `
-                    <tr>
+                    <tr style="transition:background 0.2s;">
                         <td style="color:var(--text-muted); font-size:12px; white-space:nowrap;">${safeDate}</td>
-                        <td>
-                            <div style="font-weight:700; color:#fff;">${safeName}</div>
+                        <td style="cursor:pointer;" onclick="openCrmDetailModal(${safeId})" title="Detayları İncele">
+                            <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+                                <span>${safeName}</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px; color:var(--accent); opacity:0.8;"></i>
+                            </div>
                             <div style="font-size:12px; color:var(--text-muted);">${safeEmail}</div>
                         </td>
                         <td>
@@ -822,11 +912,11 @@
                         <td>
                             <span style="font-weight:600; color:#fff;">${escapeHtml(c.project_id || 'Genel Danışmanlık')}</span>
                         </td>
-                        <td style="max-width:320px; font-size:12.5px; color:var(--text-muted); line-height:1.4;">
+                        <td style="max-width:300px; font-size:12.5px; color:var(--text-muted); line-height:1.4; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer;" onclick="openCrmDetailModal(${safeId})" title="${safeNotes}">
                             ${safeNotes}
                         </td>
                         <td>
-                            <select class="crm-stage-select" onchange="updateCrmStage(${safeId}, this.value)">
+                            <select id="crm-stage-select-${safeId}" class="crm-stage-select" onchange="updateCrmStage(${safeId}, this.value)">
                                 <option value="appointment" ${stage === 'appointment' ? 'selected' : ''}>📅 Yeni Randevu</option>
                                 <option value="Görüşüldü" ${stage === 'Görüşüldü' ? 'selected' : ''}>💬 Görüşüldü</option>
                                 <option value="Teklif Verildi" ${stage === 'Teklif Verildi' ? 'selected' : ''}>📄 Teklif Verildi</option>
@@ -835,14 +925,140 @@
                             </select>
                         </td>
                         <td>
-                            <div style="display:flex; gap:6px;">
-                                <a href="${waUrl}" target="_blank" class="btn btn-secondary btn-sm" style="background:rgba(37,211,102,0.15); color:#25D366; border-color:rgba(37,211,102,0.3); padding:6px 10px; min-height:34px; font-size:12px;" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                                <button onclick="deleteCrmLead(${safeId})" class="btn btn-secondary btn-sm" style="color:var(--accent-red); padding:6px 10px; min-height:34px; font-size:12px;" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                            <div style="display:flex; gap:6px; align-items:center;">
+                                <button onclick="openCrmDetailModal(${safeId})" class="btn btn-primary btn-sm" style="padding:6px 12px; min-height:34px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:5px; border-radius:8px;" title="Randevu Detayını İncele"><i class="fa-solid fa-eye"></i> İncele</button>
+                                <a href="${waUrl}" target="_blank" class="btn btn-secondary btn-sm" style="background:rgba(37,211,102,0.15); color:#25D366; border-color:rgba(37,211,102,0.3); padding:6px 10px; min-height:34px; font-size:12px; border-radius:8px;" title="WhatsApp ile Yaz"><i class="fa-brands fa-whatsapp"></i></a>
+                                <button onclick="deleteCrmLead(${safeId})" class="btn btn-secondary btn-sm" style="color:var(--accent-red); padding:6px 10px; min-height:34px; font-size:12px; border-radius:8px;" title="Sil"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
                 `;
             }).join('');
+        }
+
+        function openCrmDetailModal(id) {
+            const customer = allCustomers.find(c => String(c.id) === String(id));
+            if (!customer) return;
+
+            currentDetailLeadId = customer.id;
+
+            const safeName = customer.name || 'Misafir Müşteri';
+            const safePhone = customer.phone || '-';
+            const safeEmail = customer.email || 'E-posta belirtilmemiş';
+            const safeNotes = customer.notes || 'Herhangi bir ek not bulunmuyor.';
+            const safeDate = customer.created_at || '-';
+            const stage = customer.stage || 'appointment';
+            const projectId = customer.project_id || 'Genel Danışmanlık / Yatırım Talebi';
+
+            // Populate Modal Fields
+            const nameEl = document.getElementById('crmModalName');
+            if (nameEl) nameEl.innerText = safeName;
+
+            const dateEl = document.getElementById('crmModalDate');
+            if (dateEl) dateEl.innerHTML = `<i class="fa-regular fa-calendar"></i> Kayıt: ${safeDate}`;
+
+            const badgeEl = document.getElementById('crmModalStageBadge');
+            if (badgeEl) {
+                const stageLabels = {
+                    'appointment': '📅 Yeni Randevu',
+                    'Görüşüldü': '💬 Görüşüldü',
+                    'Teklif Verildi': '📄 Teklif Verildi',
+                    'Sözleşme Aşaması': '⭐ Sözleşme Aşaması',
+                    'Tamamlandı': '✅ Tamamlandı'
+                };
+                badgeEl.innerText = stageLabels[stage] || stage;
+            }
+
+            const phoneEl = document.getElementById('crmModalPhone');
+            if (phoneEl) {
+                phoneEl.innerHTML = `
+                    <span>${safePhone}</span>
+                    <a href="tel:${safePhone}" style="font-size:12px; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:4px; background:rgba(0,113,227,0.12); padding:4px 10px; border-radius:8px;"><i class="fa-solid fa-phone"></i> Ara</a>
+                `;
+            }
+
+            const emailEl = document.getElementById('crmModalEmail');
+            if (emailEl) {
+                if (customer.email) {
+                    emailEl.innerHTML = `<a href="mailto:${customer.email}" style="color:var(--accent); text-decoration:none;">${safeEmail}</a>`;
+                } else {
+                    emailEl.innerText = safeEmail;
+                }
+            }
+
+            const projectEl = document.getElementById('crmModalProject');
+            if (projectEl) projectEl.innerText = projectId;
+
+            // Extract Preferred Time / Details from Notes
+            let prefTime = 'Belirtilmemiş';
+            if (safeNotes.includes('Tercih:')) {
+                const parts = safeNotes.split('Tercih:')[1];
+                if (parts) prefTime = parts.split('|')[0].trim();
+            } else if (safeNotes.includes('Zaman:')) {
+                const parts = safeNotes.split('Zaman:')[1];
+                if (parts) prefTime = parts.split('|')[0].trim();
+            }
+            const timeEl = document.getElementById('crmModalTimeText');
+            if (timeEl) timeEl.innerText = `Tercih Edilen Zaman: ${prefTime}`;
+
+            const notesEl = document.getElementById('crmModalNotes');
+            if (notesEl) notesEl.innerText = safeNotes;
+
+            const stageSelect = document.getElementById('crmModalStageSelect');
+            if (stageSelect) stageSelect.value = stage;
+
+            // Setup Quick Links
+            const cleanPhone = safePhone.replace(/[^0-9]/g, '');
+            const trPhone = cleanPhone.startsWith('90') ? cleanPhone : (cleanPhone.startsWith('0') ? '9' + cleanPhone : '90' + cleanPhone);
+            const waUrl = `https://wa.me/${trPhone}?text=${encodeURIComponent('Merhaba Sayın ' + safeName + ', talebinizle ilgili görüşmek üzere yazıyorum.')}`;
+            
+            const waBtn = document.getElementById('crmModalWaBtn');
+            if (waBtn) waBtn.href = waUrl;
+
+            const callBtn = document.getElementById('crmModalCallBtn');
+            if (callBtn) callBtn.href = `tel:${safePhone}`;
+
+            // Show Modal
+            const modal = document.getElementById('crmDetailModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeCrmDetailModal() {
+            const modal = document.getElementById('crmDetailModal');
+            if (modal) modal.style.display = 'none';
+            currentDetailLeadId = null;
+        }
+
+        async function updateCrmStageFromModal(newStage) {
+            if (!currentDetailLeadId) return;
+            await updateCrmStage(currentDetailLeadId, newStage);
+            
+            // Update customer in local memory
+            const cust = allCustomers.find(c => c.id === currentDetailLeadId);
+            if (cust) {
+                cust.stage = newStage;
+                const selectInTable = document.getElementById(`crm-stage-select-${currentDetailLeadId}`);
+                if (selectInTable) selectInTable.value = newStage;
+
+                const badgeEl = document.getElementById('crmModalStageBadge');
+                if (badgeEl) {
+                    const stageLabels = {
+                        'appointment': '📅 Yeni Randevu',
+                        'Görüşüldü': '💬 Görüşüldü',
+                        'Teklif Verildi': '📄 Teklif Verildi',
+                        'Sözleşme Aşaması': '⭐ Sözleşme Aşaması',
+                        'Tamamlandı': '✅ Tamamlandı'
+                    };
+                    badgeEl.innerText = stageLabels[newStage] || newStage;
+                }
+            }
+        }
+
+        async function deleteCrmFromModal() {
+            if (!currentDetailLeadId) return;
+            const idToDelete = currentDetailLeadId;
+            closeCrmDetailModal();
+            await deleteCrmLead(idToDelete);
         }
 
         async function updateCrmStage(id, newStage) {
@@ -855,6 +1071,8 @@
                 const data = await res.json();
                 if (data.success) {
                     showToast('Müşteri durumu güncellendi.');
+                    const cust = allCustomers.find(c => c.id === id);
+                    if (cust) cust.stage = newStage;
                 }
             } catch (err) {
                 showToast('Güncelleme hatası.');
