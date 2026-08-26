@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-08-24T21:14:13.991070",
+  "timestamp": "2026-08-26T22:07:20.949002",
   "status": "OPTIMAL",
   "health_score": 100.0,
   "state": {
     "total_projects": 31,
     "projects_with_docs": 36,
-    "total_docs": 692,
-    "total_chunks": 1540,
+    "total_docs": 733,
+    "total_chunks": 1716,
     "error_rate": 0.0,
     "health_score": 100.0,
-    "timestamp": "2026-08-24T21:14:13.985160"
+    "timestamp": "2026-08-26T22:07:20.935359"
   },
   "anomalies": [],
   "predictions": {
@@ -38,7 +38,7 @@
     "optimizations": [
       "SQLite PRAGMA optimize yürütüldü."
     ],
-    "timestamp": "2026-08-24T21:14:13.991070"
+    "timestamp": "2026-08-26T22:07:20.949002"
   },
   "learning": {
     "lessons_learned_count": 3,
