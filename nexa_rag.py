@@ -483,7 +483,7 @@ def _sanitize_numeric(val, default=0.0):
         return default
 
 
-def schedule_vip_appointment(customer_name: str, phone: str, project_name: str = "", preferred_datetime: str = "", notes: str = "") -> str:
+def schedule_vip_appointment(customer_name: str, phone: str, project_name: str, preferred_datetime: str, notes: str) -> str:
     """Müşterinin VIP proje danışmanı Suzanne Tenekecioğlu ile randevu talebini doğrudan SQLite veritabanına ve CRM sistemine kaydeder.
     
     Args:
@@ -531,7 +531,7 @@ def schedule_vip_appointment(customer_name: str, phone: str, project_name: str =
         return f"Randevu talebiniz başarıyla alındı ({customer_name} - {phone}). Danışmanımız Suzanne Tenekecioğlu sizinle en kısa sürede iletişime geçecektir (0535 489 56 56)."
 
 
-def calculate_investment_plan(total_price, down_payment_percent = 50.0, term_months = 24) -> str:
+def calculate_investment_plan(total_price: str, down_payment_percent: str, term_months: str) -> str:
     """Gayrimenkul alımında peşinat, kalan bakiye, aylık eşit taksit tutarı ve peşin indirim avantajını kesin matematikle hesaplar.
     
     Args:

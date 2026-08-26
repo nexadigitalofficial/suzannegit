@@ -1493,6 +1493,9 @@
             right: auto !important;
             left: 50% !important;
             transform: translateX(-50%) scale(0.95) !important;
+            bottom: 74px !important;
+            max-height: calc(100dvh - 160px) !important;
+            height: min(490px, calc(100dvh - 160px)) !important;
         }
         .chatbot-widget.scroll-revealed .chat-window.open {
             transform: translateX(-50%) scale(1) !important;
@@ -1594,24 +1597,25 @@
             position: absolute;
             bottom: 84px;
             right: 0;
-            width: 560px;
-            max-width: calc(100vw - 24px);
-            height: min(760px, calc(100vh - 110px));
-            height: min(760px, calc(100dvh - 110px));
-            background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(249,250,255,0.94));
+            width: 430px;
+            max-width: calc(100vw - 28px);
+            height: 520px;
+            max-height: calc(100dvh - 110px);
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(249,250,255,0.96));
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(94, 92, 230, 0.22);
-            border-radius: 24px;
-            box-shadow: 0 24px 70px rgba(15, 20, 60, 0.28), 0 0 0 1px rgba(94, 92, 230, 0.06), 0 0 60px rgba(94, 92, 230, 0.12);
+            border-radius: 22px;
+            box-shadow: 0 20px 60px rgba(15, 20, 60, 0.25), 0 0 0 1px rgba(94, 92, 230, 0.06), 0 0 50px rgba(94, 92, 230, 0.1);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             opacity: 0;
             pointer-events: none;
-            transform: translateY(24px) scale(0.92);
+            transform: translateY(20px) scale(0.94);
             transform-origin: bottom right;
-            transition: opacity .35s ease, transform .35s cubic-bezier(.34, 1.56, .64, 1);
+            transition: opacity .3s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1);
+            z-index: 100000;
         }
 
         .chat-window.open {
@@ -1623,13 +1627,14 @@
         /* Koyu "uzay" başlık: tarayıcı ışığı + akan neon alt çizgi */
         .chat-header {
             position: relative;
-            padding: 1rem 1.1rem;
+            padding: 0.75rem 1rem;
             background: linear-gradient(135deg, #0A0F2C 0%, #141A45 55%, #1B1444 100%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
-            gap: 0.85rem;
+            gap: 0.75rem;
             overflow: hidden;
+            flex-shrink: 0;
         }
         .chat-header::before {
             content: '';
@@ -1794,35 +1799,42 @@
 
         .chat-suggestion-chips {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            flex-shrink: 0;
             gap: 0.45rem;
-            padding: 0.65rem 1rem;
-            overflow-x: hidden;
-            background: rgba(246, 248, 255, 0.92);
-            border-bottom: 1px solid rgba(94, 92, 230, 0.1);
+            padding: 0.5rem 0.85rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            background: rgba(246, 248, 255, 0.96);
+            border-bottom: 1px solid rgba(94, 92, 230, 0.12);
+            scrollbar-width: none;
         }
         .chat-suggestion-chips::-webkit-scrollbar { display: none; }
         .chat-chip {
-            flex: 0 1 auto;
+            flex: 0 0 auto;
             min-width: 0;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(94, 92, 230, 0.18);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(94, 92, 230, 0.22);
             border-radius: 99px;
-            padding: 0.38rem 0.95rem;
-            font-size: 12px;
+            padding: 0.32rem 0.85rem;
+            font-size: 11.5px;
             font-weight: 600;
             color: #2A2D45;
             cursor: pointer;
             white-space: nowrap;
-            transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), background .2s ease, color .2s ease, box-shadow .25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: transform .2s cubic-bezier(.34, 1.56, .64, 1), background .2s ease, color .2s ease, box-shadow .2s ease;
             box-shadow: 0 1px 4px rgba(31, 38, 135, 0.06);
         }
         .chat-chip:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             background: linear-gradient(135deg, #0071E3, #5E5CE6);
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 6px 16px rgba(94, 92, 230, 0.35);
+            box-shadow: 0 4px 12px rgba(94, 92, 230, 0.3);
         }
 
         /* Aurora blob'ları + mesaj alanı */
@@ -1920,20 +1932,21 @@
         }
 
         .chat-input-area {
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.92);
+            flex-shrink: 0;
+            padding: 0.65rem 0.85rem;
+            background: rgba(255, 255, 255, 0.95);
             border-top: 1px solid rgba(94, 92, 230, 0.12);
             display: flex;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
 
         .chat-input {
             flex: 1;
-            padding: 0.8rem 1.2rem;
+            padding: 0.65rem 1rem;
             border: 1px solid rgba(94, 92, 230, 0.22);
             border-radius: 980px;
             font-family: var(--font-primary);
-            font-size: 14px;
+            font-size: 13.5px;
             outline: none;
             background: rgba(245, 247, 255, 0.85);
             transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
@@ -2036,10 +2049,11 @@
         }
 
         .chat-lead-row {
+            flex-shrink: 0;
             display: flex;
             gap: 0.4rem;
-            padding: 0.6rem 1rem 0;
-            background: rgba(255, 255, 255, 0.92);
+            padding: 0.45rem 0.85rem 0;
+            background: rgba(255, 255, 255, 0.95);
             transition: opacity 0.3s ease;
         }
         .chat-lead-row.saved {
@@ -3659,21 +3673,26 @@
             /* Mobile Chat Window */
             .chat-window {
                 position: fixed !important;
-                left: 8px !important;
-                right: 8px !important;
+                left: 10px !important;
+                right: 10px !important;
                 width: auto !important;
-                max-width: 480px !important;
+                max-width: 430px !important;
                 margin: 0 auto !important;
-                bottom: calc(78px + var(--sab)) !important;
-                height: calc(100dvh - 90px - var(--sat) - var(--sab)) !important;
-                max-height: 680px !important;
-                border-radius: 22px !important;
+                top: auto !important;
+                bottom: calc(72px + var(--sab)) !important;
+                height: min(490px, calc(100dvh - 130px - var(--sat) - var(--sab))) !important;
+                max-height: calc(100dvh - 120px) !important;
+                border-radius: 20px !important;
                 z-index: 100000 !important;
             }
             .chat-chip {
-                min-height: 40px !important;
-                font-size: 12.5px !important;
-                padding: 6px 12px !important;
+                min-height: 32px !important;
+                font-size: 11.5px !important;
+                padding: 4px 10px !important;
+                flex: 0 0 auto !important;
+            }
+            .chat-header {
+                padding: 0.65rem 0.85rem !important;
             }
 
             /* Mobile Bottom Sheet Modals */
@@ -4530,12 +4549,17 @@
                     <button class="chat-close" onclick="toggleChatbot()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
-            <!-- Quick Suggestion Chips -->
-            <div class="chat-suggestion-chips">
-                <button class="chat-chip" onclick="sendQuickChip('1 - 3 Milyon TL Fırsat Konut Projeleri')">1 - 3M TL Konutlar</button>
+            <!-- Quick Suggestion Chips (Proaktif Öneriler) -->
+            <div class="chat-suggestion-chips" id="chatSuggestionChips">
                 <button class="chat-chip" onclick="sendQuickChip('Hemen Teslim Edilen Konut Projeleri')">⚡ Hemen Teslim</button>
-                <button class="chat-chip" onclick="sendQuickChip('3+1 ve 4+1 Aile Konutları')">3+1 &amp; 4+1 Konutlar</button>
+                <button class="chat-chip" onclick="sendQuickChip('1 - 3 Milyon TL Fırsat Konut Projeleri')">💰 1 - 3M TL Konutlar</button>
                 <button class="chat-chip" onclick="sendQuickChip('Topraktan Konut Satışı ve Yeni Projeler')">🏗️ Topraktan Satış</button>
+                <button class="chat-chip" onclick="sendQuickChip('Çankaya ve Yaşamkent Bölgesi Lansman Projeleri')">📍 Çankaya Projeleri</button>
+                <button class="chat-chip" onclick="sendQuickChip('Sarıtaş Mas Lora Yaşamkent projesi fiyat ve detayları')">🏠 Mas Lora Yaşamkent</button>
+                <button class="chat-chip" onclick="sendQuickChip('Angim Beytepe projesi ödeme planı ve daire seçenekleri')">⭐ Angim Beytepe</button>
+                <button class="chat-chip" onclick="sendQuickChip('3+1 ve 4+1 Aile Konutları')">👨‍👩‍👧 3+1 &amp; 4+1 Konutlar</button>
+                <button class="chat-chip" onclick="sendQuickChip('TKGM tapu ve noter sözleşme güvencesi nasıl işliyor?')">📜 Tapu &amp; Noter Güvencesi</button>
+                <button class="chat-chip" onclick="sendQuickChip('Suzanne Hanım ile VIP proje randevusu oluşturmak istiyorum')">📅 Randevu Al</button>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
@@ -8381,6 +8405,21 @@
                         </div>
                     `;
                 }
+                const chipsContainer = document.getElementById('chatSuggestionChips');
+                if (chipsContainer) {
+                    chipsContainer.innerHTML = `
+                        <button class="chat-chip" onclick="sendQuickChip('Hemen Teslim Edilen Konut Projeleri')">⚡ Hemen Teslim</button>
+                        <button class="chat-chip" onclick="sendQuickChip('1 - 3 Milyon TL Fırsat Konut Projeleri')">💰 1 - 3M TL Konutlar</button>
+                        <button class="chat-chip" onclick="sendQuickChip('Topraktan Konut Satışı ve Yeni Projeler')">🏗️ Topraktan Satış</button>
+                        <button class="chat-chip" onclick="sendQuickChip('Çankaya ve Yaşamkent Bölgesi Lansman Projeleri')">📍 Çankaya Projeleri</button>
+                        <button class="chat-chip" onclick="sendQuickChip('Sarıtaş Mas Lora Yaşamkent projesi fiyat ve detayları')">🏠 Mas Lora Yaşamkent</button>
+                        <button class="chat-chip" onclick="sendQuickChip('Angim Beytepe projesi ödeme planı ve daire seçenekleri')">⭐ Angim Beytepe</button>
+                        <button class="chat-chip" onclick="sendQuickChip('3+1 ve 4+1 Aile Konutları')">👨‍👩‍👧 3+1 &amp; 4+1 Konutlar</button>
+                        <button class="chat-chip" onclick="sendQuickChip('TKGM tapu ve noter sözleşme güvencesi nasıl işliyor?')">📜 Tapu &amp; Noter Güvencesi</button>
+                        <button class="chat-chip" onclick="sendQuickChip('Suzanne Hanım ile VIP proje randevusu oluşturmak istiyorum')">📅 Randevu Al</button>
+                    `;
+                    chipsContainer.scrollLeft = 0;
+                }
                 const input = document.getElementById('chatInput');
                 if (input) input.value = '';
                 saveChatMessagesToStorage();
@@ -8410,8 +8449,60 @@
             if(input) {
                 input.value = text;
                 sendChatMessage();
-                const chip = [...document.querySelectorAll('.chat-chip')].find(c => c.textContent.trim() === text);
-                if (chip) chip.classList.add('used');
+                const chips = document.querySelectorAll('.chat-chip');
+                chips.forEach(c => {
+                    if (c.textContent.trim().toLowerCase().includes(text.toLowerCase().slice(0, 8))) {
+                        c.classList.add('used');
+                    }
+                });
+            }
+        }
+
+        function updateContextualChips(query, data) {
+            const chipsContainer = document.getElementById('chatSuggestionChips');
+            if (!chipsContainer) return;
+            const q = (query || '').toLowerCase();
+            let newChips = [];
+
+            if (q.includes('mas lora') || q.includes('yaşamkent')) {
+                newChips = [
+                    { label: '💰 Mas Lora Ödeme Planı', q: 'Sarıtaş Mas Lora ödeme planı ve peşinat oranı nedir?' },
+                    { label: '📐 Kat Planları & m2', q: 'Mas Lora daire tipleri ve m2 büyüklükleri nelerdir?' },
+                    { label: '📅 Randevu Oluştur', q: 'Mas Lora projesi için yerinde inceleme randevusu almak istiyorum' }
+                ];
+            } else if (q.includes('angim') || q.includes('beytepe')) {
+                newChips = [
+                    { label: '⭐ Angim Fiyat & Teslim', q: 'Angim Beytepe güncel fiyat listesi ve teslim tarihi nedir?' },
+                    { label: '🏢 Ticari & Ofis Alanları', q: 'Angim Beytepe projesindeki ticari üniteler hakkında bilgi alabilir miyim?' },
+                    { label: '📞 Suzanne Hanım\'a Bağlan', q: 'Angim Beytepe için Suzanne Tenekecioğlu ile görüşmek istiyorum' }
+                ];
+            } else if (q.includes('fiyat') || q.includes('bütçe') || q.includes('milyon') || q.includes('ödeme')) {
+                newChips = [
+                    { label: '⚡ Hemen Teslim Projeler', q: 'Hemen teslim edilebilecek konut projeleri hangileri?' },
+                    { label: '🏗️ Topraktan Lansman Fırsatları', q: 'Topraktan satış avantajlı lansman projeleri' },
+                    { label: '💳 Peşinat & Taksit Seçenekleri', q: 'Düşük peşinatlı ve taksitli konut projeleri' }
+                ];
+            } else if (q.includes('tapu') || q.includes('noter') || q.includes('güven') || q.includes('tkgm')) {
+                newChips = [
+                    { label: '📜 Noter Satış Vaadi', q: 'Noter onaylı gayrimenkul satış vaadi sözleşmesi güvencesi' },
+                    { label: '🛡️ Bina Tamamlama Sigortası', q: 'Bina Tamamlama Sigortası (BTS) nasıl çalışır?' },
+                    { label: '📅 Randevu Talep Et', q: 'Güvenilir projeler için Suzanne Hanım\'dan randevu talep ediyorum' }
+                ];
+            } else {
+                newChips = [
+                    { label: '⚡ Hemen Teslim', q: 'Hemen Teslim Edilen Konut Projeleri' },
+                    { label: '💰 1-3M TL Bütçeli', q: '1 - 3 Milyon TL Fırsat Konut Projeleri' },
+                    { label: '🏗️ Topraktan Satış', q: 'Topraktan Konut Satışı ve Yeni Projeler' },
+                    { label: '📍 Çankaya Projeleri', q: 'Çankaya ve Yaşamkent Bölgesi Lansman Projeleri' },
+                    { label: '📅 Randevu Al', q: 'Suzanne Hanım ile VIP proje randevusu oluşturmak istiyorum' }
+                ];
+            }
+
+            if (newChips.length > 0) {
+                chipsContainer.innerHTML = newChips.map(c => 
+                    `<button class="chat-chip" onclick="sendQuickChip('${escapeHtml(c.q)}')">${escapeHtml(c.label)}</button>`
+                ).join('');
+                chipsContainer.scrollLeft = 0;
             }
         }
 
@@ -8557,7 +8648,7 @@
                                     ${p.is_portfolio ? `
                                         <a class="btn btn-primary btn-sm" style="font-size:10px; padding:4px 8px; text-decoration:none; display:inline-flex; align-items:center; gap:4px;" target="_blank" href="https://wa.me/905354895656?text=${encodeURIComponent('Merhaba Suzanne Hanım, ' + p.title + ' ilanı hakkında bilgi almak istiyorum.')}"><i class="fa-brands fa-whatsapp"></i> Bilgi Al</a>
                                     ` : `
-                                        <button class="btn btn-primary btn-sm" style="font-size:10px; padding:4px 8px;" onclick="event.stopPropagation(); openVideoModal('${p.id}')"><i class="fa-solid fa-play"></i> Tanıtım</button>
+                                        <button class="btn btn-primary btn-sm" style="font-size:10px; padding:4px 8px;" onclick="event.stopPropagation(); playProjectVideo('${p.id}')"><i class="fa-solid fa-play"></i> Tanıtım</button>
                                         <button class="btn btn-outline btn-sm" style="font-size:10px; padding:4px 8px; background:rgba(0,113,227,0.08); color:var(--accent);" onclick="event.stopPropagation(); openProjectReport('${p.id}')"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>
                                         <button class="btn btn-outline btn-sm" style="font-size:10px; padding:4px 8px;" onclick="event.stopPropagation(); openPdfPreview('${p.id}')"><i class="fa-solid fa-file-pdf"></i> PDF</button>
                                     `}
@@ -8578,6 +8669,7 @@
                     addChatMessage(botHtml, 'bot');
                 }
                 saveChatMessagesToStorage();
+                updateContextualChips(message, data);
                 track('chat_reply', {target: 'bot', extra: {mode: data.mode || '', count: (data.projects || []).length}});
                 if (sendBtn) sendBtn.disabled = false;
         }
