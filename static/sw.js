@@ -4,7 +4,7 @@
  * Caching Strategies: Cache-First for Static, Network-First for Dynamic APIs, Offline Navigation Fallback
  */
 
-const CACHE_VERSION = 'nexa-suzanne-v2.2.0';
+const CACHE_VERSION = 'nexa-suzanne-v2.6.0';
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `offline-${CACHE_VERSION}`;
@@ -176,17 +176,21 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(request).then((cachedResponse) => {
             if (cachedResponse) {
-                fetch(request)
-                    .then((networkResponse) => {
-                        if (networkResponse && networkResponse.status === 200) {
-                            caches.open(STATIC_CACHE).then((cache) => cache.put(request, networkResponse));
-                        }
-                    })
-                    .catch(() => {});
+                // Background revalidation with cloned request
+                try {
+                    fetch(request.clone())
+                        .then((networkResponse) => {
+                            if (networkResponse && networkResponse.status === 200) {
+                                const cloned = networkResponse.clone();
+                                caches.open(STATIC_CACHE).then((cache) => cache.put(request, cloned));
+                            }
+                        })
+                        .catch(() => {});
+                } catch (_) {}
                 return cachedResponse;
             }
 
-            return fetch(request)
+            return fetch(request.clone ? request.clone() : request)
                 .then((networkResponse) => {
                     if (networkResponse && networkResponse.status === 200) {
                         const cloned = networkResponse.clone();
