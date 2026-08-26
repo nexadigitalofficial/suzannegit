@@ -34,7 +34,8 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
-        body { background: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        html { width: 100%; max-width: 100%; overflow-x: hidden; overflow-x: clip; }
+        body { background: var(--bg-base); color: var(--text-main); min-height: 100vh; min-height: 100dvh; width: 100%; max-width: 100%; display: flex; flex-direction: column; overflow-x: hidden; overflow-x: clip; position: relative; padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px)); -webkit-tap-highlight-color: transparent; overscroll-behavior-x: none; }
         input, textarea, select { font-size: 15px !important; color: #fff; }
 
         /* HEADER */
@@ -288,13 +289,36 @@
         @media (max-width: 900px) {
             header { flex-direction: column; align-items: stretch; }
             .brand { justify-content: space-between; }
-            .admin-tabs { width: 100%; overflow-x: auto; justify-content: space-between; }
+            .admin-tabs { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; justify-content: flex-start; gap: 8px; padding-bottom: 4px; }
+            .admin-tabs::-webkit-scrollbar { display: none; }
+            .tab-btn { flex-shrink: 0; min-height: 44px; padding: 10px 16px; font-size: 13px; }
             .project-row {
                 grid-template-columns: 44px 56px 1fr auto;
                 gap: 10px; padding: 12px;
             }
             .project-row > :not(.row-order):not(.row-thumb):not(.row-title-box):not(.row-actions) { display: none !important; }
             .row-actions { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+            .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+            
+            /* Modal Bottom Sheet on Mobile */
+            .modal-overlay {
+                align-items: flex-end !important;
+                justify-content: center !important;
+                padding: 0 !important;
+                backdrop-filter: blur(16px) !important;
+                -webkit-backdrop-filter: blur(16px) !important;
+            }
+            .modal-overlay .modal-card,
+            #crmDetailModal .modal-container,
+            #crmDetailModal > div {
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 24px 24px 0 0 !important;
+                margin: 0 !important;
+                max-height: 90dvh !important;
+                padding-bottom: max(1.5rem, calc(1rem + var(--sab, 0px))) !important;
+                box-sizing: border-box !important;
+            }
         }
     </style>
 </head>
