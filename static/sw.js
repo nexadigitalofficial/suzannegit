@@ -4,7 +4,7 @@
  * Caching Strategies: Cache-First for Static, Network-First for Dynamic APIs, Offline Navigation Fallback
  */
 
-const CACHE_VERSION = 'nexa-suzanne-v2.6.0';
+const CACHE_VERSION = 'nexa-suzanne-v2.7.0';
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `offline-${CACHE_VERSION}`;

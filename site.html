@@ -48,7 +48,7 @@
       ],
       "parentOrganization": {
         "@type": "Organization",
-        "name": "Coldwell Banker VIP Gayrimenkul (Office 470)"
+        "name": "Coldwell Banker VIP Gayrimenkul"
       }
     }
     </script>
@@ -1622,6 +1622,41 @@
             opacity: 1;
             pointer-events: auto;
             transform: translateY(0) scale(1);
+        }
+
+        .chat-window.expanded {
+            width: min(720px, calc(100vw - 32px)) !important;
+            height: min(720px, calc(100dvh - 100px)) !important;
+            max-height: calc(100dvh - 90px) !important;
+            border-radius: 24px !important;
+            box-shadow: 0 30px 90px rgba(15, 20, 60, 0.35), 0 0 0 1px rgba(94, 92, 230, 0.15), 0 0 70px rgba(94, 92, 230, 0.2) !important;
+        }
+
+        .chatbot-widget.scroll-revealed .chat-window.expanded {
+            width: min(720px, calc(100vw - 32px)) !important;
+            height: min(680px, calc(100dvh - 120px)) !important;
+            max-height: calc(100dvh - 120px) !important;
+            bottom: 74px !important;
+        }
+
+        .chat-action-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #d1d5db;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+        .chat-action-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+            color: #fff;
+            transform: scale(1.1);
         }
 
         /* Koyu "uzay" başlık: tarayıcı ışığı + akan neon alt çizgi */
@@ -3681,9 +3716,19 @@
                 top: auto !important;
                 bottom: calc(72px + var(--sab)) !important;
                 height: min(490px, calc(100dvh - 130px - var(--sat) - var(--sab))) !important;
-                max-height: calc(100dvh - 120px) !important;
                 border-radius: 20px !important;
                 z-index: 100000 !important;
+            }
+            .chat-window.expanded {
+                left: 6px !important;
+                right: 6px !important;
+                top: calc(max(10px, var(--sat)) + 6px) !important;
+                bottom: calc(max(10px, var(--sab)) + 6px) !important;
+                width: auto !important;
+                max-width: none !important;
+                height: auto !important;
+                max-height: none !important;
+                border-radius: 20px !important;
             }
             .chat-chip {
                 min-height: 32px !important;
@@ -3875,7 +3920,6 @@
                     <span style="font-size:10px; font-weight:700; color:#B8860B; letter-spacing:0.6px; text-transform:uppercase; background:rgba(212,175,55,0.12); padding:1px 6px; border-radius:4px; border:1px solid rgba(212,175,55,0.25); display:inline-flex; align-items:center; gap:3px;">
                         <i class="fa-solid fa-crown" style="font-size:8px; color:#D4AF37;"></i> COLDWELL BANKER VIP
                     </span>
-                    <span style="font-size:9px; font-weight:800; color:#0071e3; background:rgba(0,113,227,0.08); padding:1px 5px; border-radius:4px;">OFFICE 470</span>
                 </div>
             </div>
         </a>
@@ -4251,7 +4295,7 @@
                     <span class="section-badge">ANKARA LÜKS KONUT &amp; TOPRAKTAN SATIŞ UZMANLIĞI</span>
                     <h2 class="section-title" style="font-size:32px; font-weight:700; margin-bottom:1rem;">Almanya Disiplini, Ankara Pazar Hakimiyeti</h2>
                     <p class="about-paragraph" style="font-size:16px; line-height:1.7; color:var(--text-secondary); margin-bottom:1rem;">
-                        Almanya'da edindiğim eğitim ve disiplinli çalışma prensiplerini, Türkiye gayrimenkul sektörünün öncüsü <strong>Coldwell Banker VIP (Office 470)</strong> güvencesiyle birleştiriyorum. Ankara'nın özellikle <strong>Yaşamkent, Çayyolu, İncek, Beytepe, Alacaatlı ve Çankaya</strong> lokasyonlarındaki en prestijli konut projeleri ve arsa yatırımlarında uzmanlaştım.
+                        Almanya'da edindiğim eğitim ve disiplinli çalışma prensiplerini, Türkiye gayrimenkul sektörünün öncüsü <strong>Coldwell Banker VIP</strong> güvencesiyle birleştiriyorum. Ankara'nın özellikle <strong>Yaşamkent, Çayyolu, İncek, Beytepe, Alacaatlı ve Çankaya</strong> lokasyonlarındaki en prestijli konut projeleri ve arsa yatırımlarında uzmanlaştım.
                     </p>
                     <p class="about-paragraph" style="font-size:16px; line-height:1.7; color:var(--text-secondary); margin-bottom:1.8rem;">
                         Topraktan konut alımlarında sözleşme güvenliği, müteahhit mali yeterlilik analizi, belediye imar ve tapu (TKGM) teyidi süreçlerini eksiksiz yöneterek, yatırımcılarımın maksimum prim getirisi elde etmesini sağlıyorum.
@@ -4471,7 +4515,7 @@
                 </div>
                 <p>Ankara batı aksında topraktan konut yatırımları, lansman projeleri ve seçkin portföy yönetimi ile güvenilir gayrimenkul danışmanlığı.</p>
                 <div class="footer-badge-cb">
-                    <i class="fa-solid fa-crown"></i> COLDWELL BANKER VIP • OFFICE 470
+                    <i class="fa-solid fa-crown"></i> COLDWELL BANKER VIP
                 </div>
             </div>
 
@@ -4545,7 +4589,8 @@
                 </div>
                 <div class="chat-waves"><span></span><span></span><span></span><span></span><span></span></div>
                 <div style="display:flex; align-items:center; gap:6px;">
-                    <button class="chat-action-btn" onclick="clearChatHistory()" aria-label="Sohbeti Sıfırla" title="Sohbeti Temizle" style="background:rgba(255,255,255,0.08); border:none; color:var(--text-secondary); width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; transition:all 0.2s;"><i class="fa-solid fa-rotate-right"></i></button>
+                    <button class="chat-action-btn" id="chatExpandBtn" onclick="toggleChatExpand()" aria-label="Büyüt/Küçült" title="Genişlet / Büyüt"><i class="fa-solid fa-expand"></i></button>
+                    <button class="chat-action-btn" onclick="clearChatHistory()" aria-label="Sohbeti Sıfırla" title="Sohbeti Temizle"><i class="fa-solid fa-rotate-right"></i></button>
                     <button class="chat-close" onclick="toggleChatbot()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
@@ -7138,8 +7183,7 @@
                     const pNum = item.price_numeric || (item.intelligence && item.intelligence.price) || (item.price_min) || 0;
                     const isBudgetMatch = (activeFilters.priceMin !== null && pNum >= activeFilters.priceMin && pNum <= activeFilters.priceMax);
 
-                    const hasVideo = item.has_video !== false && Boolean(item.has_video || item.drive_video_preview || item.promo_video_url || item.cloud_video_url || item.drive_vid_id);
-                    const videoBtn = hasVideo ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-play"></i> Tanıtım</button>` : '';
+                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
                     const slideshowBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.35); font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')"><i class="fa-solid fa-images"></i> Slayt</button>`;
                     const reportBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(0,113,227,0.08); color:var(--accent); border-color:rgba(0,113,227,0.25); font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation(); openProjectReport('${item.id}')"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
                     const pdfBtn = `<button class="btn btn-outline btn-sm" style="font-size:12px; padding:6px 10px; position:relative; z-index:10; pointer-events:auto;" onclick="event.stopPropagation(); openPdfPreview('${item.id}')"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
@@ -7152,7 +7196,7 @@
                             <div class="card-img-wrapper" id="site-card-img-${item.id}" data-preview-id="${item.id}">
                                 <img src="${imgSrc}" alt="${safeName}" loading="lazy" class="project-card-img" onerror="this.src='/static/img/placeholder.jpg'">
                                 <span class="badge sale" style="position:absolute; top:12px; left:12px; background:${isBudgetMatch ? '#34C759' : 'var(--accent)'}; color:#fff; font-weight:700; font-size:11px; padding:4px 10px; border-radius:20px;">${isBudgetMatch ? '⭐ BÜTÇENİZE UYGUN' : 'LANSMAN PROJESİ'}</span>
-                                ${hasVideo ? `<div class="video-play-overlay" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat" style="pointer-events:auto; z-index:10;"><i class="fa-solid fa-play"></i></div>` : ''}
+                                <div class="video-play-overlay" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat" style="pointer-events:auto; z-index:10;"><i class="fa-solid fa-play"></i></div>
                             </div>
                             <div class="card-content" style="padding:1.25rem; display:flex; flex-direction:column; flex-grow:1;">
                                 <h3 class="card-title" style="font-size:18px; font-weight:700; margin-bottom:4px; line-height:1.3;">${safeName}</h3>
@@ -7352,21 +7396,28 @@
 
             track.addEventListener('pointerdown', (e) => {
                 if (e.pointerType === 'touch') return;
+                if (e.target.closest('button, a, input, select, textarea, .btn, .video-play-overlay, .card-actions, .card-footer')) {
+                    return; // Do not capture pointer or start drag on interactive buttons/links!
+                }
                 isDown = true;
                 isDragging = false;
                 activePointerId = e.pointerId;
                 startX = e.pageX - track.offsetLeft;
                 scrollLeft = track.scrollLeft;
-                track.style.cursor = 'grabbing';
-                try { track.setPointerCapture(e.pointerId); } catch (_) {}
             });
 
             track.addEventListener('pointermove', (e) => {
                 if (!isDown || e.pointerType === 'touch') return;
                 const x = e.pageX - track.offsetLeft;
                 const walk = (x - startX);
-                if (Math.abs(walk) > 4) {
-                    isDragging = true;
+                if (Math.abs(walk) > 8) {
+                    if (!isDragging) {
+                        isDragging = true;
+                        track.style.cursor = 'grabbing';
+                        if (activePointerId !== null) {
+                            try { track.setPointerCapture(activePointerId); } catch (_) {}
+                        }
+                    }
                     track.scrollLeft = scrollLeft - walk;
                 }
             });
@@ -7379,7 +7430,7 @@
                     try { track.releasePointerCapture(activePointerId); } catch (_) {}
                     activePointerId = null;
                 }
-                setTimeout(() => { isDragging = false; }, 60);
+                setTimeout(() => { isDragging = false; }, 80);
             };
 
             track.addEventListener('pointerup', stopDrag);
@@ -8232,7 +8283,7 @@
                     const waMsg = `${safeName} hakkında bilgi almak istiyorum.\n📍 ${escLoc}\n💰 ${escPrice || 'Fiyat Bilgisi'}\nDetay: ${window.location.origin}/site#site-card-${item.id}`;
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
 
-                    const videoBtn = item.has_video ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-play"></i> Tanıtım</button>` : '';
+                    const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px; position:relative; z-index:10; pointer-events:auto;" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
                     const slideshowBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.3); min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-images"></i> Slayt</button>`;
                     const reportBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openProjectReport('${item.id}')" style="font-size:12px; padding:6px 10px; background:rgba(0,113,227,0.08); color:var(--accent); min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-brain"></i> Zeka Raporu</button>`;
                     const pdfBtn = `<button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); openPdfPreview('${item.id}')" style="font-size:12px; padding:6px 10px; min-height:44px; position:relative; z-index:10; pointer-events:auto;"><i class="fa-solid fa-file-pdf"></i> Sunum</button>`;
@@ -8243,7 +8294,7 @@
                                 <img src="${imgSrc}" alt="${safeName}" loading="lazy" class="project-card-img" onerror="this.src='/static/img/placeholder.jpg'">
                                 <span class="badge sale" style="position:absolute; top:12px; left:12px; background:var(--accent); color:#fff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px;">PROJE</span>
                                 <span style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); color:#FFD700; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;"><i class="fa-solid fa-star"></i> AI Skoru: ${aiScore}</span>
-                                ${item.has_video ? `<div class="video-play-overlay" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat" style="pointer-events:auto; z-index:10;"><i class="fa-solid fa-play"></i></div>` : ''}
+                                <div class="video-play-overlay" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat" style="pointer-events:auto; z-index:10;"><i class="fa-solid fa-play"></i></div>
                             </div>
                             <div class="card-content" style="padding:1.25rem; display:flex; flex-direction:column; flex-grow:1;">
                                 <h3 class="card-title" style="font-size:18px; font-weight:700; margin-bottom:4px; line-height:1.3;">${safeName}</h3>
@@ -8345,6 +8396,20 @@
                 }
                 if (btn) btn.setAttribute('aria-expanded', 'false');
                 if (btnIcon) btnIcon.className = 'fa-solid fa-brain';
+            }
+        }
+
+        function toggleChatExpand() {
+            const win = document.getElementById('chatWindow');
+            const btn = document.getElementById('chatExpandBtn');
+            if (!win) return;
+            const isExpanded = win.classList.toggle('expanded');
+            if (btn) {
+                btn.innerHTML = isExpanded ? '<i class="fa-solid fa-compress"></i>' : '<i class="fa-solid fa-expand"></i>';
+                btn.title = isExpanded ? 'Küçült' : 'Genişlet / Büyüt';
+            }
+            if (typeof scrollToBottom === 'function') {
+                setTimeout(scrollToBottom, 150);
             }
         }
 
@@ -10357,7 +10422,7 @@
             </div>
             <div style="padding:2rem; overflow-y:auto; font-size:14.5px; line-height:1.75; color:var(--text-primary);">
                 <p><strong>6698 Sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) Kapsamında Bilgilendirme</strong></p>
-                <p><strong>1. Veri Sorumlusu:</strong> Bu aydınlatma metni, veri sorumlusu sıfatıyla hareket eden <strong>Suzanne Tenekecioğlu — Coldwell Banker VIP Gayrimenkul (Office 470)</strong> tarafından hazırlanmıştır.</p>
+                <p><strong>1. Veri Sorumlusu:</strong> Bu aydınlatma metni, veri sorumlusu sıfatıyla hareket eden <strong>Suzanne Tenekecioğlu — Coldwell Banker VIP Gayrimenkul</strong> tarafından hazırlanmıştır.</p>
                 <p><strong>2. İşlenen Kişisel Veriler:</strong> Web sitemiz, iletişim formları, randevu modülleri ve yapay zeka asistanı aracılığıyla adınız, soyadınız, telefon numaranız, e-posta adresiniz, gayrimenkul yatırım tercihiniz ve bütçe aralığınız işlenmektedir.</p>
                 <p><strong>3. Veri İşleme Amaçları:</strong> Kişisel verileriniz; talep ettiğiniz konut projeleri ve portföy seçenekleri hakkında size bilgilendirme yapmak, randevu oluşturmak, sözleşme süreçlerini yürütmek, müşteri memnuniyetini sağlamak ve mevzuattan kaynaklanan yükümlülükleri yerine getirmek amacıyla işlenmektedir.</p>
                 <p><strong>4. Kişisel Verilerin Aktarımı:</strong> Verileriniz yasal zorunluluklar haricinde hiçbir üçüncü taraf kişi veya kurumla ticari amaçla paylaşılmaz. Yalnızca talebiniz doğrultusunda resmi tapu, noter veya müteahhitlik süreçlerinin yürütülmesi için yetkili mercilere aktarılabilir.</p>
