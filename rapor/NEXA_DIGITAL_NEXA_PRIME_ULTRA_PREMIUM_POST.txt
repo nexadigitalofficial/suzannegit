@@ -1,0 +1,101 @@
+====================================================================================================
+           NEXA DIGITAL | NEXA PRIME v2: BİLİŞSEL GAYRİMENKUL & PROPTECH TEKNOLOJİSİ
+                     ULTRA PREMİUM MASTER POST & KAPSAMLI GÖRSEL PROMPT KILAVUZU
+====================================================================================================
+
+Geliştirici & Teknoloji Üreticisi: NEXA DIGITAL (@nexadigitalofficial)
+Platform: NEXA PRIME v2 — Autonomous Cognitive Real Estate Intelligence
+Format: Ultra Premium Satış / Pazarlama Post Metni + 8K AI Görsel Üretim Promptları (TXT)
+Tarih: Eylül 2026
+
+====================================================================================================
+1. NEXA DIGITAL MASTER POST METNİ (KOPYALA - PAYLAŞ)
+====================================================================================================
+
+Gayrimenkulde geleneksel ilan devri bitti.
+Bilişsel yapay zeka çağı başladı.
+
+NEXA DIGITAL olarak gayrimenkul ve PropTech dünyasında kuralları yeniden yazan yeni nesil otonom zeka platformumuz NEXA PRIME v2'yi gururla sunuyoruz.
+
+🎯 NEXA PRIME Ne Yapıyor?
+• Google Drive veya bulut kaynaklarına atılan sözleşme, PDF ve Excel fiyat listelerini saniyeler içinde OTONOM tarar.
+• Tüm portföy ve gayrimenkul ilanlarını sıfır manuel işlemle otomatik çeker.
+• Tek bir satır kod yazmadan; web sitesini, filtreleri, lokasyon çiplerini ve proje kartlarını portföye göre DİNAMİK olarak yeniden inşa eder.
+• 7/24 Bilişsel Yapay Zeka Danışmanı Mira; resmi noter şartnameleri ve tapu teyidiyle yatırımcılara sıfır hata ile satış yapar.
+
+⚡ Neyi Çözüyor?
+❌ Yanıltıcı fiyatlar ve eskiyen ilanlar yok.
+❌ Haftalarca süren web geliştirme ve güncelleme maliyeti yok.
+❌ Gece veya gündüz kaybedilen tek bir nitelikli alıcı bile yok.
+
+✨ Neden Benzersiz?
+NEXA PRIME'da gayrimenkuller sadece listelenmez; yapay zeka tarafından 7/24 analiz edilir, yatırım planı simüle edilir ve en doğru alıcıyla eşleştirilir.
+
+💎 Şirketiniz, markalı projeleriniz veya gayrimenkul operasyonunuz için NEXA DIGITAL yapay zeka ekosistemiyle tanışın. Geleceğin teknolojisi bugün elinizde.
+
+🚀 Geliştirici: NEXA DIGITAL
+🌐 Canlı Teknoloji Deneyimi: suzannegit.onrender.com
+📩 İş Birlikleri & Proje Talepleri: Direct Message (DM) / Nexa Digital
+
+#NexaDigital #NexaPrime #YapayZeka #PropTech #ArtificialIntelligence #SoftwareEngineering #RealEstateTech #NextGenTech #AutonomousSystems
+
+====================================================================================================
+2. ULTRA PREMİUM & ÇOK KAPSAMLI AI GÖRSEL ÜRETİM PROMPTLARI (MIDJOURNEY v6 / FLUX PRO / DALL-E 3)
+====================================================================================================
+
+Bu promptlar; NEXA DIGITAL markasının fütüristik, ultra lüks ve ileri teknoloji kurumsal kimliğini yansıtmak
+üzere sinematik ışıklandırma, render motoru ve kamera parametreleriyle özel olarak formüle edilmiştir.
+
+----------------------------------------------------------------------------------------------------
+PROMPT 1: MASTER KAPAK (HOLOGRAFİK PROPTECH SİBERNETİK MİMARİ + NEXA DIGITAL DOKUNUŞU)
+----------------------------------------------------------------------------------------------------
+[Platform]: Midjourney v6 / Flux Pro
+[En-Boy Oranı]: --ar 16:9 veya --ar 4:5 (Instagram / LinkedIn)
+
+ENGLİSH PROMPT (Doğrudan Kopyalayıp Yapıştırın):
+An ultra-luxury futuristic architectural master villa with illuminated glass facade at blue hour, overlaid with a sophisticated glowing 3D holographic user interface designed by Nexa Digital. Floating interactive data rings in electric sapphire blue, luminous gold, and neon cyan displaying neural network diagrams, real-time property valuation algorithms, vector search matrices, and automated architectural floor plans. Deep obsidian and gold color grading, volumetric light rays, cinematic 8k octane render, architectural photography, shot on Hasselblad H6D-100c, 35mm f/1.8 lens, hyper-realistic, photorealistic textures --ar 16:9 --style raw --v 6.0 --q 2
+
+TÜRKÇE AÇIKLAMASI:
+Alacakaranlıkta cam cepheli lüks fütüristik mimari villa, üzerinde Nexa Digital tarafından tasarlanmış havada parlayan 3D holografik yapay zeka kullanıcı arayüzü. Safir mavi ve altın rengi sinir ağı diyagramları, gayrimenkul değerleme matrisleri ve mimari planlar. 8K sinematik Hasselblad fotoğraf kalitesi.
+
+----------------------------------------------------------------------------------------------------
+PROMPT 2: OTONOM SİTE İNŞASI & VERİ MADENCİLİĞİ İLLÜSTRASYONU
+----------------------------------------------------------------------------------------------------
+[Platform]: Midjourney v6 / Flux Pro
+[Kullanım]: "Kaynakları Otomatik Tarar & Web Sitesini Şekillendirir" İnfografik / Slayt
+
+ENGLİSH PROMPT:
+A breathtaking conceptual visualization of raw digital real estate files, PDF architectural contracts, and Excel spreadsheets dissolving into brilliant golden and cobalt blue data streams in mid-air, autonomously weaving and constructing a floating, ultra-modern responsive glassmorphism web platform interface. Cybernetic fiber-optic pathways, glowing neural nodes, hyper-detailed tech elements, luxury obsidian background with subtle neon ambient light, 8k resolution, cinematic lighting, studio lighting --ar 4:5 --v 6.0
+
+TÜRKÇE AÇIKLAMASI:
+Ham emlak dosyalarının, mimari sözleşmelerin ve elektronik tabloların havada parlak altın ve kobalt mavi veri akışlarına dönüşerek otonom şekilde modern bir web platformu arayüzünü inşa etmesini gösteren nefes kesici konsept illüstrasyon.
+
+----------------------------------------------------------------------------------------------------
+PROMPT 3: BİLİŞSEL YAPAY ZEKA MİRA & MOBİL KULLANICI DENEYİMİ
+----------------------------------------------------------------------------------------------------
+[Platform]: Midjourney v6 / Flux Pro
+[Kullanım]: Mobil Uygulama & 7/24 Satış Zekası Vurgusu
+
+ENGLİSH PROMPT:
+Cinematic close-up of a sleek, bezel-less high-end titanium smartphone displaying the NEXA PRIME cognitive real estate AI application interface. The screen shows dynamic audio wave telemetry, glowing golden property investment cards, and real-time biometric response HUD. Elegant minimalist modern luxury architecture studio in the background with soft bokeh, studio lighting, hyper-realistic glass reflections, 8k resolution, macro product photography --ar 4:5 --v 6.0
+
+TÜRKÇE AÇIKLAMASI:
+Titanyum çerçevesiz akıllı telefon ekranında NEXA PRIME bilişsel yapay zeka arayüzü, canlı ses dalgası telemetrisi ve parlayan altın yatırım kartları. Arka planda yumuşak odaklı lüks mimari stüdyo. 8K makro ürün fotoğrafçılığı.
+
+----------------------------------------------------------------------------------------------------
+PROMPT 4: NEXA DIGITAL KURUMSAL VİTRİNİ & GELECEĞİN YÖNETİM MERKEZİ (STORY 9:16)
+----------------------------------------------------------------------------------------------------
+[Platform]: Midjourney v6 / Flux Pro
+[Kullanım]: Instagram / TikTok / WhatsApp Story Dikey Formatı
+
+ENGLİSH PROMPT:
+An ultra-luxury executive tech headquarters commanding a breathtaking panoramic view of a futuristic metropolis skyline at dusk. Polished black obsidian conference table with an embedded glowing interactive holographic map displaying global real estate portfolios, neural network nodes, and live market analytics with a subtle NEXA DIGITAL branding badge. Moody dramatic cinematic lighting, ultra-sharp focus, ray tracing, 8k resolution, architectural masterpiece --ar 9:16 --v 6.0
+
+TÜRKÇE AÇIKLAMASI:
+Fütüristik metropol manzaralı ultra lüks teknoloji genel merkezi, siyah obsidyen masa üzerinde küresel gayrimenkul portföylerini ve yapay zeka zihin haritalarını gösteren holografik masa paneli. 9:16 dikey Story formatı.
+
+====================================================================================================
+NEXA DIGITAL VİZYON NOTU:
+Bu post metni ve görsel üretim promptları, Nexa Digital'in yapay zeka ve yazılım mühendisliği gücünü
+PropTech pazarında rakipsiz bir teknoloji lideri olarak konumlandırmak üzere tasarlanmıştır.
+====================================================================================================
