@@ -1,0 +1,102 @@
+====================================================================================================
+           NEXA DIGITAL | 8 AJANLI ULTRA GELİŞMİŞ SWARM MASTER PROMPT & DİZAYN KILAVUZU
+                     ENTERPRISE AUTONOMOUS PROMPT ENGINEERING & VISUAL SYNTHESIS
+====================================================================================================
+
+Teknoloji Üreticisi: NEXA DIGITAL (@nexadigitalofficial)
+Platform: NEXA PRIME v2 — Autonomous Cognitive Real Estate Intelligence
+Format: 8 Ajanlı Swarm Sentezi + Tek Kopyala-Yapıştır Master Prompt + Satış Metni (TXT)
+Tarih: Eylül 2026
+
+====================================================================================================
+BÖLÜM 1: 8 AJANLI ULTRA GELİŞMİŞ SWARM ORDUSU VE ROL MATRİSİ
+====================================================================================================
+
+Bu nihai görsel ve içerik mimarisi, 8 farklı uzman yapay zeka ajanının derin koordinasyonu ile üretilmiştir:
+
+1. 🎬 Cybernetic Art Director & Cinematographer:
+   - Derin obsidyen siyahı, safir elektrik mavisi ve kraliyet şampanya altını renk teorisi.
+   - Volumetrik Rayleigh ışık kırılmaları ve alacakaranlık (Blue Hour) atmosferi.
+2. ⚙️ PropTech & Autonomous AI Systems Architect:
+   - Google Drive, PDF sözleşme ve Excel fiyat verilerinin 3D veri akışlarına ve dinamik siteye dönüşümü.
+3. 🏛️ Architectural Visualizer & Luxury Space Designer:
+   - Havada asılı duran fütüristik cam villa, sonsuzluk havuzu su yansımaları ve 3D CAD kat planları.
+4. 🔬 Optical Physics & Octane/Unreal Engine 5 Specialist:
+   - Hasselblad H6D-100c 50mm f/1.2 lens optiği, subsurface scattering ve 8K hiper-fotogerçekçilik.
+5. 📱 Holographic UI & Glassmorphism Ergonomist:
+   - Altın TKGM mühür rozeti, AI 98/100 skor göstergesi ve şık yarı şeffaf cam kontrol paneli.
+6. 🧠 Consumer Psychology & Cognitive Conversion Lead:
+   - 0.4 saniyelik ilk bakışta dikkat kancası (Hook), F-Pattern göz takibi ve güven odaklı hiyerarşi.
+7. 💎 Brand Identity & NEXA DIGITAL Strategist:
+   - Küresel ölçekte lider, yenilikçi ve rakipsiz PropTech kurumsal konumlandırması.
+8. 🎯 Master Synthesizer & Token Weight Optimizer:
+   - Midjourney v6.1 ve Flux Pro için gereksiz tokenları eleyerek en saf ve güçlü prompt kodlaması.
+
+====================================================================================================
+BÖLÜM 2: MEKÂNSAL DİZİLİM ŞEMASI (TASARIM NE NEREDE OLACAK?)
+====================================================================================================
+
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ [BÖLGE 1: ÜST KANCA & BAŞLIK ALANI (HOOK ZONE) — %15 ALAN]                             │
+│ • Arka Plan: Koyu obsidyen degrade gece gökyüzü (Tipografi için temiz alan).          │
+│ • Başlık (Altın & Safir Beyaz): "NEXA PRIME v2"                                        │
+│ • Alt Başlık: "AUTONOMOUS AI REAL ESTATE PLATFORM"                                     │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ [BÖLGE 2: THE COGNITIVE HERO CORE (MERKEZİ YAPI) — %45 ALAN]                           │
+│ • Merkez Obje: Havada asılı duran, içi sıcak ışıklarla aydınlatılmış fütüristik        │
+│   ultra lüks cam villa ve taşan sonsuzluk havuzu.                                      │
+│ • Otonom Veri Katmanı: Villanın üzerinde parlayan 3D holografik mimari kat planı,      │
+│   altın PDF sözleşme ve Excel veri akışları ile safir mavisi sinir ağı parçacıkları.   │
+│ • Mesaj: "Verileri otonom tarar, web sitesini sıfır kodla dinamik inşa eder."          │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ [BÖLGE 3: İNTERAKTİF GÜVEN & METRİK HUD (TRUST & ANALYTICS) — %25 ALAN]               │
+│ • Şık Glassmorphic Yüzen Kontrol Paneli (Altın & Neon Mavi Çerçeveli):                │
+│   - Ortada Altın Mühür: "TKGM TAPU VERIFIED" Güven Rozeti                              │
+│   - Sağ Rozet: "AI Investment Score: 98/100"                                           │
+│   - Sol Panel: Canlı Değerleme Grafikleri & %7.8 Kira Getirisi / ROI                   │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ [BÖLGE 4: MARKA İMZASI & DÖNÜŞÜM ÇAĞRISI (FOOTER / CTA) — %15 ALAN]                   │
+│ • Geliştirici İmzası: "GELİŞTİRİCİ: NEXA DIGITAL" (Minimalist fütüristik logo rozeti) │
+│ • Eylem Butonu: "CANLI KEŞFET: suzannegit.onrender.com" / "DM: @nexadigital"          │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+====================================================================================================
+BÖLÜM 3: TEK KOPYALA - YAPIŞTIR MASTER GÖRSEL ÜRETİM PROMPTU
+====================================================================================================
+
+Midjourney v6.1, Flux.1 Pro veya DALL-E 3 araçlarına doğrudan kopyalayıp yapıştırabileceğiniz nihai prompt:
+
+----------------------------------------------------------------------------------------------------
+An ultra-masterpiece 8k cinematic vertical poster (4:5 ratio) for NEXA DIGITAL's autonomous AI real estate platform NEXA PRIME v2. Floating in the center against a dramatic twilight blue hour sky is a hyper-luxurious modern architectural glass mansion with glowing warm golden interior and an illuminated infinity pool. Levitating above the mansion is an intricate glowing 3D holographic wireframe CAD floor plan with golden PDF and Excel data streams turning into sparkling light particles. In the upper third, a clean dark obsidian gradient background with soft atmospheric mist for headline typography. In the lower third, an ultra-sleek floating glassmorphism dashboard displaying glowing holographic real estate analytics, a brilliant gold 'TKGM TAPU VERIFIED' seal, and an AI investment score badge of 98/100. Volumetric god rays, deep royal sapphire blue and rich champagne gold color grading, Octane render, shot on Hasselblad H6D-100c, 50mm f/1.2 lens, hyper-photorealistic glass reflections and caustics, award-winning architectural visual --ar 4:5 --style raw --v 6.0 --q 2
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+BÖLÜM 4: MASTER SATIŞ & PAZARLAMA POST METNİ (KOPYALA - PAYLAŞ)
+====================================================================================================
+
+Gayrimenkulde geleneksel ilan devri bitti.
+Bilişsel yapay zeka çağı başladı.
+
+NEXA DIGITAL olarak PropTech dünyasında kuralları baştan yazan otonom zeka platformumuz NEXA PRIME v2'yi gururla sunuyoruz.
+
+🎯 NEXA PRIME Ne Yapıyor?
+📁 Google Drive veya buluta atılan sözleşme, PDF ve Excel fiyat listelerini saniyeler içinde OTONOM tarar.
+🌐 Portföy ve ilanlarınızı sıfır manuel işlemle otomatik çeker ve veritabanına işler.
+✨ Tek bir satır kod yazmadan web sitesini, filtreleri ve proje kartlarını DİNAMİK olarak yeniden inşa eder.
+🧠 7/24 Bilişsel Yapay Zeka Danışmanı; resmi noter şartnameleri ve tapu teyidiyle mülkünüzü sıfır hata ile yatırımcılara sunar.
+
+⚡ Neyi Çözüyor?
+❌ Yanıltıcı fiyatlar ve eskiyen ilanlar yok.
+❌ Haftalarca süren web güncelleme ve entegrasyon maliyeti yok.
+❌ Kaybedilen tek bir nitelikli alıcı bile yok.
+
+Mülkleriniz sadece listelenmez; yapay zeka tarafından 7/24 en doğru yatırımcıyla eşleştirilir.
+
+💎 Markalı projeleriniz ve gayrimenkul operasyonunuz için NEXA DIGITAL zekasıyla tanışın.
+
+🚀 Geliştirici: NEXA DIGITAL
+🌐 Canlı Teknoloji Deneyimi: suzannegit.onrender.com
+📩 Bilgi & Kurumsal İş Birlikleri: DM / Nexa Digital
+
+#NexaDigital #NexaPrime #YapayZeka #PropTech #RealEstateAI #AutonomousPlatform #Innovation #NextGenSoftware
+====================================================================================================
