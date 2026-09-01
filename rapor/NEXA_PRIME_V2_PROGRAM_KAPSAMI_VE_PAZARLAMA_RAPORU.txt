@@ -1,0 +1,232 @@
+====================================================================================================
+               NEXA PRIME v2: BİLİŞSEL GAYRİMENKUL ZEKASI & OTONOM YATIRIM PLATFORMU
+                     UÇTAN UCA PROGRAM KAPSAMI, MİMARİ VE PAZARLAMA VİZYON RAPORU
+====================================================================================================
+
+Yetkili Danışman: Suzanne Tenekecioğlu — Coldwell Banker VIP Gayrimenkul (Ofis No: 470)
+Doğrudan İletişim: +90 535 489 56 56 | Ofis: Ankara / Çankaya
+Sistem Sürümü: NEXA PRIME v2.4 (Enterprise Cognitive Real Estate Platform)
+Rapor Formatı: Master Executive & Commercial Strategy Document (TXT)
+Rapor Tarihi: Eylül 2026
+
+====================================================================================================
+BÖLÜM 1: YÖNETİCİ ÖZETİ VE TEMEL DEĞER TEKLİFİ (EXECUTIVE SUMMARY & VALUE PROPOSITION)
+====================================================================================================
+
+NEXA PRIME v2, gayrimenkul sektöründe geleneksel, statik ve manuel ilan listeleme anlayışını tamamen
+ortadan kaldıran; büyük dil modelleri (LLM), 768 boyutlu Vektör Arama (Hybrid RAG), otonom veri madenciliği
+ve yerel mobil uygulama ergonomisini tek bir çatıda birleştiren YENİ NESİL BİLİŞSEL GAYRİMENKUL PLATFORMUDUR.
+
+Platform, Coldwell Banker VIP Gayrimenkul Baş Danışmanı Suzanne Tenekecioğlu'nun lüks konut, markalı
+projeler ve yüksek getirili ticari yatırım portföyünü 7/24 kesintisiz, sıfır manipülasyon ve tam
+kurumsal şeffaflıkla dünya standartlarında yatırımcılara sunmak üzere özel olarak tasarlanmıştır.
+
+TEMEL DEĞER TEKLİFİ:
+1. YATIRIMCI İÇİN: Ankara (Beytepe, İncek, Çankaya, Çayyolu, Yaşamkent, Pursaklar), Bodrum (Yalıkavak)
+   ve Alanya'daki 32 markalı proje ve 16 seçkin portföyün resmi tapu (TKGM), noter sözleşmesi, ödeme planı
+   ve inşaat tamamlama sigortası (BTS) verilerine anında, tarafsız ve bilişsel yapay zeka aracılığıyla
+   ulaşma güvencesi.
+2. MÜLK SAHİBİ & GELİŞTİRİCİ İÇİN: Gayrimenkulünün sadece bir ilan sitesine yüklenmesi değil; sözleşme
+   maddelerinden kat planlarına, video turlarından ödeme senaryolarına kadar tüm detaylarıyla yapay zekaya
+   öğretilerek yüksek gelir grubu nitelikli yatırımcılara nokta atışı pazarlanması.
+3. DANIŞMAN İÇİN: Google Drive'a bir dosya yüklendiğinde kendi kendine çalışan veri boru hatları, gece
+   otonom çalışan GitHub CI/CD senkronizasyonu ve 1-10 arası puanlanan sıcak müşteri (Lead) skorlama
+   mekanizması ile %100 otonom dijital asistan altyapısı.
+
+====================================================================================================
+BÖLÜM 2: PROGRAMIMIZ TAM OLARAK NE YAPIYOR? (7 ANA SİSTEM SÜTUNU)
+====================================================================================================
+
+NEXA PRIME v2, birbirinden bağımsız çalışan ancak kusursuz bir senfoni ile entegre olan 7 ana teknolojik
+sütun üzerinde inşa edilmiştir:
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 1: OTONOM VERİ İŞLEME VE DOKÜMAN MADENCİLİĞİ (ZERO-MANUAL DATA PIPELINE)
+----------------------------------------------------------------------------------------------------
+• Google Drive Entegrasyonu (nexa_drive_puller.py):
+  Danışman Suzanne Tenekecioğlu yeni bir projeye ait PDF, Excel, Word veya video dosyasını Google Drive
+  klasörüne yüklediği anda sistem bunu otomatik olarak algılar, indirir ve işleme alır.
+• Evrensel Belge Ayrıştırıcı (Universal Multi-Format Parser):
+  - PDF: PyPDF2 ve pypdf motorları ile resmi sözleşmeler, teknik şartnameler ve mimari kataloglar taranır.
+  - XLSX/XLS: openpyxl ile geliştirici fiyat listeleri, kat/daire bazlı liste fiyatları, peşinat oranları
+    ve vade seçenekleri tablo bazında veri tabanına işlenir.
+  - DOCX/TXT: Proje teslim tarihleri, müteahhit taahhütleri ve hukuki maddeler ayrıştırılır.
+• Dosya Sistemi Nöbetçisi (nexa_watchdog.py):
+  Yerel klasörlerdeki her yeni dosyayı milisaniyeler içinde SQLite WAL veritabanına indeksler, vektör
+  gömülmelerini (embeddings) yeniler ve web sitesindeki proje kartlarını otomatik olarak günceller.
+• Sonuç: İnsan müdahalesine gerek kalmadan, Drive'a atılan bir dosya 60 saniye içinde web sitesinde
+  canlıya çıkar ve yapay zekanın bilgi dağarcığına katılır.
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 2: BİLİŞSEL YAPAY ZEKA VE HİBRİT VEKTÖR RAG MOTORU (MIRA AI ASİSTANI)
+----------------------------------------------------------------------------------------------------
+• Mira Bilişsel Danışman (nexa_ai_engine.py & nexa_rag.py):
+  Yatırımcının doğal dilde yazdığı soruları ("Yaşamkent'te 3+1 peşinatsız veya 36 ay vadeli proje var mı?",
+  "Beytepe'de tapusu hazır, BTS sigortalı lüks villa arıyorum") anlar; bütçe, bölge, oda sayısı ve teslim
+  tarihi niyetlerini ayrıştırır.
+• Çift Motorlu Hibrit Arama (BM25 Lexical + 768-Boyutlu Vektör Embedding):
+  Hem anahtar kelime bazlı tam eşleşmeyi (SQLite FTS5) hem de anlamsal benzerlik aramasını birleştirerek
+  en doğru doküman parçalarını milisaniyeler içinde getirir.
+• Sıfır Halüsinasyon (Zero-Hallucination) & Hukuki Çapa:
+  Mira asla kafasından fiyat veya teslim tarihi uydurmaz. Her yanıtını resmi sözleşme maddelerine,
+  TKGM ada/parsel tapu kayıtlarına ve inşaat tamamlama sigortası (BTS) poliçelerine dayandırır.
+• 3 Kademeli Hata Telafi Mimarisi (Multi-Tier Fallback):
+  Google Gemini Pro -> Yerel LLM (Ollama) -> Deterministik Kural Tabanı hiyerarşisiyle internet veya kota
+  kesintilerinde bile sistem asla çökmez, daima doğru yanıt verir.
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 3: DİNAMİK VİTRİN, ÇOK KADEMELİ AKILLI ARAMA VE NOTEBOOKLM ZİHİN HARİTASI
+----------------------------------------------------------------------------------------------------
+• 32 Markalı Proje ve 16 Portföy İlanı:
+  Ankara, Bodrum ve Alanya'nın en prestijli projeleri (Gökdemir Mas Lora, Mas İncek, İncek Vista, Mas Beytepe,
+  Ankaport, Yalıkavak Villaları vb.) zengin görsel kartlar, dinamik fiyat rozetleri ve yapay zeka skorları
+  ile sunulur.
+• 5 Aşamalı Akıllı Filtreleme Motoru (applyFilters):
+  - Adım 1: Proje Türü (Markalı Proje / Bireysel Portföy / Villa)
+  - Adım 2: Dinamik Lokasyon Çipleri (Çankaya, Etimesgut, Yenimahalle, Gölbaşı, Bodrum, Alanya vb.)
+  - Adım 3: Oda Tipi (1+1, 2+1, 3+1, 4+1, 5+1, Villa)
+  - Adım 4: Milyon TL Bütçe Aralıkları (1-3 M, 3-5 M, 5-10 M, 10-20 M, 20M+ TL)
+  - Adım 5: Teslim Zamanı (Hemen Teslim, 0-6 Ay, 6-12 Ay, 12-24 Ay, 2026/2027)
+• NotebookLM Tarzı Zihin Haritası:
+  Yatırımcı filtreleri değiştirdikçe, portföy zihin haritası eşzamanlı olarak yeniden çizilir ve yatırım
+  alternatiflerini görsel bir strateji diyagramı olarak sunar.
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 4: MOBİL ÖNCELİKLİ (MOBILE-FIRST) VE YEREL UYGULAMA (NATIVE APP) ERGONOMİSİ
+----------------------------------------------------------------------------------------------------
+• Sıfır Piksel Taşma (0px Overflow-X Containment):
+  320px ultra küçük telefonlardan 1440px+ 4K ekranlara kadar tüm çözünürlüklerde sıfır yatay kayma ve
+  kusursuz responsive tasarım.
+• Sanal Klavye Görsel Viewport Senkronizasyonu (initVisualViewportManager):
+  Mobil cihazlarda (iPhone / Android) kullanıcı mesaj yazmak için klavyeyi açtığında, chatbot penceresi
+  ve giriş kutusu milisaniye gecikmesiz klavyenin hemen üzerine yapışır.
+• Akıllı Alan Maksimizasyonu (Keyboard-Mode):
+  Yazı yazılırken öneri çipleri ve büyük başlıklar otomatik gizlenir, kullanıcıya 290px ferah bir okuma
+  alanı ve 16px net bir yazma alanı sunulur (iOS otomatik zum engellenmiştir).
+• Güvenli Alan Entegrasyonu (Safe Area Insets):
+  iPhone Dynamic Island / Çentik ve Android alt navigasyon çubukları (--sat, --sab) tam uyumludur.
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 5: SIFIR DEPOLAMA MALİYETİ VE KESİNTİSİZ BULUT MEDYA AKIŞI
+----------------------------------------------------------------------------------------------------
+• HTTP 206 Kısmi İçerik Video Akışı (/video/1.mp4 & /stream/video/<id>):
+  Yüksek çözünürlüklü tanıtım videoları sunucuyu şişirmeden, 1MB'lık parçalar halinde video oynatıcılara
+  anında akar (YouTube benzeri sıfır bekleme süresi).
+• Bulut CDN Entegrasyonu:
+  Ağır PDF katalogları ve görsel galerileri doğrudan güvenli Google Drive ve CDN önbelleklerinden
+  beslenerek sunucu barındırma maliyetini sıfıra indirir.
+• 60 FPS Sinematik Parallaks Açılış (1.mp4):
+  Kullanıcı siteye girdiğinde Hollywood kalitesinde lüks gayrimenkul introları ile karşılanır; zayıf ağlarda
+  ise sistem kesintisiz olarak optimize poster görseline geçer.
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 6: TAM OTONOM BULUT SENKRONİZASYONU VE KENDİ KENDİNİ İYİLEŞTİRME (SELF-HEALING)
+----------------------------------------------------------------------------------------------------
+• GitHub Actions 24 Saatlik Otonom Cron (.github/workflows/update_db.yml):
+  Her gece saat 02:00 UTC'de (Türkiye saatiyle 05:00) bulut ajanları devreye girer:
+  1. Coldwell Banker resmi sistemini tarar (scripts/nexa_cb_sync.py).
+  2. Google Drive'daki yeni dokümanları indirip ayrıştırır (scripts/nexa_sales_miner.py).
+  3. Veritabanı bütünlüğünü kontrol eder ve 5 aşamalı Self-Healing testini çalıştırır.
+  4. Yapay zeka proje özetlerini günceller (nexa_project_summaries.json).
+  5. Değişiklikleri otomatik commit ve push yaparak Render bulut sunucusunu sıfır kesintiyle günceller.
+• Sıfır Bakım Maliyeti: Sistem haftalarca hiçbir insan müdahalesi olmadan kendi kendini günceller ve onarır.
+
+----------------------------------------------------------------------------------------------------
+SÜTUN 7: CRM, AKILLI SATIŞ HUNİSİ VE YÖNETİM PANELİ (LEAD GENERATION & CRM)
+----------------------------------------------------------------------------------------------------
+• Akıllı Müşteri Skorlama (Lead Scoring 1-10):
+  Yatırımcının sohbet içindeki sorularından niyetini ölçer:
+  - Skor 9 (HOT LEAD): "Randevu almak istiyorum", "Yeri görmek istiyorum", "Satın alma şartları"
+  - Skor 7 (SERIOUS LEAD): "Peşinatım şu kadar", "Kredi/Taksit imkanları", "Ödeme planı"
+  - Skor 5 (CURIOUS LEAD): "Fiyatlar ne kadar?", "Teslim ne zaman?"
+• Tek Tıkla WhatsApp & Telefon Yönlendirmesi:
+  Müşteri iletişim bilgisi bıraktığı anda Suzanne Tenekecioğlu'nun WhatsApp hattına (+90 535 489 56 56)
+  özelleştirilmiş mesajla bağlanır.
+• PIN Korumalı Lüks Yönetici Paneli (admin.html - PIN: nexa2026vip):
+  - Canlı Proje Sıralama: Kartları sürükle-bırak yöntemiyle vitrinde öne çıkarma veya gizleme.
+  - CRM Aşamaları: Gelen randevuları "Görüşüldü", "Teklif Verildi", "Sözleşme", "Tamamlandı" olarak yönetme.
+  - Canlı Senkronizasyon: Tek tıkla Coldwell Banker ve veritabanı senkronizasyonunu tetikleme.
+  - Sistem Sağlık Telemetrisi: 32 proje, doküman sayısı ve API sağlık durumunu gerçek zamanlı izleme.
+
+====================================================================================================
+BÖLÜM 3: PAZARLAMA VİZYONU VE TİCARİ DEĞER TEKLİFİ (MARKETING & COMMERCIAL BLUEPRINT)
+====================================================================================================
+
+NEXA PRIME v2, sadece bir yazılım değil; gayrimenkul pazarlamasında rekabet avantajı yaratan ticari
+bir satış makinesidir.
+
+----------------------------------------------------------------------------------------------------
+1. GAYRİMENKUL YATIRIMCISI AÇISINDAN NEDEN NEXA PRIME v2?
+----------------------------------------------------------------------------------------------------
+• Bilgi Kirliliğine Son: İlan sitelerindeki yanıltıcı fiyatlar, güncel olmayan fotoğraflar ve sahte
+  ilanlar yerine; resmi tapu, noter onaylı sözleşme ve güncel fiyat listesiyle teyit edilmiş gerçek veriler.
+• 7/24 Kesintisiz Yatırım Danışmanı: Gece saat 02:00'de bile bütçesine ve ödeme gücüne en uygun daire veya
+  villayı tüm hukuki ve finansal detaylarıyla analiz edebilen yapay zeka.
+• Güvenli Yatırım Güvencesi: Her projenin TKGM ada/parsel doğrulaması ve İnşaat Tamamlama Sigortası (BTS)
+  durumu açıkça belirtilir; yatırımcının sermayesi riske atılmaz.
+
+----------------------------------------------------------------------------------------------------
+2. MÜLK SAHİBİ VE PROJE GELİŞTİRİCİSİ AÇISINDAN NEDEN SUZANNE TENEKECİOĞLU?
+----------------------------------------------------------------------------------------------------
+• Eşsiz Pazarlama Teknolojisi: Bir müteahhit veya villa sahibi portföyünü Suzanne Hanım'a verdiğinde,
+  mülkü sıradan bir listeleme yerine NEXA PRIME yapay zekasına işlenir.
+• Nitelikli Yatırımcı Eşleştirmesi: Sistem, portföye en uygun bütçedeki alıcıları yapay zeka analitiğiyle
+  doğrudan tespit eder ve sıcak randevuya dönüştürür.
+• Küresel Tanıtım & Kurumsal Prestij: Coldwell Banker VIP güvencesiyle birleşen Hollywood standardında
+  video akışı ve yapay zeka destekli yatırım raporları, mülkün marka değerini zirveye taşır.
+
+----------------------------------------------------------------------------------------------------
+3. GELENEKSEL EMLAK SİTELERİ İLE NEXA PRIME v2 KARŞILAŞTIRMASI
+----------------------------------------------------------------------------------------------------
+Özellik                        | Geleneksel İlan Siteleri     | NEXA PRIME v2 (Suzanne Tenekecioğlu)
+-------------------------------+------------------------------+--------------------------------------
+Veri Kaynağı                   | Manuel, denetimsiz giriş     | Resmi Sözleşme, PDF, XLSX, TKGM Tapu
+Yapay Zeka Danışmanlığı        | Yok (Sadece arama kutusu)    | Mira Bilişsel Vektör RAG Motoru (7/24)
+Ödeme Planı Hesaplama          | Yok                          | Faizsiz şirket içi taksit simülasyonu
+Sözleşme & Tapu Doğrulaması    | Yok                          | TKGM Ada/Parsel + BTS Sigorta Kontrolü
+Mobil Sanal Klavye Deneyimi    | Standart web form            | Native App Ergonomisi (Zero-Occlusion)
+Veri Güncelliği                | Haftalarca güncellenmeyenler | Her gece 02:00 UTC otonom senkronize
+Müşteri İletişim Hızı          | Saatler/günler sonra form    | Anında Akıllı WhatsApp & CRM Çağrısı
+Sunucu & Depolama Verimi       | Ağır sunucu maliyetleri      | Sıfır Depolama & HTTP 206 Stream CDN
+
+----------------------------------------------------------------------------------------------------
+4. MÜŞTERİ KAZANIM VE SATIŞ HUNİSİ (CONVERSION FUNNEL)
+----------------------------------------------------------------------------------------------------
+[1. Ziyaretçi Girişi]       --> 60 FPS Video Splash & Etkileyici Prestij Karşılaması
+[2. Keşif & Filtreleme]     --> 5 Kademeli Akıllı Arama & NotebookLM Zihin Haritası
+[3. Bilişsel Etkileşim]     --> Mira AI ile Doğal Dilde Sohbet, Proje & Sözleşme İncelemesi
+[4. Sıcak İkna & Skorlama]  --> Bütçe, Vade ve Lokasyon Uyumu (Lead Skoru: 7-9)
+[5. Hızlı Randevu & Satış]  --> WhatsApp / GSM Üzerinden Suzanne Tenekecioğlu ile Birebir VIP Sunum
+
+====================================================================================================
+BÖLÜM 4: TEKNOLOJİ YIĞINI VE ALTYAPI ENVANTERİ (TECH STACK)
+====================================================================================================
+
+• Backend Motoru: Python 3.11+, Flask REST API, Gunicorn WSGI, Werkzeug
+• Veritabanı Katmanı: SQLite 3 (WAL - Write-Ahead Logging Modu, Foreign Keys, 30s Busy Timeout)
+• Yapay Zeka & NLP: Google Gemini Pro API (google-genai v1.0), Vektör Gömülmeleri (768-dim), SQLite FTS5
+• Frontend Arayüzü: HTML5, Modern Vanilla ES6+, CSS3 Design Tokens, GSAP Animasyon, FontAwesome 6 Pro
+• Mobil Ergonomi: CSS Visual Viewport API, Dynamic Viewport Units (100dvh), Safe Area Insets (--sat, --sab)
+• Otonom İş Hatları: GitHub Actions Cloud Cron, Python Watchdog, Google Drive Embedded Scraper
+• Medya Yayını: HTTP 206 Partial Content Video Engine, Google Drive CDN, Catbox Fallback
+• Güvenlik Standartları: Timing-Attack Korumalı PIN Doğrulama, IP Hız Sınırlandırma, CSRF Origin Koruması,
+  Content Security Policy (CSP), KVKK Uyumlu Telemetri Maskelemesi
+
+====================================================================================================
+BÖLÜM 5: KURUMSAL İLETİŞİM VE DANIŞMANLIK BİLGİLERİ
+====================================================================================================
+
+• Baş Gayrimenkul & Yatırım Danışmanı: Suzanne Tenekecioğlu
+• Kurumsal Temsil: Coldwell Banker VIP Gayrimenkul
+• Ofis Kodu / Kullanıcı No: Ofis: 470 | Danışman No: 17983
+• Doğrudan GSM & WhatsApp: 0535 489 56 56 (Uluslararası: +90 535 489 56 56)
+• Uzmanlık Alanları: Markalı Konut Projeleri, Lüks Villa Portföyü, Arsa & Ticari Yatırım Danışmanlığı
+• Hizmet Bölgeleri: Ankara (Beytepe, İncek, Çankaya, Yaşamkent, Çayyolu, Pursaklar), Bodrum (Yalıkavak), Alanya
+• Yönetici Paneli Girişi: /admin (PIN: nexa2026vip)
+• Canlı Platform Adresi: https://suzannegit.onrender.com (veya yerel host: http://localhost:5002)
+
+====================================================================================================
+SONUÇ:
+NEXA PRIME v2, gayrimenkul danışmanlığını geleneksel bir satış faaliyetinden çıkararak; yapay zeka,
+finansal matematik ve hukuki güvenliği birleştiren yüksek teknolojili bir kurumsal ekosisteme dönüştürmüştür.
+====================================================================================================
