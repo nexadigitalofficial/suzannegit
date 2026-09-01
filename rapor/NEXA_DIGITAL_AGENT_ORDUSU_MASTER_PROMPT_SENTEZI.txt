@@ -1,0 +1,112 @@
+====================================================================================================
+               NEXA DIGITAL | AGENT ORDUSU MASTER PROMPT & DİKEY TASARIM SENTEZİ
+                     AUTONOMOUS SWARM COLLABORATIVE PROMPT ENGINEERING PROTOCOL
+====================================================================================================
+
+Teknoloji Üreticisi: NEXA DIGITAL (@nexadigitalofficial)
+Proje: NEXA PRIME v2 — Otonom Bilişsel Gayrimenkul Platformu
+Format: Çoklu Ajan Sentezi (Multi-Agent Swarm Synthesis) + Master Dikey Post & Prompt (TXT)
+Tarih: Eylül 2026
+
+====================================================================================================
+BÖLÜM 1: GÖREVLENDİRİLEN AGENT ORDUSU VE UZMANLIK ALANLARI
+====================================================================================================
+
+Bu master prompt, 5 farklı yapay zeka ajanının kendi uzmanlık alanlarında gerçekleştirdiği derin
+analiz ve ortak sentez sonucunda üretilmiştir:
+
+1. AGENT 1: Baş Kreatif Direktör & Görsel Sanat Yönetmeni (Visual & Lighting Director)
+   - Odak: Renk teorisi (Obsidyen, Safir Mavisi, Şampanya Altını), 4:5 altın oran kompozisyonu,
+     volumetrik aydınlatma ve atmosfer derinliği.
+2. AGENT 2: PropTech & Otonom Sistemler Mimarı (Systems & Data Flow Specialist)
+   - Odak: Google Drive'dan gelen ham verilerin, PDF sözleşmelerin ve Excel tablolarının 3D holografik
+     akışa ve dinamik web sitesine dönüşümünün görselleştirilmesi.
+3. AGENT 3: Lüks Gayrimenkul & Mimari Tasarım Uzmanı (Architectural & Spatial Designer)
+   - Odak: Havada süzülen cam cepheli fütüristik villa, sonsuzluk havuzu ve 3D mimari tel kafes kat planları.
+4. AGENT 4: İleri Düzey Render & Prompt Mühendisi (3D Octane / Unreal Engine 5 Prompt Specialist)
+   - Odak: Midjourney v6.1 ve Flux Pro parametreleri, kamera lens seçimleri (50mm f/1.2), ışık kırılmaları.
+5. AGENT 5: Bilişsel Satış & Copywriting Stratejisti (Conversion & Marketing Lead)
+   - Odak: "Ne yapıyor, Neyi çözüyor, Neden özel?" kurgusunun görsel ve metinsel hiyerarşisi.
+
+====================================================================================================
+BÖLÜM 2: 5 AJANIN ORTAK MEKÂNSAL DİZİLİM MİMARİSİ (SPATIAL COMPOSITION BLUEPRINT)
+====================================================================================================
+
+Ajanlar, izleyicinin dikkatini ilk 0.8 saniyede yakalayan ve doğrudan dönüşüme yönlendiren 4 dikey
+bölge üzerinde mutabakata varmıştır:
+
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ [BÖLGE 1: ÜST NEGATİF ALAN & HOOK — %15 ALAN]                                         │
+│ • Arka Plan: Koyu obsidyen gece degrade gökyüzü (Metin için temiz alan).              │
+│ • Tipografi (Altın & Buzul Beyaz): "GAYRİMENKULDE YAPAY ZEKA DEVRİMİ"                 │
+│ • Alt Rozet: "OTONOM DİNAMİK PORTFÖY ZEKASI — NEXA PRIME v2"                          │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ [BÖLGE 2: THE COGNITIVE HERO CORE (MERKEZİ YAPI) — %45 ALAN]                           │
+│ • Merkez Obje: Havada asılı duran, içi sıcak sarı ışıklarla aydınlatılmış fütüristik  │
+│   ultra lüks cam cepheli villa ve taşan sonsuzluk havuzu.                             │
+│ • Otonom Veri Sentezi: Villanın üstünde havada süzülen 3D neon tel kafes kat planları  │
+│   (3D Wireframe CAD), safir mavisi sinir ağı bağlantıları ve altın veri parçacıkları. │
+│ • Sembolik Anlam: "Dosyaları ve ilanları otonom tarar, web sitesini dinamik kurar."  │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ [BÖLGE 3: İNTERAKTİF GÜVEN & METRİK HUD (TRUST & ANALYTICS) — %25 ALAN]               │
+│ • Şık Glassmorphic Yüzen Kontrol Paneli (Altın & Neon Mavi Çerçeveli):                │
+│   - Güven Rozeti : "TKGM TAPU DOĞRULANDI" & "BTS TAMAMLAMA SİGORTASI" (Altın Mühür)   │
+│   - Metrik 1     : AI Değerleme Doğruluk Skoru: %98.4                                  │
+│   - Metrik 2     : Ortalama Kira Getirisi & ROI: %7.8                                 │
+│   - Metrik 3     : Otonom Senkronizasyon: 7/24 Kesintisiz                              │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ [BÖLGE 4: MARKA İMZASI & DÖNÜŞÜM ÇAĞRISI (FOOTER / CTA) — %15 ALAN]                   │
+│ • Geliştirici İmzası: "GELİŞTİRİCİ: NEXA DIGITAL" (Minimalist fütüristik logo rozeti) │
+│ • Eylem Butonu: "CANLI KEŞFET: suzannegit.onrender.com" / "DM: @nexadigital"          │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+====================================================================================================
+BÖLÜM 3: AGENT ORDUSUNUN SENTEZLEDİĞİ MASTER GÖRSEL ÜRETİM PROMPTU
+====================================================================================================
+
+Bu prompt, Midjourney v6.1, Flux.1 Pro veya DALL-E 3 motorlarında tek seferde kusursuz ve hiper-gerçekçi
+bir sonuç üretmek üzere tüm teknik ağırlıklarla hazırlanmıştır:
+
+ENGLİSH PROMPT (Doğrudan Kopyalayıp Yapıştırın):
+----------------------------------------------------------------------------------------------------
+An ultra-premium cinematic vertical poster design (4:5 aspect ratio) for a cutting-edge autonomous AI real estate technology platform engineered by Nexa Digital. In the center, a breathtaking floating ultra-luxury architectural master villa with illuminated glass walls and an infinity pool hovering above a twilight skyline. Directly above the villa, a luminous 3D holographic wireframe architectural floor plan, floating glowing golden PDF contract data streams, and neon sapphire neural network nodes interact in mid-air. The top portion features pristine dark obsidian negative space reserved for high-end typography. The lower third features a floating futuristic glassmorphism analytics dashboard displaying property valuation metrics, a glowing golden 'TKGM TAPU VERIFIED' seal, and an AI investment score badge of 98/100. Volumetric golden atmospheric light, deep royal navy blue ambient shadows, octane render, architectural photography shot on Hasselblad H6D-100c with 50mm f/1.2 lens, hyper-realistic, photorealistic glass and water reflections, 8k resolution, award-winning visual --ar 4:5 --style raw --v 6.0 --q 2
+----------------------------------------------------------------------------------------------------
+
+TÜRKÇE AÇIKLAMASI:
+Nexa Digital tarafından geliştirilen otonom yapay zeka gayrimenkul platformu için ultra premium dikey poster tasarımı (4:5). Merkezde alacakaranlıkta havada süzülen cam cepheli lüks modern villa, üzerinde parlayan 3D holografik mimari kat planları, altın renkli sözleşme veri akışları ve safir mavisi sinir ağı noktaları. Üstte başlık için temiz koyu alan; alt kısımda ise 'TKGM TAPU VERIFIED' altın mührü ve 98/100 yapay zeka puanını gösteren fütüristik cam panel. 8K sinematik mimari fotoğraf kalitesi.
+
+====================================================================================================
+BÖLÜM 4: MASTER SATIŞ & PAZARLAMA POST METNİ (KOPYALA - PAYLAŞ)
+====================================================================================================
+
+Gayrimenkulde geleneksel ilan devri bitti.
+Bilişsel yapay zeka çağı başladı.
+
+NEXA DIGITAL olarak PropTech dünyasında kuralları baştan yazan otonom zeka platformumuz NEXA PRIME v2'yi gururla sunuyoruz.
+
+🎯 NEXA PRIME Ne Yapıyor?
+📁 Google Drive veya buluta atılan sözleşme, PDF ve Excel fiyat listelerini saniyeler içinde OTONOM tarar.
+🌐 Portföy ve ilanlarınızı sıfır manuel işlemle otomatik çeker ve veritabanına işler.
+✨ Tek bir satır kod yazmadan web sitesini, filtreleri ve proje kartlarını DİNAMİK olarak yeniden inşa eder.
+🧠 7/24 Bilişsel Yapay Zeka Danışmanı; resmi noter şartnameleri ve tapu teyidiyle mülkünüzü sıfır hata ile yatırımcılara sunar.
+
+⚡ Neyi Çözüyor?
+❌ Yanıltıcı fiyatlar ve eskiyen ilanlar yok.
+❌ Haftalarca süren web güncelleme ve entegrasyon maliyeti yok.
+❌ Kaybedilen tek bir nitelikli alıcı bile yok.
+
+Mülkleriniz sadece listelenmez; yapay zeka tarafından 7/24 en doğru yatırımcıyla eşleştirilir.
+
+💎 Markalı projeleriniz ve gayrimenkul operasyonunuz için NEXA DIGITAL zekasıyla tanışın.
+
+🚀 Geliştirici: NEXA DIGITAL
+🌐 Canlı Teknoloji Deneyimi: suzannegit.onrender.com
+📩 Bilgi & Kurumsal İş Birlikleri: DM / Nexa Digital
+
+#NexaDigital #NexaPrime #YapayZeka #PropTech #RealEstateAI #AutonomousPlatform #Innovation #NextGenSoftware
+
+====================================================================================================
+SONUÇ:
+Bu sentez, Nexa Digital'in yapay zeka mühendisliğini küresel ölçekte lüks, güvenilir ve rakipsiz bir
+PropTech markası olarak konumlandırmak üzere tasarlanmıştır.
+====================================================================================================
