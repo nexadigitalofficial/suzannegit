@@ -95,9 +95,14 @@
  "SARITAŞ MAS LORA - YAŞAMKENT": {
   "summary": "- SARITAŞ MAS LORA - YAŞAMKENT (Ankara / Etimesgut / Yapracık - Yaşamkent): 2.650.000 - 3.850.000 TL, Peşinat: 1.325.000 TL (%50), Ödeme: 24-30 Ay Taksit, Daire: 1+1, 2+1, Ada: 49905/2 (TKGM Onaylı). Çankaya Üniversitesi ve Eskişehir Yolu yönü, açık otopark, Bina Tamamlama Sigortalı ve resmi sözleşme güvenceli."
  },
- "NARÇİN RONYA CITY - 1 (VIP WEST)": {
-  "summary": "*   **Konum ve Kimlik**: NARÇİN RONYA CITY - 1 (VIP WEST), Etimesgut, Ankara. Çankaya Üniversitesi'ne komşu, Eskişehir Yolu'na hızlı erişim.\n*   **Konsept ve Daire Tipleri**: Enerjisini kendi üreten çevre dostu proje (GES). 1+1 ve 2+1 daire seçenekleri.\n*   **Fiyat ve Ödeme Planı**: 3.200.000 TL - 4.600.000 TL aralığında fiyatlar. %50 peşinat ve 12-24 ay taksit imkanı.\n*   **Örnek Ödeme**: 3.610.000 TL daire için 1.805.000 TL peşinat, 12 ay x 150.500 TL taksit.\n*   **Teslim Süresi**: 24 ay.\n*   **Tapu Durumu**: 62700/5 ada/parsel ile TKGM onaylı.",
-  "project_id": 17,
-  "ts": 1788418968.656634
+ "NEXA Royal Yalıkavak": {
+  "summary": "*   Bodrum, Muğla'da yer alan NEXA Royal Yalıkavak, ultra lüks deniz manzaralı premium villalar sunmaktadır.\n*   Proje, 2+1 ve 3+1 villa ile lüks rezidans daire tiplerinden oluşmaktadır.\n*   Fiyatlar 14.500.000 TL'den başlamakta olup, %50 peşinat (7.250.000 TL) ve 24 ay taksit imkanı bulunmaktadır.\n*   Teslimat süresi 12 aydır.\n*   Tapu durumu TKGM onaylı 624/18 ada/parseldir.",
+  "project_id": 1,
+  "ts": 1788505473.0487103
+ },
+ "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR": {
+  "summary": "- Ankara Yenimahalle'de, Çakırlar bölgesinde yer alan MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR projesi.\n- Konut projesi olup, 1+1 ve 2+1 daire tipleri sunmaktadır.\n- Fiyat aralığı 2.800.000 TL - 3.900.000 TL'dir. %50 peşinat (1.400.000 TL) ile 12-18 ay taksit imkanı bulunmaktadır.\n- Teslim süresi 24 aydır.\n- Tapu durumu TKGM onaylı 63452/7 ada/parseldir.",
+  "project_id": 12,
+  "ts": 1788505478.599907
  }
 }
