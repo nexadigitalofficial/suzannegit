@@ -4721,9 +4721,23 @@
                 margin-top: 1px;
             }
 
-            /* Floating Chatbot button positioning above bottom bar */
+            /* Hide redundant legacy Sticky CTA on mobile in favor of .mobile-app-bottom-bar */
+            .hero-sticky-cta,
+            .hero-sticky-cta.visible {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
+
+            /* On mobile, Mira AI is integrated directly in the persistent bottom navigation bar (#bbarChat) */
             .chat-toggle {
-                bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+                display: none !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+            }
+            .chatbot-widget.scroll-revealed {
+                display: none !important;
             }
         }
 
@@ -11461,6 +11475,7 @@
             const hysteresis = 100; // geri dönüş için hafif gecikme
 
             function onScroll() {
+                if (window.innerWidth <= 768) return;
                 const scrollY = window.scrollY || document.documentElement.scrollTop;
                 const shouldReveal = scrollY > threshold;
 
@@ -11499,14 +11514,16 @@
             function updateStickyUI() {
                 const scrollY = window.scrollY || document.documentElement.scrollTop;
                 
-                // Hero Sticky CTA
-                if (heroStickyCta) {
+                // Hero Sticky CTA (Disabled on mobile <= 768px in favor of native mobile-app-bottom-bar)
+                if (heroStickyCta && window.innerWidth > 768) {
                     const shouldShow = scrollY > heroThreshold;
                     if (shouldShow && !heroStickyCta.classList.contains('visible')) {
                         heroStickyCta.classList.add('visible');
                     } else if (!shouldShow && heroStickyCta.classList.contains('visible')) {
                         heroStickyCta.classList.remove('visible');
                     }
+                } else if (heroStickyCta) {
+                    heroStickyCta.classList.remove('visible');
                 }
 
                 // Filter Sticky Summary
