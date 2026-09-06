@@ -4485,13 +4485,19 @@
                 padding-bottom: 1rem !important;
             }
             .modal-overlay {
-                padding: 8px !important;
-                align-items: flex-start !important;
+                padding: 0 !important;
+                align-items: flex-end !important;
+                justify-content: center !important;
             }
             .modal-container {
-                max-height: 96dvh !important;
-                border-radius: 14px !important;
-                margin: auto 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                max-height: 92dvh !important;
+                border-top-left-radius: 24px !important;
+                border-top-right-radius: 24px !important;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                margin: 0 !important;
             }
             .chat-window {
                 height: calc(100dvh - 20px) !important;
@@ -4510,6 +4516,200 @@
             .card-actions .btn { font-size: 11.5px !important; padding: 6px 8px !important; }
             .segmented-control { width: 100% !important; height: 46px !important; }
             .segment-btn { font-size: 13px !important; }
+        }
+
+    
+        /* ═════════════════════════════════════════════════════════════════════
+           NATIVE MOBILE APP-STYLE BOTTOM NAVIGATION BAR & TOUCH DYNAMICS
+           ═════════════════════════════════════════════════════════════════════ */
+        .mobile-app-bottom-bar {
+            display: none;
+        }
+
+        .bottom-sheet-drag-handle {
+            display: none;
+            width: 40px;
+            height: 4.5px;
+            background: rgba(0, 0, 0, 0.22);
+            border-radius: 99px;
+            margin: 8px auto 6px auto;
+            flex-shrink: 0;
+        }
+
+        /* Touch Dynamics & Instant Tap Response */
+        button, .btn, .chip, .bottom-bar-item, .apt-day-pill, .apt-time-slot,
+        .nav-icon-link, .mobile-first-pill, .segment-btn, .card-actions .btn {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent !important;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .btn:active, .chip:active, .apt-day-pill:active, .apt-time-slot:active,
+        .mobile-first-pill:active, .segment-btn:active {
+            transform: scale(0.96);
+            transition: transform 0.08s ease;
+        }
+
+        @media (max-width: 768px) {
+            html, body {
+                overscroll-behavior-y: none;
+            }
+
+            body {
+                padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+
+            .bottom-sheet-drag-handle {
+                display: block !important;
+            }
+
+            /* Native Bottom Sheet Physics on Mobile */
+            .modal-overlay {
+                padding: 0 !important;
+                align-items: flex-end !important;
+                justify-content: center !important;
+                backdrop-filter: blur(12px) !important;
+                -webkit-backdrop-filter: blur(12px) !important;
+            }
+
+            .modal-container, .modal-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                max-height: 90dvh !important;
+                border-top-left-radius: 24px !important;
+                border-top-right-radius: 24px !important;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                margin: 0 !important;
+                box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.35) !important;
+                transform: translateY(100%);
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                overscroll-behavior: contain !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
+            .modal-overlay.active .modal-container,
+            .modal-overlay.active .modal-content {
+                transform: translateY(0) !important;
+            }
+
+            /* Persistent Glassmorphism Bottom Nav */
+            .mobile-app-bottom-bar {
+                display: flex !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
+                padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+                background: rgba(255, 255, 255, 0.92) !important;
+                backdrop-filter: blur(25px) !important;
+                -webkit-backdrop-filter: blur(25px) !important;
+                border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06) !important;
+                z-index: 99998 !important;
+                align-items: center !important;
+                justify-content: space-around !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+                transition: transform 0.25s ease !important;
+                user-select: none !important;
+                -webkit-user-select: none !important;
+            }
+
+            .mobile-app-bottom-bar.keyboard-hidden {
+                transform: translateY(100%) !important;
+                pointer-events: none !important;
+            }
+
+            .bottom-bar-item {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+                background: transparent;
+                border: none;
+                padding: 6px 2px;
+                color: var(--text-secondary);
+                cursor: pointer;
+                text-decoration: none;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .bottom-bar-item i {
+                font-size: 17px;
+                transition: transform 0.18s ease, color 0.18s ease;
+            }
+
+            .bottom-bar-item span {
+                font-size: 10.5px;
+                font-weight: 600;
+                letter-spacing: -0.1px;
+                line-height: 1.1;
+                transition: color 0.18s ease;
+            }
+
+            .bottom-bar-item:active {
+                transform: scale(0.92);
+            }
+
+            .bottom-bar-item.active {
+                color: #012169;
+            }
+
+            .bottom-bar-item.active i {
+                color: #0071E3;
+                transform: scale(1.1);
+            }
+
+            .bottom-bar-item.active span {
+                color: #012169;
+                font-weight: 800;
+            }
+
+            /* Special Center Action Button (Randevu) */
+            .bottom-bar-item.bbar-special {
+                position: relative;
+                top: -8px;
+            }
+
+            .bbar-special-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #012169, #0071E3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 14px rgba(0, 113, 227, 0.45);
+                transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .bbar-special-icon i {
+                color: #fff !important;
+                font-size: 18px;
+            }
+
+            .bottom-bar-item.bbar-special:active .bbar-special-icon {
+                transform: scale(0.9);
+            }
+
+            .bottom-bar-item.bbar-special span {
+                font-size: 10px;
+                font-weight: 700;
+                color: #012169;
+                margin-top: 1px;
+            }
+
+            /* Floating Chatbot button positioning above bottom bar */
+            .chat-toggle {
+                bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+            }
         }
 
     </style>
@@ -5292,6 +5492,30 @@
             </div>
         </div>
     </footer>
+
+    <!-- NATIVE APP-STYLE MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-app-bottom-bar" id="mobileAppBottomBar" aria-label="Mobil Uygulama Alt Menüsü">
+        <button type="button" class="bottom-bar-item active" id="bbarExplore" onclick="handleBottomNav('explore')" aria-label="Keşfet">
+            <i class="fa-solid fa-compass"></i>
+            <span>Keşfet</span>
+        </button>
+        <button type="button" class="bottom-bar-item" id="bbarPortfolio" onclick="handleBottomNav('portfolio')" aria-label="Portföy">
+            <i class="fa-solid fa-gem"></i>
+            <span>Portföy</span>
+        </button>
+        <button type="button" class="bottom-bar-item bbar-special" id="bbarAppointment" onclick="handleBottomNav('appointment')" aria-label="VIP Randevu Al">
+            <div class="bbar-special-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <span>Randevu</span>
+        </button>
+        <button type="button" class="bottom-bar-item" id="bbarChat" onclick="handleBottomNav('chat')" aria-label="Mira AI Asistan">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Mira AI</span>
+        </button>
+        <button type="button" class="bottom-bar-item" id="bbarContact" onclick="handleBottomNav('contact')" aria-label="Hemen Ara">
+            <i class="fa-solid fa-phone"></i>
+            <span>Ara</span>
+        </button>
+    </nav>
 
     <!-- Floating AI Chatbot (Centered on Scroll) -->
     <div class="chatbot-widget" id="chatbotWidget">
@@ -7782,6 +8006,7 @@
         }
 
         function selectAppointmentDay(dateStr, labelText) {
+            triggerHaptic(8);
             const scroller = document.getElementById('aptDaySelector');
             const dateInput = document.getElementById('aptDate');
             const label = document.getElementById('aptSelectedDateLabel');
@@ -7868,6 +8093,7 @@
         }
 
         function selectAppointmentTime(timeStr) {
+            triggerHaptic(8);
             const grid = document.getElementById('aptTimeSlotsGrid');
             const timeInput = document.getElementById('aptTime');
             const label = document.getElementById('aptSelectedTimeLabel');
@@ -8170,8 +8396,69 @@
             }
         }
 
+        
+        // ─── HAPTIC FEEDBACK & NATIVE APP CONTROLLER ───
+        function triggerHaptic(duration = 12) {
+            if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                try {
+                    navigator.vibrate(duration);
+                } catch (_) {}
+            }
+        }
+
+        function handleBottomNav(action) {
+            triggerHaptic(14);
+            const items = document.querySelectorAll('.bottom-bar-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            if (action === 'explore') {
+                const btn = document.getElementById('bbarExplore');
+                if (btn) btn.classList.add('active');
+                if (typeof switchShowcaseTab === 'function') switchShowcaseTab('projects');
+                const target = document.getElementById('showcase');
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (action === 'portfolio') {
+                const btn = document.getElementById('bbarPortfolio');
+                if (btn) btn.classList.add('active');
+                if (typeof switchShowcaseTab === 'function') switchShowcaseTab('portfolio');
+                const target = document.getElementById('showcase');
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (action === 'appointment') {
+                const btn = document.getElementById('bbarAppointment');
+                if (btn) btn.classList.add('active');
+                if (typeof openAppointmentModal === 'function') {
+                    openAppointmentModal('', 'Genel Danışmanlık & Proje Randevusu');
+                }
+            } else if (action === 'chat') {
+                const btn = document.getElementById('bbarChat');
+                if (btn) btn.classList.add('active');
+                if (typeof toggleChatbot === 'function') {
+                    const win = document.getElementById('chatWindow');
+                    if (win && !win.classList.contains('open')) {
+                        toggleChatbot();
+                    } else if (!win) {
+                        toggleChatbot();
+                    }
+                }
+            } else if (action === 'contact') {
+                const btn = document.getElementById('bbarContact');
+                if (btn) btn.classList.add('active');
+                window.location.href = 'tel:+905354895656';
+            }
+        }
+
         function switchShowcaseTab(tab) {
+            triggerHaptic(10);
             activeShowcaseTab = tab;
+            const bbarExp = document.getElementById('bbarExplore');
+            const bbarPort = document.getElementById('bbarPortfolio');
+            if (tab === 'projects') {
+                if (bbarExp) bbarExp.classList.add('active');
+                if (bbarPort) bbarPort.classList.remove('active');
+            } else if (tab === 'portfolio') {
+                if (bbarPort) bbarPort.classList.add('active');
+                if (bbarExp) bbarExp.classList.remove('active');
+            }
             const pill = document.getElementById('segmentPill');
             const btnProjects = document.getElementById('btnProjects');
             const btnPortfolio = document.getElementById('btnPortfolio');
@@ -8615,6 +8902,14 @@
 
                 root.style.setProperty('--vv-height', `${height}px`);
                 root.style.setProperty('--keyboard-height', `${keyboardHeight}px`);
+                const bbar = document.getElementById('mobileAppBottomBar');
+                if (bbar) {
+                    if (isKeyboardOpen) {
+                        bbar.classList.add('keyboard-hidden');
+                    } else {
+                        bbar.classList.remove('keyboard-hidden');
+                    }
+                }
 
                 const floatingWa = document.getElementById('floatingWaBtn');
                 const chatbotWidget = document.getElementById('chatbotWidget');
@@ -9916,6 +10211,7 @@
         
         // ─── MODAL CONTROLLERS & EVENT HANDLERS ──────────────────────────────
         function openModal(modalId) {
+            triggerHaptic(12);
             const modal = document.getElementById(modalId);
             if(modal) {
                 modal.classList.add('active');
@@ -11412,6 +11708,7 @@
     <!-- ONLINE RANDEVU MODALI (WHATSAPP ENTEGRASYONLU) -->
     <div class="modal-overlay" id="appointmentModal" onclick="if(event.target===this)closeModal('appointmentModal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:560px; max-height:90dvh; max-height:90vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
+            <div class="bottom-sheet-drag-handle"></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.15rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.06), rgba(94,92,230,0.06)); flex-shrink:0;">
                 <h3 style="margin:0; font-size:17px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> Proje & Danışmanlık Randevusu</h3>
                 <button onclick="closeModal('appointmentModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
@@ -11491,6 +11788,7 @@
     <!-- DETAYLI HAKKIMDA MODALI -->
     <div class="modal-overlay" id="aboutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:800px; max-height:85vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
+            <div class="bottom-sheet-drag-handle"></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:#f8f9fa;">
                 <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);">Suzanne Tenekecioğlu — Özgeçmiş &amp; Vizyon</h3>
                 <button onclick="closeModal('aboutModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
@@ -11513,6 +11811,7 @@
     <!-- VIDEO MODAL (GOOGLE DRIVE PREVIEW & STREAM PLAYER) -->
     <div class="modal-overlay" id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.88); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#1c1c1e; color:#fff; width:100%; max-width:940px; border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,0.15); box-shadow:0 25px 60px rgba(0,0,0,0.6); display:flex; flex-direction:column;">
+            <div class="bottom-sheet-drag-handle"></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); background:#242426;">
                 <div style="display:flex; align-items:center; gap:10px;">
                     <h3 id="videoTitle" style="margin:0; font-size:18px; font-weight:700; color:#fff;">Proje Tanıtım Filmi</h3>
@@ -11537,6 +11836,7 @@
     <!-- PDF SUNUM MODAL -->
     <div class="modal-overlay" id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:1000px; height:90vh; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.4);">
+            <div class="bottom-sheet-drag-handle"></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:#f8f9fa;">
                 <h3 id="pdfModalTitle" style="margin:0; font-size:17px; font-weight:700; color:var(--text-primary);">Proje Sunum Dosyası</h3>
                 <div style="display:flex; align-items:center; gap:10px;">
@@ -11552,6 +11852,7 @@
     <!-- ZEKA RAPORU MODAL -->
     <div class="modal-overlay" id="reportModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:850px; max-height:85vh; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.3);">
+            <div class="bottom-sheet-drag-handle"></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.05), rgba(94,92,230,0.05));">
                 <h3 id="reportProjectTitle" style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-brain" style="color:var(--accent);"></i> Nexa AI Zeka Raporu</h3>
                 <button onclick="closeModal('reportModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
@@ -11584,6 +11885,7 @@
     <!-- KVKK AYDINLATMA METNİ MODALI -->
     <div class="modal-overlay" id="kvkkModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:999999 !important; pointer-events:auto !important; align-items:center; justify-content:center; padding:1.5rem;">
         <div class="modal-container" style="background:#fff; width:100%; max-width:820px; max-height:85vh; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 60px rgba(0,0,0,0.35);">
+            <div class="bottom-sheet-drag-handle"></div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid rgba(0,0,0,0.08); background:linear-gradient(135deg, rgba(0,113,227,0.05), rgba(94,92,230,0.05)); flex-shrink:0;">
                 <h3 style="margin:0; font-size:18px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-scale-balanced" style="color:var(--accent);"></i> KVKK Aydınlatma Metni</h3>
                 <button onclick="closeModal('kvkkModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>

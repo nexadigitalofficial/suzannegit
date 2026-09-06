@@ -231,6 +231,42 @@ class TestMasterQASuite(unittest.TestCase):
         self.assertIsNotNone(maps_link, "Google Maps link to Santra Royal Rezidans must exist")
         print("[TEST 21 PASS] Verified Google Maps direct routing verified.")
 
+    def test_22_mobile_app_bottom_bar(self):
+        """TEST 22: Persistent mobile app-style bottom navigation bar exists with 5 items."""
+        bbar = self.soup.find(id='mobileAppBottomBar')
+        self.assertIsNotNone(bbar, "mobileAppBottomBar must exist in DOM")
+        items = bbar.find_all('button', class_='bottom-bar-item')
+        self.assertEqual(len(items), 5, "Bottom bar must have 5 tabs: explore, portfolio, appointment, chat, contact")
+        self.assertIn('mobile-app-bottom-bar', self.raw_html)
+        self.assertIn('handleBottomNav', self.raw_html)
+        print(f"[TEST 22 PASS] Native mobile app bottom navigation bar verified ({len(items)} tabs).")
+
+    def test_23_bottom_sheet_drag_handles(self):
+        """TEST 23: Native bottom sheet drag handle exists across all mobile modal containers."""
+        drag_handles = self.soup.find_all('div', class_='bottom-sheet-drag-handle')
+        self.assertGreaterEqual(len(drag_handles), 5, "All primary modals must have bottom sheet drag handles")
+        self.assertIn('.bottom-sheet-drag-handle', self.raw_html)
+        print(f"[TEST 23 PASS] Native bottom sheet drag handles verified ({len(drag_handles)} handles).")
+
+    def test_24_touch_dynamics_and_manipulation(self):
+        """TEST 24: Touch-action manipulation and active tap scale feedback rules exist."""
+        self.assertIn('touch-action: manipulation', self.raw_html)
+        self.assertIn('-webkit-tap-highlight-color: transparent', self.raw_html)
+        self.assertIn(':active', self.raw_html)
+        print("[TEST 24 PASS] Zero-delay touch-action & active tactile feedback verified.")
+
+    def test_25_haptic_feedback_controller(self):
+        """TEST 25: Haptic simulation controller triggerHaptic exists and integrates with actions."""
+        self.assertIn('function triggerHaptic', self.raw_html)
+        self.assertIn('navigator.vibrate', self.raw_html)
+        print("[TEST 25 PASS] Native haptic feedback engine verified.")
+
+    def test_26_bottom_bar_keyboard_auto_hide(self):
+        """TEST 26: Bottom bar auto-hiding during keyboard mode is wired into syncViewport."""
+        self.assertIn('keyboard-hidden', self.raw_html)
+        self.assertIn("bbar.classList.add('keyboard-hidden')", self.raw_html)
+        print("[TEST 26 PASS] Bottom bar virtual keyboard auto-hiding verified.")
+
     def test_backend_api_endpoints(self):
         """BONUS TEST: Verify all backend API routes (/api/config, /api/appointments/slots, /api/appointments, /api/projects)."""
         # 1. /api/config
