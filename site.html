@@ -294,6 +294,45 @@
             border-radius: 50%;
         }
 
+        .navbar-cb-vip-logo {
+            height: 36px;
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+        .navbar-cb-vip-logo:hover {
+            transform: scale(1.02);
+        }
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1.5px solid rgba(0, 0, 0, 0.12);
+            padding-left: 0.6rem;
+        }
+        @media (max-width: 480px) {
+            .navbar-cb-vip-logo {
+                height: 28px !important;
+                max-height: 32px !important;
+            }
+            .logo-text-group {
+                padding-left: 0.45rem !important;
+            }
+            .logo-text-group span:first-child {
+                font-size: 11.5px !important;
+            }
+            .logo-text-group span:last-child {
+                font-size: 9px !important;
+            }
+        }
+        @media (max-width: 360px) {
+            .logo-text-group span:last-child {
+                display: none !important;
+            }
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
@@ -4791,29 +4830,11 @@
 
     <!-- Fixed Translucent Navbar -->
     <nav class="navbar" id="navbar">
-        <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.65rem; text-decoration:none;" title="Suzanne Tenekecioğlu &amp; Coldwell Banker VIP">
-            <div class="nav-logo-media cb-vip-emblem" style="position:relative; width:44px; height:44px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 3px 12px rgba(1,33,105,0.35); background:#012169; border:1.5px solid #D4AF37;">
-                <svg viewBox="0 0 44 44" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="44" height="44" rx="9" fill="#012169"/>
-                    <!-- 4-pointed Star -->
-                    <path d="M30 6.5L31.2 10.8L35.5 12L31.2 13.2L30 17.5L28.8 13.2L24.5 12L28.8 10.8L30 6.5Z" fill="#D4AF37"/>
-                    <!-- C Monogram -->
-                    <path d="M19.5 15C15 15 11.5 18.5 11.5 23C11.5 27.5 15 31 19.5 31C22.2 31 24.6 29.7 26 27.6L23.2 25.8C22.3 27 21 27.8 19.5 27.8C16.8 27.8 14.7 25.7 14.7 23C14.7 20.3 16.8 18.2 19.5 18.2C21 18.2 22.3 19 23.2 20.2L26 18.4C24.6 16.3 22.2 15 19.5 15Z" fill="#FFFFFF"/>
-                    <!-- B Monogram -->
-                    <path d="M22.5 15.5H29C31 15.5 32.5 16.8 32.5 18.8C32.5 20.2 31.7 21.3 30.5 21.8C32 22.3 33 23.6 33 25.2C33 27.4 31.3 28.8 29 28.8H22.5V15.5ZM25.7 18.3V20.8H28.5C29.3 20.8 29.9 20.2 29.9 19.5C29.9 18.8 29.3 18.3 28.5 18.3H25.7ZM25.7 23.3V26H28.7C29.6 26 30.3 25.3 30.3 24.6C30.3 23.9 29.6 23.3 28.7 23.3H25.7Z" fill="#FFFFFF"/>
-                    <!-- VIP Golden Bar -->
-                    <rect x="9" y="32" width="26" height="8.5" rx="3.5" fill="#D4AF37"/>
-                    <text x="22" y="38.5" font-family="'Inter', -apple-system, sans-serif" font-size="7" font-weight="900" fill="#012169" text-anchor="middle" letter-spacing="1">VIP</text>
-                </svg>
-            </div>
-            <div style="display:flex; flex-direction:column; justify-content:center;">
-                <span style="font-family:var(--font-display); font-size:14px; font-weight:800; color:var(--text-primary); letter-spacing:-0.2px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
-                <span style="font-size:10.5px; font-weight:600; color:var(--text-secondary); line-height:1.2; margin-top:1px;">Gayrimenkul ve Yatırım Danışmanı</span>
-                <div style="display:flex; align-items:center; gap:5px; margin-top:2px;">
-                    <span style="font-size:9.5px; font-weight:800; color:#012169; letter-spacing:0.7px; text-transform:uppercase; background:linear-gradient(135deg, #FBF6E9, #E6C875); padding:1px 6px; border-radius:4px; border:1px solid #D4AF37; display:inline-flex; align-items:center; gap:3px;">
-                        <i class="fa-solid fa-crown" style="font-size:7.5px; color:#012169;"></i> COLDWELL BANKER VIP
-                    </span>
-                </div>
+        <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.65rem; text-decoration:none;" title="Coldwell Banker VIP — Suzanne Tenekecioğlu">
+            <img src="https://i.ibb.co/QF03S20r/CB-V-P-03.png" alt="Coldwell Banker VIP" class="navbar-cb-vip-logo" style="height:36px; max-height:40px; width:auto; object-fit:contain; display:block;" onerror="this.src='/static/img/cb_vip_logo.png'">
+            <div class="logo-text-group" style="display:flex; flex-direction:column; justify-content:center; border-left:1.5px solid rgba(0,0,0,0.12); padding-left:0.6rem;">
+                <span style="font-family:var(--font-display); font-size:13.5px; font-weight:800; color:var(--text-primary); letter-spacing:-0.2px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
+                <span style="font-size:10px; font-weight:600; color:var(--text-secondary); line-height:1.2; margin-top:1px;">Gayrimenkul ve Yatırım Danışmanı</span>
             </div>
         </a>
         <div class="nav-links" id="mobileNavLinks">
