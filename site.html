@@ -28,11 +28,13 @@
       "name": "Suzanne Tenekecioğlu | Coldwell Banker VIP Gayrimenkul",
       "image": "https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png",
       "telephone": "+905354895656",
-      "email": "info@suzannetenekecioglu.com",
+      "email": "suzanne.tenekecioglu@cb.com.tr",
       "url": "https://suzannegit.onrender.com/site",
       "priceRange": "₺₺₺",
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Santra Royal Rezidans, Çayyolu, 2676. Cadde 2C D:4",
+        "postalCode": "06810",
         "addressLocality": "Çankaya",
         "addressRegion": "Ankara",
         "addressCountry": "TR"
@@ -4160,7 +4162,101 @@
             .chat-input { padding: 0.45rem 0.85rem !important; font-size: 13.5px !important; min-height: 36px !important; }
             .chat-send { width: 36px !important; height: 36px !important; font-size: 13px !important; }
 
-            /* Mobile Chatbot Virtual Keyboard Mode (Active Typing View) */
+                    /* Mobile Quick Social Bar & Nav Quick Icons */
+        .mobile-first-social-bar {
+            display: none;
+        }
+        .mobile-nav-quick-actions {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .mobile-first-social-bar {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+                width: 100%;
+                margin-bottom: 0.85rem;
+                padding: 4px;
+                background: rgba(255, 255, 255, 0.92);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(0, 0, 0, 0.08);
+                border-radius: 14px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            }
+            .mobile-first-pill {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                padding: 8px 3px;
+                font-size: 11.5px;
+                font-weight: 700;
+                text-decoration: none;
+                border-radius: 10px;
+                color: #fff !important;
+                min-height: 38px;
+                transition: transform 0.15s ease;
+            }
+            .mobile-first-pill:active { transform: scale(0.96); }
+            .mobile-first-pill.wa-pill { background: #25D366; }
+            .mobile-first-pill.ig-pill { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+            .mobile-first-pill.fb-pill { background: #1877F2; }
+            .mobile-first-pill.tel-pill { background: #012169; }
+
+            .mobile-nav-quick-actions {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin-left: auto;
+                margin-right: 8px;
+            }
+            .mobile-nav-quick-actions .nav-icon-link {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff !important;
+                font-size: 14px;
+                text-decoration: none;
+            }
+            .mobile-nav-quick-actions .nav-icon-link.wa { background: #25D366; }
+            .mobile-nav-quick-actions .nav-icon-link.ig { background: linear-gradient(45deg,#f09433,#dc2743,#bc1888); }
+            .mobile-nav-quick-actions .nav-icon-link.fb { background: #1877F2; }
+        }
+
+        /* Shared Card VIP Green Highlight Indicator */
+        .card.shared-highlight-green {
+            border: 2.5px solid #25D366 !important;
+            box-shadow: 0 0 35px rgba(37, 211, 102, 0.45), 0 12px 32px rgba(0, 0, 0, 0.18) !important;
+            position: relative;
+            animation: sharedCardPulse 2.5s infinite ease-in-out;
+        }
+        @keyframes sharedCardPulse {
+            0%, 100% { box-shadow: 0 0 25px rgba(37, 211, 102, 0.35); }
+            50% { box-shadow: 0 0 45px rgba(37, 211, 102, 0.7); }
+        }
+        .card-shared-badge-green {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 15;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.5);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Mobile Chatbot Virtual Keyboard Mode (Active Typing View) */
             .chat-window.keyboard-mode {
                 border-radius: 16px !important;
                 box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(94, 92, 230, 0.3) !important;
@@ -4168,8 +4264,14 @@
             .chat-window.keyboard-mode .chat-suggestion-chips {
                 display: none !important;
             }
-            .chat-window.keyboard-mode .chat-lead-row {
+            .chat-window.keyboard-mode:not(.lead-typing) .chat-lead-row {
                 display: none !important;
+            }
+            .chat-window.keyboard-mode.lead-typing .chat-lead-row {
+                display: flex !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
             }
             .chat-window.keyboard-mode .chat-header {
                 padding: 4px 8px !important;
@@ -4402,15 +4504,27 @@
 
     <!-- Fixed Translucent Navbar -->
     <nav class="navbar" id="navbar">
-        <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;" title="Suzanne Tenekecioğlu & Coldwell Banker VIP">
-            <div class="nav-logo-media" style="position:relative; width:44px; height:44px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 3px 12px rgba(212,175,55,0.35); background:#0c0d12; border:2px solid #D4AF37;">
-                <img src="/static/img/suzanne_icon_circle_64.png?v=3" alt="Suzanne Tenekecioğlu" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png'">
+        <a href="#showcase" class="logo" style="display:flex; align-items:center; gap:0.65rem; text-decoration:none;" title="Suzanne Tenekecioğlu &amp; Coldwell Banker VIP">
+            <div class="nav-logo-media cb-vip-emblem" style="position:relative; width:44px; height:44px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 3px 12px rgba(1,33,105,0.35); background:#012169; border:1.5px solid #D4AF37;">
+                <svg viewBox="0 0 44 44" width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="44" height="44" rx="9" fill="#012169"/>
+                    <!-- 4-pointed Star -->
+                    <path d="M30 6.5L31.2 10.8L35.5 12L31.2 13.2L30 17.5L28.8 13.2L24.5 12L28.8 10.8L30 6.5Z" fill="#D4AF37"/>
+                    <!-- C Monogram -->
+                    <path d="M19.5 15C15 15 11.5 18.5 11.5 23C11.5 27.5 15 31 19.5 31C22.2 31 24.6 29.7 26 27.6L23.2 25.8C22.3 27 21 27.8 19.5 27.8C16.8 27.8 14.7 25.7 14.7 23C14.7 20.3 16.8 18.2 19.5 18.2C21 18.2 22.3 19 23.2 20.2L26 18.4C24.6 16.3 22.2 15 19.5 15Z" fill="#FFFFFF"/>
+                    <!-- B Monogram -->
+                    <path d="M22.5 15.5H29C31 15.5 32.5 16.8 32.5 18.8C32.5 20.2 31.7 21.3 30.5 21.8C32 22.3 33 23.6 33 25.2C33 27.4 31.3 28.8 29 28.8H22.5V15.5ZM25.7 18.3V20.8H28.5C29.3 20.8 29.9 20.2 29.9 19.5C29.9 18.8 29.3 18.3 28.5 18.3H25.7ZM25.7 23.3V26H28.7C29.6 26 30.3 25.3 30.3 24.6C30.3 23.9 29.6 23.3 28.7 23.3H25.7Z" fill="#FFFFFF"/>
+                    <!-- VIP Golden Bar -->
+                    <rect x="9" y="32" width="26" height="8.5" rx="3.5" fill="#D4AF37"/>
+                    <text x="22" y="38.5" font-family="'Inter', -apple-system, sans-serif" font-size="7" font-weight="900" fill="#012169" text-anchor="middle" letter-spacing="1">VIP</text>
+                </svg>
             </div>
             <div style="display:flex; flex-direction:column; justify-content:center;">
-                <span style="font-family:var(--font-display); font-size:15px; font-weight:800; color:var(--text-primary); letter-spacing:-0.2px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
+                <span style="font-family:var(--font-display); font-size:14px; font-weight:800; color:var(--text-primary); letter-spacing:-0.2px; line-height:1.2;">SUZANNE TENEKECİOĞLU</span>
+                <span style="font-size:10.5px; font-weight:600; color:var(--text-secondary); line-height:1.2; margin-top:1px;">Gayrimenkul ve Yatırım Danışmanı</span>
                 <div style="display:flex; align-items:center; gap:5px; margin-top:2px;">
-                    <span style="font-size:10px; font-weight:700; color:#B8860B; letter-spacing:0.6px; text-transform:uppercase; background:rgba(212,175,55,0.12); padding:1px 6px; border-radius:4px; border:1px solid rgba(212,175,55,0.25); display:inline-flex; align-items:center; gap:3px;">
-                        <i class="fa-solid fa-crown" style="font-size:8px; color:#D4AF37;"></i> COLDWELL BANKER VIP
+                    <span style="font-size:9.5px; font-weight:800; color:#012169; letter-spacing:0.7px; text-transform:uppercase; background:linear-gradient(135deg, #FBF6E9, #E6C875); padding:1px 6px; border-radius:4px; border:1px solid #D4AF37; display:inline-flex; align-items:center; gap:3px;">
+                        <i class="fa-solid fa-crown" style="font-size:7.5px; color:#012169;"></i> COLDWELL BANKER VIP
                     </span>
                 </div>
             </div>
@@ -4435,13 +4549,13 @@
                         </svg>
                         WhatsApp
                     </a>
-                    <a href="https://instagram.com" target="_blank" class="drawer-social-btn" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);">
+                    <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="drawer-social-btn" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);">
                         <svg viewBox="0 0 48 48" width="20" height="20" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:4px;">
                             <path fill="#FFFFFF" d="M24 14.5c3.1 0 3.5 0 4.7.1 1.1.1 1.7.2 2.1.4.5.2.9.4 1.3.8.4.4.6.8.8 1.3.2.4.3 1 .4 2.1.1 1.2.1 1.6.1 4.7s0 3.5-.1 4.7c-.1 1.1-.2 1.7-.4 2.1-.2.5-.4.9-.8 1.3-.4.4-.8.6-1.3.8-.4.2-1 .3-2.1.4-1.2.1-1.6.1-4.7.1s-3.5 0-4.7-.1c-1.1-.1-1.7-.2-2.1-.4-.5-.2-.9-.4-1.3-.8-.4-.4-.6-.8-.8-1.3-.2-.4-.3-1-.4-2.1-.1-1.2-.1-1.6-.1-4.7s0-3.5.1-4.7c.1-1.1.2-1.7.4-2.1.2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.2 1-.3 2.1-.4 1.2-.1 1.6-.1 4.7-.1zm0-2.5c-3.1 0-3.5 0-4.8.1-1.2.1-2.1.2-2.8.5-.8.3-1.4.7-2.1 1.3-.7.7-1.1 1.3-1.3 2.1-.3.7-.5 1.6-.5 2.8-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.2.2 2.1.5 2.8.3.8.7 1.4 1.3 2.1.7.7 1.3 1.1 2.1 1.3.7.3 1.6.5 2.8.5 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.2-.1 2.1-.2 2.8-.5.8-.3 1.4-.7 2.1-1.3.7-.7 1.1-1.3 1.3-2.1.3-.7.5-1.6.5-2.8.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.2-.2-2.1-.5-2.8-.3-.8-.7-1.4-1.3-2.1-.7-.7-1.3-1.1-2.1-1.3-.7-.3-1.6-.5-2.8-.5-1.2-.1-1.6-.1-4.8-.1zm0 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2-2.8-6.2-6.2-6.2zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm7.9-10.7c0 .8-.6 1.4-1.4 1.4-.8 0-1.4-.6-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4z"/>
                         </svg>
                         Instagram
                     </a>
-                    <a href="https://facebook.com" target="_blank" class="drawer-social-btn" style="background:#1877F2;">
+                    <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="drawer-social-btn" style="background:#1877F2;">
                         <svg viewBox="0 0 48 48" width="20" height="20" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:4px;">
                             <circle cx="24" cy="24" r="24" fill="#0866FF"/>
                             <path fill="#FFFFFF" d="M29.5 24.5h-4.3v15h-6.2v-15H16v-5.2h3V16c0-4.1 2.5-6.5 6.3-6.5 1.8 0 3.7.3 3.7.3v4.1h-2.1c-2 0-2.7 1.3-2.7 2.6v2.8h4.7l-.4 5.2z"/>
@@ -4458,7 +4572,7 @@
                     <path fill="#FFFFFF" d="M34.8 13.2C32 10.4 28.2 8.8 24.2 8.8c-8.5 0-15.4 6.9-15.4 15.4 0 2.7.7 5.4 2.1 7.7L8.8 39.2l7.5-2c2.2 1.2 4.7 1.8 7.2 1.8h.01c8.5 0 15.4-6.9 15.4-15.4.1-4.1-1.5-8-4.2-10.8zM24.2 36.4h-.01c-2.3 0-4.6-.6-6.6-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5c-1.3-2-2-4.4-2-6.9 0-7.1 5.8-12.8 12.9-12.8 3.4 0 6.7 1.3 9.1 3.8s3.8 5.7 3.8 9.1c-.1 7.1-5.9 12.9-12.8 12.9zm7-9.6c-.4-.2-2.3-1.1-2.6-1.3-.4-.1-.6-.2-.9.2-.2.4-.9 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.6.1-.2.1-.4 0-.6-.1-.2-.9-2.2-1.2-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.5 1.5-1.5 3.6 0 2.1 1.5 4.2 1.7 4.5.2.3 3 4.6 7.3 6.5 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2.3-.9 2.6-1.8.3-.9.3-1.7.2-1.8-.1-.2-.4-.3-.8-.5z"/>
                 </svg>
             </a>
-            <a href="https://instagram.com" target="_blank" class="nav-social-btn instagram-btn" title="Instagram Sayfası" aria-label="Instagram Sayfası">
+            <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="nav-social-btn instagram-btn" title="Instagram Sayfası" aria-label="Instagram Sayfası">
                 <svg viewBox="0 0 48 48" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <radialGradient id="ig-grad-nav" cx="20%" cy="110%" r="130%">
@@ -4473,7 +4587,7 @@
                     <path fill="#FFFFFF" d="M24 14.5c3.1 0 3.5 0 4.7.1 1.1.1 1.7.2 2.1.4.5.2.9.4 1.3.8.4.4.6.8.8 1.3.2.4.3 1 .4 2.1.1 1.2.1 1.6.1 4.7s0 3.5-.1 4.7c-.1 1.1-.2 1.7-.4 2.1-.2.5-.4.9-.8 1.3-.4.4-.8.6-1.3.8-.4.2-1 .3-2.1.4-1.2.1-1.6.1-4.7.1s-3.5 0-4.7-.1c-1.1-.1-1.7-.2-2.1-.4-.5-.2-.9-.4-1.3-.8-.4-.4-.6-.8-.8-1.3-.2-.4-.3-1-.4-2.1-.1-1.2-.1-1.6-.1-4.7s0-3.5.1-4.7c.1-1.1.2-1.7.4-2.1.2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.2 1-.3 2.1-.4 1.2-.1 1.6-.1 4.7-.1zm0-2.5c-3.1 0-3.5 0-4.8.1-1.2.1-2.1.2-2.8.5-.8.3-1.4.7-2.1 1.3-.7.7-1.1 1.3-1.3 2.1-.3.7-.5 1.6-.5 2.8-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.2.2 2.1.5 2.8.3.8.7 1.4 1.3 2.1.7.7 1.3 1.1 2.1 1.3.7.3 1.6.5 2.8.5 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.2-.1 2.1-.2 2.8-.5.8-.3 1.4-.7 2.1-1.3.7-.7 1.1-1.3 1.3-2.1.3-.7.5-1.6.5-2.8.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.2-.2-2.1-.5-2.8-.3-.8-.7-1.4-1.3-2.1-.7-.7-1.3-1.1-2.1-1.3-.7-.3-1.6-.5-2.8-.5-1.2-.1-1.6-.1-4.8-.1zm0 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2-2.8-6.2-6.2-6.2zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm7.9-10.7c0 .8-.6 1.4-1.4 1.4-.8 0-1.4-.6-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4z"/>
                 </svg>
             </a>
-            <a href="https://facebook.com" target="_blank" class="nav-social-btn facebook-btn" title="Facebook Sayfası" aria-label="Facebook Sayfası">
+            <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="nav-social-btn facebook-btn" title="Facebook Sayfası" aria-label="Facebook Sayfası">
                 <svg viewBox="0 0 48 48" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="24" cy="24" r="24" fill="#0866FF"/>
                     <path fill="#FFFFFF" d="M29.5 24.5h-4.3v15h-6.2v-15H16v-5.2h3V16c0-4.1 2.5-6.5 6.3-6.5 1.8 0 3.7.3 3.7.3v4.1h-2.1c-2 0-2.7 1.3-2.7 2.6v2.8h4.7l-.4 5.2z"/>
@@ -4483,6 +4597,11 @@
                 <i class="fa-solid fa-phone" style="color:var(--accent);"></i>
                 <span>0535 489 56 56</span>
             </a>
+        </div>
+        <div class="mobile-nav-quick-actions" id="mobileNavQuickActions">
+            <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m" target="_blank" class="nav-icon-link wa" aria-label="WhatsApp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="nav-icon-link ig" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="nav-icon-link fb" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
         </div>
         <button class="mobile-menu-btn" aria-label="Menü" aria-expanded="false" aria-controls="mobileNavLinks" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
     </nav>
@@ -4497,6 +4616,21 @@
                 
                 <!-- Sol Kolon: Hero Başlıkları, CTA'lar ve Bütçe Filtreleri -->
                 <div class="hero-left-content">
+                    <!-- Mobile-Only First Viewport Quick Social & Contact Bar -->
+                    <div class="mobile-first-social-bar" id="mobileFirstSocialBar">
+                        <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20konut%20projeleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="mobile-first-pill wa-pill" aria-label="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="mobile-first-pill ig-pill" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i> Instagram
+                        </a>
+                        <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="mobile-first-pill fb-pill" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i> Facebook
+                        </a>
+                        <a href="tel:+905354895656" class="mobile-first-pill tel-pill" aria-label="Ara">
+                            <i class="fa-solid fa-phone"></i> Ara
+                        </a>
+                    </div>
                     <span class="section-badge" style="background:rgba(0,113,227,0.08); padding:6px 12px; border-radius:20px;"><i class="fa-solid fa-bolt"></i> DİJİTAL GAYRİMENKUL &amp; TOPRAKTAN SATIŞ</span>
                     <h1 class="hero-banner-title">Topraktan Konut Satışı, Yeni Projeler ve Seçkin Portföy</h1>
                     <p class="hero-banner-subtitle">Topraktan avantajlı konut projeleri, yapay zeka destekli değerleme, bölge fiyat analizi ve Coldwell Banker VIP güvencesiyle doğrudan yatırım fırsatları.</p>
@@ -4544,10 +4678,10 @@
                             <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20konut%20projeleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="hero-social-pill whatsapp-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
                                 <i class="fa-brands fa-whatsapp"></i> WhatsApp
                             </a>
-                            <a href="https://instagram.com" target="_blank" class="hero-social-pill instagram-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
+                            <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="hero-social-pill instagram-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
                                 <i class="fa-brands fa-instagram"></i> Instagram
                             </a>
-                            <a href="https://facebook.com" target="_blank" class="hero-social-pill facebook-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
+                            <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="hero-social-pill facebook-pill" style="padding:10px 4px; font-size:12px; min-height:40px;">
                                 <i class="fa-brands fa-facebook-f"></i> Facebook
                             </a>
                         </div>
@@ -4884,7 +5018,7 @@
                         <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
                         <div class="contact-text">
                             <h4>E-posta</h4>
-                            <a href="mailto:info@suzannetenekecioglu.com">info@suzannetenekecioglu.com</a>
+                            <a href="mailto:suzanne.tenekecioglu@cb.com.tr">suzanne.tenekecioglu@cb.com.tr</a>
                         </div>
                     </div>
                     
@@ -4892,7 +5026,8 @@
                         <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
                         <div class="contact-text">
                             <h4>Ankara Ofis &amp; Hizmet Bölgesi</h4>
-                            <p><strong>Coldwell Banker VIP Gayrimenkul</strong><br>Çankaya / Ankara (Yaşamkent • Çayyolu • İncek • Beytepe • Alacaatlı)</p>
+                            <p><strong>Coldwell Banker VIP Gayrimenkul</strong><br>Santra Royal Rezidans, Çayyolu, 2676. Cadde 2C D:4, 06810 Çankaya/Ankara</p>
+                            <a href="https://maps.google.com/?q=Santra+Royal+Rezidans+Çayyolu+Ankara" target="_blank" style="display:inline-flex; align-items:center; gap:5px; margin-top:5px; font-size:12px; font-weight:700; color:var(--accent); text-decoration:none;"><i class="fa-solid fa-diamond-turn-right"></i> Haritada Gör &amp; Yol Tarifi Al</a>
                         </div>
                     </div>
                     
@@ -4900,10 +5035,10 @@
                         <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m,%20konut%20projeleri%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="social-link wa-link" aria-label="WhatsApp" title="WhatsApp (+90 535 489 56 56)">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
-                        <a href="https://instagram.com" target="_blank" class="social-link ig-link" aria-label="Instagram" title="Instagram">
+                        <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="social-link ig-link" aria-label="Instagram" title="Instagram">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="https://facebook.com" target="_blank" class="social-link fb-link" aria-label="Facebook" title="Facebook">
+                        <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="social-link fb-link" aria-label="Facebook" title="Facebook">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
                     </div>
@@ -5025,7 +5160,7 @@
                 <h4><i class="fa-solid fa-headset"></i> İletişim &amp; Yasal</h4>
                 <ul class="footer-nav-list">
                     <li><a href="tel:+905354895656"><i class="fa-solid fa-phone" style="font-size:11px;"></i> 0535 489 56 56</a></li>
-                    <li><a href="mailto:info@suzannetenekecioglu.com"><i class="fa-solid fa-envelope" style="font-size:11px;"></i> info@suzannetenekecioglu.com</a></li>
+                    <li><a href="mailto:suzanne.tenekecioglu@cb.com.tr"><i class="fa-solid fa-envelope" style="font-size:11px;"></i> suzanne.tenekecioglu@cb.com.tr</a></li>
                     <li><a href="javascript:void(0)" onclick="openKvkkModal()"><i class="fa-solid fa-scale-balanced" style="font-size:11px;"></i> KVKK Aydınlatma Metni</a></li>
                     <li><a href="javascript:void(0)" onclick="openPrivacyModal()"><i class="fa-solid fa-user-shield" style="font-size:11px;"></i> Gizlilik Politikası</a></li>
                     <li><a href="javascript:void(0)" onclick="openCookieSettings()"><i class="fa-solid fa-cookie-bite" style="font-size:11px;"></i> Çerez Tercihleri</a></li>
@@ -7391,6 +7526,7 @@
             }
             renderPortfolioCarousel();
             generateAllDynamicFilters();
+            checkSharedProjectHighlight();
         }
 
         // ─── P0 QUICK BUDGET HELPER & DYNAMIC CAROUSEL RE-ORDERING ───
@@ -7472,9 +7608,23 @@
             const idInput = document.getElementById('aptProjectId');
             const nameInput = document.getElementById('aptProjectName');
             const msgEl = document.getElementById('aptStatusMsg');
+            const dateInput = document.getElementById('aptDate');
+            const timeInput = document.getElementById('aptTime');
+
             if (idInput) idInput.value = projectId || '';
             if (nameInput) nameInput.value = resolvedName;
             if (msgEl) msgEl.style.display = 'none';
+
+            // Auto-initialize calendar with today's date
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (dateInput) {
+                dateInput.min = todayStr;
+                if (!dateInput.value) dateInput.value = todayStr;
+            }
+            if (timeInput && !timeInput.value) {
+                timeInput.value = '14:00';
+            }
+
             openModal('appointmentModal');
         }
 
@@ -7482,77 +7632,119 @@
             openModal('aboutModal');
         }
 
-        function sendDirectWhatsAppAppointment() {
-            const name = document.getElementById('aptName').value.trim();
-            const phone = document.getElementById('aptPhone').value.trim();
-            const dt = document.getElementById('aptDateTime').value.trim();
-            const projName = document.getElementById('aptProjectName').value || 'Genel Proje';
-            const notes = document.getElementById('aptNotes').value.trim();
+        function sendDirectWhatsAppAppointment(e) {
+            if (e) {
+                if (typeof e.preventDefault === 'function') e.preventDefault();
+                if (typeof e.stopPropagation === 'function') e.stopPropagation();
+            }
+            const name = (document.getElementById('aptName')?.value || '').trim();
+            const phone = (document.getElementById('aptPhone')?.value || '').trim();
+            const dateVal = (document.getElementById('aptDate')?.value || '').trim();
+            const timeVal = (document.getElementById('aptTime')?.value || '14:00').trim();
+            const meetingType = (document.getElementById('aptMeetingType')?.value || 'Yüz Yüze').trim();
+            const dt = dateVal ? `${dateVal} ${timeVal}` : (document.getElementById('aptDateTime')?.value || '').trim();
+            const projName = (document.getElementById('aptProjectName')?.value || 'Genel Proje').trim();
+            const notes = (document.getElementById('aptNotes')?.value || '').trim();
 
             if (!name || name.length < 2) {
                 showFormStatus('Lütfen adınızı ve soyadınızı girin.', true);
-                document.getElementById('aptName').focus();
-                return;
+                document.getElementById('aptName')?.focus();
+                return false;
             }
             if (!phone || phone.replace(/\D/g, '').length < 10) {
-                showFormStatus('Lütfen 10 haneli geçerli telefon numaranızı girin.', true);
-                document.getElementById('aptPhone').focus();
-                return;
+                showFormStatus('Lütfen geçerli telefon numaranızı girin.', true);
+                document.getElementById('aptPhone')?.focus();
+                return false;
             }
 
-            const projId = document.getElementById('aptProjectId').value;
-            const email = document.getElementById('aptEmail').value.trim();
+            const projId = document.getElementById('aptProjectId')?.value || '';
+            const email = (document.getElementById('aptEmail')?.value || '').trim();
             const urlParams = new URLSearchParams(window.location.search);
             const agentParam = urlParams.get('agent') || 'Suzanne Tenekecioğlu';
 
-            fetch('/api/appointments', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    preferred_datetime: dt,
-                    project_id: projId,
-                    project_name: projName,
-                    notes: notes,
-                    agent: agentParam
-                })
-            }).catch(() => {});
+            try {
+                fetch('/api/appointments', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        preferred_datetime: dt,
+                        project_id: projId,
+                        project_name: projName,
+                        notes: `[Görüşme: ${meetingType}] ${notes}`,
+                        agent: agentParam
+                    })
+                }).catch(() => {});
+            } catch (_) {}
 
-            const waText = encodeURIComponent(`📅 *RANDEVU TALEBİ*\n\n👤 *Ad Soyad:* ${name}\n📱 *Telefon:* ${phone}\n🏢 *Proje:* ${projName}\n📆 *Tercih Edilen Zaman:* ${dt || 'En Kısa Sürede'}\n📝 *Not:* ${notes || 'Görüşmek istiyorum.'}\n\nRandevu teyidi için sizinle görüşmek istiyorum.`);
+            const waText = encodeURIComponent(
+                `📅 *VIP RANDEVU TALEBİ*\n\n` +
+                `👤 *Ad Soyad:* ${name}\n` +
+                `📱 *Telefon:* ${phone}\n` +
+                `🏢 *Proje / Konu:* ${projName}\n` +
+                `📆 *Tarih:* ${dateVal || 'En Kısa Sürede'}\n` +
+                `⏰ *Saat:* ${timeVal}\n` +
+                `📍 *Görüşme Tercihi:* ${meetingType}\n` +
+                (notes ? `📝 *Not:* ${notes}\n` : '') +
+                `\nColdwell Banker VIP güvencesiyle danışmanlık randevusu için teyit rica ederim.`
+            );
+            const waUrl = `https://wa.me/905354895656?text=${waText}`;
             closeModal('appointmentModal');
-            window.open(`https://wa.me/905354895656?text=${waText}`, '_blank');
+            window.location.href = waUrl;
+            return false;
         }
 
         async function submitAppointmentForm(e) {
-            e.preventDefault();
+            if (e) {
+                if (typeof e.preventDefault === 'function') e.preventDefault();
+                if (typeof e.stopPropagation === 'function') e.stopPropagation();
+            }
             const btn = document.getElementById('aptSubmitBtn');
             const msgEl = document.getElementById('aptStatusMsg');
-            const name = document.getElementById('aptName').value.trim();
-            const phone = document.getElementById('aptPhone').value.trim();
-            const email = document.getElementById('aptEmail').value.trim();
-            const dt = document.getElementById('aptDateTime').value.trim();
-            const projId = document.getElementById('aptProjectId').value;
-            const projName = document.getElementById('aptProjectName').value;
-            const notes = document.getElementById('aptNotes').value.trim();
+            const name = (document.getElementById('aptName')?.value || '').trim();
+            const phone = (document.getElementById('aptPhone')?.value || '').trim();
+            const email = (document.getElementById('aptEmail')?.value || '').trim();
+            const dateVal = (document.getElementById('aptDate')?.value || '').trim();
+            const timeVal = (document.getElementById('aptTime')?.value || '14:00').trim();
+            const meetingType = (document.getElementById('aptMeetingType')?.value || 'Yüz Yüze').trim();
+            const dt = dateVal ? `${dateVal} ${timeVal}` : (document.getElementById('aptDateTime')?.value || '').trim();
+            const projId = document.getElementById('aptProjectId')?.value || '';
+            const projName = (document.getElementById('aptProjectName')?.value || 'Genel Proje').trim();
+            const notes = (document.getElementById('aptNotes')?.value || '').trim();
 
             if (!name || name.length < 2) {
                 showFormStatus('Lütfen adınızı ve soyadınızı girin.', true);
-                document.getElementById('aptName').focus();
-                return;
+                document.getElementById('aptName')?.focus();
+                return false;
             }
             if (!phone || phone.replace(/\D/g, '').length < 10) {
-                showFormStatus('Lütfen 10 haneli geçerli bir telefon numarası girin.', true);
-                document.getElementById('aptPhone').focus();
-                return;
+                showFormStatus('Lütfen geçerli telefon numaranızı girin.', true);
+                document.getElementById('aptPhone')?.focus();
+                return false;
             }
 
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gönderiliyor...';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Kaydediliyor...';
+            }
 
             const urlParams = new URLSearchParams(window.location.search);
             const agentParam = urlParams.get('agent') || 'Suzanne Tenekecioğlu';
+
+            const waText = encodeURIComponent(
+                `📅 *VIP RANDEVU TALEBİ*\n\n` +
+                `👤 *Ad Soyad:* ${name}\n` +
+                `📱 *Telefon:* ${phone}\n` +
+                `🏢 *Proje:* ${projName}\n` +
+                `📆 *Tarih:* ${dateVal || 'En Kısa Sürede'}\n` +
+                `⏰ *Saat:* ${timeVal}\n` +
+                `📍 *Görüşme:* ${meetingType}\n` +
+                (notes ? `📝 *Not:* ${notes}\n` : '') +
+                `\nRandevumu oluşturmak ve detayları görüşmek istiyorum.`
+            );
+            const waUrl = `https://wa.me/905354895656?text=${waText}`;
 
             try {
                 const res = await fetch('/api/appointments', {
@@ -7565,49 +7757,109 @@
                         preferred_datetime: dt,
                         project_id: projId,
                         project_name: projName,
-                        notes: notes,
+                        notes: `[Görüşme: ${meetingType}] ${notes}`,
                         agent: agentParam
                     })
                 });
-                const data = await res.json();
-                if (data.success) {
-                    showFormStatus('<strong>✓ Talebiniz Alındı!</strong> Danışmanımız en kısa sürede sizinle iletişime geçecektir.', false);
-                    
-                    const waText = encodeURIComponent(`Merhaba, ${projName} projesi için randevu talebi oluşturdum.\nAdım: ${name}\nTelefonum: ${phone}\nTercih: ${dt}`);
-                    setTimeout(() => {
-                        closeModal('appointmentModal');
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fa-solid fa-check"></i> Randevu Talebini Gönder';
-                        window.open(`https://wa.me/905354895656?text=${waText}`, '_blank');
-                    }, 1800);
-                } else {
-                    showFormStatus(data.message || 'Kayıt sırasında bir hata oluştu.', true);
+                const data = await res.json().catch(() => ({ success: true }));
+
+                showFormStatus(
+                    `<div style="text-align:center;">` +
+                    `<div style="font-size:15px; font-weight:800; color:#248A3D; margin-bottom:6px;"><i class="fa-solid fa-circle-check"></i> Randevu Talebiniz Kaydedildi!</div>` +
+                    `<div style="font-size:13px; color:var(--text-primary); margin-bottom:10px;">Danışmanımız sizinle iletişime geçecektir. Hızlı onay için WhatsApp üzerinden de iletebilirsiniz:</div>` +
+                    `<a href="${waUrl}" class="btn" style="background:#25D366; color:#fff; padding:10px 16px; border-radius:10px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:13px;"><i class="fa-brands fa-whatsapp"></i> WhatsApp'tan Hemen Teyit Gönder</a>` +
+                    `</div>`,
+                    false
+                );
+
+                if (btn) {
                     btn.disabled = false;
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Randevu Talebini Gönder';
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Kayıt Başarılı';
                 }
+
+                // Redirect smoothly without reloading or navigating to homepage!
+                setTimeout(() => {
+                    closeModal('appointmentModal');
+                    window.location.href = waUrl;
+                }, 1400);
+
             } catch (err) {
-                showFormStatus('Bağlantı hatası oluştu.', true);
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Randevu Talebini Gönder';
+                showFormStatus(
+                    `<div style="text-align:center;">` +
+                    `<div style="font-size:13px; margin-bottom:8px;">Talebinizi doğrudan WhatsApp ile gönderebilirsiniz:</div>` +
+                    `<a href="${waUrl}" class="btn" style="background:#25D366; color:#fff; padding:8px 14px; border-radius:8px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px;"><i class="fa-brands fa-whatsapp"></i> WhatsApp ile Gönder</a>` +
+                    `</div>`,
+                    false
+                );
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Randevuyu Kaydet';
+                }
+            }
+            return false;
+        }
+
+        // ─── PROJE SUNUMUNU PAYLAŞMA & YEŞİL BELİRTEÇLE DERİN LİNK ───
+        function shareProject(id, name, price, loc) {
+            const p = id ? findProjectFlexible(id) : null;
+            const projName = name || (p ? (p.title || p.name) : '') || 'Seçkin VIP Gayrimenkul';
+            const projPrice = price || (p ? (p.price_display || (p.price_min ? `${formatPrice(p.price_min)} - ${formatPrice(p.price_max)}` : '')) : '') || '';
+            const projLoc = loc || (p ? (p.location || (p.intelligence && p.intelligence.region)) : '') || 'Ankara';
+            const url = `${window.location.origin}/site?project=${encodeURIComponent(id || '')}&share=vip#site-card-${encodeURIComponent(id || '')}`;
+            const text = `🌟 SUZANNE TENEKECİOĞLU | COLDWELL BANKER VIP\n💎 Özel Gayrimenkul Sunumu: ${projName}\n📍 Bölge: ${projLoc}\n💰 Fiyat: ${projPrice}\n\n🔗 VIP Sunumu İnceleyin: ${url}`;
+            
+            if (navigator.share) {
+                navigator.share({ title: `VIP Sunum: ${projName}`, text: text, url: url }).catch(() => {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✓ Proje sunum linki panoya kopyalandı!\nWhatsApp veya mesajla kolayca paylaşabilirsiniz.');
+                }).catch(() => {
+                    prompt('Sunum linkini kopyalayabilirsiniz:', url);
+                });
+            } else {
+                prompt('Sunum linkini kopyalayabilirsiniz:', url);
             }
         }
 
-        // ─── PROJE PAYLAŞMA HELPER ───
-        function shareProject(id, name, price, loc) {
-            const p = id ? findProjectFlexible(id) : null;
-            const projName = name || (p ? (p.title || p.name) : '') || 'Prestij Projesi';
-            const projPrice = price || (p ? (p.price_display || (p.price_min ? `${formatPrice(p.price_min)} - ${formatPrice(p.price_max)}` : '')) : '') || '';
-            const projLoc = loc || (p ? (p.location || (p.intelligence && p.intelligence.region)) : '') || 'Ankara';
-            const url = `${window.location.origin}/site#site-card-${id || ''}`;
-            const text = `${projName}\n📍 ${projLoc}\n💰 ${projPrice}\nDetaylar: ${url}`;
-            if (navigator.share) {
-                navigator.share({ title: projName, text: text, url: url }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Proje bağlantısı panoya kopyalandı!');
-                }).catch(() => {
-                    prompt('Proje linkini kopyalayabilirsiniz:', url);
-                });
+        function checkSharedProjectHighlight() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                let targetId = urlParams.get('project') || urlParams.get('share');
+                if (!targetId && window.location.hash && window.location.hash.startsWith('#site-card-')) {
+                    targetId = window.location.hash.replace('#site-card-', '');
+                }
+                if (!targetId) return;
+
+                const isPort = (portfolioData || []).some(p => String(p.id) === String(targetId));
+                if (isPort && typeof switchShowcaseTab === 'function') {
+                    switchShowcaseTab('portfolio');
+                } else if (typeof switchShowcaseTab === 'function') {
+                    switchShowcaseTab('projects');
+                }
+
+                setTimeout(() => {
+                    const card = document.getElementById(`site-card-${targetId}`);
+                    if (!card) return;
+
+                    document.querySelectorAll('.shared-highlight-green').forEach(c => c.classList.remove('shared-highlight-green'));
+                    document.querySelectorAll('.card-shared-badge-green').forEach(b => b.remove());
+
+                    card.classList.add('shared-highlight-green');
+
+                    const badge = document.createElement('div');
+                    badge.className = 'card-shared-badge-green';
+                    badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Paylaşılan VIP Sunum';
+                    card.appendChild(badge);
+
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    const track = card.closest('.carousel-track');
+                    if (track) {
+                        track.scrollTo({ left: Math.max(0, card.offsetLeft - 30), behavior: 'smooth' });
+                    }
+                }, 600);
+            } catch(e) {
+                console.warn('Error highlighting shared project:', e);
             }
         }
 
@@ -7630,11 +7882,13 @@
                     renderProjectsCarousel();
                     generateAllDynamicFilters();
                     applyFilters();
+                    checkSharedProjectHighlight();
                 } else {
                     projectsData = EMBEDDED_PROJECTS;
                     renderProjectsCarousel();
                     generateAllDynamicFilters();
                     applyFilters();
+                    checkSharedProjectHighlight();
                 }
             } catch (e) {
                 console.log('Fetch projects fallback to embedded:', e);
@@ -7760,7 +8014,7 @@
                                     <div class="card-bottom-row">
                                         <a href="${waUrl}" target="_blank" class="btn-whatsapp" onclick="event.stopPropagation()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                                         <button class="btn btn-primary btn-randevu" onclick="event.stopPropagation(); openAppointmentModal('${item.id}')"><i class="fa-solid fa-calendar-check"></i> Randevu Al</button>
-                                        <button class="btn btn-outline btn-share" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Projeyi Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
+                                        <button class="btn btn-outline btn-share" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Sunumu Paylaş" aria-label="Sunumu Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -8070,10 +8324,19 @@
                 const isMobile = window.innerWidth <= 768;
                 const chatWin = document.getElementById('chatWindow');
                 const chatInput = document.getElementById('chatInput');
+                const isLeadInputActive = document.activeElement && (
+                    document.activeElement.id === 'chatLeadName' ||
+                    document.activeElement.id === 'chatLeadPhone'
+                );
+                if (isLeadInputActive && chatWin) {
+                    chatWin.classList.add('lead-typing');
+                } else if (document.activeElement === chatInput && chatWin) {
+                    chatWin.classList.remove('lead-typing');
+                }
+
                 const isInputActive = document.activeElement && (
                     document.activeElement === chatInput ||
-                    document.activeElement.id === 'chatLeadName' ||
-                    document.activeElement.id === 'chatLeadPhone' ||
+                    isLeadInputActive ||
                     (chatWin && chatWin.contains(document.activeElement) && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA'))
                 );
                 const keyboardHeight = Math.max(0, window.innerHeight - height - offsetTop);
@@ -8893,7 +9156,7 @@
                                     <div class="card-bottom-row">
                                         <a href="${waUrl}" target="_blank" class="btn-whatsapp" onclick="event.stopPropagation()"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
                                         <button class="btn btn-primary btn-randevu" onclick="event.stopPropagation(); openAppointmentModal('${item.id}')"><i class="fa-solid fa-calendar-check"></i> Randevu Al</button>
-                                        <button class="btn btn-outline btn-share" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Projeyi Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
+                                        <button class="btn btn-outline btn-share" onclick="event.stopPropagation(); shareProject('${item.id}')" title="Sunumu Paylaş" aria-label="Sunumu Paylaş"><i class="fa-solid fa-share-nodes"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -9331,9 +9594,28 @@
                 if (phoneInput) phoneInput.value = lead.phone || '';
                 if (row) row.classList.add('saved');
             }
+
+            // Mobile keyboard reliability: ensure lead inputs don't disappear when focused
+            [nameInput, phoneInput].forEach(inp => {
+                if (!inp) return;
+                inp.addEventListener('focus', () => {
+                    const cw = document.getElementById('chatWindow');
+                    if (cw) cw.classList.add('lead-typing');
+                });
+                inp.addEventListener('blur', () => {
+                    setTimeout(() => {
+                        const active = document.activeElement;
+                        if (!active || (active.id !== 'chatLeadName' && active.id !== 'chatLeadPhone')) {
+                            const cw = document.getElementById('chatWindow');
+                            if (cw) cw.classList.remove('lead-typing');
+                        }
+                    }, 150);
+                });
+            });
         }
 
         function initAnimations() {
+            window.addEventListener('hashchange', checkSharedProjectHighlight, { passive: true });
             window.addEventListener('scroll', () => {
                 const nav = document.getElementById('navbar');
                 if(window.scrollY > 40) nav.classList.add('scrolled');
@@ -10194,6 +10476,7 @@
             renderProjectsCarousel();
             renderPortfolioCarousel();
             generateAllDynamicFilters();
+            checkSharedProjectHighlight();
             applyFilters();
 
             // Fetch live dynamic order from backend once
@@ -10627,6 +10910,7 @@
                 }
             }
 
+            window.addEventListener('hashchange', checkSharedProjectHighlight, { passive: true });
             window.addEventListener('scroll', () => {
                 if (!ticking) {
                     window.requestAnimationFrame(() => {
@@ -10861,7 +11145,7 @@
                 <h3 style="margin:0; font-size:17px; font-weight:700; color:var(--text-primary);"><i class="fa-solid fa-calendar-check" style="color:var(--accent);"></i> Proje & Danışmanlık Randevusu</h3>
                 <button onclick="closeModal('appointmentModal')" aria-label="Kapat" style="background:rgba(0,0,0,0.06); border:none; color:var(--text-primary); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px; display:inline-flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form id="appointmentForm" onsubmit="submitAppointmentForm(event)" style="padding:1.4rem; display:flex; flex-direction:column; gap:0.85rem; overflow-y:auto; flex:1 1 auto; min-height:0; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;">
+            <form id="appointmentForm" action="javascript:void(0)" onsubmit="submitAppointmentForm(event); return false;" style="padding:1.4rem; display:flex; flex-direction:column; gap:0.85rem; overflow-y:auto; flex:1 1 auto; min-height:0; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;">
                 <input type="hidden" id="aptProjectId" name="project_id" value="">
                 <div>
                     <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">İlgilendiğiniz Proje / Konu</label>
@@ -10877,14 +11161,28 @@
                         <input type="tel" id="aptPhone" required placeholder="05XX XXX XX XX" oninput="formatTRPhone(this)" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                 </div>
+                <input type="hidden" id="aptDateTime" value="">
                 <div class="apt-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
                     <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">E-posta (Opsiyonel)</label>
                         <input type="email" id="aptEmail" placeholder="ornek@mail.com" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                     <div>
-                        <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Tercih Edilen Gün/Saat</label>
-                        <input type="text" id="aptDateTime" placeholder="Örn: Cumartesi 14:00" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
+                        <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;"><i class="fa-solid fa-calendar-days" style="color:var(--accent); margin-right:4px;"></i> Randevu Günü (Takvim) *</label>
+                        <input type="date" id="aptDate" required style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; background:#fff;">
+                    </div>
+                </div>
+                <div class="apt-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div>
+                        <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;"><i class="fa-solid fa-clock" style="color:var(--accent); margin-right:4px;"></i> Randevu Saati *</label>
+                        <input type="time" id="aptTime" required value="14:00" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; background:#fff;">
+                    </div>
+                    <div>
+                        <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Görüşme Tercihi</label>
+                        <select id="aptMeetingType" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; background:#fff;">
+                            <option value="Yüz Yüze (Ofis / Satış Ofisi)">Yüz Yüze (Ofis / Proje Sahası)</option>
+                            <option value="Online (WhatsApp / Telefon)">Online (WhatsApp / Telefon)</option>
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -10894,7 +11192,7 @@
                 <div id="aptStatusMsg" style="display:none; font-size:13px; padding:10px; border-radius:10px; text-align:center;"></div>
                 
                 <div class="apt-btns-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:0.5rem;">
-                    <button type="button" onclick="sendDirectWhatsAppAppointment()" class="btn btn-outline" style="background:#25D366; color:#fff; border:none; padding:12px; font-size:14px; font-weight:700; justify-content:center; min-height:44px;">
+                    <button type="button" onclick="sendDirectWhatsAppAppointment(event)" class="btn btn-outline" style="background:#25D366; color:#fff; border:none; padding:12px; font-size:14px; font-weight:700; justify-content:center; min-height:44px;">
                         <i class="fa-brands fa-whatsapp"></i> WhatsApp ile Randevu
                     </button>
                     <button type="submit" id="aptSubmitBtn" class="btn btn-primary" style="padding:12px; font-size:14px; font-weight:700; justify-content:center; min-height:44px;">
@@ -11011,7 +11309,7 @@
                 <p><strong>2. İşlenen Kişisel Veriler:</strong> Web sitemiz, iletişim formları, randevu modülleri ve yapay zeka asistanı aracılığıyla adınız, soyadınız, telefon numaranız, e-posta adresiniz, gayrimenkul yatırım tercihiniz ve bütçe aralığınız işlenmektedir.</p>
                 <p><strong>3. Veri İşleme Amaçları:</strong> Kişisel verileriniz; talep ettiğiniz konut projeleri ve portföy seçenekleri hakkında size bilgilendirme yapmak, randevu oluşturmak, sözleşme süreçlerini yürütmek, müşteri memnuniyetini sağlamak ve mevzuattan kaynaklanan yükümlülükleri yerine getirmek amacıyla işlenmektedir.</p>
                 <p><strong>4. Kişisel Verilerin Aktarımı:</strong> Verileriniz yasal zorunluluklar haricinde hiçbir üçüncü taraf kişi veya kurumla ticari amaçla paylaşılmaz. Yalnızca talebiniz doğrultusunda resmi tapu, noter veya müteahhitlik süreçlerinin yürütülmesi için yetkili mercilere aktarılabilir.</p>
-                <p><strong>5. KVKK Kapsamındaki Haklarınız:</strong> KVKK’nın 11. maddesi uyarınca; verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini talep etme haklarına sahipsiniz. Başvurularınızı <strong>info@suzannetenekecioglu.com</strong> adresine iletebilirsiniz.</p>
+                <p><strong>5. KVKK Kapsamındaki Haklarınız:</strong> KVKK’nın 11. maddesi uyarınca; verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini talep etme haklarına sahipsiniz. Başvurularınızı <strong>suzanne.tenekecioglu@cb.com.tr</strong> adresine iletebilirsiniz.</p>
             </div>
         </div>
     </div>
