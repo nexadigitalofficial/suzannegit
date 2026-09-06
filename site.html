@@ -4166,9 +4166,6 @@
         .mobile-first-social-bar {
             display: none;
         }
-        .mobile-nav-quick-actions {
-            display: none;
-        }
         @media (max-width: 768px) {
             .mobile-first-social-bar {
                 display: grid;
@@ -4204,27 +4201,6 @@
             .mobile-first-pill.fb-pill { background: #1877F2; }
             .mobile-first-pill.tel-pill { background: #012169; }
 
-            .mobile-nav-quick-actions {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                margin-left: auto;
-                margin-right: 8px;
-            }
-            .mobile-nav-quick-actions .nav-icon-link {
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                color: #fff !important;
-                font-size: 14px;
-                text-decoration: none;
-            }
-            .mobile-nav-quick-actions .nav-icon-link.wa { background: #25D366; }
-            .mobile-nav-quick-actions .nav-icon-link.ig { background: linear-gradient(45deg,#f09433,#dc2743,#bc1888); }
-            .mobile-nav-quick-actions .nav-icon-link.fb { background: #1877F2; }
         }
 
         @keyframes pulseDot {
@@ -4909,11 +4885,7 @@
                 <span>0535 489 56 56</span>
             </a>
         </div>
-        <div class="mobile-nav-quick-actions" id="mobileNavQuickActions">
-            <a href="https://wa.me/905354895656?text=Merhaba%20Suzanne%20Han%C4%B1m" target="_blank" class="nav-icon-link wa" aria-label="WhatsApp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="https://www.instagram.com/suzannegayrimenkulcb" target="_blank" class="nav-icon-link ig" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.facebook.com/suzannegayrimenkulcb" target="_blank" class="nav-icon-link fb" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        </div>
+
         <button class="mobile-menu-btn" aria-label="Menü" aria-expanded="false" aria-controls="mobileNavLinks" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars"></i></button>
     </nav>
 
