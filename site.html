@@ -4227,6 +4227,117 @@
             .mobile-nav-quick-actions .nav-icon-link.fb { background: #1877F2; }
         }
 
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.8); }
+        }
+        /* Interactive Appointment Calendar & Time Slot Matrix */
+        .apt-day-scroller {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 2px 8px 2px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .apt-day-scroller::-webkit-scrollbar {
+            height: 4px;
+        }
+        .apt-day-scroller::-webkit-scrollbar-thumb {
+            background: rgba(0, 33, 105, 0.2);
+            border-radius: 4px;
+        }
+        .apt-day-pill {
+            flex: 0 0 64px;
+            min-width: 64px;
+            padding: 8px 4px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(0, 0, 0, 0.12);
+            background: #fff;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .apt-day-pill:hover:not(.active) {
+            border-color: #012169;
+            background: rgba(1, 33, 105, 0.04);
+        }
+        .apt-day-pill.active {
+            background: #012169 !important;
+            border-color: #012169 !important;
+            box-shadow: 0 4px 14px rgba(1, 33, 105, 0.3);
+            transform: translateY(-1px);
+        }
+        .apt-day-pill.active span {
+            color: #fff !important;
+        }
+        .apt-day-pill .day-wday {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        .apt-day-pill .day-num {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+        .apt-day-pill .day-month {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        .apt-time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .apt-time-slot {
+            padding: 9px 2px;
+            border-radius: 10px;
+            border: 1.5px solid rgba(0, 0, 0, 0.12);
+            background: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .apt-time-slot:hover:not(:disabled):not(.active) {
+            border-color: #25D366;
+            background: rgba(37, 211, 102, 0.08);
+        }
+        .apt-time-slot.active {
+            background: #25D366 !important;
+            border-color: #25D366 !important;
+            color: #fff !important;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+            transform: translateY(-1px);
+        }
+        .apt-time-slot:disabled {
+            opacity: 0.35;
+            background: #f8f9fa;
+            border-color: #e9ecef;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            color: #999 !important;
+        }
+
         /* Shared Card VIP Green Highlight Indicator */
         .card.shared-highlight-green {
             border: 2.5px solid #25D366 !important;
@@ -5258,7 +5369,30 @@
 
     <!-- JavaScript Logic -->
     <script>
-        
+        // ═════════════════════════════════════════════════════════════════════
+        // 0. NEXA_CONFIG - CENTRALIZED IMMUTABLE SINGLE SOURCE OF TRUTH
+        // ═════════════════════════════════════════════════════════════════════
+        const NEXA_CONFIG = Object.freeze({
+            advisor: Object.freeze({
+                name: "Suzanne Tenekecioğlu",
+                title: "Gayrimenkul ve Yatırım Danışmanı",
+                agency: "Coldwell Banker VIP Gayrimenkul",
+                officeId: "470",
+                agentId: "17983"
+            }),
+            contact: Object.freeze({
+                phone: "0535 489 56 56",
+                phoneRaw: "+905354895656",
+                email: "suzanne.tenekecioglu@cb.com.tr",
+                whatsappUrl: "https://wa.me/905354895656",
+                instagramUrl: "https://www.instagram.com/suzannegayrimenkulcb",
+                facebookUrl: "https://www.facebook.com/suzannegayrimenkulcb",
+                address: "Santra Royal Rezidans, Çayyolu, 2676. Cadde 2C D:4, 06810 Çankaya/Ankara",
+                mapsUrl: "https://maps.google.com/?q=Santra+Royal+Rezidans+Çayyolu+Ankara",
+                directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Santra+Royal+Rezidans+Çayyolu+Ankara"
+            })
+        });
+
         // ═════════════════════════════════════════════════════════════════════
         // 1. DYNAMIC VIEWPORT & SAFE-AREA METRIC SYNCHRONIZER
         // ═════════════════════════════════════════════════════════════════════
@@ -7602,28 +7736,165 @@
             msgEl.innerHTML = (isError ? '<i class="fa-solid fa-circle-exclamation"></i> ' : '<i class="fa-solid fa-check"></i> ') + msg;
         }
 
+        // ─── INTERACTIVE APPOINTMENT CALENDAR & TIME SLOT CONTROLLER ───
+        const TURKISH_DAYS = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
+        const TURKISH_MONTHS = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
+
+        function renderAppointmentCalendar(defaultDate) {
+            const scroller = document.getElementById('aptDaySelector');
+            const dateInput = document.getElementById('aptDate');
+            const label = document.getElementById('aptSelectedDateLabel');
+            if (!scroller) return;
+
+            scroller.innerHTML = '';
+            const today = new Date();
+            let selectedDateStr = defaultDate || today.toISOString().split('T')[0];
+
+            for (let i = 0; i < 14; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                const dateStr = d.toISOString().split('T')[0];
+                const wday = TURKISH_DAYS[d.getDay()];
+                const dayNum = d.getDate();
+                const month = TURKISH_MONTHS[d.getMonth()];
+
+                const pill = document.createElement('div');
+                pill.className = `apt-day-pill ${dateStr === selectedDateStr ? 'active' : ''}`;
+                pill.dataset.date = dateStr;
+                pill.innerHTML = `
+                    <span class="day-wday">${i === 0 ? 'Bugün' : (i === 1 ? 'Yarın' : wday)}</span>
+                    <span class="day-num">${dayNum}</span>
+                    <span class="day-month">${month}</span>
+                `;
+                pill.onclick = () => selectAppointmentDay(dateStr, `${dayNum} ${month} ${wday}`);
+                scroller.appendChild(pill);
+            }
+
+            if (dateInput) dateInput.value = selectedDateStr;
+            if (label) {
+                const parts = selectedDateStr.split('-');
+                const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                const wday = TURKISH_DAYS[d.getDay()];
+                label.textContent = `${d.getDate()} ${TURKISH_MONTHS[d.getMonth()]} ${wday}`;
+            }
+
+            renderAppointmentTimeSlots(selectedDateStr);
+        }
+
+        function selectAppointmentDay(dateStr, labelText) {
+            const scroller = document.getElementById('aptDaySelector');
+            const dateInput = document.getElementById('aptDate');
+            const label = document.getElementById('aptSelectedDateLabel');
+            if (dateInput) dateInput.value = dateStr;
+            if (label) label.textContent = labelText;
+
+            if (scroller) {
+                scroller.querySelectorAll('.apt-day-pill').forEach(p => {
+                    p.classList.toggle('active', p.dataset.date === dateStr);
+                });
+            }
+
+            renderAppointmentTimeSlots(dateStr);
+        }
+
+        async function renderAppointmentTimeSlots(dateStr) {
+            const grid = document.getElementById('aptTimeSlotsGrid');
+            const timeInput = document.getElementById('aptTime');
+            const label = document.getElementById('aptSelectedTimeLabel');
+            if (!grid) return;
+
+            const baseSlots = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const currentHour = now.getHours();
+
+            let currentTime = timeInput ? timeInput.value : '14:00';
+            grid.innerHTML = '';
+
+            let firstAvailable = null;
+
+            baseSlots.forEach(slot => {
+                const slotHour = parseInt(slot.split(':')[0], 10);
+                const isPastToday = (dateStr === todayStr && slotHour <= currentHour);
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'apt-time-slot';
+                btn.textContent = slot;
+                btn.dataset.time = slot;
+
+                if (isPastToday) {
+                    btn.disabled = true;
+                    btn.title = 'Bu saat dilimi geçmiştir';
+                } else {
+                    if (!firstAvailable) firstAvailable = slot;
+                    btn.onclick = () => selectAppointmentTime(slot);
+                }
+
+                grid.appendChild(btn);
+            });
+
+            // If current selected time is disabled, auto-switch to first available slot
+            let targetSlot = currentTime;
+            const isCurrentSlotDisabled = dateStr === todayStr && parseInt(currentTime.split(':')[0], 10) <= currentHour;
+            if (isCurrentSlotDisabled && firstAvailable) {
+                targetSlot = firstAvailable;
+            } else if (!firstAvailable && dateStr === todayStr) {
+                if (label) label.textContent = 'Bugün için saat kalmadı';
+            }
+
+            if (targetSlot && (!isCurrentSlotDisabled || !firstAvailable)) {
+                selectAppointmentTime(targetSlot);
+            } else if (firstAvailable) {
+                selectAppointmentTime(firstAvailable);
+            }
+
+            // Sync with backend dynamic slots
+            try {
+                fetch(`/api/appointments/slots?date=${encodeURIComponent(dateStr)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.success && Array.isArray(data.slots)) {
+                            data.slots.forEach(s => {
+                                const btn = grid.querySelector(`button[data-time="${s.time}"]`);
+                                if (btn && !s.available) {
+                                    btn.disabled = true;
+                                    btn.classList.remove('active');
+                                }
+                            });
+                        }
+                    }).catch(() => {});
+            } catch (_) {}
+        }
+
+        function selectAppointmentTime(timeStr) {
+            const grid = document.getElementById('aptTimeSlotsGrid');
+            const timeInput = document.getElementById('aptTime');
+            const label = document.getElementById('aptSelectedTimeLabel');
+
+            if (timeInput) timeInput.value = timeStr;
+            if (label) label.textContent = timeStr;
+
+            if (grid) {
+                grid.querySelectorAll('.apt-time-slot').forEach(b => {
+                    b.classList.toggle('active', b.dataset.time === timeStr && !b.disabled);
+                });
+            }
+        }
+
         function openAppointmentModal(projectId, projectName) {
             const p = projectId ? findProjectFlexible(projectId) : null;
             const resolvedName = projectName || (p ? (p.title || p.name) : '') || 'Genel Portföy & VIP Proje';
             const idInput = document.getElementById('aptProjectId');
             const nameInput = document.getElementById('aptProjectName');
             const msgEl = document.getElementById('aptStatusMsg');
-            const dateInput = document.getElementById('aptDate');
-            const timeInput = document.getElementById('aptTime');
 
             if (idInput) idInput.value = projectId || '';
             if (nameInput) nameInput.value = resolvedName;
             if (msgEl) msgEl.style.display = 'none';
 
-            // Auto-initialize calendar with today's date
-            const todayStr = new Date().toISOString().split('T')[0];
-            if (dateInput) {
-                dateInput.min = todayStr;
-                if (!dateInput.value) dateInput.value = todayStr;
-            }
-            if (timeInput && !timeInput.value) {
-                timeInput.value = '14:00';
-            }
+            // Auto-initialize calendar and time slots
+            renderAppointmentCalendar();
 
             openModal('appointmentModal');
         }
@@ -7848,7 +8119,7 @@
 
                     const badge = document.createElement('div');
                     badge.className = 'card-shared-badge-green';
-                    badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Paylaşılan VIP Sunum';
+                    badge.innerHTML = '<span class="pulse-dot" style="display:inline-block; animation:pulseDot 1.2s infinite; margin-right:4px;">●</span> AKTİF SUNUM';
                     card.appendChild(badge);
 
                     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -11168,22 +11439,36 @@
                         <input type="email" id="aptEmail" placeholder="ornek@mail.com" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px;">
                     </div>
                     <div>
-                        <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;"><i class="fa-solid fa-calendar-days" style="color:var(--accent); margin-right:4px;"></i> Randevu Günü (Takvim) *</label>
-                        <input type="date" id="aptDate" required style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; background:#fff;">
-                    </div>
-                </div>
-                <div class="apt-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                    <div>
-                        <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;"><i class="fa-solid fa-clock" style="color:var(--accent); margin-right:4px;"></i> Randevu Saati *</label>
-                        <input type="time" id="aptTime" required value="14:00" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; background:#fff;">
-                    </div>
-                    <div>
                         <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Görüşme Tercihi</label>
                         <select id="aptMeetingType" style="width:100%; padding:10px 14px; border-radius:12px; border:1px solid rgba(0,0,0,0.15); font-size:16px; background:#fff;">
                             <option value="Yüz Yüze (Ofis / Satış Ofisi)">Yüz Yüze (Ofis / Proje Sahası)</option>
                             <option value="Online (WhatsApp / Telefon)">Online (WhatsApp / Telefon)</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- Interactive Calendar: Day Selector (Pills) -->
+                <div style="margin-top:0.25rem;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+                        <label style="font-size:13px; font-weight:700; color:var(--text-primary);">
+                            <i class="fa-solid fa-calendar-days" style="color:var(--accent); margin-right:4px;"></i> Randevu Günü Seçin (Takvim) *
+                        </label>
+                        <span id="aptSelectedDateLabel" style="font-size:12px; font-weight:700; color:#012169; background:#edf2f7; padding:2px 8px; border-radius:6px;">Bugün</span>
+                    </div>
+                    <div id="aptDaySelector" class="apt-day-scroller"></div>
+                    <input type="hidden" id="aptDate" name="apt_date" value="">
+                </div>
+
+                <!-- Interactive Time Slot Matrix -->
+                <div style="margin-top:0.25rem;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+                        <label style="font-size:13px; font-weight:700; color:var(--text-primary);">
+                            <i class="fa-solid fa-clock" style="color:var(--accent); margin-right:4px;"></i> Randevu Saati Seçin *
+                        </label>
+                        <span id="aptSelectedTimeLabel" style="font-size:12px; font-weight:700; color:#128C7E; background:#e8f5e9; padding:2px 8px; border-radius:6px;">14:00</span>
+                    </div>
+                    <div id="aptTimeSlotsGrid" class="apt-time-grid"></div>
+                    <input type="hidden" id="aptTime" name="apt_time" value="14:00">
                 </div>
                 <div>
                     <label style="font-size:13px; font-weight:600; color:var(--text-primary); display:block; margin-bottom:4px;">Özel Notunuz</label>

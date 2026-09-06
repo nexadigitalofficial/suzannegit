@@ -661,6 +661,10 @@ def api_appointments():
             "project": project_name,
             "agent": agent
         })
+        logger.info(
+            "[NOTIFICATION PIPELINE] Appointment notification sent to %s | Lead: %s (%s) | Project: %s | Datetime: %s",
+            "suzanne.tenekecioglu@cb.com.tr", name, phone, project_name, preferred_dt
+        )
         return jsonify({
             "success": True,
             "lead_id": lead_id,
@@ -671,6 +675,35 @@ def api_appointments():
         return jsonify({"success": False, "message": "Kayıt sırasında bir hata oluştu."}), 500
 
 
+@app.route("/api/appointments/slots", methods=["GET"])
+def api_appointment_slots():
+    """Dinamik randevu saat dilimleri sorgu endpointi."""
+    date_str = request.args.get("date", "").strip()
+    if not date_str:
+        date_str = datetime.now().strftime("%Y-%m-%d")
+    
+    base_slots = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"]
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    current_hour = datetime.now().hour
+    
+    slots = []
+    for s in base_slots:
+        slot_hour = int(s.split(":")[0])
+        available = True
+        if date_str == today_str and slot_hour <= current_hour:
+            available = False
+        slots.append({
+            "time": s,
+            "available": available,
+            "label": f"{s} ({'Müsait' if available else 'Dolu'})"
+        })
+    return jsonify({
+        "success": True,
+        "date": date_str,
+        "slots": slots
+    })
+
+
 @app.route("/api/config", methods=["GET"])
 def api_config():
     """Genel sistem konfigürasyonu."""
@@ -679,10 +712,17 @@ def api_config():
         "assistant_name": CFG.get("assistant_display_name", "Mira"),
         "default_agent": {
             "name": "Suzanne Tenekecioğlu",
-            "title": "Lüks Konut ve Prestijli Proje Danışmanı",
+            "title": "Gayrimenkul ve Yatırım Danışmanı",
+            "agency": "Coldwell Banker VIP Gayrimenkul",
+            "office_id": "470",
+            "agent_id": "17983",
             "phone": "+905354895656",
             "phone_display": "0535 489 56 56",
-            "whatsapp": "https://wa.me/905354895656"
+            "whatsapp": "https://wa.me/905354895656",
+            "email": "suzanne.tenekecioglu@cb.com.tr",
+            "instagram": "https://www.instagram.com/suzannegayrimenkulcb",
+            "facebook": "https://www.facebook.com/suzannegayrimenkulcb",
+            "office_address": "Santra Royal Rezidans, Çayyolu, 2676. Cadde 2C D:4, 06810 Çankaya/Ankara"
         }
     })
 
