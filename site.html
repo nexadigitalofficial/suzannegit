@@ -4916,8 +4916,8 @@
                         <i class="fa-solid fa-sliders" style="color:var(--accent);"></i> Hızlı Bütçe Filtresi (Kartları Önceliklendirir):
                     </div>
                     <div class="quick-budget-bar" id="quickBudgetBar">
-                        <button class="budget-btn" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
-                        <button class="budget-btn active" data-min="0" data-max="3000000" onclick="setQuickBudget(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
+                        <button class="budget-btn active" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
+                        <button class="budget-btn" data-min="0" data-max="3000000" onclick="setQuickBudget(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
                         <button class="budget-btn" data-min="3000000" data-max="5000000" onclick="setQuickBudget(3000000, 5000000, this)"><i class="fa-solid fa-tag"></i> 3 - 5 Milyon TL</button>
                         <button class="budget-btn" data-min="5000000" data-max="10000000" onclick="setQuickBudget(5000000, 10000000, this)"><i class="fa-solid fa-gem"></i> 5 - 10 Milyon TL</button>
                         <button class="budget-btn" data-min="10000000" data-max="999999999" onclick="setQuickBudget(10000000, 999999999, this)"><i class="fa-solid fa-crown"></i> 10M TL+ Lüks</button>
@@ -7777,7 +7777,7 @@
         let nexaRegionByKey = {};
 
         let activeShowcaseTab = 'projects'; // DEFAULT IS PROJELER!
-        let activeFilters = { priceMin: 0, priceMax: 3000000, rooms: null, location: null, ai: 'all', delivery: null };
+        let activeFilters = { priceMin: null, priceMax: null, rooms: null, location: null, ai: 'all', delivery: null };
 
         // Region index: RAG kaynaklı güncel bölge/fiyat verisi (project adı -> bilgi)
         function regionKey(name) {
@@ -7843,7 +7843,7 @@
 
         // ─── P0 QUICK BUDGET HELPER & DYNAMIC CAROUSEL RE-ORDERING ───
         let currentBudgetMin = 0;
-        let currentBudgetMax = 3000000;
+        let currentBudgetMax = 999999999;
 
         function setQuickBudget(min, max, btn) {
             currentBudgetMin = min;
@@ -7866,8 +7866,14 @@
             priceChips.forEach(c => {
                 const cMin = parseInt(c.getAttribute('data-min') || '0');
                 const cMax = parseInt(c.getAttribute('data-max') || '999999999');
-                if (cMin === min && cMax === max) c.classList.add('active');
-                else c.classList.remove('active');
+                if (min === 0 && max >= 999999999) {
+                    if (cMin === 0 && cMax >= 999999999) c.classList.add('active');
+                    else c.classList.remove('active');
+                } else if (cMin === min && cMax === max) {
+                    c.classList.add('active');
+                } else {
+                    c.classList.remove('active');
+                }
             });
 
             // Re-render carousel with matching cards prioritized at the front
@@ -9236,16 +9242,49 @@
         }
 
         function togglePriceFilter(min, max, btn) {
-            if(btn.classList.contains('active')) {
+            const isAll = (min === null || (min === 0 && max >= 999999999));
+            if (btn && btn.classList.contains('active')) {
+                if (isAll) {
+                    return;
+                }
                 btn.classList.remove('active');
                 activeFilters.priceMin = null;
                 activeFilters.priceMax = null;
+                currentBudgetMin = 0;
+                currentBudgetMax = 999999999;
+                const allChip = document.querySelector('#price-filters .chip[data-max="999999999"]');
+                if (allChip) allChip.classList.add('active');
             } else {
                 clearActiveChips('price-filters');
-                btn.classList.add('active');
-                activeFilters.priceMin = min;
-                activeFilters.priceMax = max;
+                if (btn) btn.classList.add('active');
+                if (isAll) {
+                    activeFilters.priceMin = null;
+                    activeFilters.priceMax = null;
+                    currentBudgetMin = 0;
+                    currentBudgetMax = 999999999;
+                } else {
+                    activeFilters.priceMin = min;
+                    activeFilters.priceMax = max;
+                    currentBudgetMin = min;
+                    currentBudgetMax = max;
+                }
             }
+
+            // Quick budget bar senkronizasyonu
+            const budgetBtns = document.querySelectorAll('.budget-btn');
+            budgetBtns.forEach(b => {
+                const bMin = parseInt(b.getAttribute('data-min') || '0');
+                const bMax = parseInt(b.getAttribute('data-max') || '999999999');
+                if (activeFilters.priceMin === null) {
+                    if (bMax >= 999999999) b.classList.add('active');
+                    else b.classList.remove('active');
+                } else {
+                    if (bMin === activeFilters.priceMin && bMax === activeFilters.priceMax) b.classList.add('active');
+                    else b.classList.remove('active');
+                }
+            });
+
+            renderProjectsCarousel();
             applyFilters();
         }
 
