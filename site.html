@@ -4316,31 +4316,45 @@
 
         /* Shared Card VIP Green Highlight Indicator */
         .card.shared-highlight-green {
-            border: 2.5px solid #25D366 !important;
-            box-shadow: 0 0 35px rgba(37, 211, 102, 0.45), 0 12px 32px rgba(0, 0, 0, 0.18) !important;
-            position: relative;
-            animation: sharedCardPulse 2.5s infinite ease-in-out;
+            border: 3.5px solid #25D366 !important;
+            outline: 3px solid rgba(37, 211, 102, 0.45) !important;
+            outline-offset: 3px !important;
+            box-shadow: 0 0 40px rgba(37, 211, 102, 0.65), 0 16px 40px rgba(0, 0, 0, 0.22) !important;
+            position: relative !important;
+            animation: sharedCardPulse 1.8s infinite ease-in-out !important;
+            transform: scale(1.02);
+            z-index: 25 !important;
+            transition: transform 0.3s ease;
         }
         @keyframes sharedCardPulse {
-            0%, 100% { box-shadow: 0 0 25px rgba(37, 211, 102, 0.35); }
-            50% { box-shadow: 0 0 45px rgba(37, 211, 102, 0.7); }
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(37, 211, 102, 0.45), 0 12px 30px rgba(0, 0, 0, 0.2);
+                border-color: #25D366;
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(37, 211, 102, 0.85), 0 18px 45px rgba(37, 211, 102, 0.35);
+                border-color: #34D399;
+            }
         }
         .card-shared-badge-green {
             position: absolute;
             top: 12px;
-            left: 12px;
-            z-index: 15;
+            right: 12px;
+            z-index: 30;
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: #fff;
             font-size: 11px;
             font-weight: 800;
-            letter-spacing: 0.4px;
-            padding: 6px 12px;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
             border-radius: 20px;
-            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.6);
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            text-transform: uppercase;
         }
 
         /* Mobile Chatbot Virtual Keyboard Mode (Active Typing View) */
@@ -4719,6 +4733,34 @@
       "image": "https://i.ibb.co/VYtqHHGm/Ekran-g-r-nt-s-2026-08-20-162222.png"
     }
     </script>
+    <!-- Deep Link / Shared Project Splash Skip Script & CSS -->
+    <script>
+    (function() {
+        try {
+            var s = window.location.search || '', h = window.location.hash || '';
+            var isShare = (s.indexOf('project=') !== -1 || s.indexOf('share=') !== -1 || s.indexOf('p=') !== -1 || s.indexOf('id=') !== -1 || h.indexOf('site-card-') !== -1 || h.indexOf('project-') !== -1 || h.indexOf('card-') !== -1);
+            if (isShare) {
+                document.documentElement.classList.add('skip-splash');
+                window.__SKIP_SPLASH__ = true;
+                try { sessionStorage.setItem('nexa_splash_seen', 'true'); } catch(_) {}
+            }
+        } catch(e) {}
+    })();
+    </script>
+    <style>
+    .skip-splash #splashScreen,
+    html.skip-splash #splashScreen {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        z-index: -99999 !important;
+    }
+    .skip-splash body,
+    html.skip-splash body {
+        overflow: auto !important;
+    }
+    </style>
 </head>
 <body>
 
@@ -4916,8 +4958,8 @@
                         <i class="fa-solid fa-sliders" style="color:var(--accent);"></i> Hızlı Bütçe Filtresi (Kartları Önceliklendirir):
                     </div>
                     <div class="quick-budget-bar" id="quickBudgetBar">
-                        <button class="budget-btn active" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
-                        <button class="budget-btn" data-min="0" data-max="3000000" onclick="setQuickBudget(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
+                        <button class="budget-btn" data-min="0" data-max="999999999" onclick="setQuickBudget(0, 999999999, this)"><i class="fa-solid fa-layer-group"></i> Tüm Bütçeler</button>
+                        <button class="budget-btn active" data-min="0" data-max="3000000" onclick="setQuickBudget(0, 3000000, this)"><i class="fa-solid fa-tag"></i> 1 - 3 Milyon TL</button>
                         <button class="budget-btn" data-min="3000000" data-max="5000000" onclick="setQuickBudget(3000000, 5000000, this)"><i class="fa-solid fa-tag"></i> 3 - 5 Milyon TL</button>
                         <button class="budget-btn" data-min="5000000" data-max="10000000" onclick="setQuickBudget(5000000, 10000000, this)"><i class="fa-solid fa-gem"></i> 5 - 10 Milyon TL</button>
                         <button class="budget-btn" data-min="10000000" data-max="999999999" onclick="setQuickBudget(10000000, 999999999, this)"><i class="fa-solid fa-crown"></i> 10M TL+ Lüks</button>
@@ -7843,7 +7885,7 @@
 
         // ─── P0 QUICK BUDGET HELPER & DYNAMIC CAROUSEL RE-ORDERING ───
         let currentBudgetMin = 0;
-        let currentBudgetMax = 999999999;
+        let currentBudgetMax = 3000000;
 
         function setQuickBudget(min, max, btn) {
             currentBudgetMin = min;
@@ -8278,25 +8320,87 @@
             }
         }
 
-        function checkSharedProjectHighlight() {
+        function getSharedTargetId() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
-                let targetId = urlParams.get('project') || urlParams.get('share');
-                if (!targetId && window.location.hash && window.location.hash.startsWith('#site-card-')) {
-                    targetId = window.location.hash.replace('#site-card-', '');
+                let targetId = urlParams.get('project');
+                if (!targetId && urlParams.get('share') && urlParams.get('share') !== 'vip') {
+                    targetId = urlParams.get('share');
                 }
+                if (!targetId && urlParams.get('p')) targetId = urlParams.get('p');
+                if (!targetId && urlParams.get('id')) targetId = urlParams.get('id');
+                if (!targetId && window.location.hash) {
+                    const h = window.location.hash;
+                    if (h.startsWith('#site-card-')) targetId = h.replace('#site-card-', '');
+                    else if (h.startsWith('#project-')) targetId = h.replace('#project-', '');
+                    else if (h.startsWith('#card-')) targetId = h.replace('#card-', '');
+                }
+                return targetId ? decodeURIComponent(targetId).trim() : null;
+            } catch(e) {
+                return null;
+            }
+        }
+
+        function findCardElement(targetId) {
+            if (!targetId) return null;
+            let card = document.getElementById(`site-card-${targetId}`);
+            if (card) return card;
+            const cleanId = String(targetId).toLowerCase().replace(/[^a-z0-9_-]/g, '');
+            card = document.getElementById(`site-card-${cleanId}`);
+            if (card) return card;
+            if (!cleanId.startsWith('cbvip-prj-')) {
+                card = document.getElementById(`site-card-cbvip-prj-${cleanId}`);
+                if (card) return card;
+            }
+            const allCards = document.querySelectorAll('.card[id^="site-card-"], .card[data-project-id]');
+            for (const c of allCards) {
+                const cId = (c.id.replace('site-card-', '') || c.getAttribute('data-project-id') || '').toLowerCase();
+                if (cId === cleanId || cId.endsWith(`-${cleanId}`) || cleanId.endsWith(`-${cId}`)) {
+                    return c;
+                }
+            }
+            return null;
+        }
+
+        function checkSharedProjectHighlight() {
+            try {
+                const targetId = getSharedTargetId();
                 if (!targetId) return;
 
-                const isPort = (portfolioData || []).some(p => String(p.id) === String(targetId));
+                // 1. Açılış videosunu derhal atla & arka plan medyalarını kapat
+                _isSplashDismissed = true;
+                const splash = document.getElementById('splashScreen');
+                if (splash) {
+                    splash.style.display = 'none';
+                    splash.classList.add('hidden');
+                    teardownSplashMedia();
+                }
+                document.body.classList.remove('splash-active');
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+
+                // 2. Proje veya Portföy sekmesini otomatik aktif et
+                const isPort = (portfolioData || []).some(p => {
+                    const pid = String(p.id || '').toLowerCase();
+                    const tid = String(targetId).toLowerCase();
+                    return pid === tid || pid.replace('cbvip-prj-', '') === tid;
+                });
+
                 if (isPort && typeof switchShowcaseTab === 'function') {
                     switchShowcaseTab('portfolio');
                 } else if (typeof switchShowcaseTab === 'function') {
                     switchShowcaseTab('projects');
                 }
 
-                setTimeout(() => {
-                    const card = document.getElementById(`site-card-${targetId}`);
-                    if (!card) return;
+                // 3. Kartı bul, yeşil çerçeve ve '● AKTİF SUNUM' belirteci uygula, dikey ve yatay tam ortala
+                const applyHighlightAndScroll = (attempt) => {
+                    const card = findCardElement(targetId);
+                    if (!card) {
+                        if ((attempt || 0) < 6) {
+                            setTimeout(() => applyHighlightAndScroll((attempt || 0) + 1), 200);
+                        }
+                        return;
+                    }
 
                     document.querySelectorAll('.shared-highlight-green').forEach(c => c.classList.remove('shared-highlight-green'));
                     document.querySelectorAll('.card-shared-badge-green').forEach(b => b.remove());
@@ -8308,13 +8412,32 @@
                     badge.innerHTML = '<span class="pulse-dot" style="display:inline-block; animation:pulseDot 1.2s infinite; margin-right:4px;">●</span> AKTİF SUNUM';
                     card.appendChild(badge);
 
-                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Dikey kaydırma: Navbar payını hesaplayıp kartı ekranın dikey merkezine getir
+                    const rect = card.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const targetY = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
+                    window.scrollTo({
+                        top: Math.max(0, targetY),
+                        behavior: 'smooth'
+                    });
 
+                    // Yatay karusel kaydırma: Kartı karusel rayında tam ortala
                     const track = card.closest('.carousel-track');
                     if (track) {
-                        track.scrollTo({ left: Math.max(0, card.offsetLeft - 30), behavior: 'smooth' });
+                        const cardOffset = card.offsetLeft;
+                        const trackWidth = track.clientWidth;
+                        const cardWidth = card.offsetWidth;
+                        const targetX = Math.max(0, cardOffset - (trackWidth / 2) + (cardWidth / 2));
+                        track.scrollTo({
+                            left: targetX,
+                            behavior: 'smooth'
+                        });
                     }
-                }, 600);
+                };
+
+                // Açılış videosu atlandığı için gecikmesiz yönlendir
+                setTimeout(() => applyHighlightAndScroll(0), 80);
+                setTimeout(() => applyHighlightAndScroll(0), 350);
             } catch(e) {
                 console.warn('Error highlighting shared project:', e);
             }
@@ -8464,12 +8587,14 @@
 
             // Copy and sort projectsData based on active budget filter
             let list = [...projectsData];
-            if (activeFilters.priceMin !== null && activeFilters.priceMax !== null) {
+            const targetMin = (activeFilters.priceMin !== null) ? activeFilters.priceMin : currentBudgetMin;
+            const targetMax = (activeFilters.priceMax !== null) ? activeFilters.priceMax : currentBudgetMax;
+            if (targetMin !== null && targetMax !== null && !(targetMin === 0 && targetMax >= 999999999)) {
                 list.sort((a, b) => {
                     const pa = a.price_numeric || (a.intelligence && a.intelligence.price) || (a.price_min) || 0;
                     const pb = b.price_numeric || (b.intelligence && b.intelligence.price) || (b.price_min) || 0;
-                    const aMatches = (pa >= activeFilters.priceMin && pa <= activeFilters.priceMax);
-                    const bMatches = (pb >= activeFilters.priceMin && pb <= activeFilters.priceMax);
+                    const aMatches = (pa >= targetMin && pa <= targetMax);
+                    const bMatches = (pb >= targetMin && pb <= targetMax);
                     if (aMatches && !bMatches) return -1;
                     if (!aMatches && bMatches) return 1;
                     return pa - pb;
@@ -8493,7 +8618,7 @@
                     const escPrice = escapeHtml(priceText), escLoc = escapeHtml(loc), escDown = escapeHtml(downPayment), escDev = escapeHtml(item.developer || 'Coldwell Banker VIP Ekosistemi');
 
                     const pNum = item.price_numeric || (item.intelligence && item.intelligence.price) || (item.price_min) || 0;
-                    const isBudgetMatch = (activeFilters.priceMin !== null && pNum >= activeFilters.priceMin && pNum <= activeFilters.priceMax);
+                    const isBudgetMatch = (targetMin !== null && targetMax !== null && !(targetMin === 0 && targetMax >= 999999999) && pNum >= targetMin && pNum <= targetMax);
 
                     const videoBtn = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); playProjectVideo('${item.id}')" title="Tanıtım Videosunu Oynat"><i class="fa-solid fa-play"></i> Tanıtım</button>`;
                     const slideshowBtn = `<button class="btn btn-outline btn-sm" style="background:rgba(255,215,0,0.1); color:#D97706; border-color:rgba(255,215,0,0.35);" onclick="event.stopPropagation(); embedSlideshowOnSiteCard('${item.id}')"><i class="fa-solid fa-images"></i> Slayt</button>`;
@@ -8504,7 +8629,7 @@
                     const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
 
                     const html = `
-                        <div class="card project-card" id="site-card-${item.id}" onclick="openProjectReport('${item.id}')" style="cursor:pointer; display:flex; flex-direction:column; ${isBudgetMatch ? 'border: 2px solid var(--accent); box-shadow: 0 12px 36px rgba(0,113,227,0.18);' : ''}">
+                        <div class="card project-card" id="site-card-${item.id}" data-project-id="${item.id}" onclick="openProjectReport('${item.id}')" style="cursor:pointer; display:flex; flex-direction:column; ${isBudgetMatch ? 'border: 2px solid var(--accent); box-shadow: 0 12px 36px rgba(0,113,227,0.18);' : ''}">
                             <div class="card-img-wrapper" id="site-card-img-${item.id}" data-preview-id="${item.id}">
                                 <img src="${imgSrc}" alt="${safeName}" loading="lazy" class="project-card-img" onerror="this.src='/static/img/placeholder.jpg'">
                                 <span class="badge sale" style="position:absolute; top:12px; left:12px; background:${isBudgetMatch ? '#34C759' : 'var(--accent)'}; color:#fff; font-weight:700; font-size:11px; padding:4px 10px; border-radius:20px;">${isBudgetMatch ? '⭐ BÜTÇENİZE UYGUN' : 'LANSMAN PROJESİ'}</span>
@@ -8569,7 +8694,7 @@
                 const safeLink = typeof item.link === 'string' ? item.link.replace(/[\u0000-\u001f'"\\]/g, '') : '#';
 
                 const html = `
-                    <div class="card" onclick="openListingDetail('${safeLink}', '${escapeHtml(item.id)}')">
+                    <div class="card portfolio-card" id="site-card-${escapeHtml(item.id)}" data-project-id="${escapeHtml(item.id)}" onclick="openListingDetail('${safeLink}', '${escapeHtml(item.id)}')">
                         <div class="card-img-wrapper">
                             <img src="${imgSrc}" alt="${escTitle}" loading="lazy" onerror="this.src='https://picsum.photos/seed/placeholder/600/400'">
                             <span class="badge ${getBadgeClass(item.type)}">${getBadgeText(item.type)}</span>
@@ -11051,12 +11176,13 @@
         function initApp() {
             forceInitializeAll();
             try {
-                if (sessionStorage.getItem('nexa_splash_seen') === 'true') {
+                if (sessionStorage.getItem('nexa_splash_seen') === 'true' || (typeof window.__SKIP_SPLASH__ !== 'undefined' && window.__SKIP_SPLASH__)) {
                     const splash = document.getElementById('splashScreen');
                     if (splash) {
                         splash.style.display = 'none';
                         splash.classList.add('hidden');
                         _isSplashDismissed = true;
+                        teardownSplashMedia();
                     }
                 }
             } catch (_) {}
@@ -11410,9 +11536,29 @@
 
         (function initSplashScreen() {
             const splash = document.getElementById('splashScreen');
-            const bar = document.getElementById('splashBar');
             if (!splash) return;
 
+            // Direct check: If opened via a shared project link or previously skipped, skip cinematic splash video entirely
+            const isShare = (typeof window.__SKIP_SPLASH__ !== 'undefined' && window.__SKIP_SPLASH__) || 
+                            (function() {
+                                try {
+                                    const s = window.location.search || '', h = window.location.hash || '';
+                                    return (s.indexOf('project=') !== -1 || s.indexOf('share=') !== -1 || s.indexOf('p=') !== -1 || s.indexOf('id=') !== -1 || h.indexOf('site-card-') !== -1 || h.indexOf('project-') !== -1);
+                                } catch(e) { return false; }
+                            })();
+
+            if (isShare) {
+                _isSplashDismissed = true;
+                splash.style.display = 'none';
+                splash.classList.add('hidden');
+                document.body.classList.remove('splash-active');
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+                teardownSplashMedia();
+                return;
+            }
+
+            const bar = document.getElementById('splashBar');
             // Start particle & VFX engines
             _particleEngineInstance = new SplashParticleEngine('splashParticlesCanvas');
             initSplashParallax();
