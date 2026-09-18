@@ -157,6 +157,11 @@ def build_ilan(entry: dict, detail: dict) -> dict:
         title = f"CB Portföy İlanı {ilan_no}"
 
     price = _clean(detail.get("Fiyat", entry.get("price", "")))
+    digits = re.sub(r"[^\d]", "", price)
+    price_numeric = int(digits) if digits else None
+    price_min = price_numeric
+    price_max = price_numeric
+
     location = _clean(detail.get("Konum", ""))
     loc = parse_location(location)
     area_brut = _clean(detail.get("Metre Kare (Brüt)", ""))
@@ -173,6 +178,12 @@ def build_ilan(entry: dict, detail: dict) -> dict:
     listing_type = "Kiralık" if "kiralık" in (title + " " + location).lower() else "Satılık"
     if "Devren" in title:
         listing_type = "Devren Kiralık"
+
+    room_info = _clean(detail.get("Oda Sayısı") or detail.get("Oda + Salon Sayısı") or entry.get("rooms") or "")
+    if not room_info:
+        m_r = re.search(r"\b(\d\+\d)\b", title)
+        if m_r:
+            room_info = m_r.group(1)
 
     features = []
     for key in ["Tapu Durumu", "Bina Yaşı", "Bulunduğu Kat", "Kat Sayısı", "Isıtma",
@@ -193,7 +204,10 @@ def build_ilan(entry: dict, detail: dict) -> dict:
         "listing_type": listing_type,
         "property_category": category or "Konut / Daire",
         "price_display": price,
-        "room_info": "",
+        "price_numeric": price_numeric,
+        "price_min": price_min,
+        "price_max": price_max,
+        "room_info": room_info,
         "net_gross_area": area,
         "location": full_location,
         "il": loc["il"],
@@ -230,6 +244,9 @@ def _ensure_columns(conn: sqlite3.Connection):
         ("cb_ilan_no", "VARCHAR(50)"),
         ("cb_url", "VARCHAR(500)"),
         ("cb_last_synced", "TIMESTAMP"),
+        ("price_numeric", "REAL"),
+        ("price_min", "REAL"),
+        ("price_max", "REAL"),
     ]:
         try:
             conn.execute(f"ALTER TABLE projects ADD COLUMN {col} {ddl}")
@@ -260,24 +277,28 @@ def upsert_ilan(conn: sqlite3.Connection, ilan: dict) -> int:
         conn.execute("""
             UPDATE projects SET name=?, location=?, il=?, ilce=?, mahalle=?, description=?,
                 cover_image_url=?, listing_type=?, property_category=?, price_display=?,
+                price_numeric=?, price_min=?, price_max=?,
                 room_info=?, net_gross_area=?, ada_no=?, parsel_no=?, tkgm_verified=?,
                 cb_url=?, cb_last_synced=?
             WHERE id=?
         """, (ilan["name"], ilan["location"], ilan["il"], ilan["ilce"], ilan["mahalle"],
               ilan["description"], ilan["cover_image_url"], ilan["listing_type"],
-              ilan["property_category"], ilan["price_display"], ilan["room_info"],
-              ilan["net_gross_area"], ilan["ada_no"], ilan["parsel_no"], ilan["tkgm_verified"],
-              ilan["cb_url"], now, proj_id))
+              ilan["property_category"], ilan["price_display"],
+              ilan.get("price_numeric"), ilan.get("price_min"), ilan.get("price_max"),
+              ilan["room_info"], ilan["net_gross_area"], ilan["ada_no"], ilan["parsel_no"],
+              ilan["tkgm_verified"], ilan["cb_url"], now, proj_id))
     else:
         cur = conn.execute("""
             INSERT INTO projects (name, location, il, ilce, mahalle, description, cover_image_url,
                 ada_no, parsel_no, tkgm_verified, is_portfolio, listing_type, property_category,
-                price_display, room_info, net_gross_area, cb_ilan_no, cb_url, cb_last_synced)
-            VALUES (?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?,?,?,?)
+                price_display, price_numeric, price_min, price_max, room_info, net_gross_area,
+                cb_ilan_no, cb_url, cb_last_synced)
+            VALUES (?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?,?,?,?,?,?)
         """, (ilan["name"], ilan["location"], ilan["il"], ilan["ilce"], ilan["mahalle"],
               ilan["description"], ilan["cover_image_url"], ilan["ada_no"], ilan["parsel_no"],
               ilan["tkgm_verified"], ilan["listing_type"], ilan["property_category"],
-              ilan["price_display"], ilan["room_info"], ilan["net_gross_area"],
+              ilan["price_display"], ilan.get("price_numeric"), ilan.get("price_min"),
+              ilan.get("price_max"), ilan["room_info"], ilan["net_gross_area"],
               ilan["cb_ilan_no"], ilan["cb_url"], now))
         proj_id = cur.lastrowid
 

@@ -833,5 +833,78 @@
       "down_payment": "1.325.000 TL",
       "region": "Yaşamkent, Ankara"
     }
+  },
+  "MAS YAŞAMKENT": {
+    "price_display": "2.990.000 - 14.000.000 TL",
+    "price_min": 2990000,
+    "price_max": 14000000,
+    "price_numeric": 2990000,
+    "down_payment": "1.495.000 TL (%50)",
+    "installment_terms": "24-36 Ay Vade",
+    "monthly_installment": 62500,
+    "room_info": "1+1, 2+1, 4+1",
+    "rooms": [
+      "1+1",
+      "2+1",
+      "4+1"
+    ],
+    "total_units": 54,
+    "delivery_months": 24,
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Yaşamkent",
+    "location": "Yaşamkent, Ankara",
+    "location_full": "Ankara / Çankaya / Yaşamkent",
+    "category": "Markalı Konut Projesi",
+    "sales_highlights": "Yaşamkent merkezinde, peşin ve vadeli ödeme seçenekleri, cadde cepheli seçkin rezidans projesi.",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_mas.jpg"
+  },
+  "MIOSTELLA": {
+    "price_display": "2.850.000 - 4.500.000 TL",
+    "price_min": 2850000,
+    "price_max": 4500000,
+    "price_numeric": 2850000,
+    "down_payment": "1.425.000 TL (%50)",
+    "installment_terms": "24-36 Ay Vade",
+    "monthly_installment": 59375,
+    "room_info": "1+1, 2+1",
+    "rooms": [
+      "1+1",
+      "2+1"
+    ],
+    "total_units": 140,
+    "delivery_months": 24,
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "İncek / Beytepe",
+    "location": "Çankaya, Ankara",
+    "location_full": "Ankara / Çankaya / İncek (Bağlar Caddesi)",
+    "category": "Markalı Konut Projesi & Cadde Mağazaları",
+    "sales_highlights": "MioStella Diplomatico; Yargıtay, Anayasa Mahkemesi ve üniversitelere 8-11 dk, 23 katlı kule, 14 adet villa tipi mağaza.",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_miostella.jpg"
+  },
+  "VIP KIRIKKALE - MÜSTAKİL": {
+    "price_display": "432.000 - 488.000 TL",
+    "price_min": 432000,
+    "price_max": 488000,
+    "price_numeric": 432000,
+    "down_payment": "216.000 TL (%50)",
+    "installment_terms": "12-24 Ay Sabit Taksit",
+    "monthly_installment": 18000,
+    "room_info": "Müstakil Parsel / Villa Arsası",
+    "rooms": [
+      "Villa",
+      "Arsa"
+    ],
+    "total_units": 7,
+    "delivery_months": 12,
+    "il": "Kırıkkale",
+    "ilce": "Yahşihan",
+    "mahalle": "Müstakil Yaşam Alanı",
+    "location": "Yahşihan, Kırıkkale",
+    "location_full": "Kırıkkale / Yahşihan / Müstakil Parsel",
+    "category": "Müstakil Arsa & Villa Projesi",
+    "sales_highlights": "Hemen tapu teslim, bağımsız müstakil parsel villa arsaları, altyapısı hazır yüksek prim potansiyeli.",
+    "thumbnail": "/static/img/video_thumbs/video_thumb_kirikkale.jpg"
   }
 }

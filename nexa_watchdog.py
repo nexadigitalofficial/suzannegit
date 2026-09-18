@@ -48,9 +48,16 @@ FOLDER_TO_DB = {
     'WM - PRIME': 'WM - PRIME',
     'SARITAŞ MAS LORA - YAŞAMKENT': 'SARITAŞ MAS LORA - YAŞAMKENT',
     'SARITAS MAS LORA - YASAMKENT': 'SARITAŞ MAS LORA - YAŞAMKENT',
+    'MAS YAŞAMKENT': 'SARITAŞ MAS LORA - YAŞAMKENT',
+    'MAS YASAMKENT': 'SARITAŞ MAS LORA - YAŞAMKENT',
+    'MIOSTELLA': 'MIOSTELLA',
+    'VIP KIRIKKALE - MÜSTAKİL': 'VIP KIRIKKALE - MÜSTAKİL',
+    'VIP KIRIKKALE - MUSTAKIL': 'VIP KIRIKKALE - MÜSTAKİL',
+    'VIP KIRIKKALE': 'VIP KIRIKKALE - MÜSTAKİL',
 }
 NEW_PROJECTS = ['CONCEPT BULVAR', 'BORDO YAŞAM', 'EXCELANCE VADİ', 'EXCELANCE BEYTEPE',
-                'JOVEN PORT', 'JOVEN KAMPÜS', 'NEST İNCEK', 'NATURA GOLF', 'SMD TWIN', 'SMD PROTOKOL']
+                'JOVEN PORT', 'JOVEN KAMPÜS', 'NEST İNCEK', 'NATURA GOLF', 'SMD TWIN', 'SMD PROTOKOL',
+                'MIOSTELLA', 'VIP KIRIKKALE - MÜSTAKİL']
 
 
 def _extract_text(path):
@@ -155,6 +162,88 @@ def _normalize_title(folder_name):
     return t or folder_name
 
 
+def _ensure_thumbnail(folder_name, card_id):
+    """Otomatik 3 Kademeli Görsel / Thumbnail Üretici:
+    1. Kademe: Proje klasöründeki veya alt klasöründeki resimler (.jpg, .png, .webp)
+    2. Kademe: PDF ilk sayfasını PyMuPDF (fitz) ile render edip kaydetme
+    3. Kademe: MP4 videodan cv2 ile poster karesi çıkarma
+    """
+    thumb_dir = SITE_DIR / "static" / "img" / "video_thumbs"
+    thumb_dir.mkdir(parents=True, exist_ok=True)
+    num = card_id.split('-')[-1] if '-' in card_id else card_id
+    target_thumb = thumb_dir / f"video_thumb_{num}.jpg"
+
+    if target_thumb.exists() and target_thumb.stat().st_size > 5000:
+        return f"/static/img/video_thumbs/video_thumb_{num}.jpg"
+
+    folder = PROJELER_DIR / folder_name
+    if not folder.exists():
+        return ""
+
+    # 1. Kademe: Klasör veya alt klasörlerde doğrudan resim var mı?
+    img_candidates = []
+    for ext in ("*.jpg", "*.jpeg", "*.png", "*.webp"):
+        img_candidates.extend(folder.glob(ext))
+        img_candidates.extend(folder.glob(f"*/{ext}"))
+    
+    if img_candidates:
+        pri = ['render-1', 'render_1', 'render1', 'render', 'dis_cephe', 'dış', 'kapak', '01', '1.jpg', 'ada parsel', 'goruntu', 'görüntü']
+        img_candidates.sort(key=lambda f: next((i for i, k in enumerate(pri) if k in f.name.lower()), len(pri)))
+        chosen_img = img_candidates[0]
+        try:
+            from PIL import Image
+            with Image.open(chosen_img) as im:
+                im = im.convert("RGB")
+                im.thumbnail((1280, 720), Image.Resampling.LANCZOS)
+                im.save(target_thumb, "JPEG", quality=85)
+            logger.info("OTO-THUMBNAIL (Görselden): %s -> %s", chosen_img.name, target_thumb.name)
+            return f"/static/img/video_thumbs/video_thumb_{num}.jpg"
+        except Exception as e:
+            logger.warning("Görsel dönüştürme hatası %s: %s", chosen_img, e)
+
+    # 2. Kademe: PDF ilk sayfasını PyMuPDF (fitz) ile render et
+    pdfs = sorted(folder.glob("*.pdf"))
+    if pdfs:
+        pdf_pri = ['sunum', 'lansman', 'katalog', 'tanitim', 'proje', '01']
+        pdfs.sort(key=lambda f: next((i for i, k in enumerate(pdf_pri) if k in f.name.lower()), len(pdf_pri)))
+        chosen_pdf = pdfs[0]
+        try:
+            import fitz
+            doc = fitz.open(chosen_pdf)
+            page = doc.load_page(0)
+            pix = page.get_pixmap(dpi=150)
+            from PIL import Image
+            import io
+            im = Image.open(io.BytesIO(pix.tobytes("png")))
+            im = im.convert("RGB")
+            im.thumbnail((1280, 720), Image.Resampling.LANCZOS)
+            im.save(target_thumb, "JPEG", quality=85)
+            doc.close()
+            logger.info("OTO-THUMBNAIL (PDF Kapağından): %s -> %s", chosen_pdf.name, target_thumb.name)
+            return f"/static/img/video_thumbs/video_thumb_{num}.jpg"
+        except Exception as e:
+            logger.warning("PDF kapak çıkarma hatası %s: %s", chosen_pdf, e)
+
+    # 3. Kademe: MP4 videodan 2.0s karesi çıkar (cv2)
+    mp4s = sorted(folder.glob("*.mp4"))
+    if mp4s:
+        try:
+            import cv2
+            cap = cv2.VideoCapture(str(mp4s[0]))
+            cap.set(cv2.CAP_PROP_POS_MSEC, 2000)
+            success, frame = cap.read()
+            if success and frame is not None:
+                cv2.imwrite(str(target_thumb), frame)
+                cap.release()
+                logger.info("OTO-THUMBNAIL (Videodan): %s -> %s", mp4s[0].name, target_thumb.name)
+                return f"/static/img/video_thumbs/video_thumb_{num}.jpg"
+            cap.release()
+        except Exception as e:
+            logger.warning("Video kare çıkarma hatası: %s", e)
+
+    return ""
+
+
 def _ensure_project(folder_name, cur, name_to_id, map_data, order_data):
     """Yeni klasor => DB projesi + site karti + sira kaydi. (Kendini duzenleyen site)"""
     title = _normalize_title(folder_name)
@@ -165,14 +254,34 @@ def _ensure_project(folder_name, cur, name_to_id, map_data, order_data):
         pid = cur.lastrowid
         name_to_id[title] = pid
         logger.info("OTO-PROJE: %s -> id %s", title, pid)
-    if any(m.get('title') == title or m.get('folder_name') == folder_name for m in map_data):
+
+    existing_card = next((m for m in map_data if m.get('title') == title or m.get('folder_name') == folder_name), None)
+    if existing_card:
+        if not existing_card.get('thumbnail') or 'pdf_cover_1.png' in existing_card.get('thumbnail', ''):
+            thumb = _ensure_thumbnail(folder_name, existing_card.get('id', 'thumb'))
+            if thumb:
+                existing_card['thumbnail'] = thumb
+                existing_card['image'] = thumb
         return pid
+
     folder = PROJELER_DIR / folder_name
     pdfs = sorted(folder.glob('*.pdf')) if folder.exists() else []
     mp4s = sorted(folder.glob('*.mp4')) if folder.exists() else []
     used = [int(m['id'].split('-')[-1]) for m in map_data if m.get('id', '').startswith('cbvip-prj-')]
     next_no = (max(used) + 1) if used else 1
     card_id = f'cbvip-prj-{next_no}'
+
+    thumb = _ensure_thumbnail(folder_name, card_id)
+
+    kg_path = SITE_DIR / "nexa_sales_knowledge_graph.json"
+    kg_data = {}
+    if kg_path.exists():
+        try:
+            kg_data = json.loads(kg_path.read_text(encoding="utf-8"))
+        except Exception:
+            kg_data = {}
+    kg_item = kg_data.get(title) or kg_data.get(folder_name) or {}
+
     map_data.append({
         'id': card_id, 'db_id': pid, 'title': title, 'folder_name': folder_name,
         'folder_path': f'projeler/{folder_name}',
@@ -180,10 +289,34 @@ def _ensure_project(folder_name, cur, name_to_id, map_data, order_data):
         'media_mode': 'local',
         'presentations': [{'filename': x.name, 'url': f'/stream/pdf/{card_id}'} for x in pdfs[:8]],
         'videos': [{'filename': x.name, 'url': f'/stream/video/{card_id}'} for x in mp4s[:6]],
-        'drive_pdf_preview': '', 'drive_video_preview': '',
-        'price_display': '', 'price': '', 'location': '', 'room_info': '',
+        'drive_pdf_preview': kg_item.get('drive_pdf_preview', ''),
+        'drive_video_preview': kg_item.get('drive_video_preview', ''),
+        'drive_vid_id': kg_item.get('drive_vid_id', ''),
+        'drive_pdf_id': kg_item.get('drive_pdf_id', ''),
+        'thumbnail': thumb or kg_item.get('thumbnail', ''),
+        'image': thumb or kg_item.get('image', ''),
+        'price_display': kg_item.get('price_display', ''),
+        'price': kg_item.get('price_display', ''),
+        'price_numeric': kg_item.get('price_numeric'),
+        'price_min': kg_item.get('price_min'),
+        'price_max': kg_item.get('price_max'),
+        'down_payment': kg_item.get('down_payment', ''),
+        'installment_terms': kg_item.get('installment_terms', ''),
+        'delivery_months': kg_item.get('delivery_months'),
+        'location': kg_item.get('location', ''),
+        'location_full': kg_item.get('location_full', ''),
+        'il': kg_item.get('il', ''),
+        'ilce': kg_item.get('ilce', ''),
+        'mahalle': kg_item.get('mahalle', ''),
+        'room_info': kg_item.get('room_info', ''),
+        'rooms': kg_item.get('rooms', []),
+        'ada_no': kg_item.get('ada_no', ''),
+        'parsel_no': kg_item.get('parsel_no', ''),
+        'tkgm_verified': kg_item.get('tkgm_verified', False),
+        'category': kg_item.get('category', 'Markalı Konut Projesi'),
+        'description': kg_item.get('description', ''),
     })
-    logger.info("OTO-KART: %s -> %s", title, card_id)
+    logger.info("OTO-KART: %s -> %s (Thumbnail: %s)", title, card_id, thumb)
     top = max((o.get('rank', 0) for o in order_data), default=0) + 1
     order_data.append({'id': card_id, 'title': title, 'rank': top,
                        'is_pinned': False, 'is_hidden': False})
@@ -200,8 +333,6 @@ def ingest_changed(only_ingest=False):
         except Exception:
             state = {}
     changed = [k for k, v in snap.items() if state.get(k) != v]
-    if not changed:
-        return 0, 0, "degisiklik yok"
 
     db = sqlite3.connect(DB, timeout=30)
     cur = db.cursor()
@@ -214,6 +345,20 @@ def ingest_changed(only_ingest=False):
     map_data = json.loads((SITE_DIR / "projects_map.json").read_text(encoding="utf-8")) if (SITE_DIR / "projects_map.json").exists() else []
     order_data = json.loads((SITE_DIR / "display_order.json").read_text(encoding="utf-8")) if (SITE_DIR / "display_order.json").exists() else []
     new_cards = False
+
+    # Tüm klasörlerin DB ve kart kaydı olduğundan emin ol (tam otonom envanter kontrolü)
+    if PROJELER_DIR.exists():
+        for fld in sorted(PROJELER_DIR.iterdir()):
+            if fld.is_dir():
+                before_len = len(map_data)
+                _ensure_project(fld.name, cur, name_to_id, map_data, order_data)
+                if len(map_data) != before_len:
+                    new_cards = True
+
+    if not changed and not new_cards:
+        db.close()
+        return 0, 0, "degisiklik yok"
+
     for key in changed:
         path = Path(key)
         ext = path.suffix.lower()
@@ -225,6 +370,9 @@ def ingest_changed(only_ingest=False):
             pid = _ensure_project(folder_name, cur, name_to_id, map_data, order_data)
             if pid is None:
                 continue
+            new_cards = True
+        else:
+            _ensure_project(folder_name, cur, name_to_id, map_data, order_data)
             new_cards = True
         if pid is None:
             continue

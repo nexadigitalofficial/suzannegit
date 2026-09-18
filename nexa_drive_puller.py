@@ -130,10 +130,34 @@ def pull_once():
         local_dir.mkdir(parents=True, exist_ok=True)
         items = top.get("children", [])
         for it in items:
+            if it["kind"] == "folder":
+                # Alt klasörlerden (örn. DIŞ CEPHE GÖRSELLERİ) görselleri ve ek belgeleri çek
+                sub_items = it.get("children", [])
+                for sub_it in sub_items:
+                    if sub_it.get("kind") != "file":
+                        continue
+                    sname = sub_it["name"]
+                    if not sname.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".txt", ".md", ".jpg", ".jpeg", ".png", ".webp")):
+                        continue
+                    skey = f"{top['name']}/{sname}"
+                    if state.get(skey) == sub_it["id"]:
+                        continue
+                    dst = local_dir / sname
+                    try:
+                        size = download_file(sub_it["id"], dst)
+                        if size > 0:
+                            state[skey] = sub_it["id"]
+                            downloaded += 1
+                            logger.info("Drive alt klasör -> %s (%s KB)", skey, size // 1024)
+                            STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+                    except Exception as e:
+                        logger.warning("alt klasör indirme hatasi %s: %s", sname, e)
+                continue
+
             if it["kind"] != "file":
                 continue
             name = it["name"]
-            if not name.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".txt", ".md")):
+            if not name.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".txt", ".md", ".jpg", ".jpeg", ".png", ".webp")):
                 continue
             key = f"{top['name']}/{name}"
             if state.get(key) == it["id"]:
@@ -204,12 +228,29 @@ def _refresh_drive_previews():
                 continue
             vid = pick(m['mp4'], vid_pri)
             pdf = pick(m['pdf'], pdf_pri)
-            if vid and c.get('drive_video_preview') != f"https://drive.google.com/file/d/{vid}/preview":
-                c['drive_video_preview'] = f"https://drive.google.com/file/d/{vid}/preview"
-                changed += 1
-            if pdf and c.get('drive_pdf_preview') != f"https://drive.google.com/file/d/{pdf}/preview":
-                c['drive_pdf_preview'] = f"https://drive.google.com/file/d/{pdf}/preview"
-                changed += 1
+            if vid:
+                if c.get('drive_video_preview') != f"https://drive.google.com/file/d/{vid}/preview":
+                    c['drive_video_preview'] = f"https://drive.google.com/file/d/{vid}/preview"
+                    changed += 1
+                if c.get('drive_vid_id') != vid:
+                    c['drive_vid_id'] = vid
+                    changed += 1
+            if pdf:
+                if c.get('drive_pdf_preview') != f"https://drive.google.com/file/d/{pdf}/preview":
+                    c['drive_pdf_preview'] = f"https://drive.google.com/file/d/{pdf}/preview"
+                    changed += 1
+                if c.get('drive_pdf_id') != pdf:
+                    c['drive_pdf_id'] = pdf
+                    changed += 1
+            thumb_target = vid or pdf
+            if thumb_target:
+                d_thumb = f"https://drive.google.com/thumbnail?id={thumb_target}&sz=w800"
+                if c.get('drive_thumbnail') != d_thumb:
+                    c['drive_thumbnail'] = d_thumb
+                    changed += 1
+                if not c.get('thumbnail'):
+                    c['thumbnail'] = d_thumb
+                    changed += 1
         if changed:
             map_path.write_text(_json.dumps(cards, ensure_ascii=False, indent=1), encoding="utf-8")
             logger.info("kart Drive onizlemeleri guncellendi: %s alan", changed)

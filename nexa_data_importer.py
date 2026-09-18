@@ -63,7 +63,7 @@ def norm_price(raw):
         v = float(s)
     except (ValueError, TypeError):
         return None
-    if not (500_000 <= v <= 500_000_000):
+    if not (100_000 <= v <= 500_000_000):
         return None
     return int(v)
 
@@ -96,7 +96,15 @@ def norm_title(s):
     return s.lower()
 
 
-SATIS_TAKIP_RE = re.compile(r"sat\s*ış|satis|takip|fiyat\s*liste|listesi", re.I)
+SATIS_TAKIP_RE = re.compile(r"sat\s*ış|satis|takip|fiyat|liste|listesi|odeme|ödeme|peşin|pesin|vadeli|tablo|stok|müstakil|mustakil", re.I)
+
+
+def _tr_lower(s: str) -> str:
+    if not s:
+        return ""
+    import unicodedata
+    s = s.replace("İ", "i").replace("I", "ı")
+    return unicodedata.normalize("NFC", s.lower()).replace("i̇", "i")
 
 
 def find_satis_takip(folder):
@@ -105,12 +113,15 @@ def find_satis_takip(folder):
     if not d.exists():
         return None
     cands = [f for f in d.iterdir()
-             if f.suffix.lower() in (".pdf", ".xlsx", ".xls", ".csv")
+             if f.is_file() and f.suffix.lower() in (".pdf", ".xlsx", ".xls", ".csv")
              and SATIS_TAKIP_RE.search(f.name)]
     if not cands:
+        xlsx_cands = [f for f in d.iterdir() if f.is_file() and f.suffix.lower() in (".xlsx", ".xls")]
+        if xlsx_cands:
+            return xlsx_cands[0]
         return None
-    pri = ["satis takip", "satış takip", "satıştakip", "satistakip", "fiyat listesi", "fiyat"]
-    cands.sort(key=lambda f: next((i for i, k in enumerate(pri) if k in f.name.lower()), len(pri)))
+    pri = ["peşin", "pesin", "nakit", "satış takip", "satis takip", "satıştakip", "satistakip", "fiyat listesi", "vadeli", "fiyat", "odeme", "ödeme"]
+    cands.sort(key=lambda f: next((i for i, k in enumerate(pri) if k in _tr_lower(f.name)), len(pri)))
     return cands[0]
 
 
@@ -138,34 +149,58 @@ def extract_pdf_prices(path):
 
 
 def extract_xlsx_prices(path):
-    """xlsx'ten fiyat sütunlarını bulup gerçek fiyatları toplar."""
+    """xlsx'ten fiyat sütunlarını veya hücre içi fiyatları bulup gerçek fiyatları toplar."""
     import openpyxl
     prices = []
     try:
         wb = openpyxl.load_workbook(str(path), read_only=True, data_only=True)
         for ws in wb.worksheets:
-            rows = ws.iter_rows(values_only=True)
-            header = next(rows, None)
-            if not header:
+            rows = list(ws.iter_rows(values_only=True))
+            if not rows:
                 continue
-            price_cols = []
-            for i, h in enumerate(header):
-                hs = str(h or "").lower()
-                if any(k in hs for k in ("fiyat", "satış", "satis", "₺", "tl", "tutar", "bedel", "price")):
-                    price_cols.append(i)
-            for row in rows:
-                for i in price_cols:
-                    v = row[i] if i < len(row) else None
-                    if isinstance(v, (int, float)) and v >= 500_000:
-                        prices.append(int(v))
-                    elif isinstance(v, str):
-                        for m in PRICE_RE.finditer(v):
-                            raw = m.group(1) or m.group(2)
-                            if is_bad_price_context(v, m.start(), m.end()):
+            # 1. İlk 15 satırda tablo başlıklarını tara
+            price_cols = set()
+            for r_idx in range(min(15, len(rows))):
+                row = rows[r_idx]
+                for c_idx, cell in enumerate(row):
+                    hs = str(cell or "").lower()
+                    if any(k in hs for k in ("fiyat", "satış", "satis", "₺", "tl", "tutar", "bedel", "price", "peşin", "pesin", "vadeli")):
+                        price_cols.add(c_idx)
+            
+            if price_cols:
+                for row in rows:
+                    for i in price_cols:
+                        if i < len(row):
+                            v = row[i]
+                            if isinstance(v, (int, float)) and 100_000 <= v <= 500_000_000:
+                                if 2020 <= v <= 2035:
+                                    continue
+                                prices.append(int(v))
+                            elif isinstance(v, str):
+                                for m in PRICE_RE.finditer(v):
+                                    raw = m.group(1) or m.group(2)
+                                    if is_bad_price_context(v, m.start(), m.end()):
+                                        continue
+                                    nv = norm_price(raw)
+                                    if nv:
+                                        prices.append(nv)
+            
+            # 2. Eğer sütunlardan yeterli fiyat çıkmadıysa tüm hücreleri tara (mimari şema/vaziyet planı formatları)
+            if len(prices) < 2:
+                for row in rows:
+                    for cell in row:
+                        if isinstance(cell, (int, float)) and 100_000 <= cell <= 500_000_000:
+                            if 2020 <= cell <= 2035:
                                 continue
-                            nv = norm_price(raw)
-                            if nv:
-                                prices.append(nv)
+                            prices.append(int(cell))
+                        elif isinstance(cell, str):
+                            for m in PRICE_RE.finditer(cell):
+                                raw = m.group(1) or m.group(2)
+                                if is_bad_price_context(cell, m.start(), m.end()):
+                                    continue
+                                nv = norm_price(raw)
+                                if nv:
+                                    prices.append(nv)
         wb.close()
     except Exception:
         pass
@@ -175,25 +210,36 @@ def extract_xlsx_prices(path):
 def satis_takip_prices(folder):
     """SATIŞ TAKİP / FİYAT LİSTESİ dosyası varsa (min, max, display) döner."""
     f = find_satis_takip(folder)
-    if not f:
-        return None
     prices = []
-    if f.suffix.lower() == ".pdf":
-        prices = extract_pdf_prices(f)
-    elif f.suffix.lower() in (".xlsx", ".xls"):
-        prices = extract_xlsx_prices(f)
-    elif f.suffix.lower() == ".csv":
-        try:
-            for line in f.read_text(encoding="utf-8", errors="ignore").splitlines():
-                for m in PRICE_RE.finditer(line):
-                    raw = m.group(1) or m.group(2)
-                    if is_bad_price_context(line, m.start(), m.end()):
-                        continue
-                    v = norm_price(raw)
-                    if v:
-                        prices.append(v)
-        except Exception:
-            pass
+    if f:
+        if f.suffix.lower() == ".pdf":
+            prices = extract_pdf_prices(f)
+        elif f.suffix.lower() in (".xlsx", ".xls"):
+            prices = extract_xlsx_prices(f)
+        elif f.suffix.lower() == ".csv":
+            try:
+                for line in f.read_text(encoding="utf-8", errors="ignore").splitlines():
+                    for m in PRICE_RE.finditer(line):
+                        raw = m.group(1) or m.group(2)
+                        if is_bad_price_context(line, m.start(), m.end()):
+                            continue
+                        v = norm_price(raw)
+                        if v:
+                            prices.append(v)
+            except Exception:
+                pass
+    
+    # Eğer henüz bulunamadıysa klasördeki diğer PDF'leri tara
+    if not prices:
+        d = BASE_DIR / "projeler" / (folder or "")
+        if d.exists():
+            for pdf in sorted(d.glob("*.pdf")):
+                p_cands = extract_pdf_prices(pdf)
+                if p_cands:
+                    prices.extend(p_cands)
+                    f = pdf
+                    break
+
     prices = sorted(set(prices))
     if not prices:
         return None
@@ -202,11 +248,11 @@ def satis_takip_prices(folder):
         display = (f"₺{lo:,}").replace(",", ".")
     else:
         display = (f"₺{lo:,} - ₺{hi:,}").replace(",", ".")
-    return {"price_display": display, "price_min": lo, "price_max": hi, "source": f.name}
+    return {"price_display": display, "price_min": lo, "price_max": hi, "source": f.name if f else "extracted"}
 
 
 def main():
-    db = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    db = sqlite3.connect(str(DB_PATH))
     db.row_factory = sqlite3.Row
     projects = db.execute(
         "SELECT * FROM projects WHERE COALESCE(is_portfolio,0)=0 ORDER BY id").fetchall()
@@ -246,7 +292,16 @@ def main():
             if good_text(t) and "iban" not in low and "bank" not in low:
                 desc_cand.append(t)
 
-        if db_price and db_price.lower() not in ("bos", "yok", "-", "fiyat"):
+        kg_path = BASE_DIR / "nexa_sales_knowledge_graph.json"
+        kg_item = {}
+        if kg_path.exists():
+            try:
+                kg_data = json.loads(kg_path.read_text(encoding="utf-8"))
+                kg_item = kg_data.get(name) or kg_data.get(p["name"]) or {}
+            except Exception:
+                pass
+
+        if db_price and db_price.lower() not in ("bos", "yok", "-", "fiyat", "fiyat için danışın"):
             price_display = db_price
             price_min, price_max = None, None
             parts = re.split(r"\s*-\s*|–", db_price.replace("₺", "").replace("TL", "").strip())
@@ -265,7 +320,29 @@ def main():
                 price_display = (f"₺{lo:,} - ₺{hi:,}").replace(",", ".")
             price_min, price_max = lo, hi
         else:
-            price_display, price_min, price_max = "", None, None
+            # 1. SATIŞ TAKİP / FİYAT LİSTESİ dosyasından kontrol et
+            st = satis_takip_prices(name)
+            if st:
+                price_display = st["price_display"]
+                price_min = st["price_min"]
+                price_max = st["price_max"]
+            elif kg_item.get("price_display"):
+                price_display = kg_item["price_display"]
+                price_min = kg_item.get("price_min")
+                price_max = kg_item.get("price_max")
+            else:
+                price_display, price_min, price_max = "", None, None
+
+        # DB'deki fiyat boşsa bulunan güncel fiyatı DB'ye kaydet
+        if price_display and not p["price_display"]:
+            try:
+                db.execute(
+                    "UPDATE projects SET price_display=?, price_numeric=?, price_min=?, price_max=? WHERE id=?",
+                    (price_display, price_min, price_min, price_max, pid)
+                )
+                db.commit()
+            except Exception:
+                pass
 
         room_list = sorted(rooms, key=lambda r: (int(r.split("+")[0]), int(r.split("+")[1])))
         teslim_ay = max(months) if months else None
@@ -273,16 +350,6 @@ def main():
         if desc_cand:
             best = max(desc_cand, key=len)
             desc = re.sub(r"\s+", " ", best).strip()[:320]
-
-        # Preserve canonical knowledge graph fields (down_payment, installment_terms, delivery_months)
-        kg_path = BASE_DIR / "nexa_sales_knowledge_graph.json"
-        kg_item = {}
-        if kg_path.exists():
-            try:
-                kg_data = json.loads(kg_path.read_text(encoding="utf-8"))
-                kg_item = kg_data.get(name) or kg_data.get(p["name"]) or {}
-            except Exception:
-                pass
 
         down_payment = kg_item.get("down_payment") or (f"{int(price_min*0.5):,} TL (%50)".replace(",", ".") if price_min else "Peşin / Görüşülür")
         installment_terms = kg_item.get("installment_terms") or "24-36 Ay Vade"
@@ -357,8 +424,18 @@ def main():
             pid = p["id"]
             row = dict(p)
             loc = " / ".join(x for x in [row.get("il"), row.get("ilce"), row.get("mahalle")] if x)
+            p_display = row.get("price_display") or ""
+            p_num = row.get("price_numeric")
+            if (not p_num or p_num == 0) and p_display:
+                p_num = norm_price(p_display.replace("₺", "").replace("TL", "").strip())
+            p_min = row.get("price_min") or p_num or 0
+            p_max = row.get("price_max") or p_num or 0
             db_item = {
-                "price_display": row.get("price_display") or "",
+                "price_display": p_display,
+                "price_numeric": p_num or 0,
+                "price": p_num or 0,
+                "price_min": p_min,
+                "price_max": p_max,
                 "room_info": row.get("room_info") or "",
                 "net_gross_area": row.get("net_gross_area") or "",
                 "listing_type": row.get("listing_type") or "Satılık",
@@ -418,6 +495,15 @@ def _sync_projects_map(db_rows=None):
     except Exception as e:
         print(f"projects_map.json okunamadi: {e}")
         return
+
+    kg_path = BASE_DIR / "nexa_sales_knowledge_graph.json"
+    kg_data = {}
+    if kg_path.exists():
+        try:
+            kg_data = json.loads(kg_path.read_text(encoding="utf-8"))
+        except Exception:
+            kg_data = {}
+
     if db_rows is None:
         db = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
         db.row_factory = sqlite3.Row
@@ -429,46 +515,74 @@ def _sync_projects_map(db_rows=None):
     changed = 0
     for p in projects:
         dbid = p.get("db_id")
-        if dbid is None or int(dbid) not in by_id:
-            continue
-        row = by_id[int(dbid)]
-        updates = {}
-        for key, col in (("price_display", "price_display"), ("room_info", "room_info"),
-                         ("price_min", "price_min"), ("price_max", "price_max"),
-                         ("down_payment", "down_payment"), ("price_numeric", "price_numeric")):
-            val = row[col]
-            if val is not None and str(val).strip() != "":
-                updates[key] = val
-        il, ilce, mahalle = row["il"], row["ilce"], row["mahalle"]
-        if il and ilce and (p.get("il") != il or p.get("ilce") != ilce or p.get("mahalle") != mahalle):
-            updates.update({"il": il, "ilce": ilce, "mahalle": mahalle})
-            updates["location"] = f"{ilce}, {il}"
-            if il and ilce and mahalle:
-                updates["location_full"] = f"{il} / {ilce} / {mahalle}"
-        for k, v in updates.items():
-            if p.get(k) != v:
-                p[k] = v
-                changed += 1
-    if changed:
-        map_path.write_text(json.dumps(projects, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"projects_map.json senkron: {changed} alan guncellendi")
+        if dbid is not None and int(dbid) in by_id:
+            row = by_id[int(dbid)]
+            updates = {}
+            for key, col in (("price_display", "price_display"), ("room_info", "room_info"),
+                             ("price_min", "price_min"), ("price_max", "price_max"),
+                             ("down_payment", "down_payment"), ("price_numeric", "price_numeric")):
+                val = row[col]
+                if val is not None and str(val).strip() != "":
+                    updates[key] = val
+            il, ilce, mahalle = row["il"], row["ilce"], row["mahalle"]
+            if il and ilce and (p.get("il") != il or p.get("ilce") != ilce or p.get("mahalle") != mahalle):
+                updates.update({"il": il, "ilce": ilce, "mahalle": mahalle})
+                updates["location"] = f"{ilce}, {il}"
+                if il and ilce and mahalle:
+                    updates["location_full"] = f"{il} / {ilce} / {mahalle}"
+            for k, v in updates.items():
+                if p.get(k) != v:
+                    p[k] = v
+                    changed += 1
 
-    # SATIŞ TAKİP / FİYAT LİSTESİ dosyaları varsa fiyatları ez (daha güncel kaynak).
-    st_changed = 0
-    for p in projects:
+        # Thumbnail kontrolü: Eğer thumbnail boşsa veya başka projenin kapağına düşmüşse otomatik üret
+        folder = p.get("folder_name") or p.get("title") or ""
+        p_title = p.get("title") or ""
+        curr_thumb = p.get("thumbnail") or ""
+        is_angim = "ANGİM BEYTEPE" in p_title or "ANGIM" in p_title
+        if not curr_thumb or ("pdf_cover_1.png" in curr_thumb and not is_angim):
+            try:
+                from nexa_watchdog import _ensure_thumbnail
+                t = _ensure_thumbnail(folder, p.get("id") or "thumb")
+                if t:
+                    p["thumbnail"] = t
+                    p["image"] = t
+                    changed += 1
+                elif p.get("drive_thumbnail"):
+                    p["thumbnail"] = p["drive_thumbnail"]
+                    p["image"] = p["drive_thumbnail"]
+                    changed += 1
+            except Exception:
+                pass
+
+        # SATIŞ TAKİP / FİYAT LİSTESİ dosyaları varsa fiyatları güncelle
         st = satis_takip_prices(p.get("folder_name"))
-        if not st:
-            continue
-        for k in ("price_display", "price_min", "price_max"):
-            if p.get(k) != st[k]:
-                p[k] = st[k]
-                st_changed += 1
-        if st["price_min"] and p.get("price_numeric") != st["price_min"]:
-            p["price_numeric"] = st["price_min"]
-            st_changed += 1
-    if st_changed:
-        map_path.write_text(json.dumps(projects, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"SATIS TAKIP fiyat kaynagi: {st_changed} alan guncellendi")
+        if st:
+            for k in ("price_display", "price_min", "price_max"):
+                if p.get(k) != st[k]:
+                    p[k] = st[k]
+                    changed += 1
+            if st["price_min"] and p.get("price_numeric") != st["price_min"]:
+                p["price_numeric"] = st["price_min"]
+                changed += 1
+            if p.get("price") != st["price_display"]:
+                p["price"] = st["price_display"]
+                changed += 1
+
+        # Eğer hala fiyat boşsa Knowledge Graph'tan çek
+        if not p.get("price_display") or p.get("price_display") == "Fiyat İçin Danışın":
+            kg_item = kg_data.get(p_title) or kg_data.get(folder) or {}
+            if kg_item.get("price_display"):
+                p["price_display"] = kg_item["price_display"]
+                p["price"] = kg_item["price_display"]
+                p["price_numeric"] = kg_item.get("price_numeric")
+                p["price_min"] = kg_item.get("price_min")
+                p["price_max"] = kg_item.get("price_max")
+                if not p.get("down_payment") and kg_item.get("down_payment"):
+                    p["down_payment"] = kg_item["down_payment"]
+                if not p.get("installment_terms") and kg_item.get("installment_terms"):
+                    p["installment_terms"] = kg_item["installment_terms"]
+                changed += 1
 
     # Kartlari en uygun fiyatli -> en pahali olarak diz (fiyati bilinmeyenler sona).
     def _card_price(c):
@@ -483,9 +597,9 @@ def _sync_projects_map(db_rows=None):
     keyed = [(c, _card_price(c), i) for i, c in enumerate(projects)]
     keyed.sort(key=lambda x: (x[1] == float("inf"), x[1], x[2]))
     sorted_projects = [c for c, _, _ in keyed]
-    if [c.get("id") for c in sorted_projects] != [c.get("id") for c in projects]:
+    if changed > 0 or [c.get("id") for c in sorted_projects] != [c.get("id") for c in projects]:
         map_path.write_text(json.dumps(sorted_projects, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"kartlar fiyata gore siralandi (ucuzdan pahaliya): {len(projects)} kart")
+        print(f"projects_map.json güncellendi: {changed} alan güncellendi, {len(sorted_projects)} kart kaydedildi")
         projects = sorted_projects
     return projects
 

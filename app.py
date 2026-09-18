@@ -340,8 +340,9 @@ _listings_lock = threading.Lock()
 def fetch_cb_listings() -> list:
     """CB ilanları — Susanne Tenekecioğlu (config'deki cb_listings_url).
 
-    Önce JSON-LD (schema.org ItemList) ayrıştırılır; sonuç yoksa HTML kart
-    seçicileri denenir (eski yapı). Sonuç yine yoksa boş liste döner.
+    Önce HTML kart seçicileri taranarak canlı fiyat (₺2.990.000 vb.),
+    gerçek görsel, oda sayısı ve m2 çekilir. HTML kart bulunamazsa
+    JSON-LD (schema.org ItemList) denenir.
     """
     if _requests is None:
         return []
@@ -352,7 +353,64 @@ def fetch_cb_listings() -> list:
         text = response.text
         listings = []
 
-        # 1) JSON-LD ItemList
+        # 1) HTML kart seçicileri (Canlı fiyat, gerçek görsel, oda/alan verileri)
+        if BeautifulSoup is not None:
+            soup = BeautifulSoup(text, "html.parser")
+            cards = soup.select(".card.locationDiv") or soup.select(".cb-list-item")
+            for card in cards:
+                try:
+                    title_el = card.select_one("a[title]") or card.select_one(".cb-list-item-info h2") or card.select_one(".card-title")
+                    title = title_el.get("title") or title_el.get_text(strip=True) if title_el else ""
+                    if not title:
+                        continue
+
+                    link_el = card.select_one("a[href]")
+                    link = link_el.get("href") if link_el else "#"
+                    if link and not link.startswith("http"):
+                        link = "https://www.cb.com.tr" + link
+
+                    img_el = card.select_one("img.card-img-top") or card.select_one(".cb-list-img-container img") or card.select_one("img")
+                    img_url = img_el.get("src") if img_el else "https://via.placeholder.com/400x300"
+
+                    price_el = card.select_one("span.h5.text-primary") or card.select_one(".feature-item .text-primary") or card.select_one("span.h5")
+                    price = price_el.get_text(strip=True) if price_el else ""
+                    digits = re.sub(r"[^\d]", "", price)
+                    price_num = int(digits) if digits else 0
+
+                    features = [f.get_text(strip=True) for f in card.select(".feature-item") if f.get_text(strip=True)]
+                    rooms, area = "", ""
+                    for f in features:
+                        if re.search(r"\b\d\+\d\b|villa|ofis|arsa|tarla", f.lower()):
+                            rooms = f
+                        elif "m2" in f.lower() or "m²" in f.lower():
+                            area = f
+
+                    badge = card.select_one(".badge-item")
+                    b_txt = badge.get_text(strip=True) if badge else ""
+                    listing_type = b_txt if b_txt else ("Kiralık" if "kiralık" in title.lower() else "Satılık")
+                    if "devren" in title.lower():
+                        listing_type = "Devren Kiralık"
+
+                    listings.append({
+                        "title": title,
+                        "price": price,
+                        "price_display": price,
+                        "price_numeric": price_num,
+                        "price_min": price_num,
+                        "price_max": price_num,
+                        "img": img_url,
+                        "link": link,
+                        "rooms": rooms,
+                        "area": area,
+                        "type": listing_type,
+                    })
+                except Exception:
+                    continue
+
+        if listings:
+            return listings
+
+        # 2) JSON-LD ItemList Fallback
         for script in re.findall(r'<script type="application/ld\+json">(.*?)</script>', text, re.S):
             try:
                 data = json.loads(script)
@@ -368,38 +426,20 @@ def fetch_cb_listings() -> list:
                         if not link:
                             continue
                         offers = p.get("offers") or {}
+                        p_val = (offers.get("price") or "") if isinstance(offers, dict) else ""
+                        digits = re.sub(r"[^\d]", "", str(p_val))
+                        p_num = int(digits) if digits else 0
                         listings.append({
                             "title": re.sub(r"\s+", " ", (p.get("name") or "")).strip(),
-                            "price": (offers.get("price") or "") if isinstance(offers, dict) else "",
+                            "price": p_val,
+                            "price_display": p_val,
+                            "price_numeric": p_num,
                             "img": "https://via.placeholder.com/400x300",
                             "link": link,
                         })
             except Exception:
                 continue
-        if listings:
-            return listings
 
-        # 2) HTML kart fallback (eski yapı)
-        if BeautifulSoup is not None:
-            soup = BeautifulSoup(text, "html.parser")
-            cards = soup.select(".card.locationDiv") or soup.select(".cb-list-item")
-            for card in cards:
-                try:
-                    title_el = card.select_one(".cb-list-item-info h2") or card.select_one(".card-title")
-                    title = title_el.get_text(strip=True) if title_el else ""
-                    if not title:
-                        continue
-                    price_el = card.select_one(".feature-item .text-primary") or card.select_one("span.h5.text-primary")
-                    price = price_el.get_text(strip=True) if price_el else ""
-                    link_el = card.select_one(".cb-list-img-container a") or card.select_one("a.title")
-                    link = link_el["href"] if link_el else "#"
-                    if link and not link.startswith("http"):
-                        link = "https://www.cb.com.tr" + link
-                    img_el = card.select_one(".cb-list-img-container img") or card.select_one("img.card-img-top")
-                    img_url = img_el.get("src") if img_el else "https://via.placeholder.com/400x300"
-                    listings.append({"title": title, "price": price, "img": img_url, "link": link})
-                except Exception:
-                    continue
         return listings
     except Exception:
         return []
@@ -427,11 +467,21 @@ def _db_portfolio_listings() -> list:
             p = dict(r)
             img = p.get("cover_image_url") or "/static/img/placeholder.jpg"
             loc = " / ".join(x for x in [p.get("il"), p.get("ilce"), p.get("mahalle")] if x)
+            p_disp = p.get("price_display") or ""
+            p_num = p.get("price_numeric")
+            if (not p_num or p_num == 0) and p_disp:
+                digits = re.sub(r"[^\d]", "", str(p_disp))
+                p_num = int(digits) if digits else 0
+            p_min = p.get("price_min") or p_num or 0
+            p_max = p.get("price_max") or p_num or 0
             out.append({
                 "id": p.get("id"),
                 "title": p.get("name"),
-                "price": p.get("price_display") or "",
-                "price_display": p.get("price_display") or "",
+                "price": p_disp,
+                "price_display": p_disp,
+                "price_numeric": p_num or 0,
+                "price_min": p_min,
+                "price_max": p_max,
                 "img": img,
                 "link": p.get("cb_url") or "#",
                 "type": p.get("listing_type") or "Satılık",

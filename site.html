@@ -8604,9 +8604,11 @@
             list.forEach((item, idx) => {
                 try {
                     const rooms = item.rooms || item.room_types || [];
-                    const roomTags = (Array.isArray(rooms) ? rooms : []).map(r => `<span class="tag">${escapeHtml(r)}</span>`).join('');
-                    const imgSrc = item.thumbnail || item.image || '/static/img/pdf_previews/pdf_cover_1.png';
                     const safeName = escapeHtml(item.title || item.name || 'Prestij Projesi');
+                    let imgSrc = item.thumbnail || item.image || item.drive_thumbnail || '';
+                    if (!imgSrc || (imgSrc.includes('pdf_cover_1.png') && !safeName.toUpperCase().includes('ANGİM') && !safeName.toUpperCase().includes('ANGIM'))) {
+                        imgSrc = item.drive_thumbnail || '/static/img/placeholder.jpg';
+                    }
                     
                     const rg = getRegionFor(item);
                     const priceText = item.price_display ? item.price_display
@@ -8684,9 +8686,12 @@
                 const imgSrc = item.image || item.img || 'https://picsum.photos/seed/listing/600/400';
                 const loc = item.location || item.loc || '';
                 const price = item.price_numeric || item.price || 0;
-                const priceDisplay = (item.price_display && item.price_display !== '0' && !item.price_display.includes('Susanne')) 
+                let priceDisplay = (item.price_display && item.price_display !== '0' && !item.price_display.includes('Susanne')) 
                     ? item.price_display 
-                    : formatPrice(price);
+                    : (price ? formatPrice(price) : 'Fiyat İçin İletişime Geçin');
+                if (!priceDisplay || priceDisplay === '0' || priceDisplay === '₺0' || priceDisplay.trim() === '') {
+                    priceDisplay = (price && price > 0) ? formatPrice(price) : 'Fiyat İçin İletişime Geçin';
+                }
 
                 const waMsg = `Merhaba Suzanne Hanım, "${escapeHtml(item.title)}" ilanınız hakkında detaylı bilgi almak istiyorum.`;
                 const waUrl = `https://wa.me/905354895656?text=${encodeURIComponent(waMsg)}`;
@@ -10593,7 +10598,11 @@
             const project = projectsData.find(p => String(p.id) === String(id) || String(p.db_id) === String(id));
             if (!project) return;
             const cloudUrl = getProjectVideoUrl(id);
-            const imgSrc = project.thumbnail || project.image || '/static/img/pdf_previews/pdf_cover_1.png';
+            const pTitle = (project.title || project.name || '').toUpperCase();
+            let imgSrc = project.thumbnail || project.image || project.drive_thumbnail || '';
+            if (!imgSrc || (imgSrc.includes('pdf_cover_1.png') && !pTitle.includes('ANGİM') && !pTitle.includes('ANGIM'))) {
+                imgSrc = project.drive_thumbnail || '/static/img/placeholder.jpg';
+            }
             const imgWrapper = document.getElementById(`site-card-img-${id}`);
             if (imgWrapper) {
                 imgWrapper.innerHTML = `
@@ -10612,7 +10621,11 @@
             const project = projectsData.find(p => String(p.id) === String(id) || String(p.db_id) === String(id));
             if (!project) return;
             const slideshowUrl = project.slideshow_cloud_url || `/stream/video/${id}`;
-            const imgSrc = project.thumbnail || project.image || '/static/img/pdf_previews/pdf_cover_1.png';
+            const sTitle = (project.title || project.name || '').toUpperCase();
+            let imgSrc = project.thumbnail || project.image || project.drive_thumbnail || '';
+            if (!imgSrc || (imgSrc.includes('pdf_cover_1.png') && !sTitle.includes('ANGİM') && !sTitle.includes('ANGIM'))) {
+                imgSrc = project.drive_thumbnail || '/static/img/placeholder.jpg';
+            }
             const imgWrapper = document.getElementById(`site-card-img-${id}`);
             if (imgWrapper) {
                 imgWrapper.innerHTML = `
