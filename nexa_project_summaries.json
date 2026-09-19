@@ -12,7 +12,7 @@
     "summary": "- ANKAPORT - SARAY (Ankara / Pursaklar / Saray Fatih): 3.040.000 - 8.350.000 TL, Peşinat: 1.520.000 TL (%50), Ödeme: 24 Ay Vade, Daire: 1+1, 2+1, 3+1, Ada: 96400/4 (TKGM Onaylı). 1050 Konut, 150 Ofis, 70.000 m² AVM ve Cadde Mağazaları, sosyal tesisler."
   },
   "EVART YALIKAVAK": {
-    "summary": "- EVART YALIKAVAK (Muğla / Bodrum / Gündoğan - Yalıkavak Yolu): 4.500.000 - 6.000.000 TL (125.000 - 200.000 €), Peşinat: 2.250.000 TL (%50), Ödeme: 20 Ay Faizsiz Taksit, Daire: 1+1 Dubleks Loft (45 m² - Çatı ve Bahçe Dubleks), Ada: 510 / Parsel: 1 (TKGM Onaylı), Teslim: 24 Ay. Toplam 140 daire, Yalıkavak Marina'ya 4 km mesafede."
+    "summary": "- EVART YALIKAVAK (Muğla / Bodrum / Gündoğan): 4.500.000 - 6.000.000 TL, Peşinat: 2.250.000 TL (%50), Ödeme: 20 Ay Taksit, Daire: 1+1 Dubleks Loft (45 m²), Ada: 510/1 (TKGM Onaylı). Bodrum Gündoğan'da 1+1 (45 m²) Dubleks Loftlar. Çatı Dubleks 4.500.000 TL (125.000-150.000 €), Bahçe Dubleks 6.000.000 TL (160.000-200.000 €). %50 peşinat, 20 ay faizsiz taksit."
   },
   "GRANDE YAŞAMKENT": {
     "summary": "- GRANDE YAŞAMKENT (Ankara / Etimesgut / Yapracık): 3.000.000 - 4.000.000 TL, Peşinat: 1.500.000 TL (%50), Ödeme: 24-36 Ay Taksit, Daire: 1+1, 2+1, Ada: 62900/1 (TKGM Onaylı). 5 Blok mega proje, takas ve kaparo seçenekleri, geniş peyzaj alanları."
@@ -95,19 +95,13 @@
   "SARITAŞ MAS LORA - YAŞAMKENT": {
     "summary": "- SARITAŞ MAS LORA - YAŞAMKENT (Ankara / Etimesgut / Yapracık - Yaşamkent): 2.650.000 - 3.850.000 TL, Peşinat: 1.325.000 TL (%50), Ödeme: 24-30 Ay Taksit, Daire: 1+1, 2+1, Ada: 49905/2 (TKGM Onaylı). Çankaya Üniversitesi ve Eskişehir Yolu yönü, açık otopark, Bina Tamamlama Sigortalı ve resmi sözleşme güvenceli."
   },
-  "NEXA Royal Yalıkavak": {
-    "summary": "- EVART YALIKAVAK (Muğla / Bodrum / Gündoğan - Yalıkavak Yolu): 4.500.000 - 6.000.000 TL (125.000 - 200.000 €), Peşinat: 2.250.000 TL (%50), Ödeme: 20 Ay Faizsiz Taksit, Daire: 1+1 Dubleks Loft (45 m² - Çatı ve Bahçe Dubleks), Ada: 510 / Parsel: 1 (TKGM Onaylı), Teslim: 24 Ay. Toplam 140 daire, Yalıkavak Marina'ya 4 km mesafede.",
-    "project_id": 1,
-    "ts": 1789715545.0673637
+  "MAS YAŞAMKENT": {
+    "summary": "- MAS YAŞAMKENT (Ankara / Çankaya / Yaşamkent): 2.990.000 - 14.000.000 TL, Peşinat: 1.495.000 TL (%50), Ödeme: 24-36 Ay Vade, Daire: 1+1, 2+1, 4+1, Ada: -/- (TKGM Onaylı). Yaşamkent merkezinde, peşin ve vadeli ödeme seçenekleri, cadde cepheli seçkin rezidans projesi."
   },
-  "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR": {
-    "summary": "*   Ankara Yenimahalle'de konumlanan MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR, markalı bir konut projesidir.\n*   Proje, 1+1 ve 2+1 daire tipleri sunmaktadır.\n*   Fiyatlar 2.800.000 TL ile 3.900.000 TL arasında değişmekte olup, 1.400.000 TL (%50) peşinat ve 12-18 ay taksit seçenekleri mevcuttur.\n*   Teslim süresi 24 aydır.\n*   Tapu bilgileri 63452/7 ada/parsel olup, TKGM onaylıdır.",
-    "project_id": 12,
-    "ts": 1789715548.191059
+  "MIOSTELLA": {
+    "summary": "- MIOSTELLA (Ankara / Çankaya / İncek (Bağlar Caddesi)): 2.850.000 - 4.500.000 TL, Peşinat: 1.425.000 TL (%50), Ödeme: 24-36 Ay Vade, Daire: 1+1, 2+1, Ada: -/- (TKGM Onaylı). MioStella Diplomatico; Yargıtay, Anayasa Mahkemesi ve üniversitelere 8-11 dk, 23 katlı kule, 14 adet villa tipi mağaza."
   },
-  "NARÇİN RONYA CITY - 1 (VIP WEST)": {
-    "summary": "- Ankara Etimesgut'ta, Çankaya Üniversitesi'ne komşu, Eskişehir Yolu'na hızlı erişimli NARÇİN RONYA CITY - 1 (VIP WEST) projesi.\n- 1+1 ve 2+1 daire seçenekleri sunan, enerjisini kendi üreten çevre dostu konut projesi.\n- Fiyatlar 3.200.000 TL - 4.600.000 TL aralığında.\n- %50 peşinat (1.600.000 TL'den başlayan) ve 12-24 ay taksit imkanı ile avantajlı ödeme planları.\n- Peşin ödemelerde özel indirim fırsatları.\n- Teslim süresi 24 aydır.\n- TKGM onaylı 62700/5 ada/parsel bilgisi mevcuttur.",
-    "project_id": 17,
-    "ts": 1789715552.7100003
+  "VIP KIRIKKALE - MÜSTAKİL": {
+    "summary": "- VIP KIRIKKALE - MÜSTAKİL (Kırıkkale / Yahşihan / Müstakil Parsel): 432.000 - 488.000 TL, Peşinat: 216.000 TL (%50), Ödeme: 12-24 Ay Sabit Taksit, Daire: Müstakil Parsel / Villa Arsası, Ada: -/- (TKGM Onaylı). Hemen tapu teslim, bağımsız müstakil parsel villa arsaları, altyapısı hazır yüksek prim potansiyeli."
   }
 }

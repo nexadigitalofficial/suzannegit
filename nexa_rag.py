@@ -483,7 +483,7 @@ def _sanitize_numeric(val, default=0.0):
         return default
 
 
-def schedule_vip_appointment(customer_name: str, phone: str, project_name: str, preferred_datetime: str, notes: str) -> str:
+def schedule_vip_appointment(customer_name: str, phone: str, project_name: str = "", preferred_datetime: str = "", notes: str = "") -> str:
     """Müşterinin VIP proje danışmanı Suzanne Tenekecioğlu ile randevu talebini doğrudan SQLite veritabanına ve CRM sistemine kaydeder.
     
     Args:

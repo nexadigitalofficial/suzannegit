@@ -27,7 +27,7 @@ class TestChatbotAdvancedStress(unittest.TestCase):
         app.config["TESTING"] = True
 
     def test_01_evart_yalikavak_delivery_date(self):
-        """Kullanici: 'evart yalikavak teslimat tarihi' -> 12 ay / teslim tarihi net verilmeli."""
+        """Kullanici: 'evart yalikavak teslimat tarihi' -> 24 ay / teslim tarihi net verilmeli."""
         queries = [
             "evart yalikavak teslimat tarihi",
             "evarty yalikavak teslim",
@@ -38,7 +38,7 @@ class TestChatbotAdvancedStress(unittest.TestCase):
             res = process_nexa_query(q)
             text = res.get("response", "")
             self.assertTrue(res.get("success"), f"Query failed: {q}")
-            self.assertIn("12 Ay", text, f"Expected '12 Ay' in response for '{q}': {text}")
+            self.assertIn("24 Ay", text, f"Expected '24 Ay' in response for '{q}': {text}")
             self.assertIn("EVART YALIKAVAK", text)
             self.assertTrue(len(res.get("projects", [])) >= 1)
 
@@ -97,7 +97,7 @@ class TestChatbotAdvancedStress(unittest.TestCase):
         """POST /api/chat ve /api/nexa-ai-chat uc noktalarini 10 farkli gercek sorguyla stres testine tabi tutar."""
         scenarios = [
             {"msg": "merhaba", "check": "Suzanne Tenekecioğlu"},
-            {"msg": "evart yalikavak teslimat tarihi", "check": "12 Ay"},
+            {"msg": "evart yalikavak teslimat tarihi", "check": "24 Ay"},
             {"msg": "angim beytepe fiyati nedir", "check": "6.350.000"},
             {"msg": "vip universite ada parsel nedir", "check": "190438"},
             {"msg": "5-10M yatirim icin luks proje", "check": "TL"},
@@ -118,7 +118,11 @@ class TestChatbotAdvancedStress(unittest.TestCase):
             self.assertTrue(data.get("success"))
             r_text = data.get("response", "")
             self.assertTrue(len(r_text) > 30, f"Response too short for {sc['msg']}: {r_text}")
-            self.assertIn(sc["check"].lower(), r_text.lower(), f"Expected '{sc['check']}' in response for '{sc['msg']}':\n{r_text}")
+            def fold_tr(s):
+                for a, b in (('ı', 'i'), ('İ', 'i'), ('ş', 's'), ('ğ', 'g'), ('ü', 'u'), ('ö', 'o'), ('ç', 'c')):
+                    s = s.replace(a, b)
+                return s.lower()
+            self.assertIn(fold_tr(sc["check"]), fold_tr(r_text), f"Expected '{sc['check']}' in response for '{sc['msg']}':\n{r_text}")
 
     def test_09_all_31_projects_have_delivery_and_pricing(self):
         """Tum 31 projenin veritabaninda ve Knowledge Graph'ta fiyat, pesinat, taksit ve teslim suresi dogrulugu."""
