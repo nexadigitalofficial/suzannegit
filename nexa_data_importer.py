@@ -477,9 +477,12 @@ def main():
         print("\nnexa_portfolio_data.json bulunamadi — yalnizca fiyat dosyasi yazildi.")
 
     db.close()
-    print(f"nexa_project_prices.json yazildi ({len(result)} proje)")
-
     _sync_projects_map()
+    try:
+        from scripts.ci_sync import sync_site_html_embedded
+        sync_site_html_embedded()
+    except Exception:
+        pass
 
 
 def _sync_projects_map(db_rows=None):
