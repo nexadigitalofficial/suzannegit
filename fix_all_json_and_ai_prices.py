@@ -36,14 +36,14 @@ CANONICAL = {
     },
     "cbvip-prj-3": {
         "title": "EVART YALIKAVAK",
-        "price_display": "14.500.000 TL",
-        "price_numeric": 14500000,
-        "price_min": 14500000,
-        "price_max": 14500000,
-        "down_payment": "7.250.000 TL",
-        "il": "Muğla", "ilce": "Bodrum", "mahalle": "Yalıkavak",
-        "room_info": "2+1, 3+1 Villa & Rezidans",
-        "ada_no": "624", "parsel_no": "18", "tkgm_verified": True
+        "price_display": "4.500.000 - 6.000.000 TL",
+        "price_numeric": 4500000,
+        "price_min": 4500000,
+        "price_max": 6000000,
+        "down_payment": "2.250.000 TL",
+        "il": "Muğla", "ilce": "Bodrum", "mahalle": "Gündoğan",
+        "room_info": "1+1 Dubleks Loft (45 m²)",
+        "ada_no": "510", "parsel_no": "1", "tkgm_verified": True
     },
     "cbvip-prj-4": {
         "title": "GRANDE YAŞAMKENT",

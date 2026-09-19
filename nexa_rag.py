@@ -62,7 +62,7 @@ _FALLBACK_CANONICAL_MATRIX = """- VIP ÜNİVERSİTE: Başlangıç Fiyatı: 1.350
 - GÖKDEMİR İMZA: 3.900.000 TL - 8.000.000 TL (1+1, 2+1, 3+1, Kızılcaşar / Gölbaşı).
 - VIP MARIN: 4.100.000 TL - 5.935.000 TL (1+1 ve 2+1 Lüks Sahil/Deniz Rezidansı, Avsallar / Alanya / Antalya).
 - ANGİM BEYTEPE: 4.500.000 TL - 22.890.000 TL (1+1'den 6+1'e, Beytepe / Çankaya).
-- EVART YALIKAVAK: 14.500.000 TL (Lüks Deniz Manzaralı Villa & Rezidans, Yalıkavak / Bodrum / Muğla)."""
+- EVART YALIKAVAK: 4.500.000 TL - 6.000.000 TL (1+1 Dubleks Loft, Gündoğan / Bodrum / Muğla)."""
 
 _matrix_cache = {"text": None, "time": 0}
 

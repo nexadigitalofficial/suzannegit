@@ -1,10 +1,10 @@
 {
  "NEXA Royal Yalıkavak": {
   "title": "NEXA Royal Yalıkavak",
-  "price_display": "14.500.000 TL",
-  "price_min": 14500000,
-  "price_max": 14500000,
-  "down_payment": "7.250.000 TL (%50)",
+  "price_display": "4.500.000 - 6.000.000 TL",
+  "price_min": 4500000,
+  "price_max": 6000000,
+  "down_payment": "2.250.000 TL (%50)",
   "installment_terms": "24-36 Ay Vade",
   "delivery_months": 24,
   "teslim_ay": 24,
@@ -669,22 +669,20 @@
  },
  "EVART YALIKAVAK": {
   "title": "EVART YALIKAVAK",
-  "price_display": "14.500.000 TL",
-  "price_min": 14500000,
-  "price_max": 14500000,
-  "down_payment": "7.250.000 TL (%50)",
-  "installment_terms": "24 Ay Taksit",
-  "delivery_months": 12,
-  "teslim_ay": 12,
+  "price_display": "4.500.000 - 6.000.000 TL",
+  "price_min": 4500000,
+  "price_max": 6000000,
+  "down_payment": "2.250.000 TL (%50)",
+  "installment_terms": "20 Ay Taksit",
+  "delivery_months": 24,
+  "teslim_ay": 24,
   "rooms": [
-   "2+1",
-   "3+1"
+   "1+1"
   ],
   "room_types": [
-   "2+1",
-   "3+1"
+   "1+1"
   ],
-  "description": "NEXA PRIME PROJE TANITIMI VE MİMARİ KONSEPT: EVART YALIKAVAK Kategori: Yazlık / Villa / Lüks Sahil | Adres: Muğla / Bodrum / Yalıkavak Koyu Açıklama: Mimari Özellikler: Marina ve deniz manzaralı, müstakil bahçeli lüks villalar ve seçkin rezidanslar. | Teslim:",
+  "description": "NEXA PRIME PROJE TANITIMI VE MİMARİ KONSEPT: EVART YALIKAVAK Kategori: Yazlık / Dubleks Loft / Lüks Sahil Yaşamı | Adres: Muğla / Bodrum / Gündoğan (Yalıkavak Yolu 4 km) Açıklama: 140 dairelik 1+1 (45 m²) Dubleks Loft projesi. Çatı dubleks ve bahçe dubleks seçenekleri, ortak yüzme havuzu, kapalı otopark, 7/24 güvenlik,",
   "chunk_count": 4
  },
  "NARÇİN RONYA CITY - 1": {

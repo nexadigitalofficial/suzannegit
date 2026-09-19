@@ -140,9 +140,9 @@ def pull_once():
                     if not sname.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".txt", ".md", ".jpg", ".jpeg", ".png", ".webp")):
                         continue
                     skey = f"{top['name']}/{sname}"
-                    if state.get(skey) == sub_it["id"]:
-                        continue
                     dst = local_dir / sname
+                    if state.get(skey) == sub_it["id"] and dst.exists():
+                        continue
                     try:
                         size = download_file(sub_it["id"], dst)
                         if size > 0:
@@ -160,9 +160,9 @@ def pull_once():
             if not name.lower().endswith((".pdf", ".mp4", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".txt", ".md", ".jpg", ".jpeg", ".png", ".webp")):
                 continue
             key = f"{top['name']}/{name}"
-            if state.get(key) == it["id"]:
-                continue
             dst = local_dir / name
+            if state.get(key) == it["id"] and dst.exists():
+                continue
             try:
                 size = download_file(it["id"], dst)
                 if size > 0:

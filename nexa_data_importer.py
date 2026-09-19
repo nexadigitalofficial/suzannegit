@@ -23,21 +23,29 @@ PRICES_OUT = BASE_DIR / "nexa_project_prices.json"
 PORTFOLIO_OUT = BASE_DIR / "nexa_portfolio_data.json"
 
 GARBAGE = re.compile(r"[\u0080-\u02FF]{4,}")
-PRICE_RE = re.compile(r"([\d][\d.,]*)\s*(?:₺|TL)|(?:₺)\s*([\d][\d.,]*)", re.I)
+PRICE_RE = re.compile(r"([\d][\d.,]*)\s*(?:₺|TL|/uni20BA|\\u20ba)|(?:₺|/uni20BA|\\u20ba)\s*([\d][\d.,]*)", re.I)
 ROOM_RE = re.compile(r"(\d)\s*\+\s*(\d)")
 MONTH_RE = re.compile(r"(\d{1,2})\s*Ay\b", re.I)
 # Taksit/peşinat/kapora/ayda gibi ödeme bağlamı: bu sözcüklere bitişik fiyatlar
 # toplam fiyat DEĞİLDİR, elenir.
 BAD_CTX = re.compile(r"(kapora|kaparo|taksit|peşinat|pesinat|ayda|aylık|aylik|vade|öde|ode|%50|%40|%30|hisse|gönderim|maksimum|minimum)", re.I)
-CTX_BEFORE, CTX_AFTER = 30, 45
+GOOD_CTX = re.compile(r"(fiyat|satış|satis|bedel|total|toplam|liste)", re.I)
+CTX_BEFORE, CTX_AFTER = 25, 30
 
 
 def is_bad_price_context(text, start, end):
-    """Fiyat eşleşmesinin çevresinde ödeme bağlamı varsa True."""
-    low = text
-    s = max(0, start - CTX_BEFORE)
-    e = min(len(text), end + CTX_AFTER)
-    return bool(BAD_CTX.search(low[s:e]))
+    """Fiyat eşleşmesinin çevresinde (aynı satırda) ödeme/peşinat bağlamı varsa True."""
+    s_good = max(0, start - 25)
+    if GOOD_CTX.search(text[s_good:start]):
+        return False
+    line_start = text.rfind("\n", 0, start)
+    line_start = 0 if line_start == -1 else line_start + 1
+    line_end = text.find("\n", end)
+    line_end = len(text) if line_end == -1 else line_end
+    
+    before_on_line = text[max(line_start, start - 20):start]
+    after_on_line = text[end:min(line_end, end + 20)]
+    return bool(BAD_CTX.search(before_on_line) or BAD_CTX.search(after_on_line))
 
 
 def norm_price(raw):
@@ -126,7 +134,7 @@ def find_satis_takip(folder):
 
 
 def extract_pdf_prices(path):
-    """PDF metninden tüm gerçek fiyatları toplar (ödeme bağlamı elenir)."""
+    """PDF metninden tüm gerçek fiyatları toplar (ödeme bağlamı ve peşinatlar elenir)."""
     try:
         from pypdf import PdfReader
     except ImportError:
@@ -136,13 +144,24 @@ def extract_pdf_prices(path):
         r = PdfReader(str(path))
         for page in r.pages:
             t = page.extract_text() or ""
+            page_prices = []
             for m in PRICE_RE.finditer(t):
                 raw = m.group(1) or m.group(2)
                 if is_bad_price_context(t, m.start(), m.end()):
                     continue
                 v = norm_price(raw)
                 if v:
-                    prices.append(v)
+                    after_text = t[m.end():min(len(t), m.end()+25)].lower()
+                    if any(k in after_text for k in ("peşinat", "pesinat", "taksit", "kapora")):
+                        continue
+                    page_prices.append(v)
+            # Sayfa içinde 50% peşinat çiftleri varsa (örn. 4.5M ve 2.25M), küçük olanı (peşinatı) ele
+            full_prices = []
+            for p in page_prices:
+                if any(abs(p * 2 - other) < 1000 for other in page_prices):
+                    continue
+                full_prices.append(p)
+            prices.extend(full_prices or page_prices)
     except Exception:
         pass
     return prices
@@ -216,6 +235,16 @@ def satis_takip_prices(folder):
             prices = extract_pdf_prices(f)
         elif f.suffix.lower() in (".xlsx", ".xls"):
             prices = extract_xlsx_prices(f)
+            # Eğer xlsx'ten çıkan fiyatlar 1.000.000 TL altındaysa (döviz/kapora) ve klasörde PDF varsa, PDF TL fiyatlarını kontrol et
+            if prices and max(prices) < 1_000_000:
+                d = BASE_DIR / "projeler" / (folder or "")
+                if d.exists():
+                    for pdf in sorted(d.glob("*.pdf")):
+                        p_pdf = extract_pdf_prices(pdf)
+                        if p_pdf and max(p_pdf) >= 1_000_000:
+                            prices = p_pdf
+                            f = pdf
+                            break
         elif f.suffix.lower() == ".csv":
             try:
                 for line in f.read_text(encoding="utf-8", errors="ignore").splitlines():

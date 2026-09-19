@@ -112,7 +112,7 @@ CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ (BU VERİLERİ KESİNLİKLE BİREB
 - NARÇİN RONYA CITY - 1: 3.400.000 TL - 4.330.000 TL (1+1, 2+1, Yukarıyurtçu / Etimesgut).
 - GÖKDEMİR İMZA: 3.900.000 TL - 8.000.000 TL (1+1, 2+1, 3+1, Kızılcaşar / Gölbaşı).
 - ANGİM BEYTEPE: 4.500.000 TL - 22.890.000 TL (1+1'den 6+1'e, Beytepe / Çankaya).
-- EVART YALIKAVAK: 14.500.000 TL (Lüks Rezidans & Villa, Yalıkavak / Bodrum).
+- EVART YALIKAVAK: 4.500.000 TL - 6.000.000 TL (1+1 Dubleks Loft, Gündoğan / Bodrum).
 """
 
 if "CANONICAL VERİLEN GÜNCEL PROJE GERÇEKLERİ" not in rag_code:
