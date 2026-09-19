@@ -71,3 +71,4 @@ Thumbs.db
 # Large database and cache files (do not commit)
 nexa_database.db
 nexa_embedding_cache.json
+scratch/
