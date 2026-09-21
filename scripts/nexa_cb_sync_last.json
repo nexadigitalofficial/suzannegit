@@ -1,7 +1,9 @@
 {
- "ts": "2026-09-20T07:34:26",
+ "ts": "2026-09-21T07:46:18",
  "agent": "Susanne Tenekecioğlu (17983)",
  "fetched": 5,
- "upserted": 5,
- "errors": []
+ "upserted": 4,
+ "errors": [
+  "http://www.cb.com.tr/ankara-cankaya-yasamkent-kiralik/cafe-restoran-bar/360642: HTTP Error 403: Forbidden"
+ ]
 }
