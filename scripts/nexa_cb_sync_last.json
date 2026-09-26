@@ -1,7 +1,11 @@
 {
- "ts": "2026-09-25T07:19:58",
+ "ts": "2026-09-26T07:15:36",
  "agent": "Susanne Tenekecioğlu (17983)",
  "fetched": 5,
- "upserted": 5,
- "errors": []
+ "upserted": 2,
+ "errors": [
+  "http://www.cb.com.tr/ankara-bala-beynam-satilik/tarla/369430: HTTP Error 403: Forbidden",
+  "http://www.cb.com.tr/ankara-cankaya-mursel-uluc-satilik/daire/369429: HTTP Error 403: Forbidden",
+  "http://www.cb.com.tr/ankara-cankaya-yasamkent-kiralik/cafe-restoran-bar/360642: HTTP Error 403: Forbidden"
+ ]
 }
