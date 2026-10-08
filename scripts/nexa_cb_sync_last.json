@@ -1,7 +1,9 @@
 {
- "ts": "2026-10-07T08:18:32",
+ "ts": "2026-10-08T08:34:38",
  "agent": "Susanne Tenekecioğlu (17983)",
  "fetched": 5,
- "upserted": 5,
- "errors": []
+ "upserted": 4,
+ "errors": [
+  "http://www.cb.com.tr/ankara-cubuk-esenboga-merkez-satilik/daire/369451: HTTP Error 403: Forbidden"
+ ]
 }
