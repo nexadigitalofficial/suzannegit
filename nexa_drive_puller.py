@@ -52,26 +52,74 @@ def fetch(url, timeout=60):
 
 
 def download_file(fid, dst, timeout=180):
-    """drive.usercontent endpoint'i ile indirir (206/uyarli, HTML virus-scan
-    sayfasi dondurmez, buyuk dosyalar icin guvenilir)."""
+    """drive.usercontent endpoint'i ile indirir. Kotaya takılırsa akıllı fallback:
+    - Görseller için Google Drive Thumbnail API (1600px)
+    - Excel/Tablolar için Google Sheets CSV Export API
+    """
     url = f"https://drive.usercontent.google.com/download?id={fid}&export=download&confirm=t"
     tmp = str(dst) + ".part"
-    with urllib.request.urlopen(urllib.request.Request(url, headers=LAST_HEADERS), timeout=timeout) as r:
-        ctype = r.headers.get("Content-Type", "")
-        if "text/html" in ctype:
-            logger.warning("drive %s HTML sayfasi dondurdu (public degil mi?)", fid)
-            return 0
-        with open(tmp, "wb") as f:
-            shutil.copyfileobj(r, f)
-    size = os.path.getsize(tmp)
-    if size < 512 and tmp.lower().endswith((".mp4", ".pdf")):
-        os.unlink(tmp)
-        logger.warning("drive %s cok kucuk/bos dosya", fid)
-        return 0
-    if dst.exists():
-        dst.unlink()
-    shutil.move(tmp, dst)
-    return size
+    try:
+        req = urllib.request.Request(url, headers=LAST_HEADERS)
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            ctype = r.headers.get("Content-Type", "")
+            if "text/html" not in ctype:
+                with open(tmp, "wb") as f:
+                    shutil.copyfileobj(r, f)
+                size = os.path.getsize(tmp)
+                if not (size < 512 and tmp.lower().endswith((".mp4", ".pdf"))):
+                    if dst.exists():
+                        dst.unlink()
+                    shutil.move(tmp, dst)
+                    return size
+                if os.path.exists(tmp):
+                    os.unlink(tmp)
+    except Exception as e:
+        logger.debug("drive download exception for %s: %s", fid, e)
+
+    # Fallback 1: Görseller için Google Drive Thumbnail API (Kota duvarından etkilenmez)
+    if dst.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"):
+        try:
+            t_url = f"https://drive.google.com/thumbnail?id={fid}&sz=w1600"
+            with urllib.request.urlopen(urllib.request.Request(t_url, headers=LAST_HEADERS), timeout=30) as r:
+                if "image" in r.headers.get("Content-Type", ""):
+                    with open(tmp, "wb") as f:
+                        shutil.copyfileobj(r, f)
+                    if os.path.getsize(tmp) > 500:
+                        if dst.exists():
+                            dst.unlink()
+                        shutil.move(tmp, dst)
+                        logger.info("Drive görsel fallback (thumbnail API) -> %s", dst.name)
+                        return os.path.getsize(dst)
+        except Exception:
+            pass
+
+    # Fallback 2: Excel tabloları için Google Sheets CSV Export API
+    if dst.suffix.lower() in (".xlsx", ".xls"):
+        try:
+            csv_url = f"https://docs.google.com/spreadsheets/d/{fid}/export?format=csv"
+            with urllib.request.urlopen(urllib.request.Request(csv_url, headers=LAST_HEADERS), timeout=30) as r:
+                ctype = r.headers.get("Content-Type", "")
+                if "text/" in ctype or "csv" in ctype:
+                    csv_dst = dst.with_suffix(".csv")
+                    csv_tmp = str(csv_dst) + ".part"
+                    with open(csv_tmp, "wb") as f:
+                        shutil.copyfileobj(r, f)
+                    if os.path.getsize(csv_tmp) > 50:
+                        if csv_dst.exists():
+                            csv_dst.unlink()
+                        shutil.move(csv_tmp, csv_dst)
+                        logger.info("Drive tablo fallback (Google Sheets CSV export) -> %s", csv_dst.name)
+                        return os.path.getsize(csv_dst)
+        except Exception:
+            pass
+
+    if os.path.exists(tmp):
+        try:
+            os.unlink(tmp)
+        except Exception:
+            pass
+    logger.warning("drive %s indirilemedi (kota/yetki siniri)", fid)
+    return 0
 
 
 def list_folder(fid, depth=0, seen=None):
@@ -213,9 +261,13 @@ def _refresh_drive_previews():
         groups = {}
         for key, fid in state.items():
             folder, name = key.split('/', 1)
-            if name.lower().endswith(('.pdf', '.mp4')):
-                groups.setdefault(folder, {'pdf': [], 'mp4': []})
-                groups[folder]['pdf' if name.lower().endswith('.pdf') else 'mp4'].append((name, fid))
+            groups.setdefault(folder, {'pdf': [], 'mp4': [], 'img': []})
+            if name.lower().endswith(('.pdf',)):
+                groups[folder]['pdf'].append((name, fid))
+            elif name.lower().endswith(('.mp4',)):
+                groups[folder]['mp4'].append((name, fid))
+            elif name.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
+                groups[folder]['img'].append((name, fid))
 
         def pick(items, pri):
             items = sorted(items, key=lambda x: next((i for i, k in enumerate(pri) if k in fold(x[0])), len(pri)))
@@ -242,9 +294,11 @@ def _refresh_drive_previews():
                 if c.get('drive_pdf_id') != pdf:
                     c['drive_pdf_id'] = pdf
                     changed += 1
-            thumb_target = vid or pdf
+            img_pri = ['render', 'dis_cephe', 'dış', 'kapak', '1.jpeg', '1.jpg', 'ada parsel', 'arsa']
+            best_img = pick(m.get('img', []), img_pri)
+            thumb_target = best_img or vid or pdf
             if thumb_target:
-                d_thumb = f"https://drive.google.com/thumbnail?id={thumb_target}&sz=w800"
+                d_thumb = f"https://drive.google.com/thumbnail?id={thumb_target}&sz=w1000"
                 if c.get('drive_thumbnail') != d_thumb:
                     c['drive_thumbnail'] = d_thumb
                     changed += 1

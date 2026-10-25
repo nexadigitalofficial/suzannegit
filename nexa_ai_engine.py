@@ -86,6 +86,7 @@ PROJE_SINONIMLERI = {
     "vip yenikent": "VIP YENİKENT", "vip çakırlar": "VIP ÇAKIRLAR",
     "vip üniversite": "VIP ÜNİVERSİTE", "viva": "VIVA - START BRAVO",
     "wm prime": "WM - PRIME", "wm": "WM - PRIME",
+    "west point": "WEST POINT", "westpoint": "WEST POINT", "west": "WEST POINT",
 }
 
 def parse_down_payment_value(dp_raw: str) -> int:

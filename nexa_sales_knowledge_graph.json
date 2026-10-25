@@ -906,5 +906,42 @@
     "category": "Müstakil Arsa & Villa Projesi",
     "sales_highlights": "Hemen tapu teslim, bağımsız müstakil parsel villa arsaları, altyapısı hazır yüksek prim potansiyeli.",
     "thumbnail": "/static/img/video_thumbs/video_thumb_kirikkale.jpg"
+  },
+  "WEST POINT": {
+    "title": "WEST POINT",
+    "name": "WEST POINT",
+    "developer": "Osko Yapı İnşaat",
+    "price_display": "1.890.000 - 2.590.000 TL",
+    "price_min": 1890000,
+    "price_max": 2590000,
+    "price_numeric": 1890000,
+    "down_payment": "945.000 TL (%50)",
+    "installment_terms": "Vadeli Fiyat: 2.250.000 - 3.100.000 TL",
+    "monthly_installment": 45000,
+    "room_info": "1+1",
+    "rooms": [
+      "1+1"
+    ],
+    "total_units": 171,
+    "delivery_months": 24,
+    "delivery_display": "24 Ay Teslim",
+    "il": "Ankara",
+    "ilce": "Etimesgut",
+    "mahalle": "Yukarıyurtçu",
+    "location": "Etimesgut, Ankara",
+    "location_full": "Ankara / Etimesgut / Yukarıyurtçu (Eskişehir Yolu)",
+    "ada_no": "49132",
+    "parsel_no": "1",
+    "tkgm_verified": true,
+    "category": "Markalı Konut Projesi",
+    "sales_highlights": "12.738 m² arsa üzerinde Osko Yapı güvencesi; 1+1 modern mimari, açık ve kapalı havuz, yeşil peyzaj alanları, peşinatsız vadeli ödeme seçenekleri.",
+    "thumbnail": "https://drive.google.com/thumbnail?id=1JmaDbLvgar8beizdNch6rszTxcf4FT62&sz=w1000",
+    "image": "https://drive.google.com/thumbnail?id=1JmaDbLvgar8beizdNch6rszTxcf4FT62&sz=w1000",
+    "drive_thumbnail": "https://drive.google.com/thumbnail?id=1JmaDbLvgar8beizdNch6rszTxcf4FT62&sz=w1000",
+    "drive_video_preview": "https://drive.google.com/file/d/1I9zTe52glM84d62ArFaWWMUd10OgjaCG/preview",
+    "drive_vid_id": "1I9zTe52glM84d62ArFaWWMUd10OgjaCG",
+    "drive_pdf_preview": "https://drive.google.com/file/d/15FFHXwZ9iD8nZ1wUubowwkzGaq6U9Qcn/preview",
+    "drive_pdf_id": "15FFHXwZ9iD8nZ1wUubowwkzGaq6U9Qcn",
+    "description": "Ankara Etimesgut Yukarıyurtçu mevkisinde, 12.738 m² arsa üzerinde yükselen Osko Yapı imzalı West Point; 1+1 modern daireleri, açık/kapalı havuzu, yeşil peyzaj alanları ve peşinatsız vadeli ödeme avantajlarıyla ayrıcalıklı bir yatırım ve yaşam projesidir."
   }
 }
