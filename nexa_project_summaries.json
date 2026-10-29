@@ -106,5 +106,20 @@
  },
  "WEST POINT": {
   "summary": "- WEST POINT (Ankara / Etimesgut / Yukarıyurtçu (Eskişehir Yolu)): 1.890.000 - 2.590.000 TL, Peşinat: 945.000 TL (%50), Ödeme: Vadeli Fiyat: 2.250.000 - 3.100.000 TL, Daire: 1+1, Ada: 49132/1 (TKGM Onaylı). 12.738 m² arsa üzerinde Osko Yapı güvencesi; 1+1 modern mimari, açık ve kapalı havuz, yeşil peyzaj alanları, peşinatsız vadeli ödeme seçenekleri."
+ },
+ "NEXA Royal Yalıkavak": {
+  "summary": "- Bodrum Gündoğan mevkiinde konumlanan NEXA Royal Yalıkavak, markalı bir konut projesidir.\n- 140 bağımsız bölümden oluşan proje, 1+1 Dubleks Loft (45 m²) daire tipleri sunmaktadır.\n- Fiyatlar 4.500.000 TL - 6.000.000 TL arasında değişmekte olup, %50 peşinat (2.250.000 TL) ve 20 ay taksit imkanı bulunmaktadır.\n- Teslim süresi 24 aydır.\n- Tapu durumu TKGM onaylı 510 ada, 1 parseldir.",
+  "project_id": 1,
+  "ts": 1793261589.486074
+ },
+ "MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR": {
+  "summary": "*   **Konum ve Proje Kimliği:** Ankara, Yenimahalle'de yer alan MONZA EYLÜL CONCEPT - VIP ÇAKIRLAR, markalı bir konut projesidir.\n*   **Proje Konsepti ve Daire Tipleri:** Konut projesi olup, 1+1 ve 2+1 daire seçenekleri sunmaktadır.\n*   **Fiyat ve Ödeme Planı Özeti:** Fiyatlar 2.800.000 TL ile 3.900.000 TL arasında değişmektedir. 1.400.000 TL (%50) peşinat ile 12-18 ay taksit imkanı bulunmaktadır.\n*   **Teslim Süresi:** 24 ay içinde teslim edilecektir.\n*   **Tapu/TKGM Durumu:** TKGM onaylı 63452/7 ada/parsel bilgisine sahiptir.",
+  "project_id": 12,
+  "ts": 1793261593.2362242
+ },
+ "NARÇİN RONYA CITY - 1 (VIP WEST)": {
+  "summary": "*   **Konum ve Proje Kimliği**: NARÇİN RONYA CITY - 1 (VIP WEST), Etimesgut, Ankara. Çankaya Üniversitesi'ne komşu, Eskişehir Yolu'na hızlı erişim sağlayan merkezi bir konumdadır.\n*   **Proje Konsepti ve Daire Tipleri**: Konut projesi olup, 1+1 ve 2+1 daire tipleri sunmaktadır. Enerjisini kendi üreten çevre dostu (GES) bir konsepte sahiptir.\n*   **Fiyat ve Ödeme Planı Özeti**: Daire fiyatları 4.900.000 TL'den (1+1) ve 5.700.000 TL'den (2+1) başlamaktadır. %50 peşinat ve 12 ay taksit imkanı sunulmaktadır.\n*   **Teslim Süresi**: Proje teslim süresi 24 aydır.\n*   **Tapu/TKGM Durumu**: 62700/5 ada/parsel bilgisi ile TKGM onaylıdır.",
+  "project_id": 17,
+  "ts": 1793261599.4325356
  }
 }
