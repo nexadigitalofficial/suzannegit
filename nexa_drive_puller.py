@@ -218,12 +218,16 @@ def pull_once():
                     downloaded += 1
                     logger.info("Drive -> %s (%s KB)", key, size // 1024)
                     STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+                elif it.get("id"):
+                    # Kota siniri olsa bile File ID'yi kaydet; boylece bulut onizleme (Cloud Preview) calisir
+                    state[key] = it["id"]
+                    STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
             except Exception as e:
                 logger.warning("indirme hatasi %s: %s", name, e)
+    STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+    _refresh_drive_previews()
     if downloaded:
-        STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
         _trigger_ingest()
-        _refresh_drive_previews()
     return downloaded
 
 

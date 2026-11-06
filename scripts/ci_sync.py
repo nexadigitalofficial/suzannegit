@@ -114,6 +114,14 @@ def main():
     results = []
     any_failed = False
 
+    # 0. Google Drive Otonom Cekimi
+    try:
+        import nexa_drive_puller
+        ok, msg = run_step("Drive Puller", nexa_drive_puller.pull_once)
+    except Exception as e:
+        ok, msg = False, f"Drive Puller hatasi: {e}"
+    results.append((ok, msg))
+
     # 1. CB.com.tr Senkronizasyonu
     try:
         from scripts.nexa_cb_sync import sync_once

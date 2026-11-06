@@ -943,5 +943,42 @@
     "drive_pdf_preview": "https://drive.google.com/file/d/15FFHXwZ9iD8nZ1wUubowwkzGaq6U9Qcn/preview",
     "drive_pdf_id": "15FFHXwZ9iD8nZ1wUubowwkzGaq6U9Qcn",
     "description": "Ankara Etimesgut Yukarıyurtçu mevkisinde, 12.738 m² arsa üzerinde yükselen Osko Yapı imzalı West Point; 1+1 modern daireleri, açık/kapalı havuzu, yeşil peyzaj alanları ve peşinatsız vadeli ödeme avantajlarıyla ayrıcalıklı bir yatırım ve yaşam projesidir."
+  },
+  "WM YAŞAM": {
+    "title": "WM YAŞAM",
+    "name": "WM YAŞAM",
+    "developer": "WM Proje",
+    "price_display": "2.999.999 TL (Peşin) / 3.300.000 - 4.000.000 TL (Vadeli)",
+    "price_min": 2999999,
+    "price_max": 4000000,
+    "price_numeric": 2999999,
+    "down_payment": "1.499.000 TL'den Başlayan Peşinat Seçenekleri",
+    "installment_terms": "6 Ay Vade: 3.300.000 TL (200.000 TL/ay) | 12 Ay Vade: 3.400.000 TL (115.000 TL/ay) | 18 Ay Vade: 3.600.000 TL (100.000 TL/ay) | 24 Ay Vade: 3.800.000 TL (92.000 TL/ay) | 30 Ay Vade: 4.000.000 TL (83.000 TL/ay)",
+    "monthly_installment": 83000,
+    "room_info": "1+1 (50 m² Brüt)",
+    "rooms": [
+      "1+1"
+    ],
+    "total_units": 900,
+    "delivery_months": 24,
+    "delivery_display": "30 Ay Vade / 24 Ay Teslim",
+    "il": "Ankara",
+    "ilce": "Çankaya",
+    "mahalle": "Yaşamkent",
+    "location": "Yaşamkent, Ankara",
+    "location_full": "Ankara / Çankaya / Yeni Yaşamkent (Eskişehir Yolu Aksı)",
+    "ada_no": "Yeni Yaşamkent",
+    "parsel_no": "20.000 m²",
+    "tkgm_verified": true,
+    "category": "Markalı Konut Projesi / Topraktan Yatırım",
+    "sales_highlights": "20.000 m² arsa üzerinde 900 konutluk mega yaşam projesi; 1+1 lüks daireler, kapalı yüzme havuzu, spa, fitness, geniş peyzaj alanları, otopark, e-Devlet KOOPBİS güvencesi ve 30 aya varan esnek vade imkanı.",
+    "thumbnail": "https://drive.google.com/thumbnail?id=19nUqIFOHm1shcVY_I41cehHHLu5eVacQ&sz=w1000",
+    "image": "https://drive.google.com/thumbnail?id=19nUqIFOHm1shcVY_I41cehHHLu5eVacQ&sz=w1000",
+    "drive_thumbnail": "https://drive.google.com/thumbnail?id=19nUqIFOHm1shcVY_I41cehHHLu5eVacQ&sz=w1000",
+    "drive_video_preview": "https://drive.google.com/file/d/1gNc1ZbaBoosQSg-GHo40kW2Ftu9KsX_m/preview",
+    "drive_vid_id": "1gNc1ZbaBoosQSg-GHo40kW2Ftu9KsX_m",
+    "drive_pdf_preview": "https://drive.google.com/file/d/19nUqIFOHm1shcVY_I41cehHHLu5eVacQ/preview",
+    "drive_pdf_id": "19nUqIFOHm1shcVY_I41cehHHLu5eVacQ",
+    "description": "Ankara Yeni Yaşamkent mevkisinde, 20.000 m² arsa üzerinde yükselen WM Proje imzalı WM Yaşam; 1+1 lüks modern konutları, kapalı havuzu, spa ve fitness merkezi, ticari cadde alanları, e-Devlet KOOPBİS güvencesi ve 30 aya varan vadeli ödeme seçenekleriyle ayrıcalıklı bir yatırım ve yaşam projesidir."
   }
 }

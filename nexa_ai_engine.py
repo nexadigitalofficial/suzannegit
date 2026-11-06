@@ -85,7 +85,8 @@ PROJE_SINONIMLERI = {
     "vip yaşamkent": "VIP YAŞAMKENT - GÖKDEMİR STAR",
     "vip yenikent": "VIP YENİKENT", "vip çakırlar": "VIP ÇAKIRLAR",
     "vip üniversite": "VIP ÜNİVERSİTE", "viva": "VIVA - START BRAVO",
-    "wm prime": "WM - PRIME", "wm": "WM - PRIME",
+    "wm prime": "WM - PRIME",
+    "wm yaşam": "WM YAŞAM", "wm yasam": "WM YAŞAM", "wm yaşamı": "WM YAŞAM", "wm yasami": "WM YAŞAM", "wm yaşamkent": "WM YAŞAM", "wm": "WM YAŞAM",
     "west point": "WEST POINT", "westpoint": "WEST POINT", "west": "WEST POINT",
 }
 
