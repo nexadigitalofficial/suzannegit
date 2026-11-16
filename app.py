@@ -1204,7 +1204,46 @@ def _handle_500(err):
 
 @app.route("/projeler/<path:filename>")
 def projeler_files(filename):
-    return send_from_directory(PROJELER_DIR, filename)
+    file_path = PROJELER_DIR / filename
+    if file_path.exists() and file_path.is_file():
+        return send_from_directory(PROJELER_DIR, filename)
+
+    # Cloud Redirect Fallback: Ephemeral sunucuda dosya diskte yoksa doğrudan Google Drive'a yönlendir
+    parts = filename.replace("\\", "/").split("/")
+    folder_name = parts[0] if parts else ""
+    pure_filename = parts[-1] if parts else filename
+
+    if JSON_FILE.exists():
+        try:
+            with open(JSON_FILE, "r", encoding="utf-8") as f:
+                projects = json.load(f)
+            for p in projects:
+                p_fld = (p.get("folder_name") or p.get("title") or "").strip()
+                if p_fld.lower() == folder_name.lower() or p.get("title", "").strip().lower() == folder_name.lower():
+                    if pure_filename.lower().endswith(".pdf"):
+                        fid = p.get("drive_pdf_id")
+                        if not fid and p.get("drive_pdf_preview"):
+                            m = re.search(r"/file/d/([\w-]{15,})", p.get("drive_pdf_preview"))
+                            if m:
+                                fid = m.group(1)
+                        if fid:
+                            return redirect(f"https://drive.google.com/file/d/{fid}/view")
+                        if p.get("drive_pdf_preview"):
+                            return redirect(p.get("drive_pdf_preview").replace("/preview", "/view"))
+                    elif pure_filename.lower().endswith(".mp4"):
+                        vid = p.get("drive_vid_id")
+                        if not vid and p.get("drive_video_preview"):
+                            m = re.search(r"/file/d/([\w-]{15,})", p.get("drive_video_preview"))
+                            if m:
+                                vid = m.group(1)
+                        if vid:
+                            return redirect(f"https://drive.google.com/file/d/{vid}/view")
+                        if p.get("drive_video_preview"):
+                            return redirect(p.get("drive_video_preview"))
+        except Exception as e:
+            logger.warning("projeler fallback hatasi: %s", e)
+
+    return "Sayfa bulunamadı", 404
 
 # ─── HIGH PERFORMANCE HTTP 206 CLOUD VIDEO STREAMING ENDPOINT ───
 def stream_file_response(path: Path, mimetype: str):
@@ -1269,6 +1308,31 @@ def file_serve():
             logger.warning("Yol disari cikma denemesi: %s", path_arg)
             return "Geçersiz yol", 400
         if not target.exists() or not target.is_file():
+            # Cloud fallback if file not on disk
+            parts = rel.replace("\\", "/").split("/")
+            folder_name = parts[0] if parts else ""
+            pure_filename = parts[-1] if parts else rel
+            if JSON_FILE.exists():
+                try:
+                    with open(JSON_FILE, "r", encoding="utf-8") as f:
+                        projects = json.load(f)
+                    for p in projects:
+                        p_fld = (p.get("folder_name") or p.get("title") or "").strip()
+                        if p_fld.lower() == folder_name.lower() or p.get("title", "").strip().lower() == folder_name.lower():
+                            if pure_filename.lower().endswith(".pdf"):
+                                fid = p.get("drive_pdf_id")
+                                if fid:
+                                    return redirect(f"https://drive.google.com/file/d/{fid}/view")
+                                if p.get("drive_pdf_preview"):
+                                    return redirect(p.get("drive_pdf_preview").replace("/preview", "/view"))
+                            elif pure_filename.lower().endswith(".mp4"):
+                                vid = p.get("drive_vid_id")
+                                if vid:
+                                    return redirect(f"https://drive.google.com/file/d/{vid}/view")
+                                if p.get("drive_video_preview"):
+                                    return redirect(p.get("drive_video_preview"))
+                except Exception:
+                    pass
             return "Dosya bulunamadı", 404
     except Exception:
         return "Hatalı yol", 400

@@ -11209,7 +11209,16 @@
                 return;
             }
 
-            const drivePdfUrl = project.drive_pdf_preview;
+            const drivePdfUrl = project.drive_pdf_preview || '';
+            let drivePdfId = project.drive_pdf_id;
+            if(!drivePdfId && drivePdfUrl) {
+                const m = drivePdfUrl.match(/\/file\/d\/([\w-]{15,})/);
+                if(m) drivePdfId = m[1];
+            }
+
+            const previewUrl = drivePdfId ? `https://drive.google.com/file/d/${drivePdfId}/preview` : drivePdfUrl;
+            const viewUrl = drivePdfId ? `https://drive.google.com/file/d/${drivePdfId}/view` : (drivePdfUrl ? drivePdfUrl.replace('/preview', '/view') : '');
+
             let localPdfSrc = (project.presentation || (project.presentations && project.presentations.length > 0 ? '/' + project.presentations[0].path : null)) 
                 || (project.pdf_url || (project.pdf_file ? '/projeler/' + encodeURIComponent(project.pdf_file) : null));
 
@@ -11221,16 +11230,17 @@
 
             if(titleEl) titleEl.innerText = projTitle + ' — Sunum Dosyası';
             
-            const activePdfUrl = drivePdfUrl || localPdfSrc;
-            if(downloadBtn) { downloadBtn.href = localPdfSrc || activePdfUrl; downloadBtn.target = '_blank'; }
-            if(openTabBtn) { openTabBtn.href = activePdfUrl; openTabBtn.target = '_blank'; }
+            // Bulut Önizleme: Asla diskte bulunmayan yerel yola düşürme, doğrudan Google Drive View/Download linkine yönlendir
+            const effectiveActionUrl = viewUrl || previewUrl || (project.id ? `/stream/pdf/${project.id}` : localPdfSrc);
+            if(downloadBtn) { downloadBtn.href = effectiveActionUrl; downloadBtn.target = '_blank'; }
+            if(openTabBtn) { openTabBtn.href = effectiveActionUrl; openTabBtn.target = '_blank'; }
 
             if(container) {
-                if (drivePdfUrl && drivePdfUrl.includes('drive.google.com')) {
+                if (previewUrl && previewUrl.includes('drive.google.com')) {
                     // Google Drive PDF Preview
                     container.innerHTML = `
                         <div style="display:flex; flex-direction:column; width:100%; height:100%; overflow:hidden;">
-                            <iframe src="${drivePdfUrl}" allow="autoplay" style="width:100%; height:100%; border:none; flex-grow:1;"></iframe>
+                            <iframe src="${previewUrl}" allow="autoplay" style="width:100%; height:100%; border:none; flex-grow:1;"></iframe>
                         </div>
                     `;
                 } else if (localPdfSrc) {
