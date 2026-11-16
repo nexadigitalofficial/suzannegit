@@ -59,7 +59,7 @@ _FALLBACK_CANONICAL_MATRIX = """- VIP ÜNİVERSİTE: Başlangıç Fiyatı: 1.350
 - GRANDE YAŞAMKENT: 3.000.000 TL - 4.000.000 TL (1+1, 2+1, Yapracık / Etimesgut).
 - ANKAPORT - SARAY: 3.040.000 TL - 8.350.000 TL (1+1, 2+1, 3+1, Saray / Pursaklar).
 - NARÇİN RONYA CITY - 1: 3.400.000 TL - 4.330.000 TL (1+1, 2+1, Yukarıyurtçu / Etimesgut).
-- GÖKDEMİR İMZA: 3.900.000 TL - 8.000.000 TL (1+1, 2+1, 3+1, Kızılcaşar / Gölbaşı).
+- GÖKDEMİR İMZA: 4.850.000 TL - 8.700.000 TL (1+1, 2+1, 3+1, Kızılcaşar / Gölbaşı).
 - VIP MARIN: 4.100.000 TL - 5.935.000 TL (1+1 ve 2+1 Lüks Sahil/Deniz Rezidansı, Avsallar / Alanya / Antalya).
 - ANGİM BEYTEPE: 4.500.000 TL - 22.890.000 TL (1+1'den 6+1'e, Beytepe / Çankaya).
 - EVART YALIKAVAK: 4.500.000 TL - 6.000.000 TL (1+1 Dubleks Loft, Gündoğan / Bodrum / Muğla).
