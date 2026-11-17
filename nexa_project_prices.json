@@ -856,5 +856,23 @@
   ],
   "description": "MOTTO İNCEK - 29905 ADA 1 PARSEL PROJESİ - PEŞİN SATIŞ TAKİP ÇİZELGESİ 3.KAT | KUZEY BATI PARK YÖNÜ | KUZEY DOĞU - YOL YÖNÜ | GÜNEY DOĞU - BULVAR YÖNÜ 39 | 40 | 41 | 42 | 43 | 44 | 45 | 46 2+1 | 2+1 | 1+1 | 1+1 | 1+1 | 1+1 | 2+1 | 2+1 0 ₺ | 0 ₺ | 0 ₺ | 0 ₺ | 0 ₺ | 0 ₺ | 0 ₺ | 0 ₺ | 67 KAT HOLÜ | MERDİVEN ASANSÖR | KAT ",
   "chunk_count": 2
+ },
+ "VILLA KARAN": {
+  "title": "VILLA KARAN",
+  "price_display": "₺6.090.000 - ₺5.550.000",
+  "price_min": 6090000,
+  "price_max": 5550000,
+  "down_payment": "3.045.000 TL (%50)",
+  "installment_terms": "24-36 Ay Vade",
+  "delivery_months": 24,
+  "teslim_ay": 24,
+  "rooms": [
+   "3+1"
+  ],
+  "room_types": [
+   "3+1"
+  ],
+  "description": "GİRİŞ - YOL - KUZEY BATI CEPHE YÖNÜ | YOL - KUZEY DOĞU CEPHE YÖNÜ | YOL - GÜNEY BATI CEPHE YÖNÜ 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 3+1 | 3+1 | 3+1 | 3+1 | 3+1 | 3+1 | 3+1 | 3+1 | 3+1 | 3+1 | 3+1 6.480.000 ₺ | 6.300.000 ₺ | 6.240.000 ₺ | 6.300.000 ₺ | 6.240.000 ₺ | 6.300.000 ₺ | 6.240.000 ₺ | 6.300.000 ₺ | 6.24",
+  "chunk_count": 2
  }
 }
