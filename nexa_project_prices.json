@@ -859,10 +859,10 @@
  },
  "VILLA KARAN": {
   "title": "VILLA KARAN",
-  "price_display": "₺6.090.000 - ₺5.550.000",
-  "price_min": 6090000,
+  "price_display": "₺5.000.000 - ₺5.550.000",
+  "price_min": 5000000,
   "price_max": 5550000,
-  "down_payment": "3.045.000 TL (%50)",
+  "down_payment": "2.500.000 TL (%50)",
   "installment_terms": "24-36 Ay Vade",
   "delivery_months": 24,
   "teslim_ay": 24,
